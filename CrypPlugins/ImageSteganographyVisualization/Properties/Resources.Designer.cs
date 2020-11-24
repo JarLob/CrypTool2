@@ -448,6 +448,15 @@ namespace ImageSteganographyVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hint: Start the program with the &quot;Play&quot; button in the ribbon bar. This executes the hiding process and enables the buttons to access the other views..
+        /// </summary>
+        internal static string HintPrompt3 {
+            get {
+                return ResourceManager.GetString("HintPrompt3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total number of image blocks:.
         /// </summary>
         internal static string ImageBlocksInfoText1 {
@@ -547,7 +556,7 @@ namespace ImageSteganographyVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The procedure encodes data in a way that is so subtle such that the changes cannot be noticed..
+        ///   Looks up a localized string similar to The procedure aims to encode data in a way that is so subtle such that        ///the changes cannot be noticed..
         /// </summary>
         internal static string Intro0Text3 {
             get {
@@ -592,7 +601,7 @@ namespace ImageSteganographyVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In BPCS, a multi-valued image consisting of 24-bit pixels can be decomposed into set of  24 binary pictures (bit planes)..
+        ///   Looks up a localized string similar to In BPCS, a multi-valued image consisting of 24-bit pixels can be        ///decomposed into a set of 24 binary pictures (bit planes)..
         /// </summary>
         internal static string Intro2BPCSText2 {
             get {
@@ -1042,7 +1051,7 @@ namespace ImageSteganographyVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to see slide 4..
+        ///   Looks up a localized string similar to see slide 1.4..
         /// </summary>
         internal static string SeeSlide4Text {
             get {
@@ -1051,7 +1060,7 @@ namespace ImageSteganographyVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to see slide 5..
+        ///   Looks up a localized string similar to see slide 1.5..
         /// </summary>
         internal static string SeeSlide5Text {
             get {

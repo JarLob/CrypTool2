@@ -19,16 +19,12 @@
     <replacement key="$stegextract$" value="Extrahieren" />
     <replacement key="$extractedmessage$" value="Extrahierte Nachricht" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "Dieser Modus der Text-Steganographie konvertiert die geheime Nachricht in Bits und konvertiert die Buchstaben im Covertext in Großbuchstaben, wo das Bit 1 am gleichen Index im Bitstring ist oder es bleibt eine Kleinbuchstabe wenn das Bit 0 ist. Also um die gesamte Nachricht zu verstecken, sollte die Anzahl der Buchstaben im Covertext gleich oder größer als die Anzahl der Bits in der geheimen Nachricht sein. \line
-Unser Beispiel beginnt mit &quot;se&quot;, was in ASCII 0x73 and 0x65 ist und in binarärer Form &quot;01110011&quot; und &quot;01100101&quot; ist. \line
-Dann wird die Binärform jedes Zeichens umgekehrt, somit erhalten wir: &quot;11 00 11 10  10 10 01 10&quot;. \line
-Und so sieht die Konvertierung damit aus: \line
-He ordered his regular \line
---> [Kleinbuchstaben] \line
-he ordered his regular \line
---> [Buchstaben enstprechend der Bitfolge anpassen] \line
-HE orDEReD hIs rEGuLAr \line
-11 0011101 010 0110"/>
+    <replacement key="$memotext$" value= "Dieser Modus der Text-Steganographie konvertiert die geheime Nachricht in Bits und konvertiert die Buchstaben im Covertext in Großbuchstaben, wo das Bit 1 am gleichen Index im Bitstring ist oder es bleibt eine Kleinbuchstabe wenn das Bit 0 ist. Also um die gesamte Nachricht zu verstecken, sollte die Anzahl der Buchstaben im Covertext gleich oder größer als die Anzahl der Bits in der geheimen Nachricht sein. \line \line
+In unserem Beispiel, die geheime Nachricht beginnt mit &quot;se&quot;, was in ASCII 0x73 und 0x65 ist und in binärer Form &quot;01110011&quot; und &quot;01100101&quot; ist.  Dann wird die Binärform jedes Zeichens umgekehrt, somit erhalten wir: &quot;11 00 11 10  10 10 01 10&quot;.  Die Konvertierung der ersten 16 (Nicht-Blankstellen) der Buchstaben des Covertexts sieht damit so aus: \line
+He ordered his regu         [originaler Covertext] \line
+he ordered his regu          [Covertext kleingeschrieben] \line
+HE orDEReD hIs rEGu       [angepasster Covertext anhand des Bitstroms] \line
+11 0011101 010 0110       [Bitstrom, der benutzt wird um den Covertext anzupassen]"/>
   </replacements>
   <replacements lang="en">
     <replacement key="$secretmessage$" value="Secret message" />
@@ -37,15 +33,11 @@ HE orDEReD hIs rEGuLAr \line
     <replacement key="$stegextract$" value="Extract" />
     <replacement key="$extractedmessage$" value="Extracted message" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "This mode of text steganography converts the secret message to bits and converts the letters in the cover text to uppercase when the bit is 1 at the same index in the bitstring or leaves the letter in lowercase when the bit is 0 at that index. Therefore, to hide all of the message correctly, the number of letters in the cover text should be equal to or greater than the number of bits in the secret message. \line
-Our example starts with &quot;se&quot;, what is in ASCII 0x73 and 0x65 and in binary form &quot;01110011&quot; and &quot;01100101&quot;. &#xA;
-Then the binary stream of each character is reversed, so we get: &quot;11 00 11 10  10 10 01 10&quot;. \line
-So the conversion here is: \line
-He ordered his regular \line
---> [lowercase] \line
-he ordered his regular \line
---> [adapt case according to the bitsequence] \line
-HE orDEReD hIs rEGuLAr \line
-11 0011101 010 0110"/>
+    <replacement key="$memotext$" value= "This mode of text steganography converts the secret message to bits and converts the letters in the cover text to uppercase when the bit is 1 at the same index in the bitstring or leaves the letter in lowercase when the bit is 0 at that index. Therefore, to hide all of the message correctly, the number of letters in the cover text should be equal to or greater than the number of bits in the secret message. \line \line
+In our example, the secret message starts with &quot;se&quot;, what in ASCII is 0x73 and 0x65 and in binary form it is &quot;01110011&quot; and &quot;01100101&quot;.  Then the binary sequence of each secret character is reversed, so we get the bitstream: &quot;11 00 11 10  10 10 01 10&quot;.  The conversions for the first 16 (non blank) cover-text letters then look like this: \line
+He ordered his regu         [original cover text] \line
+he ordered his regu          [cover text in lowercase] \line
+HE orDEReD hIs rEGu       [cover text adapted according to the bitstream] \line
+11 0011101 010 0110       [bitstream used for adapting the case of the letters]"/>
   </replacements>
 </sample>

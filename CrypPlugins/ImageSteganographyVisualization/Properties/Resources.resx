@@ -246,6 +246,9 @@
   <data name="HintPrompt2" xml:space="preserve">
     <value>Choose the hiding bits in order to perform the hiding process and activate the other views. </value>
   </data>
+  <data name="HintPrompt3" xml:space="preserve">
+    <value>Hint: Start the program with the "Play" button in the ribbon bar. This executes the hiding process and enables the buttons to access the other views.</value>
+  </data>
   <data name="ImageBlocksInfoText1" xml:space="preserve">
     <value>Total number of image blocks:</value>
   </data>
@@ -280,7 +283,7 @@
     <value>The term combines the greek words steganós which means hidden and graph which means writing.</value>
   </data>
   <data name="Intro0Text3" xml:space="preserve">
-    <value>The procedure encodes data in a way that is so subtle such that the changes cannot be noticed.</value>
+    <value>The procedure aims to encode data in a way that is so subtle such thatthe changes cannot be noticed.</value>
   </data>
   <data name="Intro0Text4" xml:space="preserve">
     <value>Steganogrphy can be combined with cryptography to add an additional layer of security when communicating sensitive data.</value>
@@ -295,7 +298,7 @@
     <value>BPCS algorithm was introduced to overcome the shortcomings of traditional steganography techniques with limited data hiding capacity. This technique can hide up to 50% of the cover image data amount without much distortion in the visual appearance of the original image.</value>
   </data>
   <data name="Intro2BPCSText2" xml:space="preserve">
-    <value>In BPCS, a multi-valued image consisting of 24-bit pixels can be decomposed into set of  24 binary pictures (bit planes).</value>
+    <value>In BPCS, a multi-valued image consisting of 24-bit pixels can bedecomposed into a set of 24 binary pictures (bit planes).</value>
   </data>
   <data name="Intro2BPCSText3" xml:space="preserve">
     <value>These planes are divided into 8 x 8 pixel blocks, the blocks are then classified into noise like regions and informative regions, </value>
@@ -445,10 +448,10 @@
     <value>See pixel conversion</value>
   </data>
   <data name="SeeSlide4Text" xml:space="preserve">
-    <value>see slide 4.</value>
+    <value>see slide 1.4.</value>
   </data>
   <data name="SeeSlide5Text" xml:space="preserve">
-    <value>see slide 5.</value>
+    <value>see slide 1.5.</value>
   </data>
   <data name="ShowAllBlocksButton" xml:space="preserve">
     <value>Show all image blocks</value>

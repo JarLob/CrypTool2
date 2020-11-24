@@ -241,10 +241,13 @@
     <value>Versteckprozess </value>
   </data>
   <data name="HintPrompt" xml:space="preserve">
-    <value>Hinweis: Starten Sie das Programm mit dem "Starten" Button in der Multifunktionsleiste. Dies aktiviert den Button"Bits für den Versteckprozess auswählen" oben.</value>
+    <value>Hinweis: Starten Sie das Programm mit dem "Starten" Button in der Multifunktionsleiste. Dies aktiviert den Button "Bits für den Versteckprozess auswählen" oben.</value>
   </data>
   <data name="HintPrompt2" xml:space="preserve">
     <value>Wählen Sie die Bits, die für das Verstecken benutzt werden sollen, um den Versteckprozess abzuschließen und die anderen Views zu aktivieren. </value>
+  </data>
+  <data name="HintPrompt3" xml:space="preserve">
+    <value>Hinweis: Starten Sie das Programm mit dem "Starten" Button in der Multifunktionsleiste. Dies führt den Versteckprozess aus und aktiviert die Buttons um auf die anderen Ansichten zuzugreifen.</value>
   </data>
   <data name="ImageBlocksInfoText1" xml:space="preserve">
     <value>Anzahl Bildblöcke insgemat: </value>
@@ -445,10 +448,10 @@
     <value>Pixel Konvertierung ansehen</value>
   </data>
   <data name="SeeSlide4Text" xml:space="preserve">
-    <value>siehe Folie 4. </value>
+    <value>siehe Folie 1.4. </value>
   </data>
   <data name="SeeSlide5Text" xml:space="preserve">
-    <value>siehe Folie 5.</value>
+    <value>siehe Folie 1.5.</value>
   </data>
   <data name="ShowAllBlocksButton" xml:space="preserve">
     <value>Alle Bildblöcke ansehen</value>

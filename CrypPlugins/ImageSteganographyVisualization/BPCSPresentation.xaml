@@ -38,7 +38,7 @@
                 <Button Name="SeePixelConversionButton" Content="{ Loc BPCSMainMenu3 }" Margin="5" IsEnabled="False" Click="PixelConversionViewClick" Grid.Row="3" Grid.Column="2"/>
                 <Button Name="SeeBitPlanesButton" Content="{ Loc BPCSMainMenu4 }" Margin="5" IsEnabled="False" Click="ShowBitPlanesView" Grid.Row="4" Grid.Column="2"/>
             </Grid>
-            <Label Name="StartHint" Content="{Loc HintPrompt}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Name="StartHint" Text="{Loc HintPrompt3}" Grid.Row="2"  VerticalAlignment="Bottom" Margin="15, 5" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" />
         </Grid>
 
         <Grid Name="IntroView" Visibility="Hidden" Background="White">
