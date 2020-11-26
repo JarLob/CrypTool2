@@ -237,7 +237,10 @@ namespace Cryptool.CrypConsole
                 foreach (var component in _workspaceModel.GetAllPluginModels())
                 {
                     //we also memorize here the name of each plugin
-                    _pluginNames.Add(component.Plugin, component.GetName());
+                    if (!_pluginNames.ContainsKey(component.Plugin))
+                    {
+                        _pluginNames.Add(component.Plugin, component.GetName());
+                    }
 
                     if (component.GetName().ToLower().Equals(param.Name.ToLower()))
                     {
@@ -527,7 +530,11 @@ namespace Cryptool.CrypConsole
             }
             if (_jsonoutput)
             {
-                Console.WriteLine(JsonHelper.GetOutputJsonString(property.GetValue(plugin).ToString(), _pluginNames[plugin]));
+                var value = property.GetValue(plugin);
+                if (value != null) 
+                {
+                    Console.WriteLine(JsonHelper.GetOutputJsonString(value.ToString(), _pluginNames[plugin])); 
+                }
             }         
         }
 
