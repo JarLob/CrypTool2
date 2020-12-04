@@ -230,5 +230,25 @@ namespace Cryptool.PluginBase.Properties {
                 return ResourceManager.GetString("This_is_a_WorkspaceManager_file_", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0000;&lt;control&gt;;Cc;0;BN;;;;;N;NULL;;;;
+        ///0001;&lt;control&gt;;Cc;0;BN;;;;;N;START OF HEADING;;;;
+        ///0002;&lt;control&gt;;Cc;0;BN;;;;;N;START OF TEXT;;;;
+        ///0003;&lt;control&gt;;Cc;0;BN;;;;;N;END OF TEXT;;;;
+        ///0004;&lt;control&gt;;Cc;0;BN;;;;;N;END OF TRANSMISSION;;;;
+        ///0005;&lt;control&gt;;Cc;0;BN;;;;;N;ENQUIRY;;;;
+        ///0006;&lt;control&gt;;Cc;0;BN;;;;;N;ACKNOWLEDGE;;;;
+        ///0007;&lt;control&gt;;Cc;0;BN;;;;;N;BELL;;;;
+        ///0008;&lt;control&gt;;Cc;0;BN;;;;;N;BACKSPACE;;;;
+        ///0009;&lt;control&gt;;Cc;0;S;;;;;N;CHARACTER TABULATION;;;;
+        ///000A;&lt;control&gt;;Cc;0;B;;;;;N;LINE FEED (LF);;;;
+        ///000B;&lt;contro [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string UnicodeData {
+            get {
+                return ResourceManager.GetString("UnicodeData", resourceCulture);
+            }
+        }
     }
 }

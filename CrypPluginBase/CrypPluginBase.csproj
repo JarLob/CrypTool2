@@ -214,6 +214,7 @@
     <Compile Include="Utils\StandaloneComponent\StandaloneComponentCompat.cs" />
     <Compile Include="Utils\StandaloneComponent\StandaloneComponents.cs" />
     <Compile Include="Utils\Text.cs" />
+    <Compile Include="Utils\UnicodeHelper.cs" />
     <Compile Include="Validation\IntegerRule.cs" />
     <Compile Include="Validation\RegExRule.cs" />
   </ItemGroup>
@@ -279,7 +280,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\UnicodeData.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
