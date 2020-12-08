@@ -15,19 +15,14 @@
    limitations under the License.
 */
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
-using System.Collections.Generic;
-using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Utils;
 using Cryptool.CrypAnalysisViewControl;
 
@@ -35,6 +30,7 @@ namespace Cryptool.VigenereAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String keyString, String plaintextString);
+    public delegate int[] DecryptVigenereFunction(int[] plaintext, int[] key, int[] alphabet, int offset, int[] oldciphertext);
 
     [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Uni Kassel", "https://www.ais.uni-kassel.de")]
     [PluginInfo("Cryptool.VigenereAnalyzer.Properties.Resources",
@@ -42,6 +38,8 @@ namespace Cryptool.VigenereAnalyzer
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class VigenereAnalyzer : ICrypComponent
     {
+        
+        
         private const int MaxBestListEntries = 100;
         private readonly AssignmentPresentation _presentation = new AssignmentPresentation();
         private string _plaintext;
@@ -299,6 +297,16 @@ namespace Cryptool.VigenereAnalyzer
                     ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) 
                     : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
 
+                DecryptVigenereFunction decryptVigenereFunction;
+                if (_settings.Mode == Mode.Vigenere)
+                {
+                    decryptVigenereFunction = DecryptVigenereOwnAlphabetInPlace;
+                }
+                else
+                {
+                    decryptVigenereFunction = DecryptAutokeyOwnAlphabetInPlace;
+                }
+
                 do
                 {
                     foundbetter = false;
@@ -309,9 +317,7 @@ namespace Cryptool.VigenereAnalyzer
                         {
                             var oldLetter = runkey[i];
                             runkey[i] = j;
-                            plaintext = _settings.Mode == Mode.Vigenere
-                                ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
-                                : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);                          
+                            plaintext = decryptVigenereFunction(plaintext, runkey, numvigalphabet, i, ciphertext);                          
 
                             keys++;
                             var costvalue = grams.CalculateCost(plaintext);
@@ -328,9 +334,7 @@ namespace Cryptool.VigenereAnalyzer
                                 runkey[i] = oldLetter;
                                 if (j == alphabetlength - 1)
                                 {
-                                    plaintext = _settings.Mode == Mode.Vigenere
-                                        ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
-                                        : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
+                                    plaintext = decryptVigenereFunction(plaintext, runkey, numvigalphabet, i, ciphertext);
                                 }
                             }
 
