@@ -44,12 +44,12 @@ namespace CT2AutomaticTranslator
         /// Before start, create a Google Cloud user and get an API key.
         /// Also make sure to clean up your CT2 SVN (delete all files not belonging to SVN with cleanup)
         /// </summary>
-        static string targetDirectory = @"C:\...\CrypTool2";
+        static string targetDirectory = @"C:\Users\nilsk\Desktop\CrypTool2";
         static string templateDirectory = targetDirectory + @"\Templates\";
         static string wizardDirectory = targetDirectory + @"\CrypPlugins\Wizard\";
 
-        static string targetLanguage = "ru";
-        static string key = ""; // enter here the google auth key
+        static string targetLanguage = "zh-CN";
+        static string key = "AIzaSyA3ho9Fwu_0OMcZ-CnswSELKSZVjrpko6g"; // enter here the google auth key
 
         private static Dictionary<string, Project> projectCache = new Dictionary<string, Project>();
 

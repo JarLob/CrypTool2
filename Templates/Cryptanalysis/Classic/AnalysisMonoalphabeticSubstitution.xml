@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Monoalphabetic Substitution Analyzer</title>
+  <title lang="zh">单字母替代分析仪</title>
   <title lang="ru">Моноалфавитный анализатор замещения</title>
   <summary lang="en">Cryptanalysis of the monoalphabetic substitution cipher</summary>
+  <summary lang="zh">单字母替代密码的密码分析</summary>
   <summary lang="ru">Криптоанализ моноалфавитного замещающего шифра</summary>
   <description lang="en">This template shows the cryptanalysis of the monoalphabetic substitution cipher. A sample ciphertext is entered in the text input. After starting the workspace the Monoalphabetic Substitution Analyzer processes the ciphertext and shows the best found keys as well as the according plaintexts.</description>
+  <description lang="zh">该模板显示了单字母替换密码的密码分析。在文本输入中输入样本密文。启动工作区后，Monoalphabetic替代分析器将处理密文并显示找到的最佳密钥以及相应的明文。</description>
   <description lang="ru">Этот шаблон показывает криптоанализ моноалфавитного шифрования замещения. В ввод текста вводится образец зашифрованного текста. После запуска рабочей области анализатор моноалфавитного замещения обрабатывает зашифрованный текст и показывает лучшие найденные ключи, а также соответствующие текстовые тексты.</description>
   <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis, MASC</keywords>
+  <keywords lang="zh">单字母替代密码，频率，字典攻击，分析，MASC</keywords>
   <keywords lang="ru">Моноалфавитный шифр замещения, частоты, атака словаря, анализ, MASC</keywords>
   <title lang="de">Angriff auf die monoalphabetische Substitution</title>
   <summary lang="de">Angriff auf die monoalphabetische Substitution</summary>
@@ -23,6 +27,14 @@
     <replacement key="$Plaintext Alphabet$" value="Ausgabe des Klartextalphabets" />
     <replacement key="$Cryptanalysis$" value="Kryptoanalyse des Geheimtextes. Verschiedene Kandidaten mit zugehörigem Schlüssel werden angezeigt." />
     <replacement key="$memo$" value="Diese Vorlage demonstriert die Kryptoanalyse monoalphabetischer Substitutionen.\line\line Die Präsentationsansicht der Analysekomponente zeigt im oberen Teil die Startzeit, vergangene Zeit und Endzeit, und im unteren Teil eine Liste der 20 besten Schlüssel, die bei der Analyse gefunden wurden. Die Liste zeigt für jeden gefundenen Schlüssel dessen Position (Spalte 1 &quot;#&quot;), den Wert der Kostenfunktion (Spalte 2 &quot;Wert&quot;), die Angriffsart, mit der der Schlüssel gefunden wurde (Spalte 3 &quot;Angriff&quot;), den gefundenen Schlüssel (Spalte 4 &quot;Schlüssel&quot;) und den zugehörigen Klartext (Spalte 5 &quot;Text&quot;). Der Wert der Kostenfunktion ist der Logarithmus des arithmetischen Mittels der N-Gramm-Häufigkeiten des zugehörigen Klartextes. Die Differenz zwischen diesen Werten zweier Schlüssel gibt an, um wie viel ein Schlüssel besser als der andere ist. In Spalte 3 (&quot;Angriff&quot;) wird die Angriffsmethode, mit der der Schlüssel gefunden wurde, angezeigt. Ein &quot;G&quot; steht für einen Angriff mit dem genetischen Algorithmus, &quot;W&quot; steht für den Wörterbuchangriff. Ein Doppelklick auf eine Zeile gibt den zugehörigen Klartext am Ausgang der Komponente aus. Außerdem werden die momentan besten gefundenen Schlüssel und Klartexte automatisch am Ausgang ausgegeben." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Plaintext$" value="纯文本输出" />
+    <replacement key="$Ciphertext$" value="输入密文" />
+    <replacement key="$Key$" value="密钥发行" />
+    <replacement key="$Plaintext Alphabet$" value="纯文本字母的输出" />
+    <replacement key="$Cryptanalysis$" value="密文的密码分析。显示具有关联键的各种候选。" />
+    <replacement key="$memo$" value="此模板演示了单字母置换的密码分析\Line \line分析组件的显示视图在上部显示了开始时间，经过时间和结束时间，并在下部显示了在分析过程中找到的20个最佳密钥的列表。对于找到的每个密钥，该列表都会显示其位置（第1列“＃”），成本函数的值（第2列“值”），发现该密钥的攻击类型（第3列“攻击”），找到的密钥（第4栏“键”）和相关的纯文本（第5栏“文本”）。代价函数的值是相关明文的n元语法频率的算术平均值的对数。两个键的这些值之间的差异表示一个键比另一个更好。第3列（“攻击”）显示了用于查找密钥的攻击方法。 “ G”代表使用遗传算法的攻击，“ W”代表字典攻击。双击一行将在组件输出处输出关联的纯文本。另外，找到的当前最佳键和纯文本将自动输出到输出。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="Вывод простого текста" />

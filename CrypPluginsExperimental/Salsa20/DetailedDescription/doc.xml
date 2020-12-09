@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
   <language culture="en" />
+  <language culture="zh-CN" />
   <language culture="ru" />
   <introduction lang="en">
     Salsa20 is one of seven symmetric stream ciphers that was chosen for the final eSTREAM portfolio of the ECRYPT Stream Cipher Project.
     It requires a 64 bits initialization vector and either a 128 or 256 bits secret key. The cipher is based on a strong cryptographic hash function
     and the byte limit for the generated key stream from every IV is 2^70. No attack faster than brute-force has been identified so far.
   </introduction>
+  <introduction lang="zh-CN">Salsa20是为ECRYPT流密码项目的最终eSTREAM产品组合选择的七个对称流密码之一。它需要一个64位的初始化向量和一个128位或256位的秘密密钥。该密码基于强大的加密哈希函数，每个IV生成的密钥流的字节限制为2 ^ 70。到目前为止，还没有发现比蛮力还要快的攻击。</introduction>
   <introduction lang="ru">Salsa20 является одним из семи симметричных потоковых шифров, который был выбран для окончательного портфеля eSTREAM проекта ECHREPT Stream Cipher. Для этого требуется вектор инициализации 64 бит и либо секретный ключ 128 или 256 бит. Шифр основан на сильной криптографической хэш-функции, а предел байта для генерируемого ключевого потока из каждого IV равен 2 ^ 70. До сих пор не было обнаружено атаки быстрее, чем грубая сила.</introduction>
   <usage lang="en">
     After dragging the Salsa20 component onto your workspace, you will
@@ -14,6 +16,7 @@
 
     Additionally you have to connect a text output component to the 'Output' connector.
   </usage>
+  <usage lang="zh-CN">将Salsa20组件拖到工作区后，必须将三个输入连接器“输入”，“键”和“ IV”连接到数据源。另外，您必须将文本输出组件连接到“输出”连接器。</usage>
   <usage lang="ru">После перетаскивания компонента Salsa20 в рабочее пространство вам необходимо будет подключить три входных разъема «Вход», «Ключ» и «IV» к источникам данных. Кроме того, вам необходимо подключить компонент вывода текста к разъему «Выход».</usage>
   <language culture="de-DE" />
   <introduction lang="de-DE">

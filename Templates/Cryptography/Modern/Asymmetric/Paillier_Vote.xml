@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Paillier Cipher (Voting)</title>
+  <title lang="zh">Paillier密码（投票）</title>
   <title lang="ru">Шифр Пайлера (Голосование)</title>
   <summary lang="en">Usage of the <i>Pailler</i> cipher for voting</summary>
+  <summary lang="zh">使用Pailler密码进行投票</summary>
   <summary lang="ru">Использование шифра Пайлера для голосования</summary>
   <description lang="en">This template shows the usage of the <i>Pailler</i> cipher for voting.</description>
+  <description lang="zh">该模板显示了Pailler密码用于投票的用法。</description>
   <description lang="ru">Этот шаблон показывает использование шифра Pailler для голосования.</description>
   <keywords>homomorphic, voting, E-Voting, Damgard, Eurocrypt, Jurik, asymmetric</keywords>
+  <keywords lang="zh">同态，投票，电子投票，Damgard，Eurocrypt，Jurik，不对称</keywords>
   <keywords lang="ru">гомоморфизм, голосование, E-голосование, Damgard, Eurocrypt, Jurik, асимметричный</keywords>
   <title lang="de">Paillier-Chiffre (Wahlen)</title>
   <summary lang="de">Benutzung der <i>Paillier</i>-Chiffre für Wahlen</summary>
@@ -26,6 +30,15 @@
     <replacement key="$Decrypt$" value="Entschlüsselung" />
     <replacement key="$Add$" value="Addition" />
     <replacement key="$Voting Result$" value="Wahlergebnis" />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Voter$" value="选民" />
+    <replacement key="$Converter$" value="转换器" />
+    <replacement key="$KeyGenerator$" value="密钥生成器" />
+    <replacement key="$Encrypt$" value="加密" />
+    <replacement key="$Decrypt$" value="解密" />
+    <replacement key="$Add$" value="加成" />
+    <replacement key="$Voting Result$" value="选举结果" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Voter$" value="избиратель" />

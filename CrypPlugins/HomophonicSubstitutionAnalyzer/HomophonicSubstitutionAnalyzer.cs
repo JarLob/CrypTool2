@@ -182,12 +182,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 if (!string.IsNullOrEmpty(StartKey))
                 {
                     _presentation.ApplyStartKey(StartKey);
-                }
+                }                
             }
             catch(Exception ex)
             {
                 GuiLogMessage(string.Format("Could not apply key: {0}", ex.Message), NotificationLevel.Warning);
             }
+
+            _presentation.ReplaceCiphertextLabelsByUnicodeChars();
+
             _presentation.EnableUI();
             if (_settings.AnalysisMode == AnalysisMode.FullAutomatic)
             {

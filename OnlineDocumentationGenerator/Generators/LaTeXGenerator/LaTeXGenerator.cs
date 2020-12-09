@@ -11,6 +11,7 @@ using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Localization;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
 {
@@ -33,7 +34,7 @@ namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
         {
             foreach (var lang in AvailableLanguages)
             {
-                var cultureInfo = new CultureInfo(lang);
+                CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 

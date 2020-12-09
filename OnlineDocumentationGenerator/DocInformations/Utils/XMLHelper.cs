@@ -20,7 +20,7 @@ namespace OnlineDocumentationGenerator.DocInformations.Utils
             if (allElements.Any())
             {
                 foundElements = from descln in allElements 
-                                where (new CultureInfo(descln.Attribute("lang").Value)).TwoLetterISOLanguageName == currentLang.TwoLetterISOLanguageName 
+                                where (new CultureInfo(descln.Attribute("lang").Value)).TwoLetterISOLanguageName.Equals(currentLang.TwoLetterISOLanguageName) 
                                 select descln;
                 if (!foundElements.Any())
                 {
@@ -37,7 +37,9 @@ namespace OnlineDocumentationGenerator.DocInformations.Utils
                     return null;
                 }
                 else
+                {
                     return allElements.First();
+                }
             }
 
             return foundElements.First();

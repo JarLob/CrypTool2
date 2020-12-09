@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Next Smaller Prime Number</title>
+  <title lang="zh">下一个较小的素数</title>
   <title lang="ru">Следующий меньший первичный номер</title>
   <summary lang="en">Find the next smaller prime number</summary>
+  <summary lang="zh">查找下一个较小的素数</summary>
   <summary lang="ru">Найдите следующее меньшее простое число</summary>
   <description lang="en">This template searches for the biggest prime number that is smaller or equal to a given number using a loop.</description>
+  <description lang="zh">该模板使用循环搜索小于或等于给定数字的最大质数。</description>
   <description lang="ru">Этот шаблон ищет наибольшее простое число, которое меньше или равно заданному числу с использованием цикла.</description>
   <keywords>prime, composite, primality</keywords>
+  <keywords lang="zh">素数，复合，素数</keywords>
   <keywords lang="ru">простой, составной, примитивный</keywords>
   <title lang="de">Nächstkleinere Primzahl</title>
   <summary lang="de">Findet die nächstkleinere Primzahl</summary>
@@ -27,6 +31,16 @@
     <replacement key="$Difference$" value="Differenz" />
     <replacement key="$Subtraction$" value="Subtraktion" />
     <replacement key="$memo$" value="Die in der Komponente &quot;Zahleneingabe&quot; gegebene Zahl wird in einer Schleife solange heruntergezählt, bis eine Primzahl gefunden wurde. Sie können die Schrittweite auf 1 abändern, um die nächstgrößere Primzahl zu suchen." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Number Input$" value="输入数字" />
+    <replacement key="$PrimeTest$" value="首要测试" />
+    <replacement key="$Is Prime?$" value="是素数？" />
+    <replacement key="$Next smaller prime$" value="下一个较小的素数" />
+    <replacement key="$Step Size$" value="增量" />
+    <replacement key="$Difference$" value="区别" />
+    <replacement key="$Subtraction$" value="减法" />
+    <replacement key="$memo$" value="在“数字输入”组件中给定的数字将循环向下计数，直到找到质数。您可以将步长更改为1以查找下一个最大的质数。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Number Input$" value="ввод номера" />

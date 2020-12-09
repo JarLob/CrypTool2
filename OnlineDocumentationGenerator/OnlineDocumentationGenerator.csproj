@@ -135,6 +135,7 @@
     <Compile Include="Reference\Reference.cs" />
     <Compile Include="Reference\ReferenceList.cs" />
     <Compile Include="TemplateDirectory.cs" />
+    <Compile Include="Utils\CultureInfoHelper.cs" />
     <Compile Include="Utils\RelativePaths.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Generators\HtmlGenerator\zh.png" />
     <Resource Include="StaticDocs\PseudoRandomFunction_based_KeyDerivationFunctions.xml" />
     <Resource Include="StaticDocs\CrypToolBook.xml">
       <SubType>Designer</SubType>
@@ -219,6 +221,9 @@
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.zh-CN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Avalanche (Modern Ciphers)</title>
+  <title lang="zh">雪崩（现代密码）</title>
   <title lang="ru">Лавина (современные шифры)</title>
   <summary lang="en">This template demonstrates the Avalanche effect in modern ciphers.</summary>
+  <summary lang="zh">该模板演示了现代密码中的雪崩效应。</summary>
   <summary lang="ru">Этот шаблон демонстрирует эффект лавины в современных шифрах.</summary>
   <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in modern ciphers.</description>
+  <description lang="zh">该模板显示了雪崩可视化组件如何用于演示现代密码中的雪崩效应。</description>
   <description lang="ru">Этот шаблон показывает, как компонент визуализации лавины можно использовать для демонстрации эффекта лавины в современных шифрах.</description>
   <keywords>Avalanche, Analysis, modern</keywords>
+  <keywords lang="zh">雪崩，分析，现代</keywords>
   <keywords lang="ru">Лавина, анализ, современный</keywords>
   <title lang="de">Avalanche (moderne Verschlüsselungsverfahren)</title>
   <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.</summary>
@@ -23,6 +27,14 @@
     <replacement key="$String Decoder$" value="String-Dekodierer" />
     <replacement key="$Generated Data$" value="Generierte Daten" />
     <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.\line\line Nach &quot;Starten&quot; wird der aus den Eingaben resultierende Geheimtext angezeigt. Verändern Sie nun die Eingabe, erhalten Sie einen entsprechenden neuen Geheimtext (Die Eingabe besteht in diesem Fall aus dem Klartext und dem Sender-Schlüssel. Bei anderen Verfahren wird noch eine zusätzliche Eingabe benötigt, z.B. ein IV bei der Achterbahn-Chiffre). Anschließend werden beide Geheimtexte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Avalanche Visualization$" value="雪崩可视化" />
+    <replacement key="$Sender Key$" value="发射钥匙" />
+    <replacement key="$Plaintext$" value="纯文本" />
+    <replacement key="$String Decoder$" value="字符串解码器" />
+    <replacement key="$Generated Data$" value="产生的数据" />
+    <replacement key="$Memo$" value="此模板说明了现代加密方法中的雪崩效应\Line \line在“开始”之后，将显示条目产生的密文。如果现在更改条目，您将收到一个相应的新密文（在这种情况下，该条目包括纯文本和发送器密钥。使用其他方法，还需要一个附加的条目，例如过山车密码的IV）。然后比较两个密文的雪崩效应。除了雪崩效应的值外，还可以在演示文稿中找到其他相关的统计数据。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Avalanche Visualization$" value="Avalanche визуализация" />

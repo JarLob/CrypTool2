@@ -1,13 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">RC2 Cipher</title>
+  <title lang="zh">RC2密码</title>
   <title lang="ru">RC2 Cipher</title>
   <summary lang="en">Usage of the <i>RC2</i> cipher</summary>
+  <summary lang="zh">RC2密码的用法</summary>
   <summary lang="ru">Использование шифрования RC2</summary>
   <description lang="en">In cryptography, RC2 is a block cipher designed by Ron Rivest in 1987. "RC" stands for "Ron's Code" or "Rivest Cipher"; other ciphers designed by Rivest include RC4, RC5 and RC6.<newline /><newline />
 Source: <external ref="http://en.wikipedia.org/wiki/RC2" /></description>
+  <description lang="zh">在密码学中，RC2是由Ron Rivest在1987年设计的分组密码。“ RC”代表“ Ron&amp;#39;s Code”或“ Rivest Cipher”。 Rivest设计的其他密码包括RC4，RC5和RC6。资源：</description>
   <description lang="ru">В криптографии RC2 является блочным шифром, разработанным Рон Ривестом в 1987 году. «RC» означает «Ron&amp;#39;s Code» или «Rivest Cipher»; другие шифры, разработанные фирмой Rivest, включают RC4, RC5 и RC6. Источник:</description>
   <keywords>Rivest, Ron, block, symmetric</keywords>
+  <keywords lang="zh">Rivest，Ron，块，对称</keywords>
   <keywords lang="ru">Ривест, Рон, блок, симметричный</keywords>
   <title lang="de">RC2-Chiffre</title>
   <summary lang="de">Benutzung der <i>RC2</i>-Chiffre</summary>
@@ -28,6 +32,17 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RC2_%28Verschl%C3%BCsselungs
     <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
     <replacement key="$text$" value="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern." />
     <replacement key="$memo$" value="Mit dieser Komponente können Sie einen beliebigen Text, der in die Komponente {\b Klartext} auf der linken Seite eingegeben werden muss, mit der {\b RC2}-Komponente verschlüsseln. Der resultierende verschlüsselte Text wird in der Komponente {\b Geheimtext} auf der rechten Seite angezeigt, nachdem die Vorlage durch Klicken der &quot;Starten&quot;-Schaltfläche ausgeführt wurde. Die {\b RC2}-Komponente arbeitet mit binären Werten, d.h. Bytes. Daher wird der eingegebene Text zuerst mit der Komponente {\b Nachrichten-Decodierer} in Bytes konvertiert. Mit den gegebenen Einstellungen wird der Text im ASCII-Format interpretiert. Die so erhaltenen Bytes werden mit {\b RC2} verschlüsselt und man erhält eine weitere Bytefolge. Diese wird dann mit Hilfe der {\b Nachrichten-Codierer}-Komponente ins hexadezimale Format konvertiert und ausgegeben. Diese Vorlage kann auch zur Entschlüsselung von Nachrichten verwendet werden. Dazu müssen zuerst die verschlüsselten hexadezimalen Werte in die Komponente {\b Klartext} kopiert werden. Dann müssen folgende Anpassungen vorgenommen werden: (1) Das Eingabeformat in der Komponente {\b Nachrichten-Decodierer} muss auf &quot;Hexadezimal&quot; gesetzt werden; (2) In der {\b RC2}-Komponente muss die Aktion auf &quot;Entschlüsselung&quot; gesetzt werden; (3) Das Format in der Komponente {\b Nachrichten-Codierer} muss auf Text und die Kodierung auf &quot;ASCII&quot; gesetzt werden." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Plaintext$" value="纯文本" />
+    <replacement key="$Ciphertext$" value="密文" />
+    <replacement key="$Key$" value="密钥（十六进制）" />
+    <replacement key="$Message Encoder$" value="讯息编码器" />
+    <replacement key="$Message Decoder$" value="讯息解码器" />
+    <replacement key="$Key Decoder$" value="密钥解码器" />
+    <replacement key="$Decrypted Ciphertext$" value="解密密文" />
+    <replacement key="$text$" value="弗朗兹（Franz）乘坐一辆完全残破的出租车在巴伐利亚州内搜寻。" />
+    <replacement key="$memo$" value="使用此组件，您可以使用{\b RC2}组件加密必须在左侧的{\b Klartext}组件中输入的任何文本。在通过单击“开始”按钮执行模板之后，生成的加密文本将显示在右侧的{\b密文}组件中。 {\b RC2}组件使用二进制值，即字节。因此，首先使用组件{\b Message Decoder}将输入的文本转换为字节。使用给定的设置，文本将以ASCII格式解释。以这种方式获得的字节用{\b RC2}加密，您将获得另一个字节序列。然后将其转换为十六进制格式，并在{\b消息编码器}组件的帮助下输出。该模板也可以用于解密消息。为此，必须首先将加密的十六进制值复制到{\b Klartext}组件中。然后必须进行以下调整：（1）组件{\b消息解码器}中的输入格式必须设置为“十六进制”； （2）在{\b RC2}组件中，必须将操作设置为“解密”； （3）必须将组件{\b Message Encoder}中的格式设置为文本，并将编码设置为“ ASCII”。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />

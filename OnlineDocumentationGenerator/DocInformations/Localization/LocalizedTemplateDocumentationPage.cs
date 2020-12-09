@@ -7,6 +7,7 @@ using System.Linq;
 using System.Xml.Linq;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator.DocInformations.Localization
 {
@@ -86,7 +87,7 @@ namespace OnlineDocumentationGenerator.DocInformations.Localization
             _xml = templateDocumentationPage.TemplateXML;
             _filePath = OnlineHelp.GetTemplateDocFilename(Path.Combine(templateDocumentationPage.RelativeTemplateDirectory, Path.GetFileName(templateDocumentationPage.TemplateFile)), lang);
 
-            var cultureInfo = new CultureInfo(lang);
+            CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 

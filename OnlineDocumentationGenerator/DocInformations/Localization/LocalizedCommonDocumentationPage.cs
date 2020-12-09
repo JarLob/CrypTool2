@@ -4,6 +4,7 @@ using System.Threading;
 using System.Xml.Linq;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator.DocInformations.Localization
 {
@@ -20,7 +21,7 @@ namespace OnlineDocumentationGenerator.DocInformations.Localization
 
         public LocalizedCommonDocumentationPage(CommonDocumentationPage commonDocumentationPage, XElement xml, string lang)
         {
-            var cultureInfo = new CultureInfo(lang);
+            CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 

@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">ADFGVX Dictionary Attack</title>
+  <title lang="zh">ADFGVX词典攻击</title>
   <title lang="ru">ADFGVX словарная атака</title>
   <summary lang="en">Attack on the <i>ADFGVX</i> cipher</summary>
+  <summary lang="zh">攻击ADFGVX密码</summary>
   <summary lang="ru">Атака на шифр <i>ADFGVX</i></summary>
   <description lang="en">This template shows how a dictionary attack can be implemented and carried out in CrypTool 2 using a dictionary and the ADFGVX cipher.<newline /><newline />The result of this template is the ciphertext that was encrypted with the ADFGVX cipher, but with the transposition undone. In order to get the actual plaintext from this text, it has to be decrypted with another ADFGVX component, that uses the same substitution password and as transposition the identical permutation. The identical transposition is achieved by using "A" as transposition password.</description>
+  <description lang="zh">该模板显示了如何使用字典和ADFGVX密码在CrypTool 2中实施和实施字典攻击。此模板的结果是使用ADFGVX密码加密但未进行转置的密文。为了从该文本中获取实际的纯文本，必须使用另一个ADFGVX组件对其进行解密，该组件使用相同的替换密码并转置相同的排列。通过使用“ A”作为换位密码可以实现相同的换位。</description>
   <description lang="ru">Этот шаблон показывает, как атака словаря может быть реализована и реализована в CrypTool 2 с использованием словаря и шифрования ADFGVX. Результатом этого шаблона является зашифрованный текст, который был зашифрован с помощью шифрования ADFGVX, но с отменой переноса. Чтобы получить фактический текст из этого текста, он должен быть расшифрован другим компонентом ADFGVX, который использует один и тот же пароль подстановки и как транспонирование идентичную перестановку. Точная транспозиция достигается с помощью «А» в качестве пароля перестановки.</description>
   <keywords>ADFGX, World War, Telegraphy, Polybius, Square, Column, Row, Polybios, Dictionary, Attack, Analysis</keywords>
+  <keywords lang="zh">ADFGX，世界大战，电报，波利比乌斯，广场，列，行，Polybios，字典，攻击，分析</keywords>
   <keywords lang="ru">ADFGX, мировая война, телеграфия, полибий, площадь, колонка, ряд, полибиос, словарь, атака, анализ</keywords>
   <title lang="de">Wörterbuchangriff auf die ADFGVX-Chiffre</title>
   <summary lang="de">Angriff auf die <i>ADFGVX</i>-Chiffre mit Hilfe eines Wörterbuchs</summary>
@@ -36,6 +40,25 @@
     <replacement key="$Generate Output$" value="Generiere Ausgabe" />
     <replacement key="$Check transposition$" value="Teste Transposition\line\line Diese Vorlage zeigt, wie eine ADFGVX-Chiffre mit einem Wörterbuchangriff attackiert werden kann. Der gegebene Text wird mit ADFGVX verschlüsselt. Eingestellt ist als Substitutionspasswort &quot;ABC&quot; und somit die identische Substitution, und als Transpositionspasswort &quot;accordingly&quot;. Für jeden Eintrag des Wörterbuches wird dann mit einer normalen Spaltentransposition die Transposition rückgängig gemacht, und die Kostenfunktion berechnet für das Resultat den auf Buchstabenpaaren basierenden Koinzidenzindex. Dies ist möglich, da der &quot;verschlüsselte&quot; Text eine monoalphabetische Substitution ist, die denselben Koinzidenzindex wie der Klartext hat. Der Text ist immer noch verschlüsselt und kann nicht gelesen werden, aber die Transposition wurde entfernt.\line\line In der Bestenliste werden alle Schlüssel aufgelistet, für die der Koinzidenzindex über dem Schwellenwert 0,05 liegt. Der Schwellenwert ist so gewählt, da der Koinzidenzindex für zufällige Zeichenfolgen 1/26 (also etwa 0,038) beträgt. Ein Wert über 0,05 deutet dagegen auf einen sinnvollen Text hin." />
     <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#xD;&#xA;&#xD;&#xA;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#xD;&#xA;&#xD;&#xA;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#xD;&#xA;&#xD;&#xA;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#xD;&#xA;&#xD;&#xA;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher" />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Plaintext$" value="纯文本" />
+    <replacement key="$Output (Bestlist)$" value="版（排行榜）" />
+    <replacement key="$Converter$" value="转换器" />
+    <replacement key="$Dictionary$" value="字典" />
+    <replacement key="$Concat$" value="康卡特尼尔" />
+    <replacement key="$Cost function$" value="成本函数" />
+    <replacement key="$Actual value$" value="当前值" />
+    <replacement key="$Threshold$" value="阈" />
+    <replacement key="$CoincidenceGate$" value="巧合门" />
+    <replacement key="$KeyGate$" value="钥匙门" />
+    <replacement key="$TextGate$" value="文字门" />
+    <replacement key="$Gate$" value="门" />
+    <replacement key="$infinity$" value="无限的" />
+    <replacement key="$Iterate Dictionary$" value="翻阅字典" />
+    <replacement key="$Generate Output$" value="产生输出" />
+    <replacement key="$Check transposition$" value="Test Transposition \line \line此模板显示如何使用字典攻击来攻击ADFGVX密码。给定的文本已使用ADFGVX加密。替换密码设置为“ ABC”，因此设置为相同的替换，而换位密码设置为“相应”。对于字典中的每个条目，然后使用普通的列转置来反转转置，并且cost函数基于字母对计算出结果的重合指数。这是可能的，因为“加密”文本是单字母替换，具有与纯文本相同的重合索引。文本仍是加密的，无法读取，但是移调已被删除\Line \line最佳列表列出了所有符合指数高于阈值0.05的键。选择该阈值，以使随机字符串的重合指数为1/26（即约0.038）。另一方面，高于0.05的值表示有意义的文本。" />
+    <replacement key="$message$" value="在密码术中，ADFGVX密码是第一次世界大战期间德国军队在西线使用的现场密码。ADFGVX实际上是早期密码ADFGX的扩展。该密码由上校弗里兹·内贝尔（Fritz Nebel）发明并于1918年3月推出，是一种分馏转位密码，它结合了经过修改的Polybius正方形和单个柱状转位。该密码以密文中使用的六个可能的字母命名：A，D，F，G，V和X。这些字母是故意选择的，因为它们在通过莫尔斯电码传输时听起来彼此非常不同。目的是减少操作员错误的可能性。 Nebel设计了该密码，以便为行军提供加密，比沟槽代码更方便，但仍然安全。实际上，德国人认为ADFGVX密码坚不可摧。资料来源：http://en.wikipedia.org/wiki/ADFGVX_cipher" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />

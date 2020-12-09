@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Dictionary Attack on the Double Columnar Transposition Cipher</title>
+  <title lang="zh">双列换位密码的字典攻击</title>
   <title lang="ru">Атака словаря на двойном столбце Transposition Cipher</title>
   <summary lang="en">Usage of the <i>IDP Analyzer</i></summary>
+  <summary lang="zh">IDP分析仪的用法</summary>
   <summary lang="ru">Использование анализатора IDP</summary>
   <description lang="en">This template shows a dictionary attack on the double columnar transposition cipher using the <i>IDP Analysis</i> component.</description>
+  <description lang="zh">该模板显示了使用IDP Analysis组件对双列换位密码的字典攻击。</description>
   <description lang="ru">Этот шаблон показывает атаку словаря на двойной столбчатый транспозиционный шифр с использованием компонента анализа IDP.</description>
   <keywords>IDP,double,columnar,transposition,dct,index,digraphic,potential,dictionary,keyphrase,keyword</keywords>
+  <keywords lang="zh">IDP，双，列，换位，dct，索引，图，电位，字典，关键字，关键字</keywords>
   <keywords lang="ru">IDP, двойной, столбчатый, транспозиция, DCT, индекс, digraphic, потенциал, словарь, ключевая фраза, ключевое слово</keywords>
   <title lang="de">Wörterbuchangriff auf die doppelte Spaltentransposition</title>
   <summary lang="de">Benutzung der <i>IDP-Analyse</i></summary>
@@ -30,6 +34,20 @@
     <replacement key="$Intermediate Ciphertext$" value="Zwischen-Geheimtext" />
     <replacement key="$memo1$" value="Diese Vorlage demonstriert einen neuen Angriff auf einen Geheimtext, der mit der {\b doppelten Spaltentransposition (engl. double columnar transposition (DCT)} verschlüsselt wurde. Der Angriff verwendet den {\b IDP (Index of digraphic potential)} und wurde 2013 von {\b George Lasry} entwickelt, als er erfolgreich die bekannte DCT-Challenge von {\b Klaus Schmeh} löste.\line\line Eine DCT besteht aus zwei {\b einfachen Spaltentranspositionen (engl. single-columnar transpositions (SCT)}, wobei jede einen eigenen Schlüssel verwendet. Der Erfolg der IDP-Methode beruht darauf, dass sie einschätzen kann, wie gut der zweite Schlüssel ist, ohne den ersten Schlüssel zu kennen. Durch Berechnung der IDP-Werte für alle Schlüsselphrasen eines Wörterbuches kann die IDP-Analyse-Komponente vielversprechende Kandidaten erkennen. Sie macht dann die zweite SCT mit diesem Schlüsselkandidaten rückgängig und generiert einen Zwischen-Geheimtext, der folglich nur noch einen SCT-verschlüsselten Geheimtext darstellt und in einem zweiten Schritt mit einem klassischen Hill-Climbing-Algorithmus gelöst werden kann." />
     <replacement key="$memo2$" value="Wenn Sie eigene Geheimtexte analysieren wollen und die IDP-Analyse-Komponente nicht die korrekte Schlüsselphrase in den mitgelieferten Wörterbüchern findet, sollten Sie andere Wörterbücher testen. Unter dem folgenden Link finden Sie weitere Wörterbücher: {\b http://www.ngrams.info/download_coca.asp}" />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Ciphertext$" value="密文" />
+    <replacement key="$Decrypted Ciphertext$" value="解密密文" />
+    <replacement key="$String Encoder$" value="Stringkodierer" />
+    <replacement key="$Dictionary$" value="字典" />
+    <replacement key="$Replace$" value="更换" />
+    <replacement key="$Split$" value="分离" />
+    <replacement key="$Split Chars$" value="定界符" />
+    <replacement key="$Step 1$" value="步骤1：IDP分析" />
+    <replacement key="$Step 2$" value="步骤2：单列换位分析" />
+    <replacement key="$Intermediate Ciphertext$" value="中间密文" />
+    <replacement key="$memo1$" value="该模板演示了对使用{\b双列换位（DCT）}加密的密文的新攻击，该攻击使用{\b IDP（双位图的索引）}，于2013年由{\b George Lasry}在成功解决{\b Klaus Schmeh}的著名DCT挑战时得到发展\line \line DCT由两个{\b单列换位（SCT）}组成，每个使用自己的密钥.IDP方法的成功取决于其在不知道第一个密钥的情况下估计第二个密钥的能力。通过计算字典中所有关键短语的IDP值，IDP -分析组件识别出有前途的候选者，然后使用该关键候选者反转第二个SCT并生成中间密文，因此该中间密文仅是SCT加密的密文ellt并且可以使用经典的爬坡算法在第二步中解决。" />
+    <replacement key="$memo2$" value="如果要分析自己的密文，而IDP分析组件在提供的词典中找不到正确的关键词，则应测试其他词典。您可以在以下链接下找到更多词典：{\b http://www.ngrams.info/download_coca.asp}" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />

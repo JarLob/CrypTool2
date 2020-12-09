@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">CRC Null Problems</title>
+  <title lang="zh">CRC空问题</title>
   <title lang="ru">CRC Нулевые проблемы</title>
   <summary lang="en">Problems with null values in the <i>CRC</i> checksum function</summary>
+  <summary lang="zh">CRC校验和函数中的空值问题</summary>
   <summary lang="ru">Проблемы с нулевыми значениями в хэш-функции CRC</summary>
   <description lang="en">In some configurations of the <i>CRC</i> algorithm prepending or appending zero bytes to the input data will cause no change in the CRC value.</description>
+  <description lang="zh">在CRC算法的某些配置中，在输入数据之前或之后添加零字节将不会导致CRC值发生变化。</description>
   <description lang="ru">В некоторых конфигурациях алгоритма CRC, добавляя или добавляя нулевые байты к входным данным, не будет изменяться значение CRC.</description>
   <keywords>hash</keywords>
+  <keywords lang="zh">杂凑</keywords>
   <keywords lang="ru">гашиш</keywords>
   <title lang="de">CRC Nullprobleme</title>
   <summary lang="de">Probleme mit Nullbytes bei <i>CRC</i></summary>
@@ -28,6 +32,18 @@
     <replacement key="$Concatenate$" value="Konkatenation" />
     <replacement key="$memo1$" value="Das Anhängen eines oder mehrerer Nullbytes an einen Datenblock, der mit einem korrekten CRC-Wert versehen ist, wird den CRC-Wert nicht verändern." />
     <replacement key="$memo2$" value="Wenn der Startwert der ausgewählten CRC-Methode Null ist, haben führende Nullbytes in den Eingbedaten keine Auswirkung auf den sich ergebenden CRC-Wert." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Input$" value="输入" />
+    <replacement key="$Input with correct CRC check value$" value="输入正确的CRC值" />
+    <replacement key="$Zero bytes suffix$" value="零字节后缀" />
+    <replacement key="$Zero bytes prefix$" value="零字节前缀" />
+    <replacement key="$CRC value (hexadecimal)$" value="CRC值（十六进制）" />
+    <replacement key="$String Decoder$" value="字符串编码器" />
+    <replacement key="$String Encoder$" value="字符串解码器" />
+    <replacement key="$Concatenate$" value="Konkatenation" />
+    <replacement key="$memo1$" value="将一个或多个零字节添加到已提供正确CRC值的数据块不会更改CRC值。" />
+    <replacement key="$memo2$" value="如果所选CRC方法的起始值为零，则输入数据中的前导零字节对所得的CRC值没有影响。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Input$" value="вход" />

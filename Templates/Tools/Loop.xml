@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Loop</title>
+  <title lang="zh">循环</title>
   <title lang="ru">Петля</title>
   <summary lang="en">How to build loops in CrypTool 2</summary>
+  <summary lang="zh">如何在CrypTool 2中构建循环</summary>
   <summary lang="ru">Как создать петли в CrypTool 2</summary>
   <description lang="en">This template shows how to build loops in CrypTool 2.</description>
+  <description lang="zh">该模板显示了如何在CrypTool 2中构建循环。</description>
   <description lang="ru">Этот шаблон показывает, как создавать циклы в CrypTool 2.</description>
   <keywords>loop</keywords>
+  <keywords lang="zh">循环</keywords>
   <keywords lang="ru">петля</keywords>
   <title lang="de">Schleife</title>
   <summary lang="de">Wie baut man Schleifen in CrypTool 2</summary>
@@ -24,6 +28,14 @@
     <replacement key="$Comparator$" value="Vergleicher" />
     <replacement key="$Counter Output$" value="Ausgabe des Zählers" />
     <replacement key="$memo$" value="Die Schleife wird mit dem &quot;Startwert&quot; initialisiert. Der Zähler endet, wenn der &quot;Stopwert&quot; erreicht wurde.\line Die IncDec-Komponente wird nach Erreichen des Stopwertes durch das Gatter blockiert, indem der Zählerwert nicht weitergegeben wird. Dadurch wird keine weitere CPU-Zeit durch die IncDec-Komponente verbraucht." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Initial Value$" value="起始值" />
+    <replacement key="$Stop Value$" value="Stopwert" />
+    <replacement key="$Gate$" value="门" />
+    <replacement key="$Comparator$" value="比较器" />
+    <replacement key="$Counter Output$" value="计数器输出" />
+    <replacement key="$memo$" value="循环使用“起始值”初始化。到达“停止值”时，计数器结束\线到达停止值后，IncDec组件被门封锁，因为计数器值未传递。这意味着IncDec组件不再使用更多的CPU时间。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Initial Value$" value="начальное значение" />

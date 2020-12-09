@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">CBC-Attack</title>
+  <title lang="zh">CBC攻击</title>
   <title lang="ru">CBC-атака</title>
   <summary lang="en">This template shows an attack on the cipher block chaining (CBC) mode of block ciphers.</summary>
+  <summary lang="zh">该模板显示了对分组密码的密码块链接（CBC）模式的攻击。</summary>
   <summary lang="ru">Этот шаблон показывает атаку на режим блокировки блока шифрования (CBC) блочных шифров.</summary>
   <description lang="en">This template shows an attack on the cipher block chaining (CBC) mode of block ciphers. Blocks are replaced by arbitrary content.</description>
+  <description lang="zh">该模板显示了对分组密码的密码块链接（CBC）模式的攻击。块被任意内容替换。</description>
   <description lang="ru">Этот шаблон показывает атаку на режим блокировки блока шифрования (CBC) блочных шифров. Блоки заменяются произвольным контентом.</description>
   <keywords>Cipher Block Chaining, Attack, Mode, Analysis</keywords>
+  <keywords lang="zh">密码块链接，攻击，模式，分析</keywords>
   <keywords lang="ru">Цепочка блоков шифрования, атака, режим, анализ</keywords>
   <title lang="de">CBC-Angriff</title>
   <summary lang="de">Diese Vorlage zeigt einen Angriff auf den Cipher Block Chaining (CBC) Modus von Blockchiffren.</summary>
@@ -30,6 +34,20 @@
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
     <replacement key="$Modify Ciphertext Array$" value="Array für die Modifikation des Geheimtextes" />
     <replacement key="$memo$" value="Diese Vorlage zeigt einen Angriff auf den Cipher Block Chaining (CBC) Modus von Blockchiffren. Der Angreifer benötigt Zugriff auf den ursprünglichen Klartext und den Geheimtext.\line\line In diesem Beispiel wird der Klartext (eine Liste von Vornamen) mit AES im CBC-Modus verschlüsselt. Da CBC jeden Block durch die XOR-Operation mit dem vorherigen Geheimtextblock verknüpft, kann man leicht jeden zweiten Geheimtextblock so abändern, dass der darauffolgende Geheimtextblock entschlüsselt einen frei wählbaren Inhalt ergibt. Der entschlüsselte Inhalt des jeweils ersten Geheimtextblocks wird dabei natürlich zerstört. In diesem Beispiel werden im entschlüsselten Klartext vier Vornamen abgeändert und vier zerstört.\line\line Dieser Angriff kann praktisch gegen LUKS-Partitionen (Linux Unified Key Setup) eingesetzt werden. Weitere Informationen zu diesem Angriff sind auf dieser Seite verfügbar:\line http://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/" />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Ciphertext$" value="密文" />
+    <replacement key="$Plaintext$" value="纯文本" />
+    <replacement key="$Original Ciphertext$" value="原始密文" />
+    <replacement key="$Modified Ciphertext$" value="修改后的密文" />
+    <replacement key="$Modified Decrypted Plaintext$" value="修改后的解密明文" />
+    <replacement key="$Converter$" value="转换器" />
+    <replacement key="$String Encoder$" value="字符串编码器" />
+    <replacement key="$String Decoder$" value="字符串解码器" />
+    <replacement key="$Text Input$" value="密钥（十六进制）" />
+    <replacement key="$Revealed Plaintext$" value="解密的纯文本" />
+    <replacement key="$Modify Ciphertext Array$" value="用于修改密文的数组" />
+    <replacement key="$memo$" value="该模板显示了对分组密码的密码块链接（CBC）模式的攻击。攻击者需要访问原始的明文和密文\Line \line在此示例中，以CBC模式使用AES对明文（名字列表）进行加密。由于CBC使用XOR操作将每个块与上一个密文块链接在一起，因此您可以轻松地每隔一个密文块进行一次更改，以便解密后的下一个密文块可自由选择内容。当然，第一个密文块的解密内容被破坏了。在此示例中，在解密的纯文本中更改了四个名，并破坏了四个名\Line \line该攻击实际上可以用于LUKS分区（Linux统一密钥设置）。有关此攻击的更多信息，请访问以下页面：\line http://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />

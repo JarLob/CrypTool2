@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Simple Webserver</title>
+  <title lang="zh">简单的Web服务器</title>
   <title lang="ru">Простой веб-сервер</title>
   <summary lang="en">Creating a simple webserver</summary>
+  <summary lang="zh">创建一个简单的网络服务器</summary>
   <summary lang="ru">Создание простого веб-сервера</summary>
   <description lang="en">This template shows how to create a simple webserver.</description>
+  <description lang="zh">该模板显示了如何创建简单的Web服务器。</description>
   <description lang="ru">Этот шаблон показывает, как создать простой веб-сервер.</description>
   <keywords>smart card</keywords>
+  <keywords lang="zh">智能卡</keywords>
   <keywords lang="ru">интеллектуальная карточка</keywords>
   <title lang="de">Einfacher Webserver</title>
   <summary lang="de">Einfachen Webserver erstellen</summary>
@@ -31,6 +35,21 @@
     <replacement key="$String Encoder$" value="String-Kodierer" />
     <replacement key="$HTTP header$" value="HTTP-Header" />
     <replacement key="$memo$" value="\fs24 {\fs30\b Einfacher Webserver}\line Diese Vorlage demonstriert, wie man einen einfachen Webserver mit CrypTool 2 bauen kann.\line\line Die Vorlage empfängt Anfragen auf Port 81. Wenn Sie mit Ihrem Webbrowser auf\line {\fs28\b http://localhost:81/}\line gehen, antwortet dieser Server mit einer kleinen HTML-Seite, die das CT2-Logo zeigt.\line\line In &quot;Client-Anfrage&quot; wird die Anfrage des Browsers angezeigt, in &quot;Server-Antwort&quot; die Antwort des Webservers an den Client." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Network Sender$" value="网络发射器" />
+    <replacement key="$Network Receiver$" value="网络接收器" />
+    <replacement key="$Client request$" value="客户要求" />
+    <replacement key="$Server response$" value="服务器响应" />
+    <replacement key="$Length$" value="长" />
+    <replacement key="$Replace length$" value="更换长度" />
+    <replacement key="$Replace payload$" value="替换内容" />
+    <replacement key="$HTML page$" value="HTML页面" />
+    <replacement key="$Length placeholder$" value="占位符长度" />
+    <replacement key="$Payload placeholder$" value="占位符内容" />
+    <replacement key="$String Encoder$" value="字符串编码器" />
+    <replacement key="$HTTP header$" value="HTTP头" />
+    <replacement key="$memo$" value="\fs24 {\fs30 \b简单Web服务器} \line此模板演示如何使用CrypTool 2构建简单的Web服务器。\line \line该模板在端口81上接收请求。如果单击\line {\fs28 \b http：//本地主机：81 /} \行，此服务器以一个显示CT2徽标的HTML小页面作为响应。 “服务器响应”是从Web服务器到客户端的响应。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Network Sender$" value="Сетевой передатчик" />

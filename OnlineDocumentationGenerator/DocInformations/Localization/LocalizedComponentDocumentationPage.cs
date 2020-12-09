@@ -8,8 +8,6 @@ namespace OnlineDocumentationGenerator.DocInformations.Localization
 {
     public class LocalizedComponentDocumentationPage : LocalizedPluginDocumentationPage
     {
-        private readonly ComponentTemplateList _templates = new ComponentTemplateList();
-        
         public PropertyInfoAttribute[] Connectors {
             get { return DocumentationPage.Connectors; }
         }

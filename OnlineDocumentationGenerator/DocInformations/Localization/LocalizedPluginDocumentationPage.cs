@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Cryptool.PluginBase;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator.DocInformations.Localization
 {
@@ -47,15 +48,15 @@ namespace OnlineDocumentationGenerator.DocInformations.Localization
             get { return DocumentationPage.AuthorName; }
         }
 
-        protected LocalizedPluginDocumentationPage(PluginDocumentationPage editorDocumentationPage, Type pluginType, XElement xml, string lang, BitmapFrame icon)
+        protected LocalizedPluginDocumentationPage(PluginDocumentationPage pluginDocumentationPage, Type pluginType, XElement xml, string lang, BitmapFrame icon)
         {
-            base.DocumentationPage = editorDocumentationPage;
+            base.DocumentationPage = pluginDocumentationPage;
             PluginType = pluginType;
             _xml = xml;
             Lang = lang;
             Icon = icon;
 
-            var cultureInfo = new CultureInfo(lang);
+            CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 

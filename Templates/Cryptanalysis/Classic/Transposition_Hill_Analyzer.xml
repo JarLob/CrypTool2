@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Transposition Hill Climbing Analysis</title>
+  <title lang="zh">换位爬坡分析</title>
   <title lang="ru">Анализ пересадки холмов</title>
   <summary lang="en">Cryptanalysis of the <i>Transposition</i> cipher using a hill climbing algorithm</summary>
+  <summary lang="zh">使用爬山算法对换位密码进行密码分析</summary>
   <summary lang="ru">Криптоанализ шифрования Transposition с использованием алгоритма альпинизма</summary>
   <description lang="en">This template shows the cryptanalysis of the single <i>Transposition</i> cipher with the <i>Transposition Analyzer</i> using a hill climbing algorithm. It is a ciphertext-only attack, as no part of the plaintext is known in advance.</description>
+  <description lang="zh">该模板显示了使用“爬山”算法使用“转置分析器”对单个“转置密码”进行的密码分析。这是仅密文攻击，因为事先不知道明文的任何部分。</description>
   <description lang="ru">Этот шаблон показывает криптоанализ одиночного Transposition cipher с Transposition Analyzer с использованием алгоритма альпинизма. Это атака только с зашифрованным текстом, поскольку никакая часть открытого текста не известна заранее.</description>
   <keywords>Attack, Analysis, Transposition, Permutation</keywords>
+  <keywords lang="zh">攻击，分析，换位，排列</keywords>
   <keywords lang="ru">Атака, анализ, транспонирование, перестановка</keywords>
   <title lang="de">Transposition Hill-Climbing-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Transpositionsverschlüsselung</i> mit einem Hill-Climbing-Algorithmus</summary>
@@ -24,6 +28,13 @@
     <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse" />
     <replacement key="$Converter$" value="Konvertierer" />
     <replacement key="$memo$" value="Diese Vorlage zeigt die Kryptoanalyse eines Geheimtextes, der mit einer Spaltentransposition und einem Schlüssel der Länge 25 verschlüsselt wurde. Die Analyse verwendet einen Hill-Climbing-Algorithmus. Da dieser Ansatz nicht deterministisch ist, ist nicht garantiert, dass die Lösung (WHYHEWASSOANGRY...) gefunden wird. Starten Sie in diesem Fall die Vorlage einfach erneut.\line\line Der Geheimtext wurde der CC1-3-Challenge von MysteryTwister I entnommen, die noch viele weitere mit der Spaltentransposition verschlüsselte Geheimtexte enthält und die ebenfalls mit dieser Vorlage entschlüsselt werden können.\line\line Link: http://www.mysterytwisterc3.org/de/alte-mysterytwister-spiele/cc1-3" />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Ciphertext$" value="密文" />
+    <replacement key="$Revealed Plaintext$" value="解密的纯文本" />
+    <replacement key="$TranspositionAnalyser$" value="换位分析" />
+    <replacement key="$Converter$" value="转换器" />
+    <replacement key="$memo$" value="该模板显示了对密文的密码分析，密文使用列转置和长度为25的密钥加密。分析使用爬山算法。由于此方法不是确定性的，因此无法保证将找到解决方案（WHYHEWASSOANGRY ...）。在这种情况下，只需再次启动模板\Line \line密文来自MysteryTwister I的CC1-3挑战，其中包含许多其他通过列转置加密的密文，也可以使用此模板解密。 \线链接：http://www.mysterytwisterc3.org/de/alte-mysterytwister-spiele/cc1-3" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />

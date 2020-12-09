@@ -212,7 +212,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     if (startKeyDictionary.ContainsKey((string)ciphertextLabel.Content))
                     {
                         _plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Symbol = startKeyDictionary[(string)ciphertextLabel.Content];
-                        _plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Content = startKeyDictionary[(string)ciphertextLabel.Content];
+                        _plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Content = startKeyDictionary[(string)ciphertextLabel.Content];                        
 
                         var key = CipherAlphabetTextBox.Text;
                         var index = key.IndexOf(ciphertextLabel.Symbol);
@@ -227,6 +227,35 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
                 MarkLockedHomophones();
             }, null);            
+        }
+
+        /// <summary>
+        /// Replaces all unicode names in ciphertext labels content by the unicode char itself
+        /// </summary>
+        public void ReplaceCiphertextLabelsByUnicodeChars()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                foreach(var ciphertextLabel in _ciphertextLabels)
+                {
+                    if (ciphertextLabel == null)
+                    {
+                        continue;
+                    }
+                    
+                    //allow <space> syntax for DECRYPT documents
+                    if (((string)ciphertextLabel.Content).ToLower().Equals("<space>"))
+                    {
+                        ciphertextLabel.Content = "space";
+                    }
+
+                    long unicode = UnicodeHelper.GetIdByName((string)ciphertextLabel.Content);
+                    if(unicode != -1)
+                    {
+                        ciphertextLabel.Content = string.Format("{0}", (char)unicode);
+                    }                    
+                }                
+            }, null);
         }
 
         /// <summary>
@@ -358,12 +387,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         label.Symbol = "?";
                     }
                     _ciphertextLabels[x, y] = label;
-                    label.Width = 30  + (_originalCiphertextSymbols[offset].Length  - 1) * 5;
+                    label.Width = 30;//  + (_originalCiphertextSymbols[offset].Length  - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
                     //label.Content = text.Substring(offset, 1);
                     label.Content = _originalCiphertextSymbols[offset];
+                    label.ToolTip = _originalCiphertextSymbols[offset];
                     label.HorizontalAlignment = HorizontalAlignment.Center;
                     label.HorizontalContentAlignment = HorizontalAlignment.Center;
                     offset++;
@@ -438,12 +468,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         label.Symbol = "?";
                     }
                     _ciphertextLabels[x, y] = label;
-                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
+                    label.Width = 30;// + (_originalCiphertextSymbols[offset].Length - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
                     //label.Content = text.Substring(offset, 1);
                     label.Content = _originalCiphertextSymbols[offset];
+                    label.ToolTip = _originalCiphertextSymbols[offset];
                     label.HorizontalAlignment = HorizontalAlignment.Center;
                     label.HorizontalContentAlignment = HorizontalAlignment.Center;
                     offset++;
@@ -500,11 +531,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.Y = y;
                     label.SymbolOffset = offset;
                     label.Symbol = text.Substring(offset, 1);
-                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
+                    label.Width = 30;// + (_originalCiphertextSymbols[offset].Length - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
                     label.Content = text.Substring(offset, 1);
+                    label.ToolTip = _originalCiphertextSymbols[offset];
                     label.HorizontalAlignment = HorizontalAlignment.Center;
                     label.HorizontalContentAlignment = HorizontalAlignment.Center;
                     offset++;
@@ -576,7 +608,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.Y = y;
                     label.SymbolOffset = offset;
                     label.Symbol = text.Substring(offset, 1);
-                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
+                    label.Width = 30;// + (_originalCiphertextSymbols[offset].Length - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");

@@ -1,13 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">PURPLE Cipher Machine</title>
+  <title lang="zh">紫色密码机</title>
   <title lang="ru">PURPLE Cipher Machine</title>
   <summary lang="en">Usage of the <i>PURPLE</i> cipher machine</summary>
+  <summary lang="zh">紫色密码机的用法</summary>
   <summary lang="ru">Использование шифровальной машины PURPLE</summary>
   <description lang="en">This template shows the usage of the <i>PURPLE</i> cipher machine.<newline /><newline />
 Source: <external ref="http://en.wikipedia.org/wiki/Purple_(cipher_machine)" /></description>
+  <description lang="zh">该模板显示了PURPLE密码机的用法。资源：</description>
   <description lang="ru">Этот шаблон показывает использование шифровальной машины PURPLE. Источник:</description>
   <keywords>japan, angooki, angoki, machine, World War</keywords>
+  <keywords lang="zh">日本，angooki，angoki，机器，第二次世界大战</keywords>
   <keywords lang="ru">япония, ангуки, ангоки, машина, мировая война</keywords>
   <title lang="de">PURPLE-Chiffre</title>
   <summary lang="de">Benutzung der <i>PURPLE</i>-Chiffriermaschine</summary>
@@ -22,6 +26,11 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/PURPLE" /></description>
     <replacement key="$Ciphertext$" value="Geheimtext (der gleiche Text wie in der Vorlage links)" />
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
     <replacement key="$memo$" value="Diese Vorlage zeigt die Entschlüsselung der berühmten &quot;Nomura Note&quot;, die mit der japanischen Chiffriermaschine PURPLE verschlüsselt wurde. Sie wurde von Tokio an den japanischen Botschafter in den Vereinigten Staaten geschickt, einen Tag vor dem Angriff auf Pearl Harbor." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Ciphertext$" value="密文（与左侧模板中的文本相同）" />
+    <replacement key="$Revealed Plaintext$" value="解密的纯文本" />
+    <replacement key="$memo$" value="该模板显示了著名的“野村笔记”的解密，该解密是用日本密码机PURPLE加密的。它是在袭击珍珠港的前一天从东京寄给日本驻美国大使的。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="Ciphertext (тот же текст, что и в шаблоне слева)" />

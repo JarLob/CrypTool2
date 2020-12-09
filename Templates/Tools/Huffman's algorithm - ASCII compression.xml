@@ -1,15 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Huffman's Algorithm (ASCII)</title>
+  <title lang="zh">霍夫曼算法（ASCII）</title>
   <title lang="de">Huffman-Algorithmus (ASCII)</title>
   <title lang="ru">Алгоритм Хаффмана (ASCII)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress an ASCII encoded text</summary>
+  <summary lang="zh">使用Huffman压缩ASCII编码的文本</summary>
   <summary lang="de">Benutzung des <i>Huffman-Algorithmus</i> um ASCII-encodierten Text zu komprimieren.</summary>
   <summary lang="ru">Использование Хаффмана для сжатия ASCII-кодированного текста</summary>
   <description lang="en">This template shows how the <i>Huffman</i> component can be used to compress an ASCII encoded text.</description>
+  <description lang="zh">此模板显示了如何使用霍夫曼组件压缩ASCII编码的文本。</description>
   <description lang="de">Diese Vorlage zeigt, wie man die <i>Huffman</i>-Komponente benutzen kann, um ASCII-encodierten Text zu komprimieren.</description>
   <description lang="ru">Этот шаблон показывает, как компонент Huffman можно использовать для сжатия ASCII-кодированного текста.</description>
   <keywords lang="en">Huffman, ascii, compression</keywords>
+  <keywords lang="zh">霍夫曼，ASCII，压缩</keywords>
   <keywords lang="de">packen, komprimieren, zip, Kompression</keywords>
   <keywords lang="ru">Хаффман, ascii, сжатие</keywords>
   <icon file="Huffman.png" />
@@ -25,6 +29,16 @@
     <replacement key="$Decompressed text$" value="Dekomprimierter Text" />
     <replacement key="$memo1$" value="In diesem Beispiel wird ein ASCII-kodierter Text von 100.000 Bytes auf eine Größe von 54.546 Bytes mit einer Kompressionsrate von 45% komprimiert." />
     <replacement key="$memo2$" value="Die Code-Tabelle zeigt, dass häufiger vorkommende Zeichen kürzere Codeworte erhalten." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Uncompressed text$" value="未压缩的文字" />
+    <replacement key="$ASCII bytes$" value="ASCII字节" />
+    <replacement key="$Compress$" value="压缩" />
+    <replacement key="$Decompress$" value="Dekomprimiere" />
+    <replacement key="$ASCII string$" value="ASCII字符串" />
+    <replacement key="$Decompressed text$" value="解压后的文字" />
+    <replacement key="$memo1$" value="在此示例中，100,000字节的ASCII编码文本被压缩为54,546字节，压缩率为45％。" />
+    <replacement key="$memo2$" value="代码表显示，出现频率更高的字符具有较短的代码字。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Uncompressed text$" value="Несжатый текст" />

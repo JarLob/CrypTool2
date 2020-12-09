@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Wordpattern Analysis</title>
+  <title lang="zh">字型分析</title>
   <title lang="ru">Анализ Wordpattern</title>
   <summary lang="en">Usage of the <i>Wordpattern Analysis</i></summary>
+  <summary lang="zh">字型分析的用法</summary>
   <summary lang="ru">Использование анализа Wordpattern</summary>
   <description lang="en">This template shows the usage of the <i>Wordpattern Analysis</i>.</description>
+  <description lang="zh">此模板显示了字型分析的用法。</description>
   <description lang="ru">Этот шаблон показывает использование анализа Wordpattern.</description>
   <keywords>WordPatterns, Attack, Analysis</keywords>
+  <keywords lang="zh">字模式，攻击，分析</keywords>
   <keywords lang="ru">WordPatterns, Attack, Analysis</keywords>
   <title lang="de">Wortmusteranalyse</title>
   <summary lang="de">Benutzung der <i>Wortmusteranalyse</i></summary>
@@ -23,6 +27,13 @@
     <replacement key="$Dictionary$" value="Wörterbuch" />
     <replacement key="$Found patterns$" value="Gefundene Muster" />
     <replacement key="$memo$" value="Diese Vorlage demonstriert, wie mit der Wortmuster-Komponente Wörter gefunden werden können, die dasselbe Muster wie ein Eingabewort (Suchmuster) haben. In diesem Beispiel hat das Eingabewort TREE das Muster 1233, genauso wie die Worte ball, bass, bell etc.\line Wenn die Vorlage ausgeführt wird, wird die Wortliste von der Komponente geladen. Danach kann das Eingabewort interaktiv geändert werden, um neue Muster zu suchen, ohne dass die Wortliste neu geladen wird." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Search pattern$" value="搜索模式" />
+    <replacement key="$WordPatterns$" value="mus草" />
+    <replacement key="$Dictionary$" value="字典" />
+    <replacement key="$Found patterns$" value="找到图案" />
+    <replacement key="$memo$" value="该模板演示了如何使用单词模式组件来查找与输入单词（搜索模式）具有相同模式的单词。在此示例中，输入单词TREE具有模式1233，就像单词ball，bass，bell等。\line执行模板时，组件将加载单词列表。然后可以交互更改输入的单词，以搜索新的模式而无需重新加载单词列表。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Search pattern$" value="Suchmuster" />

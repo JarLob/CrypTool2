@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Hamming Distance</title>
+  <title lang="zh">汉明距离</title>
   <title lang="ru">Расстояние Хэмминга</title>
   <summary lang="en">Usage of the <i>Hamming Distance</i> components</summary>
+  <summary lang="zh">汉明距离组件的用法</summary>
   <summary lang="ru">Использование компонентов расстояния Хэмминга</summary>
   <description lang="en">This template shows the usage of the <i>Haming Distance</i> components.</description>
+  <description lang="zh">该模板显示了Haming Distance组件的用法。</description>
   <description lang="ru">Этот шаблон показывает использование компонентов Haming Distance.</description>
   <keywords>hamming distance, codewords, binary</keywords>
+  <keywords lang="zh">汉明距离，码字，二进制</keywords>
   <keywords lang="ru">расстояние от помех, кодовые слова, двоичные</keywords>
   <title lang="de">Hamming-Abstand</title>
   <summary lang="de">Benutzung der Komponente für die Berechnung des <i>Hamming-Abstands</i></summary>
@@ -22,6 +26,13 @@
     <replacement key="$Distance Value between CW1 and CW2$" value="Distanz zwischen CW1 und CW2" />
     <replacement key="$Distance Value between CW2 and CW3$" value="Distanz zwischen CW2 und CW3" />
     <replacement key="$memo$" value="Diese Vorlage demonstriert, wie man die Hamming-Distanz zwischen Codeworten in CrypTool 2 berechnen kann. Die Hamming-Distanz ist die Anzahl der Bits, in denen sich die beiden Codeworte unterscheiden.\line\line Codewort1 und Codewort2 sind unterschiedlich. Daher ist ihre Hamming-Distanz größer als 0.\line Codewort2 und Codewort3 sind gleich. Daher beträgt ihre Hamming-Distanz 0." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Codeword$" value="码字" />
+    <replacement key="$HammingDistance$" value="汉明距离" />
+    <replacement key="$Distance Value between CW1 and CW2$" value="CW1和CW2之间的距离" />
+    <replacement key="$Distance Value between CW2 and CW3$" value="CW2和CW3之间的距离" />
+    <replacement key="$memo$" value="该模板演示了如何计算CrypTool 2中代码字之间的汉明距离。汉明距离是两个代码字不同的位数\Line \line Codeword1和Codeword2不同。因此，它们的汉明距离大于0。\行Codeword2和Codeword3相等。因此，它们的汉明距离为0。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Codeword$" value="кодовое слово" />

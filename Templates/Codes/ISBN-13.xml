@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">ISBN-13 Check</title>
+  <title lang="zh">ISBN-13检查</title>
   <title lang="ru">Проверка ISBN-13</title>
   <summary lang="en">Checking an ISBN-13 number (International Standard Book Number)</summary>
+  <summary lang="zh">检查ISBN-13号（国际标准书号）</summary>
   <summary lang="ru">Проверка номера ISBN-13 (Международный стандартный номер книги)</summary>
   <description lang="en">This template shows the checking of an ISBN-13 number.</description>
+  <description lang="zh">该模板显示了对ISBN-13号的检查。</description>
   <description lang="ru">Этот шаблон показывает проверку номера ISBN-13.</description>
   <keywords>isbn, book, code, international standard book number</keywords>
+  <keywords lang="zh">isbn，书籍，代码，国际标准书籍编号</keywords>
   <keywords lang="ru">isbn, книга, код, международный стандартный номер книги</keywords>
   <title lang="de">ISBN-13 Überprüfung</title>
   <summary lang="de">Überprüfung einer ISBN-13 Nummer (Internationale Standardbuchnummer)</summary>
@@ -24,6 +28,14 @@
     <replacement key="$valid$" value="gültig" />
     <replacement key="$Comparator$" value="Vergleicher" />
     <replacement key="$memo$" value="Diese Vorlage zeigt, wie man eine ISBN-13 Nummer mit CrypTool 2 erstellen kann.\line\line ISBN-13 = { Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8, Z9, Z10, Z11, Z12, Z13},\line wobei Zn die Ziffer an der n-ten Position des Codes ist.\line\line {\b Die Überprüfung geschieht durch:}\line\line {\b 1)} Addition aller Ziffern an gerader Position:\line EVEN = Z2 + Z4 + Z6 + Z8 + Z10 + Z12\line\line {\b 2)} Addition aller Ziffern an ungerader Position:\line ODD = Z1 + Z3 + Z5 + Z7 + Z9 + Z11\line\line Berechnung\line CHECKSM = (3 * EVEN + ODD) MOD 10 \line\line {\b 4)} Überprüfung, ob CHECKSM == Z13\line\line Z13 ist die in der ISBN-Nummer enthaltene Prüfsumme.\line Wenn die berechnete Prüfsumme gleich Z13 ist, dann ist die ISBN-Nummer gültig.\line\line Diese Vorlage extrahiert zuerst alle Ziffern mit Zeichenketten-Operationen. Danach werden die Prüfsummen berechnet, und zuletzt wird diese mit der in der ISBN-Nummer angegebenen Prüfsumme verglichen." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$Substring$" value="子串" />
+    <replacement key="$Replace$" value="更换" />
+    <replacement key="$ISBN-13 code$" value="ISBN-13代码" />
+    <replacement key="$valid$" value="有效" />
+    <replacement key="$Comparator$" value="比较器" />
+    <replacement key="$memo$" value="此模板显示了如何使用CrypTool 2创建ISBN-13编号。\line \line ISBN-13 = {Z1，Z2，Z3，Z4，Z5，Z6，Z7，Z8，Z9，Z10，Z11，Z12， Z13}，\line，其中Zn是代码第n个位置的数字\Line \line {\b通过以下方式执行检查：} \line \line {\b 1）}将所有数字加到偶数位置：\行EVEN = Z2 + Z4 + Z6 + Z8 + Z10 + Z12 \line \line {\b 2）}在奇数位置加所有数字：\line ODD = Z1 + Z3 + Z5 + Z7 + Z9 + Z11 \line \line计算\行CHECKSM =（3 *偶数+奇数）MOD 10 \行\行{\b 4）}检查CHECKSM == Z13 \行\Z13行是否为ISBN编号中包含的校验和。计算得出的校验和为Z13，则ISBN编号有效\line \line此模板首先使用字符串操作提取所有数字。然后计算校验和，最后将其与ISBN号中指定的校验和进行比较。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Substring$" value="подстрока" />

@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Primes Generator</title>
+  <title lang="zh">素数发生器</title>
   <title lang="ru">Генератор простых чисел</title>
   <summary lang="en">Generating Prime Numbers</summary>
+  <summary lang="zh">生成素数</summary>
   <summary lang="ru">Создание первичных номеров</summary>
   <description lang="en">This template shows the usage of the <i>Primes Generator</i> in order to generate prime numbers of any size.</description>
+  <description lang="zh">此模板显示素数生成器的用法，以便生成任何大小的素数。</description>
   <description lang="ru">Этот шаблон показывает использование генератора Primes для генерации простых чисел любого размера.</description>
   <keywords>Prime, Generator</keywords>
+  <keywords lang="zh">发电机，发电机</keywords>
   <keywords lang="ru">Prime, Generator</keywords>
   <title lang="de">Primzahlgenerator</title>
   <summary lang="de">Erzeugen von Primzahlen (beliebiger Größe)</summary>
@@ -29,6 +33,20 @@
     <replacement key="$memo1$" value="Erzeuge eine zufällige Primzahl, die kleiner als die angegebene obere Grenze ist." />
     <replacement key="$memo2$" value="Erzeuge eine zufällige Primzahl mit der angegebenen Anzahl von Bits." />
     <replacement key="$memo3$" value="Erzeuge eine zufällige Primzahl, indem zuerst eine Zufallszahl erzeugt wird und dann die nächstgrößere Primzahl gesucht wird." />
+  </replacements>
+  <replacements lang="zh">
+    <replacement key="$UpperLimit$" value="上限" />
+    <replacement key="$NumberOfBits$" value="位数" />
+    <replacement key="$Number Input$" value="输入数字" />
+    <replacement key="$PrimeNumber$" value="素数" />
+    <replacement key="$PrimesGenerator$" value="质数发生器" />
+    <replacement key="$PrimeTest$" value="首要测试" />
+    <replacement key="$Is Prime?$" value="是素数？" />
+    <replacement key="$Converter$" value="转换器" />
+    <replacement key="$Random Generator$" value="随机发生器" />
+    <replacement key="$memo1$" value="生成小于指定上限的随机质数。" />
+    <replacement key="$memo2$" value="生成具有指定位数的随机素数。" />
+    <replacement key="$memo3$" value="首先生成一个随机数，然后找到下一个最大的质数，从而生成一个随机质数。" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$UpperLimit$" value="Верхний предел" />

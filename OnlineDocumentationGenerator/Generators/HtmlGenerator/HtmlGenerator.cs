@@ -13,6 +13,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using Ionic.Zip;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Localization;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 {
@@ -21,14 +22,8 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         private Type _typeToGenerate = null;
         private int _commonDocId = -1;
 
-        private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }, { "ru", "Русский" } };
-        private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }, { "ru", "ru.png" } };
-
-        private static readonly Dictionary<string, Dictionary<string, string>> _languagePresentation = new Dictionary<string, Dictionary<string, string>> {
-            { "en", new Dictionary<string, string> { { "Name", "English" }, { "Icon", "en.png" } } },
-            { "de", new Dictionary<string, string> { { "Name", "Deutsch" }, { "Icon", "de.png" } } },
-            { "ru", new Dictionary<string, string> { { "Name", "Русский" }, { "Icon", "ru.png" } } }
-        };
+        private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }, { "ru", "Русский" }, { "zh", "中文" } };
+        private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }, { "ru", "ru.png" }, { "zh", "zh.png" }, { "zh-CN", "zh.png" } };
         
         private ObjectConverter _objectConverter;
         private TemplateDirectory _templatesDir;
@@ -78,7 +73,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             foreach (var lang in AvailableLanguages)
             {
-                var cultureInfo = new CultureInfo(lang);
+                CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -101,7 +96,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             foreach (var lang in AvailableLanguages)
             {
-                var cultureInfo = new CultureInfo(lang);
+                CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -123,7 +118,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             foreach (var lang in AvailableLanguages)
             {
-                var cultureInfo = new CultureInfo(lang);
+                CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -143,7 +138,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             foreach (var lang in AvailableLanguages)
             {
-                var cultureInfo = new CultureInfo(lang);
+                CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -460,7 +455,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                     {
                         var localizedEntityDocumentationPage = documentationPage.Localizations[lang];
 
-                        var cultureInfo = new CultureInfo(lang);
+                        CultureInfo cultureInfo = CultureInfoHelper.GetCultureInfo(lang);
                         Thread.CurrentThread.CurrentCulture = cultureInfo;
                         Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
