@@ -37,9 +37,7 @@ namespace Cryptool.VigenereAnalyzer
     "PluginCaption", "PluginTooltip", "", "VigenereAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class VigenereAnalyzer : ICrypComponent
-    {
-        
-        
+    {                
         private const int MaxBestListEntries = 100;
         private readonly AssignmentPresentation _presentation = new AssignmentPresentation();
         private string _plaintext;
@@ -145,7 +143,13 @@ namespace Cryptool.VigenereAnalyzer
             }
             if (string.IsNullOrEmpty(VigenereAlphabet))
             {
-                GuiLogMessage("No Vigenere Alphabet given for analysis!", NotificationLevel.Error);
+                GuiLogMessage("No Vigenère Alphabet given for analysis!", NotificationLevel.Error);
+                return;
+            }
+
+            if(VigenereAlphabet.Length != Alphabet.Length)
+            {
+                GuiLogMessage(string.Format("The Vigenère Analyzer only supports alphabets of length 26"), NotificationLevel.Error);
                 return;
             }
 
