@@ -1508,17 +1508,17 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             {
                                 default:
                                 case 5:
-                                    PentaGrams pentaGrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    Pentagrams pentaGrams = new Pentagrams(LanguageStatistics.LanguageCode(language), useSpaces);
                                     NGramCache.Add(key, pentaGrams);
                                     loaded = true;
                                     break;
                                 case 4:
-                                    QuadGrams quadGrams = new QuadGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    Tetragrams quadGrams = new Tetragrams(LanguageStatistics.LanguageCode(language), useSpaces);
                                     NGramCache.Add(key, quadGrams);
                                     loaded = true;
                                     break;
                                 case 3:
-                                    TriGrams triGrams = new TriGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    Trigrams triGrams = new Trigrams(LanguageStatistics.LanguageCode(language), useSpaces);
                                     NGramCache.Add(key, triGrams);
                                     loaded = true;
                                     break;                                                                    

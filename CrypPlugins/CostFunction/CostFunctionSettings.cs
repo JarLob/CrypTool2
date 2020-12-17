@@ -1,5 +1,5 @@
 ﻿/*                              
-   Copyright 2009 Team CrypTool (Sven Rech,Dennis Nolte,Raoul Falk,Nils Kopal), Uni Duisburg-Essen
+   Copyright 2020 Team CrypTool (Nils Kopal, Sven Rech)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,23 +19,40 @@ using System.Text;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace Cryptool.Plugins.CostFunction
 {
     public class CostFunctionSettings : ISettings
     {
-        public enum FunctionTypes { IOC = 0, Entropy, NgramsLog2, NgramsSinkov, NGramsPercentage, Regex, Weighted };
+        public enum CostFunctionType 
+        { 
+            IOC = 0, 
+            Entropy = 1, 
+            NGramsLog2 = 2, 
+            RegEx = 3 
+        };
 
         #region private variables
 
-        private FunctionTypes functionType = FunctionTypes.NgramsLog2;
-        private String bytesToUse = "256";        
-        private int bytesToUseInteger = 256;
-        private int blocksize = 2;
-        private String bytesOffset = "0";
+        private CostFunctionType functionType = CostFunctionType.Entropy;
+
+        //for all
+        private string bytesToUse = "256";        
+        private int bytesToUseInteger = 256;                        
+        private string bytesOffset = "0";
         private int bytesOffsetInteger;
 
+        //for IOC and entropy
+        private int blocksize = 1;
+
+        //for ngrams
+        private int language;
+        private int ngramSize;
+        private bool useSpaces = false;
+
+        //for regex
+        private string regExText;
+        private bool caseInsensitive;
         #endregion
 
         public void Initialize()
@@ -43,17 +60,20 @@ namespace Cryptool.Plugins.CostFunction
             UpdateTaskPaneVisibility();
         }
 
-        [TaskPane("FunctionTypeCaption", "FunctionTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] { "FunctionTypeList1", "FunctionTypeList2", "FunctionTypeList3", "FunctionTypeList4", "FunctionTypeList5", "FunctionTypeList6", "FunctionTypeList7" })]
-        public int FunctionType
+        [TaskPane("FunctionTypeCaption", "FunctionTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] { "IOC", "Entropy", "NGramsLog2", "RegEx" })]
+        public CostFunctionType FunctionType
         {
-            get { return (int)this.functionType; }
+            get 
+            { 
+                return functionType; 
+            }
             set
             {
-                this.functionType = (FunctionTypes)value;
+                functionType = value;
                 UpdateTaskPaneVisibility();
                 OnPropertyChanged("FunctionType");
             }
-        }
+        }      
 
         [TaskPane("BlocksizeCaption", "BlocksizeTooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10)]
         public int BlockSize
@@ -69,22 +89,8 @@ namespace Cryptool.Plugins.CostFunction
             }
         }
 
-        [TaskPane("NgramSizeCaption", "NgramSizeTooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10)]
-        public int NgramSize
-        {
-            get
-            {
-                return blocksize;
-            }
-            set
-            {
-                blocksize = value;
-                OnPropertyChanged("NgramSize");
-            }
-        }
-
         [TaskPane( "BytesToUseCaption", "BytesToUseTooltip", null, 3, false, ControlType.TextBox)]
-        public String BytesToUse
+        public string BytesToUse
         {
             get
             {
@@ -109,13 +115,8 @@ namespace Cryptool.Plugins.CostFunction
             get { return bytesToUseInteger; }
         }
 
-        //public int BlocksizeToUseInteger
-        //{
-        //    get { return blocksizeInteger; }
-        //}
-
         [TaskPane("BytesOffsetCaption", "BytesOffsetTooltip", null, 4, false, ControlType.TextBox)]
-        public String BytesOffset
+        public string BytesOffset
         {
             get
             {
@@ -137,47 +138,60 @@ namespace Cryptool.Plugins.CostFunction
             }
         }
 
-
-        public string customFilePath;
-        private int statisticscorpus = 0;
-
-        [TaskPane("StatisticsCorpusCaption", "StatisticsCorpusTooltip", null, 5, false, ControlType.ComboBox, new string[] { "StatisticsCorpusList1", "StatisticsCorpusList2", "StatisticsCorpusList3" })]
-        public int StatisticsCorpus
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 5, false, ControlType.LanguageSelector)]
+        public int Language
         {
             get
             {
-              return statisticscorpus;
+                return language;
             }
-
             set
             {
-                statisticscorpus = value;
-
-                if (statisticscorpus == 2)
+                if (value != language)
                 {
-                    OpenFileDialog openCorpusFile = new OpenFileDialog();
-                    openCorpusFile.Title = "Select text corpus file";
-                    openCorpusFile.CheckFileExists = true;
-                    openCorpusFile.CheckPathExists = true;
-                    openCorpusFile.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                    if (openCorpusFile.ShowDialog() == DialogResult.OK)
-                    {
-                        customFilePath = openCorpusFile.FileName;
-                    }
-                    else
-                    {
-                        statisticscorpus = 0; // Fall back to default
-                    }
+                    language = value;
+                    OnPropertyChanged("Language");
                 }
-
-                UpdateTaskPaneVisibility();
-                OnPropertyChanged("StatisticsCorpus");
             }
         }
 
+        [TaskPane("NGramSizeCaption", "NGramSizeTooltip", null, 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 5)]
+        public int NGramSize
+        {
+            get
+            {
+                return ngramSize;
+            }
+            set
+            {
+                if (value != ngramSize)
+                {
+                    ngramSize = value;
+                    OnPropertyChanged("NGramSize");
+                }
+            }
+        }
+
+        [TaskPane("UseSpacesCaption", "UseSpacesTooltip", null, 7, false, ControlType.CheckBox)]
+        public bool UseSpaces
+        {
+            get
+            {
+                return useSpaces;
+            }
+            set
+            {
+                if (value != useSpaces)
+                {
+                    useSpaces = value;
+                    OnPropertyChanged("UseSpaces");
+                }
+            }
+        }
+                                    
         public int entropyselect;
         [TaskPane("entropyCaption", "entropyTooltip", null, 6, false, ControlType.ComboBox, new string[] { "entropyList1", "entropyList2" })]
-        public int entropy
+        public int EntropySelection
         {
             get
             {
@@ -187,41 +201,10 @@ namespace Cryptool.Plugins.CostFunction
             set
             {
                 entropyselect = value;
-                OnPropertyChanged("entropy");
+                OnPropertyChanged("EntropySelection");
             }
         }
-
-        public string customfwtpath;
-        public int fwt = 0; //fwt = fitness weight table
-        [TaskPane("weighttableCaption", "weighttableTooltip", null, 7, false, ControlType.ComboBox, new string[] { "weighttableList1", "weighttableList2", "weighttableList3" })]
-        public int weighttable
-        {
-            get
-            {
-                return fwt;
-            }
-            set
-            {
-                fwt = value;
-                if (fwt == 2)
-                {
-                    OpenFileDialog openfwt = new OpenFileDialog();
-                    openfwt.Title = "Select fitness weight table";
-                    openfwt.CheckFileExists = true;
-                    openfwt.CheckPathExists = true;
-                    openfwt.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-                    if (openfwt.ShowDialog() == DialogResult.OK)
-                    {
-                        customfwtpath = openfwt.FileName;
-                    }
-                    else
-                    {
-                        fwt = 0; // Fall back to default
-                    }
-                }
-                OnPropertyChanged("weighttable");
-            }
-        }
+        
         
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
@@ -232,61 +215,45 @@ namespace Cryptool.Plugins.CostFunction
                 return;
             }
 
-            if (functionType == FunctionTypes.Regex)
+            if (functionType == CostFunctionType.RegEx)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BytesToUse", Visibility.Visible)));
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BytesOffset", Visibility.Visible)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("RegEx", Visibility.Visible)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("RegExHex", Visibility.Visible)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("CaseInsensitive", Visibility.Visible)));
             }
             else
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BytesToUse", Visibility.Visible)));
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BytesOffset", Visibility.Visible)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("RegEx", Visibility.Collapsed)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("RegExHex", Visibility.Collapsed)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("CaseInsensitive", Visibility.Collapsed)));
             }
 
-            if (functionType == FunctionTypes.NgramsLog2 || functionType == FunctionTypes.NgramsSinkov || functionType == FunctionTypes.NGramsPercentage)
+            if (functionType == CostFunctionType.NGramsLog2)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("NgramSize", Visibility.Visible)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Language", Visibility.Visible)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("NGramSize", Visibility.Visible)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("UseSpaces", Visibility.Visible)));
+
             }
             else
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("NgramSize", Visibility.Collapsed)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Language", Visibility.Collapsed)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("NGramSize", Visibility.Collapsed)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("UseSpaces", Visibility.Collapsed)));
             }
 
-            if (functionType == FunctionTypes.NgramsLog2 || functionType == FunctionTypes.NgramsSinkov || functionType == FunctionTypes.NGramsPercentage || functionType == FunctionTypes.Weighted)
+            if (functionType == CostFunctionType.Entropy)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("StatisticsCorpus", Visibility.Visible)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("EntropySelection", Visibility.Visible)));
             }
             else
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("StatisticsCorpus", Visibility.Collapsed)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("EntropySelection", Visibility.Collapsed)));
             }
 
-            if (functionType == FunctionTypes.Weighted)
+            if (functionType == CostFunctionType.Entropy || functionType == CostFunctionType.IOC)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("weighttable", Visibility.Visible)));
-            }
-            else
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("weighttable", Visibility.Collapsed)));
-            }
-
-            if (functionType == FunctionTypes.Entropy)
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("entropy", Visibility.Visible)));
-            }
-            else
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("entropy", Visibility.Collapsed)));
-            }
-
-            if (functionType == FunctionTypes.IOC)
-            {
+                //only entropy and ioc support a block size
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BlockSize", Visibility.Visible)));
             }
             else
@@ -294,11 +261,9 @@ namespace Cryptool.Plugins.CostFunction
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("BlockSize", Visibility.Collapsed)));
             }
         }
-
-
-        private string regExText;
+        
         [TaskPane( "RegExCaption", "RegExTooltip", null, 5, false, ControlType.TextBox)]
-        public String RegEx
+        public string RegEx
         {
             get
             {
@@ -317,7 +282,9 @@ namespace Cryptool.Plugins.CostFunction
         private static string convertTextToHexString(string text)
         {
             if (text == null)
+            {
                 return null;
+            }
 
             StringBuilder sb = new StringBuilder();
             foreach(byte b in Encoding.ASCII.GetBytes(text))
@@ -327,11 +294,13 @@ namespace Cryptool.Plugins.CostFunction
             return sb.ToString();
         }
 
-        private bool caseInsensitive;
         [TaskPane( "CaseInsensitivCaption", "CaseInsensitivTooltip", null, 6, false, ControlType.CheckBox)]
         public bool CaseInsensitive
         {
-            get { return caseInsensitive; }
+            get 
+            { 
+                return caseInsensitive; 
+            }
             set
             {
                 if (value != caseInsensitive)
@@ -344,7 +313,7 @@ namespace Cryptool.Plugins.CostFunction
 
         private string regExHex;
         [TaskPane( "RegExHexCaption", "RegExHexTooltip", null, 7, false, ControlType.TextBox)]
-        public String RegExHex
+        public string RegExHex
         {
             get
             {
@@ -363,7 +332,9 @@ namespace Cryptool.Plugins.CostFunction
         private static string convertHexStringToText(string hexString)
         {
             if (hexString == null)
+            {
                 return null;
+            }
 
             StringBuilder cleanHexString = new StringBuilder();
 
@@ -400,9 +371,9 @@ namespace Cryptool.Plugins.CostFunction
         #endregion
 
         #region testing
-        public void changeFunctionType(int type)
+        public void changeFunctionType(CostFunctionType type)
         {
-            this.functionType = (FunctionTypes)type;
+            functionType = type;
             UpdateTaskPaneVisibility();
             OnPropertyChanged("FunctionType");
         }

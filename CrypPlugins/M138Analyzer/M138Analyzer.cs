@@ -61,10 +61,10 @@ namespace Cryptool.M138Analyzer
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
 
-        private UniGrams Unigrams;
-        private TriGrams Trigrams;
-        private QuadGrams Quadgrams;
-        private PentaGrams Pentagrams;
+        private Unigrams Unigrams;
+        private Trigrams Trigrams;
+        private Tetragrams Quadgrams;
+        private Pentagrams Pentagrams;
 
         private string StripAlphabet;   // alphabet used by the strips
         private string Alphabet;        // alphabet used by the chosen language, StripAlphabet may not use characters that are not contained in Alphabet
@@ -665,14 +665,14 @@ namespace Cryptool.M138Analyzer
         {
             string lang = LanguageStatistics.LanguageCode(settings.Language);
 
-            Unigrams = new UniGrams(lang);
-            Trigrams = new TriGrams(lang);
-            Quadgrams = new QuadGrams(lang);
+            Unigrams = new Unigrams(lang);
+            Trigrams = new Trigrams(lang);
+            Quadgrams = new Tetragrams(lang);
             //Pentagrams = new PentaGrams(lang);
             Alphabet = Unigrams.Alphabet;
         }
 
-        private void HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, TriGrams _ngrams3, QuadGrams _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
+        private void HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, Trigrams _ngrams3, Tetragrams _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
         {
             int _numberOfStrips = _stripes.Count; //Anzahl verfügbarer Streifen
             double _globalBestKeyCost = double.MinValue; //Kostenwert des globalen Maximums fuer diesen Offset

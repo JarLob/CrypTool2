@@ -282,10 +282,10 @@ namespace Cryptool.VigenereAnalyzer
             Grams grams = null;
             try
             {
-                grams = new PentaGrams(LanguageStatistics.LanguageCode(_settings.Language), false);
+                grams = new Pentagrams(LanguageStatistics.LanguageCode(_settings.Language), false);
             }catch(Exception ex)
             {
-                grams = new QuadGrams(LanguageStatistics.LanguageCode(_settings.Language), false);
+                grams = new Tetragrams(LanguageStatistics.LanguageCode(_settings.Language), false);
             }
 
             while (restarts > 0)

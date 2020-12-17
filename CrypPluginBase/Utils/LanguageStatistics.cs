@@ -6,6 +6,8 @@ using System.IO.Compression;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Properties;
 using System.Linq;
+using System.Text;
+using static Cryptool.PluginBase.Utils.LanguageStatistics;
 
 namespace Cryptool.PluginBase.Utils
 {
@@ -13,6 +15,10 @@ namespace Cryptool.PluginBase.Utils
     {
         //this has to be consistent with the "SupportedLanguagesCodes"
         //and with all other arrays here
+
+        /// <summary>
+        /// Enum of supported languages of CrypTool 2
+        /// </summary>
         public enum Languages
         {
             Englisch,
@@ -28,14 +34,52 @@ namespace Cryptool.PluginBase.Utils
             Dutch
         }
 
+        /// <summary>
+        /// Returns the localized names of the language
+        /// </summary>
         public static string[] SupportedLanguages
         {
-            get { return new string[] { Resources.LanguageEN, Resources.LanguageDE, Resources.LanguageES, Resources.LanguageFR, Resources.LanguageIT, Resources.LanguageHU, Resources.LanguageRU, Resources.LanguageCS, Resources.LanguageEL, Resources.LanguageLA, Resources.LanguageNL }; }
+            get
+            {
+                return new string[]
+                {
+                    Resources.LanguageEN,
+                    Resources.LanguageDE,
+                    Resources.LanguageES,
+                    Resources.LanguageFR,
+                    Resources.LanguageIT,
+                    Resources.LanguageHU,
+                    Resources.LanguageRU,
+                    Resources.LanguageCS,
+                    Resources.LanguageEL,
+                    Resources.LanguageLA,
+                    Resources.LanguageNL
+                };
+            }
         }
 
+        /// <summary>
+        /// Returns a list of supported language codes
+        /// </summary>
         public static string[] SupportedLanguagesCodes
         {
-            get { return new string[] { "en", "de", "es", "fr", "it", "hu", "ru", "cs", "el", "la", "nl" }; }
+            get
+            {
+                return new string[]
+                {
+                    "en",
+                    "de", 
+                    "es", 
+                    "fr", 
+                    "it", 
+                    "hu", 
+                    "ru", 
+                    "cs", 
+                    "el", 
+                    "la", 
+                    "nl" 
+                };
+            }
         }
 
         public static string LanguageCode(int n)
@@ -66,7 +110,7 @@ namespace Cryptool.PluginBase.Utils
             //Source: https://everything2.com/title/Letter+frequency+in+several+languages
             { "la", new double[] { 0.072, 0.012, 0.033, 0.017, 0.092, 0.009, 0.014, 0.005, 0.101, 0, 0, 0.021, 0.034, 0.06, 0.044, 0.03, 0.013, 0.068, 0.068, 0.072, 0.074, 0.007, 0, 0.006, 0, 0 } }, // Latin
         };
-        
+
         public static Dictionary<string, string> Alphabets = new Dictionary<string, string>()
         {
             { "en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
@@ -81,6 +125,19 @@ namespace Cryptool.PluginBase.Utils
             { "la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
             { "nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         };
+
+        /// <summary>
+        /// Enum of types of ngrams
+        /// </summary>
+        public enum GramsType
+        {
+            Undefined =0 ,               // invalid type
+            Unigrams = 1,                // 1-gram
+            Bigrams = 2,                 // 2-gram
+            Trigrams = 3,                // 3-gram
+            Tetragrams = 4,              // 4-gram
+            Pentragrams = 5              // 5-gram
+        }
 
         public static string Alphabet(string language, bool useSpaces = false)
         {
@@ -150,7 +207,7 @@ namespace Cryptool.PluginBase.Utils
             uint[] freq;
             uint max;
             ulong sum;
-            
+
             BinaryFormatter bf = new BinaryFormatter();
 
             using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
@@ -195,7 +252,7 @@ namespace Cryptool.PluginBase.Utils
 
             for (int a = 0; a < alphabet.Length; a++)
                 for (int b = 0; b < alphabet.Length; b++)
-                        result[a, b] = Math.Log((freq[a, b] + 0.001) / max);
+                    result[a, b] = Math.Log((freq[a, b] + 0.001) / max);
 
             return result;
         }
@@ -312,9 +369,6 @@ namespace Cryptool.PluginBase.Utils
 
             return value / end;
         }
-
-        // deprecated:
-
         public static double[,,] Load3Grams(string language, bool useSpaces = false)
         {
             try
@@ -379,13 +433,13 @@ namespace Cryptool.PluginBase.Utils
 
             return _quadgrams;
         }
-        
+
         /// <summary>
         /// Calculate cost value based on index of coincidence
         /// </summary>
         /// <param name="plaintext"></param>
         /// <returns></returns>
-        static public double CalculateIoC(int[] plaintext)
+        public static double CalculateIoC(int[] plaintext)
         {
             Dictionary<int, UInt64> countChars = new Dictionary<int, UInt64>();
 
@@ -400,6 +454,131 @@ namespace Cryptool.PluginBase.Utils
             UInt64 N = (UInt64)plaintext.Length;
             return (double)value / (N * (N - 1));
         }
+
+        /// <summary>
+        /// Maps a given array of numbers into the "textspace" defined by the alphabet
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
+        public static string MapNumbersIntoTextSpace(int[] numbers, string alphabet)
+        {
+            var builder = new StringBuilder();
+            foreach (var i in numbers)
+            {
+                builder.Append(alphabet[i]);
+            }
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Maps a given string into the "numberspace" defined by the alphabet
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
+        public static int[] MapTextIntoNumberSpace(string text, string alphabet)
+        {
+            var numbers = new int[text.Length];
+            var position = 0;
+            foreach (var c in text)
+            {
+                numbers[position] = alphabet.IndexOf(c);
+                position++;
+            }
+            return numbers;
+        }
+
+        /// <summary>
+        /// Returns the type of the n-gramm with the specified length
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static GramsType GetGramsTypeByLength(int length)
+        {
+            switch (length)
+            {
+                case 1:
+                    return GramsType.Unigrams;
+                case 2:
+                    return GramsType.Bigrams;
+                case 3:
+                    return GramsType.Trigrams;
+                case 4:
+                    return GramsType.Tetragrams;
+                case 5:
+                    return GramsType.Pentragrams;
+                default:
+                    return GramsType.Undefined;
+            }
+        }
+
+        /// <summary>
+        /// Returns a list containing all supported n-gram lengths of the given language
+        /// by searching through the n-gram files
+        /// </summary>
+        /// <param name="language"></param>
+        /// <param name="useSpaces"></param>
+        /// <returns></returns>
+        public static List<GramsType> GetSupportedGramsTypes(string language, bool useSpaces = false)
+        {
+            var typesList = new List<GramsType>();
+            for (int i = 1; i < 6; i++)
+            {
+                string filename = string.Format("{0}-{1}gram-nocs{2}.bin", language, i, useSpaces ? "-sp" : "");
+                if(File.Exists(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename)))
+                {
+                    typesList.Add(GetGramsTypeByLength(i));
+                }
+            }
+            return typesList;
+        }
+
+        /// <summary>
+        /// Creates a grams object for the given gramSize and language
+        /// returns null if not possible
+        /// </summary>
+        /// <param name="gramsSize"></param>
+        /// <param name="language"></param>
+        /// <param name="useSpaces"></param>
+        /// <returns></returns>
+        public static Grams CreateNGrams(int gramsSize, string language, bool useSpaces = false)
+        {
+            return CreateNGrams(GetGramsTypeByLength(gramsSize), language, useSpaces);
+        }
+
+        /// <summary>
+        /// Creates a grams object for the given gramsType and language
+        /// returns null if not possible
+        /// </summary>
+        /// <param name="gramsType"></param>
+        /// <param name="language"></param>
+        /// <param name="useSpaces"></param>
+        /// <returns></returns>
+        public static Grams CreateNGrams(GramsType gramsType, string language, bool useSpaces = false)
+        {
+            try
+            {
+                switch (gramsType)
+                {
+                    case GramsType.Unigrams:
+                        return new Unigrams(language, useSpaces);
+                    case GramsType.Bigrams:
+                        return new Bigrams(language, useSpaces);
+                    case GramsType.Trigrams:
+                        return new Trigrams(language, useSpaces);
+                    case GramsType.Tetragrams:
+                        return new Tetragrams(language, useSpaces);
+                    case GramsType.Pentragrams:
+                        return new Pentagrams(language, useSpaces);
+                }
+            }
+            catch (Exception)
+            {
+                //can not create grams
+            }
+            return null;
+        }
     }
 
     /// <summary>
@@ -411,13 +590,14 @@ namespace Cryptool.PluginBase.Utils
         public abstract double CalculateCost(int[] text);
         public abstract double CalculateCost(List<int> text);
         public abstract int GramSize();
+        public abstract GramsType GramsType();
     }
 
-    public class UniGrams : Grams
+    public class Unigrams : Grams
     {
         public float[] Frequencies;
 
-        public UniGrams(string language, bool useSpaces = false)
+        public Unigrams(string language, bool useSpaces = false)
         {
             string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 1, useSpaces ? "-sp" : "");
             LoadGZ(filename);
@@ -474,13 +654,18 @@ namespace Cryptool.PluginBase.Utils
             }
             return value / end;
         }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Unigrams;
+        }
     }
 
-    public class BiGrams : Grams
+    public class Bigrams : Grams
     {
         public float[,] Frequencies;
 
-        public BiGrams(string language, bool useSpaces = false)
+        public Bigrams(string language, bool useSpaces = false)
         {
             string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 2, useSpaces ? "-sp" : "");
             LoadGZ(filename);
@@ -545,13 +730,18 @@ namespace Cryptool.PluginBase.Utils
             }
             return value / end;
         }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Bigrams;
+        }
     }
 
-    public class TriGrams : Grams
+    public class Trigrams : Grams
     {
         public float[,,] Frequencies;
-        
-        public TriGrams(string language, bool useSpaces = false)
+
+        public Trigrams(string language, bool useSpaces = false)
         {
             string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 3, useSpaces ? "-sp" : "");
             LoadGZ(filename);
@@ -586,7 +776,7 @@ namespace Cryptool.PluginBase.Utils
                 {
                     continue;
                 }
-                value += Frequencies[a, b, c];               
+                value += Frequencies[a, b, c];
             }
             return value / end;
         }
@@ -622,13 +812,18 @@ namespace Cryptool.PluginBase.Utils
             }
             return value / end;
         }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Trigrams;
+        }
     }
 
-    public class QuadGrams : Grams
+    public class Tetragrams : Grams
     {
         public float[,,,] Frequencies;
 
-        public QuadGrams(string language, bool useSpaces = false)
+        public Tetragrams(string language, bool useSpaces = false)
         {
             string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 4, useSpaces ? "-sp" : "");
             LoadGZ(filename);
@@ -666,7 +861,7 @@ namespace Cryptool.PluginBase.Utils
                 {
                     continue;
                 }
-                value += Frequencies[a, b, c, d];               
+                value += Frequencies[a, b, c, d];
             }
             return value / end;
         }
@@ -705,13 +900,18 @@ namespace Cryptool.PluginBase.Utils
             }
             return value / end;
         }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Tetragrams;
+        }
     }
 
-    public class PentaGrams : Grams
+    public class Pentagrams : Grams
     {
-        public float[,,,,] Frequencies;        
+        public float[,,,,] Frequencies;
 
-        public PentaGrams(string language, bool useSpaces = false)
+        public Pentagrams(string language, bool useSpaces = false)
         {
             string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 5, useSpaces ? "-sp" : "");
             LoadGZ(filename);
@@ -720,7 +920,7 @@ namespace Cryptool.PluginBase.Utils
         private void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
-            Frequencies = (float[,,,,]) file.LoadFrequencies(5);
+            Frequencies = (float[,,,,])file.LoadFrequencies(5);
             Alphabet = file.Alphabet;
         }
 
@@ -793,6 +993,11 @@ namespace Cryptool.PluginBase.Utils
                 value += Frequencies[a, b, c, d, e];
             }
             return value / end;
+        }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Pentragrams;
         }
     }
 

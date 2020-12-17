@@ -165,7 +165,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
             // Set alphabets
             string lang = LanguageStatistics.LanguageCode(settings.Language);
-            grams = new QuadGrams(lang, settings.UseSpaces);
+            grams = new Tetragrams(lang, settings.UseSpaces);
 
             plaintextalphabet = grams.Alphabet;
             ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
