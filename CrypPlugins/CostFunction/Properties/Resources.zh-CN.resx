@@ -201,27 +201,6 @@
   <data name="BytesOffsetTooltip" xml:space="preserve">
     <value>应用正则表达式之前应跳过哪个字节数量？</value>
   </data>
-  <data name="FunctionTypeList1" xml:space="preserve">
-    <value>符合指数</value>
-  </data>
-  <data name="FunctionTypeList2" xml:space="preserve">
-    <value>熵</value>
-  </data>
-  <data name="FunctionTypeList3" xml:space="preserve">
-    <value>N克：对数2</value>
-  </data>
-  <data name="FunctionTypeList4" xml:space="preserve">
-    <value>N-克：Sinkov</value>
-  </data>
-  <data name="FunctionTypeList5" xml:space="preserve">
-    <value>N克：百分比</value>
-  </data>
-  <data name="FunctionTypeList6" xml:space="preserve">
-    <value>正则表达式</value>
-  </data>
-  <data name="FunctionTypeList7" xml:space="preserve">
-    <value>加权二元组/三元组</value>
-  </data>
   <data name="StatisticsCorpusList1" xml:space="preserve">
     <value>德语</value>
   </data>
@@ -252,10 +231,34 @@
   <data name="BlocksizeTooltip" xml:space="preserve">
     <value>一个块应组合多少个字符？</value>
   </data>
-  <data name="NgramSizeCaption" xml:space="preserve">
+  <data name="NGramSizeCaption" xml:space="preserve">
     <value>N克大小</value>
   </data>
-  <data name="NgramSizeTooltip" xml:space="preserve">
+  <data name="NGramSizeTooltip" xml:space="preserve">
     <value>要使用的n克大小</value>
+  </data>
+  <data name="Entropy" xml:space="preserve">
+    <value>熵</value>
+  </data>
+  <data name="IOC" xml:space="preserve">
+    <value>符合指数</value>
+  </data>
+  <data name="NGramsLog2" xml:space="preserve">
+    <value>N克Log2</value>
+  </data>
+  <data name="RegEx" xml:space="preserve">
+    <value>正则表达式</value>
+  </data>
+  <data name="UseSpacesCaption" xml:space="preserve">
+    <value>使用空间</value>
+  </data>
+  <data name="UseSpacesTooltip" xml:space="preserve">
+    <value>如果选中，则使用包含空格的文本统计信息</value>
+  </data>
+  <data name="LanguageCaption" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="LanguageTooltip" xml:space="preserve">
+    <value>使用n-gram这种语言的成本函数。</value>
   </data>
 </root>
