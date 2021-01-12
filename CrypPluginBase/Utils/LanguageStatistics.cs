@@ -136,7 +136,8 @@ namespace Cryptool.PluginBase.Utils
             Bigrams = 2,                 // 2-gram
             Trigrams = 3,                // 3-gram
             Tetragrams = 4,              // 4-gram
-            Pentragrams = 5              // 5-gram
+            Pentragrams = 5,              // 5-gram
+            Hexagrams = 6
         }
 
         public static string Alphabet(string language, bool useSpaces = false)
@@ -1000,6 +1001,107 @@ namespace Cryptool.PluginBase.Utils
             return LanguageStatistics.GramsType.Pentragrams;
         }
     }
+
+    public class Hexagrams : Grams
+    {
+        public float[,,,,,] Frequencies;
+
+        public Hexagrams(string language, bool useSpaces = false)
+        {
+            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 6, useSpaces ? "-sp" : "");
+            LoadGZ(filename);
+        }
+
+        private void LoadGZ(string filename)
+        {
+            var file = new LanguageStatisticsFile(filename);
+            Frequencies = (float[,,,,,])file.LoadFrequencies(6);
+            Alphabet = file.Alphabet;
+        }
+
+        public override double CalculateCost(int[] text)
+        {
+            int end = text.Length - 5;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                var e = text[i + 4];
+                var f = text[i + 5];
+                if (a >= alphabetLength ||
+                   b >= alphabetLength ||
+                   c >= alphabetLength ||
+                   d >= alphabetLength ||
+                   e >= alphabetLength ||
+                   f >= alphabetLength ||
+                   a < 0 ||
+                   b < 0 ||
+                   c < 0 ||
+                   d < 0 ||
+                   e < 0 ||
+                   f < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b, c, d, e, f];
+            }
+            return value / end;
+        }
+
+        public override int GramSize()
+        {
+            return 6;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count - 4;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                var e = text[i + 4];
+                var f = text[i + 4];
+                if (a >= alphabetLength ||
+                   b >= alphabetLength ||
+                   c >= alphabetLength ||
+                   d >= alphabetLength ||
+                   e >= alphabetLength ||
+                   f >= alphabetLength ||
+                   a < 0 ||
+                   b < 0 ||
+                   c < 0 ||
+                   d < 0 ||
+                   e < 0 ||
+                   f < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b, c, d, e, f];
+            }
+            return value / end;
+        }
+
+        public override GramsType GramsType()
+        {
+            return LanguageStatistics.GramsType.Hexagrams;
+        }
+    }
+
 
     public class LanguageStatisticsFile
     {

@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
-using System.Runtime.CompilerServices;
 
 namespace LanguageStatisticsGenerator
 {
-    class NGrams
+    public class NGrams
     {
         public string alphabet;
 
+        //public uint[,,,,,,] freq7;
+        public uint[,,,,,] freq6;
         public uint[,,,,] freq5;
         public uint[,,,] freq4;
         public uint[,,] freq3;
@@ -23,27 +23,6 @@ namespace LanguageStatisticsGenerator
 
         public uint max;
         public ulong sum;
-        const int size = 4;
-
-        public NGrams(string alphabet, uint[,,,] freq)
-        {
-            this.alphabet = alphabet;
-            this.freq4 = freq;
-            GetMaxAndSum(4);
-        }
-
-        public NGrams(string alphabet, string text)
-        {
-            this.alphabet = alphabet;
-            var char2num = Enumerable.Range(0, alphabet.Length).ToDictionary(i => alphabet[i]);
-
-            freq4 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-
-            for (int i = 0; i + size <= text.Length; i++)
-                freq4[char2num[text[i]], char2num[text[i + 1]], char2num[text[i + 2]], char2num[text[i + 3]]]++;
-
-            GetMaxAndSum(4);
-        }
 
         // create statistics from directory
         public NGrams(string alphabet, string path, bool useSpace)
@@ -59,6 +38,8 @@ namespace LanguageStatisticsGenerator
             int j = 0;
             string pattern = "[^" + alphabet + "]";
 
+            //freq7 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+            freq6 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
             freq5 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
             freq4 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
             freq3 = new uint[alphabet.Length, alphabet.Length, alphabet.Length];
@@ -143,6 +124,8 @@ namespace LanguageStatisticsGenerator
 
                                         var n = w.Select(c => char2num[c]).ToArray();
 
+                                        //for (int i = 0; i + 7 <= n.Length; i++) freq7[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4], n[i + 5], n[i + 6]]++;
+                                        for (int i = 0; i + 6 <= n.Length; i++) freq6[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4], n[i + 5]]++;
                                         for (int i = 0; i + 5 <= n.Length; i++) freq5[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4]]++;
                                         for (int i = 0; i + 4 <= n.Length; i++) freq4[n[i], n[i + 1], n[i + 2], n[i + 3]]++;
                                         for (int i = 0; i + 3 <= n.Length; i++) freq3[n[i], n[i + 1], n[i + 2]]++;
@@ -157,7 +140,7 @@ namespace LanguageStatisticsGenerator
                                         }
 
                                         counter++;
-                                        if (++j == 1000)
+                                        if (++j == 50000)
                                         {
                                             j = 0;
                                             Console.Write(counter + " lines read\r");
@@ -202,7 +185,36 @@ namespace LanguageStatisticsGenerator
             sum = 0;
             max = 0;
 
-            if (n == 5)
+            /*if (n == 7)
+            {
+                for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                        for (int c = 0; c < alphabet.Length; c++)
+                            for (int d = 0; d < alphabet.Length; d++)
+                                for (int e = 0; e < alphabet.Length; e++)
+                                    for (int f = 0; f < alphabet.Length; f++)
+                                        for (int g = 0; g < alphabet.Length; g++)
+                                        {
+                                            uint x = freq7[a, b, c, d, e, f, g];
+                                            if (max < x) max = x;
+                                            sum += x;
+                                        }
+            }
+            else*/ if (n == 6)
+            {
+                for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                        for (int c = 0; c < alphabet.Length; c++)
+                            for (int d = 0; d < alphabet.Length; d++)
+                                for (int e = 0; e < alphabet.Length; e++)                                
+                                    for (int f = 0; f < alphabet.Length; f++)
+                                    {
+                                        uint x = freq6[a, b, c, d, e,f];
+                                        if (max < x) max = x;
+                                        sum += x;
+                                    }
+            }
+            else if (n == 5)
             {
                 for (int a = 0; a < alphabet.Length; a++)
                     for (int b = 0; b < alphabet.Length; b++)
@@ -281,18 +293,19 @@ namespace LanguageStatisticsGenerator
             }
         }
 
-        private static IEnumerable<float> CalculateLogs(Array freq, uint max)
-        {
-            return freq.Cast<uint>().Select(value => (float)Math.Log((value + 0.001) / max));
+        private static IEnumerable<float> CalculateLogs(Array freq, ulong sum)
+        {            
+            return freq.Cast<uint>().Select(value => (float)Math.Log(value == 0 ? 1.0 / sum : value  / (double)sum));
         }
 
         public void WriteGZ(string filename)
         {
-            var freqs = new Array[] { freq1, freq2, freq3, freq4, freq5 };
-            for (int gramLength = 5; gramLength >= 1; gramLength--)
+            var freqs = new Array[] { freq1, freq2, freq3, freq4, freq5, freq6/*, freq7*/ };
+            for (int gramLength = 6; gramLength >= 1; gramLength--)
             {
+                Console.WriteLine("Writing {0}-grams", gramLength);
                 GetMaxAndSum(gramLength);
-                WriteStatisticsFile(gramLength, CalculateLogs(freqs[gramLength-1], max), string.Format(filename + ".gz", gramLength));
+                WriteStatisticsFile(gramLength, CalculateLogs(freqs[gramLength-1], sum), string.Format(filename + ".gz", gramLength));
             }
         }
     }
@@ -328,56 +341,7 @@ namespace LanguageStatisticsGenerator
                 {"la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
                 {"el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
                 {"nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
-        };
-
-        public static void WriteStatistics(string path, string filename, NGrams data)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
-                    using (var entryStream = archive.CreateEntry(filename + ".bin").Open())
-                    {
-                        bf.Serialize(entryStream, data.alphabet);
-                        bf.Serialize(entryStream, data.max);
-                        bf.Serialize(entryStream, data.sum);
-                        bf.Serialize(entryStream, data.freq4);
-                    }
-                }
-
-                using (var fileStream = new FileStream(path + filename + ".zip", FileMode.Create))
-                {
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    memoryStream.CopyTo(fileStream);
-                }
-            }
-        }
-
-        public static NGrams ReadStatistics(string filename)
-        {
-            NGrams data;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(filename, FileMode.Open))
-            using (ZipArchive zip = new ZipArchive(fs))
-            {
-                var entry = zip.Entries.First();
-
-                using (Stream sr = entry.Open())
-                {
-                    string alphabet = (string)bf.Deserialize(sr);
-                    uint max = (uint)bf.Deserialize(sr);
-                    ulong sum = (ulong)bf.Deserialize(sr);
-                    var freq = (uint[,,,])bf.Deserialize(sr);
-                    data = new NGrams(alphabet, freq);
-                }
-            }
-
-            return data;
-        }
+        };    
         
         static void Main(string[] args)
         {
@@ -436,7 +400,7 @@ namespace LanguageStatisticsGenerator
             }
             catch(Exception ex)
             {
-                Console.WriteLine(String.Format("Error while reading text corpus file '{0}'", sentencesFilename));
+                Console.WriteLine(String.Format("Error while reading text corpus file '{0}': {1}", sentencesFilename, ex.Message));
                 return;
             }
         }
