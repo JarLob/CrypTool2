@@ -36,7 +36,6 @@ namespace CrypToolStoreBuildSystem
     {
         private const string BUILD_FOLDER = "Build";
         private const string SOURCE_FILE_NAME = "Source";
-        private const string TIMESTAMP_SERVER = "http://timestamp.verisign.com/scripts/timstamp.dll";
         private const string BUILD_TARGET = "x64";
 
         private BuildLogger Logger = new BuildLogger();
@@ -890,7 +889,7 @@ namespace CrypToolStoreBuildSystem
             }
 
             ProcessStartInfo info = new ProcessStartInfo("signtool.exe");
-            info.Arguments = string.Format("sign /f {0} /p {1} /t {2} {3}", SigningCertificatePfxFile, SigningCertificatePassword, TIMESTAMP_SERVER, filenames.ToString());
+            info.Arguments = string.Format("sign /f {0} /p {1} /t {2} {3}", SigningCertificatePfxFile, SigningCertificatePassword, Config.GetConfigEntry("BuildServer_TimeStampServer"), filenames.ToString());
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
