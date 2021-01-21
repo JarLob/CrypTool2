@@ -199,7 +199,7 @@ namespace Cryptool.DESVisualization
                     }  
                 }
                 string tmp = builder.ToString();
-                tmp =tmp.Remove(length-1,tmp.Length-length);
+                tmp = tmp.Remove(length, tmp.Length - length);
                 return tmp;
             }
         }
