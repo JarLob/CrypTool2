@@ -490,6 +490,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextSteganography", "CrypPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSteganographyVisualization", "CrypPlugins\ImageSteganographyVisualization\ImageSteganographyVisualization.csproj", "{F7D32FCB-CC43-4CF6-9694-3D94D0D59277}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaCha", "CrypPlugins\ChaCha\ChaCha.csproj", "{3D890E75-8ACE-4780-8E5B-E7D94052834E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -1925,6 +1927,12 @@ Global
 		{F7D32FCB-CC43-4CF6-9694-3D94D0D59277}.Release|x64.Build.0 = Release|x64
 		{F7D32FCB-CC43-4CF6-9694-3D94D0D59277}.Test|x64.ActiveCfg = Debug|x64
 		{F7D32FCB-CC43-4CF6-9694-3D94D0D59277}.Test|x64.Build.0 = Debug|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Debug|x64.ActiveCfg = Debug|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Debug|x64.Build.0 = Debug|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Release|x64.ActiveCfg = Release|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Release|x64.Build.0 = Release|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Test|x64.ActiveCfg = Test|x64
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2158,6 +2166,7 @@ Global
 		{DB36F62A-9567-40B9-A5E5-B8CFFBAFDE3A} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{C83E7FAB-47C4-4878-A5BC-C886A4B451BD} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{F7D32FCB-CC43-4CF6-9694-3D94D0D59277} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{3D890E75-8ACE-4780-8E5B-E7D94052834E} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92042D62-2CDA-4393-9D74-4FB5AC571A2D}
