@@ -44,9 +44,13 @@ namespace Cryptool.Plugins.SATSolver
         private Process solverProcess = null;
         private StreamReader reader = null;
 
-        private string outputResultFilename = "SATresult";
-        private string tempCnfFilename = "SATtemp";
+        private string outputResultFilename = null;
+        private string tempCnfFilename = null;
         
+
+        public static readonly string TEMP_FOLDER = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"CrypTool2\Temp\SATSolver");
+        private static readonly string OUTPUT_RESULT_FILENAME = "SATresult";
+        private static readonly string TEMP_CNF_FILENAME = "SATtemp";
 
         #endregion
 
@@ -110,6 +114,17 @@ namespace Cryptool.Plugins.SATSolver
         /// </summary>
         public void PreExecution()
         {
+            try
+            {
+                if (!Directory.Exists(TEMP_FOLDER))
+                {
+                    Directory.CreateDirectory(TEMP_FOLDER);
+                }
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(string.Format("Can not create temp folder \"{0}\": {1}", TEMP_FOLDER, ex.Message),NotificationLevel.Error);
+            }
         }
 
         /// <summary>
@@ -118,6 +133,11 @@ namespace Cryptool.Plugins.SATSolver
         public void Execute()
         {
             ProgressChanged(0, 100);
+
+            //generate random id for temp files to allow SATSolver being executed in parallel
+            uint randomId = (uint)Guid.NewGuid().GetHashCode();
+            outputResultFilename = OUTPUT_RESULT_FILENAME + "_" + randomId;
+            tempCnfFilename = TEMP_CNF_FILENAME + "_" + randomId;
 
             #region lokale variablen
 
@@ -155,7 +175,7 @@ namespace Cryptool.Plugins.SATSolver
                 int bytesRead = 0;
                 byte[] bytes = new byte[BUFFERSIZE];
 
-                using (bw = new BinaryWriter(File.Open(tempCnfFilename, FileMode.Create)))
+                using (bw = new BinaryWriter(File.Open(Path.Combine(TEMP_FOLDER, tempCnfFilename), FileMode.Create)))
                 {
                     while ((bytesRead = inputStream.ReadFully(bytes)) > 0)
                     {
@@ -225,8 +245,8 @@ namespace Cryptool.Plugins.SATSolver
             }
             finally
             {
-                File.Delete(outputResultFilename);
-                File.Delete(tempCnfFilename);
+                File.Delete(Path.Combine(TEMP_FOLDER, outputResultFilename));
+                File.Delete(Path.Combine(TEMP_FOLDER,tempCnfFilename));
             }
             ProgressChanged(100, 100);
         }
@@ -341,7 +361,7 @@ namespace Cryptool.Plugins.SATSolver
         
         string buildArgs()
         {
-            StringBuilder sb = new StringBuilder(tempCnfFilename + " " + outputResultFilename);
+            StringBuilder sb = new StringBuilder("\"" + Path.Combine(TEMP_FOLDER,tempCnfFilename) + "\" \"" + Path.Combine(TEMP_FOLDER, outputResultFilename) + "\"" );
             double dbl;
             int intgr;
 
@@ -496,7 +516,7 @@ namespace Cryptool.Plugins.SATSolver
                         */
                         if (settings.DimacsHandling != 1)
                         {
-                            sb.Append(" -dimacs=" + outputResultFilename);
+                            sb.Append(" -dimacs=" + Path.Combine(TEMP_FOLDER, outputResultFilename));
                         }
                         if (settings.ElimHandling != 0)
                         {
@@ -573,7 +593,7 @@ namespace Cryptool.Plugins.SATSolver
                                     //}
                                     //reader.Close();
 
-                                    using (reader = new StreamReader(outputResultFilename))
+                                    using (reader = new StreamReader(Path.Combine(TEMP_FOLDER, outputResultFilename)))
                                     {
                                         while ((line = reader.ReadLine()) != null)
                                         {
