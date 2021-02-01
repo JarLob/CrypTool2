@@ -139,28 +139,28 @@
     <value>Viertelrunde</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn1" xml:space="preserve">
-    <value>Viertelrunde(0,4,8,12)</value>
+    <value>VR(0,4,8,12)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn2" xml:space="preserve">
-    <value>Viertelrunde(1,5,9,13)</value>
+    <value>VR(1,5,9,13)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn3" xml:space="preserve">
-    <value>Viertelrunde(2,6,10,14)</value>
+    <value>VR(2,6,10,14)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn4" xml:space="preserve">
-    <value>Viertelrunde(3,7,11,15)</value>
+    <value>VR(3,7,11,15)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal1" xml:space="preserve">
-    <value>Viertelrunde(0,5,10,15)</value>
+    <value>VR(0,5,10,15)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal2" xml:space="preserve">
-    <value>Viertelrunde(1,6,11,12)</value>
+    <value>VR(1,6,11,12)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal3" xml:space="preserve">
-    <value>Viertelrunde(2,7,8,13)</value>
+    <value>VR(2,7,8,13)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal4" xml:space="preserve">
-    <value>Viertelrunde(3,4,9,14)</value>
+    <value>VR(3,4,9,14)</value>
   </data>
   <data name="ChaChaHashNavigationRoundLabel" xml:space="preserve">
     <value>Runde</value>
@@ -368,7 +368,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Als Bytes:</value>
   </data>
   <data name="StateMatrixEncodingConstants3" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingConstants4" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -380,10 +380,10 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingCounter2" xml:space="preserve">
-    <value>Bytereihenfolgeumkehren:</value>
+    <value>Bytereihenfolge umkehren:</value>
   </data>
   <data name="StateMatrixEncodingCounter3" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingCounter4" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -395,7 +395,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingIV2" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingIV3" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -407,7 +407,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingKey2" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingKey3" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>

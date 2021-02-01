@@ -10,6 +10,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class ChaChaPresentationViewModel : ViewModelBase, IChaCha
     {
+        public static string RESET_VISUALIZATION = "RESET_VISUALIZATION";
         public ChaChaPresentationViewModel(ChaCha chaCha)
         {
             ChaCha = chaCha;
@@ -30,9 +31,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// </summary>
         private void OnPluginPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == RESET_VISUALIZATION)
+            {
+                ShowXOR = false;
+                ChangePage(Pages[0]);
+            }
             OnPropertyChanged("NavigationEnabled");
-
-            ChangePage(Pages[0]);
         }
 
         #region Commands

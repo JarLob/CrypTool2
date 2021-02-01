@@ -191,7 +191,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                     StateActionCreator.HideLittleEndian();
                 });
 
-                Seq(() => { RoundsStep = false; });
+                Seq(() => {
+                    RoundsStep = false;
+                    CurrentRoundIndex = Settings.Rounds - 1;
+                    CurrentQRIndex = 3;
+                });
                 TagMatrixStartAction(keystreamBlock);
                 Seq(StateActionCreator.ShowOriginalState(localKeystreamBlock));
                 Seq(StateActionCreator.ShowAdditionResult(localKeystreamBlock));

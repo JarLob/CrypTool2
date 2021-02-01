@@ -3019,9 +3019,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColumnLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="0">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="0" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3034,9 +3038,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColumnLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="1">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="1" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3049,9 +3057,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColumnLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="2">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="2" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3064,9 +3076,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColumnLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="3">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="3" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3084,9 +3100,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiagonalLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="0">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="0" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3099,9 +3119,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiagonalLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="1">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="1" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
@@ -3114,9 +3138,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiagonalLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="2">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="2" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>

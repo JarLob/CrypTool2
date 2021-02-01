@@ -121,7 +121,7 @@
                                 <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" />
                                 bytes consist of the
                                 <Run Background="SkyBlue" Text="counter" />.
-                                The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.
+                                The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing is needed.
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>

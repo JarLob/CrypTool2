@@ -139,28 +139,28 @@
     <value>Quarterround</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn1" xml:space="preserve">
-    <value>Quarterround(0,4,8,12)</value>
+    <value>QR(0,4,8,12)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn2" xml:space="preserve">
-    <value>Quarterround(1,5,9,13)</value>
+    <value>QR(1,5,9,13)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn3" xml:space="preserve">
-    <value>Quarterround(2,6,10,14)</value>
+    <value>QR(2,6,10,14)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelColumn4" xml:space="preserve">
-    <value>Quarterround(3,7,11,15)</value>
+    <value>QR(3,7,11,15)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal1" xml:space="preserve">
-    <value>Quarterround(0,5,10,15)</value>
+    <value>QR(0,5,10,15)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal2" xml:space="preserve">
-    <value>Quarterround(1,6,11,12)</value>
+    <value>QR(1,6,11,12)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal3" xml:space="preserve">
-    <value>Quarterround(2,7,8,13)</value>
+    <value>QR(2,7,8,13)</value>
   </data>
   <data name="ChaChaHashNavigationQrLabelDiagonal4" xml:space="preserve">
-    <value>Quarterround(3,4,9,14)</value>
+    <value>QR(3,4,9,14)</value>
   </data>
   <data name="ChaChaHashNavigationRoundLabel" xml:space="preserve">
     <value>Round</value>
@@ -360,10 +360,10 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
     <value>Key</value>
   </data>
   <data name="StateMatrixDescription1" xml:space="preserve">
-    <value>The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.</value>
+    <value>The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They are encoded before insertion into the state matrix.</value>
   </data>
   <data name="StateMatrixDescription6" xml:space="preserve">
-    <value>On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.</value>
+    <value>On the next page, this initialized state matrix is passed to the ChaCha hash function to generate the first block of the keystream.</value>
   </data>
   <data name="StateMatrixEncodingConstants1" xml:space="preserve">
     <value>Original value (ASCII):</value>

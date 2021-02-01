@@ -28,6 +28,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Cryptool.Plugins.ChaCha.ViewModel;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -491,6 +492,7 @@ namespace Cryptool.Plugins.ChaCha
             Validate();
             if (IsValid)
             {
+                OnPropertyChanged(ChaChaPresentationViewModel.RESET_VISUALIZATION);
                 ClearIntermediateResults();
                 outputWriter = new CStreamWriter();
                 // If InitialCounter is not set by user, it defaults to zero.
@@ -636,10 +638,20 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ClearIntermediateResults()
         {
+            // matrices
             OriginalState.Clear();
+            OriginalStateDiffusion.Clear();
+            AdditionResultState.Clear();
+            AdditionResultStateDiffusion.Clear();
+            LittleEndianState.Clear();
+            LittleEndianStateDiffusion.Clear();
+            // qr
             QRInput.Clear();
+            QRInputDiffusion.Clear();
             QRStep.Clear();
+            QRStepDiffusion.Clear();
             QROutput.Clear();
+            QROutputDiffusion.Clear();
         }
 
         private List<uint[]> _stateDiffusion; public List<uint[]> OriginalStateDiffusion
