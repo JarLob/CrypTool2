@@ -46,8 +46,10 @@ namespace Cryptool.VigenereAnalyzer
         private bool _stopped;
         private DateTime _startTime;
         private DateTime _endTime;
-        private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private string _ciphertextInput;    
+        private const string DefaultAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string Alphabet = null;
+        private string _ciphertextInput;
+        private Grams _grams = null;
 
         public VigenereAnalyzer()
         {
@@ -94,8 +96,9 @@ namespace Cryptool.VigenereAnalyzer
       
         
         public void PreExecution()
-        {           
-            VigenereAlphabet = Alphabet;
+        {
+            Alphabet = DefaultAlphabet;
+            VigenereAlphabet = DefaultAlphabet;
         }
 
         public void PostExecution()
@@ -147,32 +150,22 @@ namespace Cryptool.VigenereAnalyzer
                 return;
             }
 
-            if(VigenereAlphabet.Length != Alphabet.Length)
+            
+            try
             {
-                GuiLogMessage(string.Format("The Vigenère Analyzer only supports alphabets of length 26"), NotificationLevel.Error);
-                return;
+                _grams = new Pentagrams(LanguageStatistics.LanguageCode(_settings.Language), false);
+            }
+            catch (Exception ex)
+            {
+                _grams = new Tetragrams(LanguageStatistics.LanguageCode(_settings.Language), false);
             }
 
-            //Check, if the given Vigenere Alphabet is valid
-            var numvigalphabet = MapTextIntoNumberSpace(VigenereAlphabet, Alphabet);
-            var builder = new StringBuilder();
-            var pos = 0;            
-            foreach(var number in numvigalphabet)
+            //Create a unique alphabet from the given (maybe permuted) alphabet
+            if (!string.IsNullOrEmpty(VigenereAlphabet))
             {
-                if(number == -1)
-                {
-                    builder.Append(VigenereAlphabet[pos]);
-                    builder.Append(",");
-                }
-                pos++;
+                Alphabet = string.Join("", VigenereAlphabet.Distinct().OrderBy(q => q).ToArray());
+                _grams.ReduceAlphabet(Alphabet);
             }
-
-            if(builder.Length > 0)
-            {
-                builder.Remove(builder.Length - 1, 1);
-                GuiLogMessage(string.Format("Invalid characters in Vigenère alphabet: {0}", builder.ToString()), NotificationLevel.Error);
-                return;
-            }                   
 
             var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(_ciphertextInput.ToUpper(), Alphabet), Alphabet);
 
@@ -277,16 +270,7 @@ namespace Cryptool.VigenereAnalyzer
             var lasttime = DateTime.Now;
             var keys = 0;
 
-            var runkey = new int[keylength];
-
-            Grams grams = null;
-            try
-            {
-                grams = new Pentagrams(LanguageStatistics.LanguageCode(_settings.Language), false);
-            }catch(Exception ex)
-            {
-                grams = new Tetragrams(LanguageStatistics.LanguageCode(_settings.Language), false);
-            }
+            var runkey = new int[keylength];          
 
             while (restarts > 0)
             {
@@ -324,7 +308,7 @@ namespace Cryptool.VigenereAnalyzer
                             plaintext = decryptVigenereFunction(plaintext, runkey, numvigalphabet, i, ciphertext);                          
 
                             keys++;
-                            var costvalue = grams.CalculateCost(plaintext);
+                            var costvalue = _grams.CalculateCost(plaintext);
                             
                             if (costvalue > bestkeycost)
                             {

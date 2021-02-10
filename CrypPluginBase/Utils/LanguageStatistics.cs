@@ -588,10 +588,46 @@ namespace Cryptool.PluginBase.Utils
     public abstract class Grams
     {
         public string Alphabet { get; protected set; }
+        public int[] addLetterIndicies = null;
         public abstract double CalculateCost(int[] text);
         public abstract double CalculateCost(List<int> text);
         public abstract int GramSize();
         public abstract GramsType GramsType();
+
+
+        /// <summary>
+        /// This method reduces the alphabet by "blending out" letters that are not in this alphabet
+        /// Letters in the used alphabet have to be in the original alphabet of this Grams
+        /// 
+        /// example
+        /// 
+        /// original ABCDEFGH
+        /// new      ABCEFH
+        /// 
+        /// addLetterIndicies will be 000122
+        /// These add values are then added during cost calculation
+        /// This "fixes" the letter indices to be compatible with smaller alphabets
+        /// 
+        /// </summary>
+        /// <param name="newAlphabet"></param>
+        public void ReduceAlphabet(string newAlphabet)
+        {
+            if (newAlphabet.Length == Alphabet.Length)
+            {
+                addLetterIndicies = null;
+                return;
+            }
+            addLetterIndicies = new int[newAlphabet.Length];
+            int addValue = 0;
+            for (int i = 0; i < newAlphabet.Length; i++)
+            {
+                if (!newAlphabet.Contains(Alphabet[i]))
+                {
+                    addValue++;
+                }
+                addLetterIndicies[i] = addValue;
+            }
+        }
     }
 
     public class Unigrams : Grams
@@ -611,21 +647,28 @@ namespace Cryptool.PluginBase.Utils
             Alphabet = file.Alphabet;
         }
 
-        public override double CalculateCost(int[] plaintext)
+        public override double CalculateCost(int[] text)
         {
-            int end = plaintext.Length;
+            int end = text.Length;
             if (end <= 0) return 0;
 
             double value = 0;
 
             for (int i = 0; i < end; i++)
             {
-                if (plaintext[i] >= Alphabet.Length ||
-                    plaintext[i] < 0)
+                var a = text[i];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                }
+
+                if (a >= Alphabet.Length ||
+                    a < 0)
                 {
                     continue;
                 }
-                value += Frequencies[plaintext[i]];
+                value += Frequencies[a];
 
             }
             return value / end;
@@ -645,12 +688,19 @@ namespace Cryptool.PluginBase.Utils
 
             for (int i = 0; i < end; i++)
             {
-                if (text[i] >= Alphabet.Length ||
-                    text[i] < 0)
+                var a = text[i];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];                    
+                }
+
+                if (a >= Alphabet.Length ||
+                    a < 0)
                 {
                     continue;
                 }
-                value += Frequencies[text[i]];
+                value += Frequencies[a];
 
             }
             return value / end;
@@ -660,6 +710,7 @@ namespace Cryptool.PluginBase.Utils
         {
             return LanguageStatistics.GramsType.Unigrams;
         }
+      
     }
 
     public class Bigrams : Grams
@@ -691,6 +742,13 @@ namespace Cryptool.PluginBase.Utils
             {
                 var a = text[i];
                 var b = text[i + 1];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     a < 0 ||
@@ -720,6 +778,13 @@ namespace Cryptool.PluginBase.Utils
             {
                 var a = text[i];
                 var b = text[i + 1];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     a < 0 ||
@@ -736,6 +801,7 @@ namespace Cryptool.PluginBase.Utils
         {
             return LanguageStatistics.GramsType.Bigrams;
         }
+
     }
 
     public class Trigrams : Grams
@@ -768,6 +834,14 @@ namespace Cryptool.PluginBase.Utils
                 var a = text[i];
                 var b = text[i + 1];
                 var c = text[i + 2];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     c >= alphabetLength ||
@@ -800,6 +874,14 @@ namespace Cryptool.PluginBase.Utils
                 var a = text[i];
                 var b = text[i + 1];
                 var c = text[i + 2];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     c >= alphabetLength ||
@@ -818,6 +900,7 @@ namespace Cryptool.PluginBase.Utils
         {
             return LanguageStatistics.GramsType.Trigrams;
         }
+
     }
 
     public class Tetragrams : Grams
@@ -851,6 +934,15 @@ namespace Cryptool.PluginBase.Utils
                 var b = text[i + 1];
                 var c = text[i + 2];
                 var d = text[i + 3];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     c >= alphabetLength ||
@@ -886,6 +978,15 @@ namespace Cryptool.PluginBase.Utils
                 var b = text[i + 1];
                 var c = text[i + 2];
                 var d = text[i + 3];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                }
+
                 if (a >= alphabetLength ||
                     b >= alphabetLength ||
                     c >= alphabetLength ||
@@ -906,11 +1007,12 @@ namespace Cryptool.PluginBase.Utils
         {
             return LanguageStatistics.GramsType.Tetragrams;
         }
+
     }
 
     public class Pentagrams : Grams
     {
-        public float[,,,,] Frequencies;
+        public float[,,,,] Frequencies;        
 
         public Pentagrams(string language, bool useSpaces = false)
         {
@@ -940,6 +1042,16 @@ namespace Cryptool.PluginBase.Utils
                 var c = text[i + 2];
                 var d = text[i + 3];
                 var e = text[i + 4];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                    e += addLetterIndicies[e];
+                }
+
                 if (a >= alphabetLength ||
                    b >= alphabetLength ||
                    c >= alphabetLength ||
@@ -978,6 +1090,16 @@ namespace Cryptool.PluginBase.Utils
                 var c = text[i + 2];
                 var d = text[i + 3];
                 var e = text[i + 4];
+
+                if(addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                    e += addLetterIndicies[e];
+                }
+
                 if (a >= alphabetLength ||
                    b >= alphabetLength ||
                    c >= alphabetLength ||
@@ -1035,6 +1157,17 @@ namespace Cryptool.PluginBase.Utils
                 var d = text[i + 3];
                 var e = text[i + 4];
                 var f = text[i + 5];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                    e += addLetterIndicies[e];
+                    f += addLetterIndicies[f];
+                }
+
                 if (a >= alphabetLength ||
                    b >= alphabetLength ||
                    c >= alphabetLength ||
@@ -1076,6 +1209,17 @@ namespace Cryptool.PluginBase.Utils
                 var d = text[i + 3];
                 var e = text[i + 4];
                 var f = text[i + 4];
+
+                if (addLetterIndicies != null)
+                {
+                    a += addLetterIndicies[a];
+                    b += addLetterIndicies[b];
+                    c += addLetterIndicies[c];
+                    d += addLetterIndicies[d];
+                    e += addLetterIndicies[e];
+                    f += addLetterIndicies[f];
+                }
+
                 if (a >= alphabetLength ||
                    b >= alphabetLength ||
                    c >= alphabetLength ||
@@ -1100,6 +1244,7 @@ namespace Cryptool.PluginBase.Utils
         {
             return LanguageStatistics.GramsType.Hexagrams;
         }
+
     }
 
 
