@@ -24,53 +24,71 @@ namespace Cryptool.Plugins.ChaCha
     {
         #region Private Variables
 
-        private int rounds = 20;
-        private Version version;
+        private int _rounds = 20;
+        private Version _version;
 
         #endregion Private Variables
 
         #region TaskPane Settings
 
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
-        public int Rounds
+        public int RoundsIndex
         {
-            get { return rounds; }
+            get
+            {
+                // We need to return the index of the entry we want to display.
+                switch (Rounds)
+                {
+                    case 8: return 0;
+                    case 12: return 1;
+                    case 20: return 2;
+                    default: return 2;
+                }
+            }
             set
             {
                 // The CT2 environment calls this setter with the index thus we map the indices to the actual round value.
-                // The ChaCha Unittest calls this setter with the actual round value,
-                // that's why there is a fallthrough with the actual round value for each case.
                 switch (value)
                 {
                     case 0:
-                    case 8:
-                        rounds = 8;
+                        Rounds = 8;
                         break;
 
                     case 1:
-                    case 12:
-                        rounds = 12;
+                        Rounds = 12;
                         break;
 
                     case 2:
-                    case 20:
-                        rounds = 20;
+                        Rounds = 20;
                         break;
                 }
                 OnPropertyChanged("Rounds");
             }
         }
 
+        public int Rounds
+        {
+            get
+            {
+                return _rounds;
+            }
+            set
+            {
+                _rounds = value;
+                OnPropertyChanged("Rounds");
+            }
+        }
+
         [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "DJB", "IETF" })]
-        public int IntVersion
+        public int VersionIndex
         {
             get { return Version.Name == Version.DJB.Name ? 0 : 1; }
             set
             {
-                Version intVersion = value == 0 ? Version.DJB : Version.IETF;
-                if (Version.Name != intVersion.Name)
+                Version selectedVersion = value == 0 ? Version.DJB : Version.IETF;
+                if (Version.Name != selectedVersion.Name)
                 {
-                    Version = intVersion;
+                    Version = selectedVersion;
                     OnPropertyChanged("IntVersion");
                 }
             }
@@ -80,17 +98,17 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                if (version == null)
+                if (_version == null)
                 {
-                    version = Version.DJB;
+                    _version = Version.DJB;
                 }
-                return version;
+                return _version;
             }
             private set
             {
-                if (version.Name != value.Name)
+                if (_version.Name != value.Name)
                 {
-                    version = value;
+                    _version = value;
                     OnPropertyChanged("Version");
                 }
             }

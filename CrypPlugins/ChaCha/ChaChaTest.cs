@@ -13,7 +13,9 @@ namespace Tests.TemplateAndPluginTests
         private void RunTests(TestVector[] vectors)
         {
             var pluginInstance = TestHelpers.GetPluginInstance("ChaCha");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputStream", "InputKey", "InputIV", "InitialCounter", ".Rounds", ".IntVersion" }, new[] { "OutputStream" });
+            // We use .VersionIndex instead of .Version because else we would need to include the ChaCha namespace since we need to use the Version type.
+            // With .VersionIndex, we can simply use integers to set the version.
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputStream", "InputKey", "InputIV", "InitialCounter", ".Rounds", ".VersionIndex" }, new[] { "OutputStream" });
 
             foreach (TestVector vector in vectors)
             {

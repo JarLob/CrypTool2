@@ -20,6 +20,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.ChaCha.Helper;
 using Cryptool.Plugins.ChaCha.Model;
 using Cryptool.Plugins.ChaCha.View;
+using Cryptool.Plugins.ChaCha.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Cryptool.Plugins.ChaCha.ViewModel;
 
 namespace Cryptool.Plugins.ChaCha
 {
