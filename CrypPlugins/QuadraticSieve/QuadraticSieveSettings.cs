@@ -112,12 +112,11 @@ namespace Cryptool.Plugins.QuadraticSieve
         /// <summary>
         /// Getter / Setter to enable/disable the use of peer2peer
         /// </summary>
-        [TaskPane( "UsePeer2PeerCaption", "UsePeer2PeerTooltip", null, 3, false, ControlType.CheckBox, "", null)]
+        //[TaskPane( "UsePeer2PeerCaption", "UsePeer2PeerTooltip", null, 3, false, ControlType.CheckBox, "", null)]
         public bool UsePeer2Peer
         {
             get
             {
-                //TODO CKONZE reenable p2p
                 if (false)
                 {
                     UsePeer2Peer = false;

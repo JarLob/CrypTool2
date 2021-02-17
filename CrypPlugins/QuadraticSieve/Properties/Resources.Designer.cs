@@ -142,7 +142,7 @@ namespace QuadraticSieve.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Day ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die day ähnelt.
         /// </summary>
         internal static string day {
             get {
@@ -250,7 +250,7 @@ namespace QuadraticSieve.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hour ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die hour ähnelt.
         /// </summary>
         internal static string hour {
             get {
@@ -313,7 +313,7 @@ namespace QuadraticSieve.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Minute ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die minute ähnelt.
         /// </summary>
         internal static string minute {
             get {
@@ -502,7 +502,7 @@ namespace QuadraticSieve.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Second ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die second ähnelt.
         /// </summary>
         internal static string second {
             get {

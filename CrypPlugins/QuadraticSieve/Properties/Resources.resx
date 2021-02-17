@@ -286,16 +286,16 @@
     <value>digits</value>
   </data>
   <data name="day" xml:space="preserve">
-    <value>Day</value>
+    <value>day</value>
   </data>
   <data name="hour" xml:space="preserve">
-    <value>Hour</value>
+    <value>hour</value>
   </data>
   <data name="minute" xml:space="preserve">
-    <value>Minute</value>
+    <value>minute</value>
   </data>
   <data name="second" xml:space="preserve">
-    <value>Second</value>
+    <value>second</value>
   </data>
   <data name="NoneLeft" xml:space="preserve">
     <value>None</value>
