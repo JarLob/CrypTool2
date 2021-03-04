@@ -1183,7 +1183,7 @@
 
                         <dd:DockWindowGroup x:Name="dockWindowGroupAlgorithmSettings">
                             <dd:DockWindow Name="dockWindowAlgorithmSettings" Header="{Loc Parameters}" CanAutoHide="False" ImageSource="images/MyFiles16.png" IsAutoHide="False" AutoHideOpen="False" 
-                           CanClose="True" CanDockAsDocument="False" AutoHideChanged="dockWindowAlgorithmSettings_AutoHideChanged" Closed="dockWindowAlgorithmSettings_Closed">
+                           CanClose="True" CanDockAsDocument="False" Closed="dockWindowAlgorithmSettings_Closed">
                             </dd:DockWindow>
                         </dd:DockWindowGroup>
                     </dd:SplitPanel>

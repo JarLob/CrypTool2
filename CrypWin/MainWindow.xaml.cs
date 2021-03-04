@@ -2862,7 +2862,9 @@ namespace Cryptool.CrypWin
         {
             ComboBox box = (ComboBox)sender;
             if (box.SelectedIndex < 0)
+            {
                 return;
+            }
 
             MainTab.SelectedItem = box.Items[box.SelectedIndex];
         }
@@ -2871,11 +2873,7 @@ namespace Cryptool.CrypWin
         {
             Visibility v = ((ButtonDropDown)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed;
             Properties.Settings.Default.SettingVisibility = v.ToString();
-            SaveSettingsSavely();
-            
-            //if (v == Visibility.Visible)
-            //    dockWindowAlgorithmSettings.Open();
-            //else
+            SaveSettingsSavely();            
             dockWindowAlgorithmSettings.Close();
         }
 
@@ -2913,75 +2911,20 @@ namespace Cryptool.CrypWin
 
         void doHandleMaxTab() 
         {
-            //if (ActiveEditor != null)
-            {
+           {
                 var prop = (ActiveEditor==null) ? defaultPanelProperties : editorTypePanelManager.GetEditorTypePanelProperties(ActiveEditor.GetType());
                 if (ActiveEditor is WorkspaceManager.WorkspaceManagerClass)
                     prop.ShowSettingsPanel = ((WorkspaceManager.View.Visuals.EditorVisual)((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation).IsSettingsOpen;
                 if (prop.IsMaximized) prop.Minimize(); else prop.Maximize();
                 ShowEditorSpecificPanels(ActiveEditor);
-            }
-            //else
-            //{
-            //    if (LogBTN.IsChecked)
-            //    {
-            //        MaximizeTab();
-            //    }
-            //    else
-            //    {
-            //        MinimizeTab();
-            //    }
-            //}
-
-            //if (LogBTN.IsChecked || SettingBTN.IsChecked || PluginBTN.IsChecked)
-            //{
-            //    MaximizeTab();
-            //}
-            //else
-            //{
-            //    //Normalize tab:
-            //    if (ActiveEditor != null)
-            //    {
-            //        var prop = editorTypePanelManager.GetEditorTypePanelProperties(ActiveEditor.GetType());
-            //        prop.ShowMaximized = false;
-            //        editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), prop);
-            //        ShowEditorSpecificPanels(ActiveEditor);
-            //    }
-            //    else
-            //    {
-            //        MinimizeTab();
-            //    }
-            //}
+            }          
         }
 
         void handleMaximizeTab(object sender, EventArgs e)
         {
             doHandleMaxTab();
         }
-
-        private void MaximizeTab()
-        {
-            //if (ActiveEditor != null)
-            //{
-            //    //save status before maximizing, so it can be restored later:
-            //    editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
-            //                                                                                    {
-            //                                                                                        ShowComponentPanel = PluginBTN.IsChecked,
-            //                                                                                        ShowLogPanel = LogBTN.IsChecked,
-            //                                                                                        ShowSettingsPanel = SettingBTN.IsChecked,
-            //                                                                                        ShowMaximized = true
-            //                                                                                    });
-            //}
-
-            LogBTN.IsChecked = false;
-            SettingBTN.IsChecked = false;
-            PluginBTN.IsChecked = false;
-
-            LogBTN_Checked(LogBTN, null);
-            SettingBTN_Checked(SettingBTN, null);
-            PluginBTN_Checked(PluginBTN, null);
-        }
-
+        
         private void MinimizeTab()
         {
             LogBTN.IsChecked = true;
@@ -2991,70 +2934,7 @@ namespace Cryptool.CrypWin
             LogBTN_Checked(LogBTN, null);
             SettingBTN_Checked(SettingBTN, null);
             PluginBTN_Checked(PluginBTN, null);
-        }
-
-        private void dockWindowAlgorithmSettings_AutoHideChanged(object sender, RoutedEventArgs e)
-        {
-
-            //if (activePlugin == null)
-            //    return;
-
-            //this.taskpaneCtrl.OnGuiLogNotificationOccured -= OnGuiLogNotificationOccured;
-            //this.taskpaneCtrl.OnShowPluginDescription -= OnShowPluginDescription;
-            //this.taskpaneCtrl = new TaskPaneCtrl(this);
-            //this.taskpaneCtrl.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-            //this.taskpaneCtrl.OnShowPluginDescription += OnShowPluginDescription;
-            //taskpaneCtrl.DisplayPluginSettings(activePlugin, activePluginTitle, activePluginMode);
-            ////if (!listPluginsAlreadyInitialized.Contains(activePlugin))
-            ////{
-            ////    listPluginsAlreadyInitialized.Add(activePlugin);
-            ////    activePlugin.Initialize();
-            ////}
-        }
-
-        //private void ButtonDropDown2_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ButtonDropDown btn = (ButtonDropDown)sender;
-        //    switch (btn.Name)
-        //    {
-        //        case "LogBTN":
-        //            if (btn.IsChecked)
-        //            {
-        //                btn.IsChecked = false;
-        //                splitPanelLogMessages.Visibility = System.Windows.Visibility.Visible;
-        //            }
-        //            else
-        //            {
-        //                btn.IsChecked = true;
-        //                splitPanelLogMessages.Visibility = System.Windows.Visibility.Collapsed;
-        //            }
-        //            break;
-        //        case "SettingBTN":
-        //            if (btn.IsChecked)
-        //            {
-        //                btn.IsChecked = false;
-        //                splitPanelAlgorithmSettings.Visibility = System.Windows.Visibility.Visible;
-        //            }
-        //            else
-        //            {
-        //                btn.IsChecked = true;
-        //                splitPanelAlgorithmSettings.Visibility = System.Windows.Visibility.Collapsed;
-        //            }
-        //            break;
-        //        case "PluginBTN":
-        //            if (btn.IsChecked)
-        //            {
-        //                btn.IsChecked = false;
-        //                splitPanelNaviPaneAlgorithms.Visibility = System.Windows.Visibility.Visible;
-        //            }
-        //            else
-        //            {
-        //                btn.IsChecked = true;
-        //                splitPanelNaviPaneAlgorithms.Visibility = System.Windows.Visibility.Collapsed;
-        //            }
-        //            break;
-        //    }
-        //}
+        }       
 
         private void ShowHelpPage(object docEntity)
         {

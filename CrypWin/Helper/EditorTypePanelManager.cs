@@ -41,7 +41,7 @@ namespace Cryptool.CrypWin.Helper
             {
                 get
                 {
-                    return !(ShowLogPanel || ShowSettingsPanel || ShowComponentPanel);
+                    return !(ShowLogPanel || ShowComponentPanel);
                 }
             }
 
