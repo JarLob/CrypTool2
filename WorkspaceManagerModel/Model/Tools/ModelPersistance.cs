@@ -50,11 +50,11 @@ namespace WorkspaceManager.Model
             WorkspaceModel workspacemodel = persistantModel.WorkspaceModel;
             restoreSettings(persistantModel, workspacemodel);
 
-            workspacemodel.AllConnectionModels = CheckModelListForCorruption(workspacemodel.AllConnectionModels);
-            workspacemodel.AllConnectorModels = CheckModelListForCorruption(workspacemodel.AllConnectorModels);
-            workspacemodel.AllImageModels = CheckModelListForCorruption(workspacemodel.AllImageModels);
-            workspacemodel.AllPluginModels = CheckModelListForCorruption(workspacemodel.AllPluginModels);
-            workspacemodel.AllTextModels = CheckModelListForCorruption(workspacemodel.AllTextModels);
+            workspacemodel.AllConnectionModels = CheckModelListForCorruption(workspacemodel.AllConnectionModels, filename);
+            workspacemodel.AllConnectorModels = CheckModelListForCorruption(workspacemodel.AllConnectorModels, filename);
+            workspacemodel.AllImageModels = CheckModelListForCorruption(workspacemodel.AllImageModels, filename);
+            workspacemodel.AllPluginModels = CheckModelListForCorruption(workspacemodel.AllPluginModels, filename);
+            workspacemodel.AllTextModels = CheckModelListForCorruption(workspacemodel.AllTextModels, filename);
 
             if (handleTemplateReplacement)
             {
@@ -71,16 +71,15 @@ namespace WorkspaceManager.Model
             return workspacemodel;
         }
 
-        private List<T> CheckModelListForCorruption<T>(List<T> modelList)
+        private List<T> CheckModelListForCorruption<T>(List<T> modelList, string filename)
         {
             //There has been a bug in CT2, which led to double entries of the same objects in internal model lists.
             var distinctModelList = modelList.Distinct().ToList();
             if (distinctModelList.Count != modelList.Count)
             {
-                GuiLogMessage("The workspace model is corrupt due to double entries in internal lists. It has been repaired by the load routine.", NotificationLevel.Error);
+                GuiLogMessage(string.Format("The workspace model of file {0} is corrupt due to double entries in internal lists. It has been automatically repaired by the load routine.", filename), NotificationLevel.Warning);
                 return distinctModelList;
             }
-
             return modelList;
         }
 
