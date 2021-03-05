@@ -169,11 +169,38 @@ namespace Cryptool.PluginBase.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Polish ähnelt.
+        /// </summary>
+        public static string LanguagePL {
+            get {
+                return ResourceManager.GetString("LanguagePL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Portuguese ähnelt.
+        /// </summary>
+        public static string LanguagePT {
+            get {
+                return ResourceManager.GetString("LanguagePT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Russian ähnelt.
         /// </summary>
         public static string LanguageRU {
             get {
                 return ResourceManager.GetString("LanguageRU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Swedish ähnelt.
+        /// </summary>
+        public static string LanguageSV {
+            get {
+                return ResourceManager.GetString("LanguageSV", resourceCulture);
             }
         }
         

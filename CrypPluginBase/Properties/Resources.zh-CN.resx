@@ -178,4 +178,13 @@
   <data name="UnicodeData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UnicodeData.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="LanguagePL" xml:space="preserve">
+    <value>抛光</value>
+  </data>
+  <data name="LanguagePT" xml:space="preserve">
+    <value>葡萄牙语</value>
+  </data>
+  <data name="LanguageSV" xml:space="preserve">
+    <value>瑞典</value>
+  </data>
 </root>

@@ -168,4 +168,13 @@
   <data name="LanguageNL" xml:space="preserve">
     <value>Niederländisch</value>
   </data>
+  <data name="LanguagePL" xml:space="preserve">
+    <value>Polnisch</value>
+  </data>
+  <data name="LanguagePT" xml:space="preserve">
+    <value>Portugiesisch</value>
+  </data>
+  <data name="LanguageSV" xml:space="preserve">
+    <value>Schwedisch</value>
+  </data>
 </root>

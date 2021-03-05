@@ -31,7 +31,10 @@ namespace Cryptool.PluginBase.Utils
             Czech,
             Greek,
             Latin,
-            Dutch
+            Dutch,
+            Swdish,
+            Portuguese,
+            Polish
         }
 
         /// <summary>
@@ -53,7 +56,10 @@ namespace Cryptool.PluginBase.Utils
                     Resources.LanguageCS,
                     Resources.LanguageEL,
                     Resources.LanguageLA,
-                    Resources.LanguageNL
+                    Resources.LanguageNL,
+                    Resources.LanguageSV,
+                    Resources.LanguagePT,
+                    Resources.LanguagePL,
                 };
             }
         }
@@ -77,7 +83,10 @@ namespace Cryptool.PluginBase.Utils
                     "cs", 
                     "el", 
                     "la", 
-                    "nl" 
+                    "nl",
+                    "sv",
+                    "pt",
+                    "pl"
                 };
             }
         }
@@ -113,17 +122,20 @@ namespace Cryptool.PluginBase.Utils
 
         public static Dictionary<string, string> Alphabets = new Dictionary<string, string>()
         {
-            { "en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-            { "de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },
-            { "es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÑÓÚÜ" },
-            { "fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂŒÇÈÉÊËÎÏÔÙÛ" },
-            { "it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-            { "hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÖŐÚÜŰ" },
-            { "ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },
-            { "cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
-            { "el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
-            { "la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-            { "nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+            {"en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // English
+            {"de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },                  // German
+            {"fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // French
+            {"es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ" },                     // Spanish
+            {"it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Italian
+            {"hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Hungarian
+            {"ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },               // Russian
+            {"cs", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Slovak
+            {"la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Latin
+            {"el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },                        // Greek
+            {"nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},                       // Dutch
+            {"sv", "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"},                    // Swedish
+            {"pt", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},                       // Portuguese 
+            {"pl", "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ"}               // Polish
         };
 
         /// <summary>
@@ -1259,6 +1271,8 @@ namespace Cryptool.PluginBase.Utils
 
         public string Alphabet { get; private set; }
 
+        public string LanguageCode { get; private set; }
+
         public LanguageStatisticsFile(string filePath)
         {
             this.filePath = filePath;
@@ -1275,6 +1289,9 @@ namespace Cryptool.PluginBase.Utils
                 {
                     throw new Exception("File does not start with the expected magic number for language statistics.");
                 }
+
+                //read the stored language code, e.g. EN for English
+                LanguageCode = br.ReadString();
 
                 var gramLength = br.ReadInt32();
                 if (gramLength != arrayDimensions)

@@ -174,4 +174,13 @@
   <data name="LanguageNL" xml:space="preserve">
     <value>Голландский</value>
   </data>
+  <data name="LanguagePL" xml:space="preserve">
+    <value>Польский</value>
+  </data>
+  <data name="LanguagePT" xml:space="preserve">
+    <value>португальский</value>
+  </data>
+  <data name="LanguageSV" xml:space="preserve">
+    <value>Шведский</value>
+  </data>
 </root>
