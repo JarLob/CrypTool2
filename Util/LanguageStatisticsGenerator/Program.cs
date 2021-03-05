@@ -6,163 +6,284 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace LanguageStatisticsGenerator
-{
+{        
     public class NGrams
     {
-        public string alphabet;
+        public static Dictionary<string, string> alphabets = new Dictionary<string, string>
+        {
+                {"en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // English
+                {"de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },                  // German
+                {"fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // French
+                {"es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ" },                     // Spanish
+                {"it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Italian
+                {"hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Hungarian
+                {"ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },               // Russian
+                {"cs", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Slovak
+                {"la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },                      // Latin
+                {"el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },                        // Greek
+                {"nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},                       // Dutch
+                {"sv", "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"},                    // Swedish
+                {"pt", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},                       // Portuguese 
+                {"pl", "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ"}               // Polish
+        };
+
+        private ConcurrentQueue<string> _fileQueue = new ConcurrentQueue<string>();
+        private object _lockobject = new object();
+        
+        private const int NGRAM_SIZE = 5;
+        private const int WORKERS = 8;
+
+        public string _alphabet;
 
         //public uint[,,,,,,] freq7;
-        public uint[,,,,,] freq6;
-        public uint[,,,,] freq5;
-        public uint[,,,] freq4;
-        public uint[,,] freq3;
-        public uint[,] freq2;
-        public uint[] freq1;
+        //public uint[,,,,,] _freq6;
+        public uint[,,,,] _freq5;
+        public uint[,,,] _freq4;
+        public uint[,,] _freq3;
+        public uint[,] _freq2;
+        public uint[] _freq1;
 
-        public uint max;
-        public ulong sum;
+        public uint _max = 0;
+        public ulong _sum = 0;
 
         // create statistics from directory
         public NGrams(string alphabet, string path, bool useSpace)
         {
             if (!useSpace) alphabet.Replace(" ", "");
             if (useSpace && !alphabet.Contains(" ")) alphabet += " ";
-
-            this.alphabet = alphabet;
-            var char2num = Enumerable.Range(0, alphabet.Length).ToDictionary(i => alphabet[i]);
-
-            string line;
-            int counter = 0;
-            int j = 0;
-            string pattern = "[^" + alphabet + "]";
+            _alphabet = alphabet;
 
             //freq7 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            freq6 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            freq5 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            freq4 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            freq3 = new uint[alphabet.Length, alphabet.Length, alphabet.Length];
-            freq2 = new uint[alphabet.Length, alphabet.Length];
-            freq1 = new uint[alphabet.Length];
+            //_freq6 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+            _freq5 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+            _freq4 = new uint[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+            _freq3 = new uint[alphabet.Length, alphabet.Length, alphabet.Length];
+            _freq2 = new uint[alphabet.Length, alphabet.Length];
+            _freq1 = new uint[alphabet.Length];
 
             Console.WriteLine("Creating files list");
             string[] files = Directory.GetFiles(path, "*.zip", SearchOption.AllDirectories);
             Console.WriteLine("Files list created");
-
-            foreach (var filename in files)
+            
+            foreach(var file in files)
             {
-                try
+                _fileQueue.Enqueue(file);
+            }
+
+            Console.WriteLine("Starting worker tasks");
+            List<Task> tasks = new List<Task>();
+            int totalFiles = _fileQueue.Count;
+            for (int i = 0; i < WORKERS; i++)
+            {
+                var task = Task.Run(() => ProcessBookFiles(i, totalFiles));
+                tasks.Add(task);
+                while (task.Status != TaskStatus.Running)
                 {
-                    Console.WriteLine(String.Format("Reading {0}", filename));
-                    using (ZipArchive zipfile = ZipFile.OpenRead(filename))
+                    Thread.Sleep(10);
+                }                
+            }
+            Console.WriteLine("Worker tasks started");
+
+            Console.WriteLine("Waiting for worker tasks to finish");
+            tasks.WaitAll();
+            Console.WriteLine("Worker tasks finished");
+            Console.WriteLine("Calculating statistics");
+            GetMaxAndSum(NGRAM_SIZE);
+            Console.WriteLine("Finished calculating statistics");
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+        }
+
+        public void ProcessBookFiles(int taskId, int totalFiles)
+        {
+            Console.WriteLine("Task {0} started", taskId);
+            DateTime startTime = DateTime.Now;
+
+            var book = new char[1024 * 1024 * 100];
+            //var freq6 = new uint[_alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length];
+            var freq5 = new uint[_alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length];
+            var freq4 = new uint[_alphabet.Length, _alphabet.Length, _alphabet.Length, _alphabet.Length];
+            var freq3 = new uint[_alphabet.Length, _alphabet.Length, _alphabet.Length];
+            var freq2 = new uint[_alphabet.Length, _alphabet.Length];
+            var freq1 = new uint[_alphabet.Length];
+            
+            long totalValidLetters = 0;
+            
+            DateTime lastProcessTime = DateTime.Now;
+
+            while (_fileQueue.Count > 0)
+            {                
+                if (taskId == 0 && DateTime.Now > lastProcessTime.AddSeconds(1))
+                {
+                    lastProcessTime = DateTime.Now;
+                    int finished = totalFiles - _fileQueue.Count;
+
+                    var totalSec = (DateTime.Now - startTime).TotalSeconds;
+                    var speed = totalSec / (float)finished;
+                    var remainingSeconds = (int)(speed * (totalFiles - finished));
+                    TimeSpan remainingTime = new TimeSpan(0, 0, 0, remainingSeconds);
+
+                    Console.Write("\rFinished {0} from {1} files: {2:0.##} % ({3} left)     ", finished, totalFiles, ((double)finished) / totalFiles * 100, remainingTime);
+                }
+
+                bool startfound = false;
+                int index = 0;
+                int offset = 0;
+                var letterBuffer = new int[6];
+                string filename;
+                                
+                if (_fileQueue.TryDequeue(out filename))
+                {
+                    //read unzipped text file(s) into memory
+                    try
                     {
-                        foreach (ZipArchiveEntry entry in zipfile.Entries)
+                        using (ZipArchive zipfile = ZipFile.Open(filename, ZipArchiveMode.Read))
                         {
-                            if (!entry.FullName.EndsWith("txt"))
+                            foreach (ZipArchiveEntry entry in zipfile.Entries)
                             {
-                                continue;
-                            }
-                            using (var stream = entry.Open())
-                            {
-                                using (StreamReader sr = new StreamReader(stream))
+                                if (!entry.FullName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    bool startfound = false;
-                                    bool endfound = false;
-
-                                    while ((line = sr.ReadLine()) != null && !endfound)
+                                    continue;
+                                }
+                                using (var stream = entry.Open())
+                                {
+                                    using (StreamReader streamReader = new StreamReader(stream))
                                     {
-                                        string w = line.Substring(line.IndexOf('\t') + 1).ToUpper();
-                                        
-                                        if (!startfound) // search for start line
+                                        while (!streamReader.EndOfStream && entry.Length - offset != 0)
                                         {
-                                            if (w.StartsWith("*** START"))
-                                            {
-                                                startfound = true;
-                                            }
-                                            continue;
-                                        }
-                                        if (!endfound) // search for end line
-                                        {
-                                            if (w.StartsWith("*** END"))
-                                            {
-                                                endfound = true;
-                                                continue;
-                                            }                                            
-                                        }
-
-                                        w = w.Replace("Á", "A");
-                                        w = w.Replace("Â", "A");
-                                        w = w.Replace("À", "A");
-
-                                        w = w.Replace("É", "E");
-                                        w = w.Replace("Ê", "E");
-                                        w = w.Replace("È", "E");
-
-                                        w = w.Replace("Í", "I");
-                                        w = w.Replace("Î", "I");
-                                        w = w.Replace("Ì", "I");
-
-                                        w = w.Replace("Ó", "O");
-                                        w = w.Replace("Ô", "O");
-                                        w = w.Replace("Ò", "O");
-
-                                        w = w.Replace("Ú", "U");
-                                        w = w.Replace("Û", "U");
-                                        w = w.Replace("Ù", "U");
-
-                                        if (useSpace)
-                                        {
-                                            w = " " + w + " ";
-                                            w = Regex.Replace(w, pattern, "");
-                                            w = Regex.Replace(w, " +", " ");
-                                        }
-                                        else
-                                        {
-                                            w = Regex.Replace(w, pattern, "");
-                                        }
-
-                                        var n = w.Select(c => char2num[c]).ToArray();
-
-                                        //for (int i = 0; i + 7 <= n.Length; i++) freq7[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4], n[i + 5], n[i + 6]]++;
-                                        for (int i = 0; i + 6 <= n.Length; i++) freq6[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4], n[i + 5]]++;
-                                        for (int i = 0; i + 5 <= n.Length; i++) freq5[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4]]++;
-                                        for (int i = 0; i + 4 <= n.Length; i++) freq4[n[i], n[i + 1], n[i + 2], n[i + 3]]++;
-                                        for (int i = 0; i + 3 <= n.Length; i++) freq3[n[i], n[i + 1], n[i + 2]]++;
-                                        for (int i = 0; i + 2 <= n.Length; i++) freq2[n[i], n[i + 1]]++;
-                                        if (useSpace)
-                                        {
-                                            for (int i = 1; i + 1 <= n.Length; i++) freq1[n[i]]++;
-                                        }
-                                        else
-                                        {
-                                            for (int i = 0; i + 1 <= n.Length; i++) freq1[n[i]]++;
-                                        }
-
-                                        counter++;
-                                        if (++j == 50000)
-                                        {
-                                            j = 0;
-                                            Console.Write(counter + " lines read\r");
-                                            Console.Out.Flush();
+                                            offset += streamReader.Read(book, offset, (int)(entry.Length - offset));
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    Console.WriteLine(String.Format("{0} successfully read", filename));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(String.Format("Excption during read of {0}: ", ex.Message));
-                }
-            }                
-                
-            GetMaxAndSum(4);
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(string.Format("Exception during reading of {0}: ", ex.Message));
+                        continue;
+                    }
 
-            Console.WriteLine(counter + " lines read");
+                    //process text file(s)               
+                    while (index < offset - 8)
+                    {
+                        // search for start line
+                        // Gutenberg text files always start with ***START
+                        if (!startfound)
+                        {
+                            if (book[index + 0] == '*' &&
+                                book[index + 1] == '*' &&
+                                book[index + 2] == '*' &&
+                                book[index + 3] == ' ' &&
+                               (book[index + 4] == 'S' || book[index + 4] == 's') &&
+                               (book[index + 5] == 'T' || book[index + 5] == 't') &&
+                               (book[index + 6] == 'A' || book[index + 6] == 'a') &&
+                               (book[index + 7] == 'R' || book[index + 7] == 'r') &&
+                               (book[index + 8] == 'T' || book[index + 8] == 't'))
+                            {
+                                while (book[index] != '\r' && book[index] != '\n' && index < offset - 8)
+                                {
+                                    index++;
+                                }
+                                startfound = true;
+                                continue;
+                            }
+                            index++;
+                            continue;
+                        }
+
+                        // search for end line
+                        // Gutenberg text files always end with ***END
+                        if (book[index + 0] == '*' &&
+                             book[index + 1] == '*' &&
+                             book[index + 2] == '*' &&
+                             book[index + 3] == ' ' &&
+                            (book[index + 4] == 'E' || book[index + 4] == 'e') &&
+                            (book[index + 5] == 'N' || book[index + 5] == 'n') &&
+                            (book[index + 6] == 'D' || book[index + 6] == 'd'))
+                        {
+                            break;
+                        }
+
+                        var addLetter = char.ToUpper(book[index]);
+
+                        //we only count alphabet letters
+                        if (_alphabet.Contains(addLetter))
+                        {
+                            totalValidLetters++;
+                            letterBuffer[0] = letterBuffer[1];
+                            letterBuffer[1] = letterBuffer[2];
+                            letterBuffer[2] = letterBuffer[3];
+                            letterBuffer[3] = letterBuffer[4];
+                            letterBuffer[4] = letterBuffer[5];
+                            letterBuffer[5] = _alphabet.IndexOf(addLetter);
+                            /*if (totalValidLetters > 5)
+                            {
+                                freq6[letterBuffer[0], letterBuffer[1], letterBuffer[2], letterBuffer[3], letterBuffer[4], letterBuffer[5]]++;
+                            }*/
+                            if (totalValidLetters > 4)
+                            {
+                                freq5[letterBuffer[0], letterBuffer[1], letterBuffer[2], letterBuffer[3], letterBuffer[4]]++;
+                            }
+                            if (totalValidLetters > 3)
+                            {
+                                freq4[letterBuffer[0], letterBuffer[1], letterBuffer[2], letterBuffer[3]]++;
+                            }
+                            if (totalValidLetters > 2)
+                            {
+                                freq3[letterBuffer[0], letterBuffer[1], letterBuffer[2]]++;
+                            }
+                            if (totalValidLetters > 1)
+                            {
+                                freq2[letterBuffer[0], letterBuffer[1]]++;
+                            }
+                            freq1[_alphabet.IndexOf(addLetter)]++;
+                        }
+                        index++;
+                    }
+                }
+            }
+
+            //sum all local thread statistics in the one big statistics
+            lock (_lockobject)
+            {
+                Console.WriteLine("Task {0} -> merging statistics... Counted {1} valid letters", taskId, totalValidLetters);
+                for (int a = 0; a < _alphabet.Length; a++)
+                {
+                    _freq1[a] += freq1[a];
+                    for (int b = 0; b < _alphabet.Length; b++)
+                    {
+                        _freq2[a, b] += freq2[a, b];
+                        for (int c = 0; c < _alphabet.Length; c++)
+                        {
+                            _freq3[a, b, c] += freq3[a, b, c];
+                            for (int d = 0; d < _alphabet.Length; d++)
+                            {
+                                _freq4[a, b, c, d] += freq4[a, b, c, d];
+                                for (int e = 0; e < _alphabet.Length; e++)
+                                {
+                                    _freq5[a, b, c, d, e] += freq5[a, b, c, d, e];
+                                    /*for (int f = 0; f < _alphabet.Length; f++)
+                                    {
+                                        {
+                                            _freq6[a, b, c, d, e, f] += freq6[a, b, c, d, e, f];
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine("Merging statistics done");
+            }
+            Console.WriteLine("Task {0} finished", taskId);
         }
+     
 
         public NGrams(string filename)
         {
@@ -172,18 +293,18 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
-                    alphabet = (string)bf.Deserialize(gz);
-                    max = (uint)bf.Deserialize(gz);
-                    sum = (ulong)bf.Deserialize(gz);
-                    freq4 = (uint[,,,])bf.Deserialize(gz);
+                    _alphabet = (string)bf.Deserialize(gz);
+                    _max = (uint)bf.Deserialize(gz);
+                    _sum = (ulong)bf.Deserialize(gz);
+                    _freq4 = (uint[,,,])bf.Deserialize(gz);
                 }
             }
         }
 
         void GetMaxAndSum(int n)
         {
-            sum = 0;
-            max = 0;
+            _sum = 0;
+            _max = 0;
 
             /*if (n == 7)
             {
@@ -200,73 +321,74 @@ namespace LanguageStatisticsGenerator
                                             sum += x;
                                         }
             }
-            else*/ if (n == 6)
+             if (n == 6)
             {
-                for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                        for (int c = 0; c < alphabet.Length; c++)
-                            for (int d = 0; d < alphabet.Length; d++)
-                                for (int e = 0; e < alphabet.Length; e++)                                
-                                    for (int f = 0; f < alphabet.Length; f++)
+                for (int a = 0; a < _alphabet.Length; a++)
+                    for (int b = 0; b < _alphabet.Length; b++)
+                        for (int c = 0; c < _alphabet.Length; c++)
+                            for (int d = 0; d < _alphabet.Length; d++)
+                                for (int e = 0; e < _alphabet.Length; e++)                                
+                                    for (int f = 0; f < _alphabet.Length; f++)
                                     {
-                                        uint x = freq6[a, b, c, d, e,f];
-                                        if (max < x) max = x;
-                                        sum += x;
+                                        uint x = _freq6[a, b, c, d, e,f];
+                                        if (_max < x) _max = x;
+                                        _sum += x;
                                     }
             }
-            else if (n == 5)
+            else else*/
+            if (n == 5)
             {
-                for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                        for (int c = 0; c < alphabet.Length; c++)
-                            for (int d = 0; d < alphabet.Length; d++)
-                                for (int e = 0; e < alphabet.Length; e++)
+                for (int a = 0; a < _alphabet.Length; a++)
+                    for (int b = 0; b < _alphabet.Length; b++)
+                        for (int c = 0; c < _alphabet.Length; c++)
+                            for (int d = 0; d < _alphabet.Length; d++)
+                                for (int e = 0; e < _alphabet.Length; e++)
                                 {
-                                    uint x = freq5[a, b, c, d, e];
-                                    if (max < x) max = x;
-                                    sum += x;
+                                    uint x = _freq5[a, b, c, d, e];
+                                    if (_max < x) _max = x;
+                                    _sum += x;
                                 }
             }
             else if (n == 4)
             {
-                for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                        for (int c = 0; c < alphabet.Length; c++)
-                            for (int d = 0; d < alphabet.Length; d++)
+                for (int a = 0; a < _alphabet.Length; a++)
+                    for (int b = 0; b < _alphabet.Length; b++)
+                        for (int c = 0; c < _alphabet.Length; c++)
+                            for (int d = 0; d < _alphabet.Length; d++)
                             {
-                                uint x = freq4[a, b, c, d];
-                                if (max < x) max = x;
-                                sum += x;
+                                uint x = _freq4[a, b, c, d];
+                                if (_max < x) _max = x;
+                                _sum += x;
                             }
             }
             else if (n == 3)
             {
-                for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                        for (int c = 0; c < alphabet.Length; c++)
+                for (int a = 0; a < _alphabet.Length; a++)
+                    for (int b = 0; b < _alphabet.Length; b++)
+                        for (int c = 0; c < _alphabet.Length; c++)
                         {
-                            uint x = freq3[a, b, c];
-                            if (max < x) max = x;
-                            sum += x;
+                            uint x = _freq3[a, b, c];
+                            if (_max < x) _max = x;
+                            _sum += x;
                         }
             }
             else if (n == 2)
             {
-                for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
+                for (int a = 0; a < _alphabet.Length; a++)
+                    for (int b = 0; b < _alphabet.Length; b++)
                     {
-                        uint x = freq2[a, b];
-                        if (max < x) max = x;
-                        sum += x;
+                        uint x = _freq2[a, b];
+                        if (_max < x) _max = x;
+                        _sum += x;
                     }
             }
             else if (n == 1)
             {
-                for (int a = 0; a < alphabet.Length; a++)
+                for (int a = 0; a < _alphabet.Length; a++)
                 {
-                    uint x = freq1[a];
-                    if (max < x) max = x;
-                    sum += x;
+                    uint x = _freq1[a];
+                    if (_max < x) _max = x;
+                    _sum += x;
                 }
             }
         }
@@ -277,15 +399,16 @@ namespace LanguageStatisticsGenerator
         /// </summary>
         public const uint FileFormatMagicNumber = 'C' + ('T' << 8) + ('L' << 16) + ('S' << 24);
 
-        private void WriteStatisticsFile(int gramLength, IEnumerable<float> frequencies, string outputFile)
+        private void WriteStatisticsFile(int gramLength, IEnumerable<float> frequencies, string outputFile, string langCode)
         {
             using (FileStream fs = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
             using (var gz = new GZipStream(fs, CompressionMode.Compress))
             using (var bw = new BinaryWriter(gz))
             {
                 bw.Write(FileFormatMagicNumber);
-                bw.Write(gramLength);
-                bw.Write(alphabet);
+                bw.Write(langCode);
+                bw.Write(gramLength);                
+                bw.Write(_alphabet);
                 foreach (var frequencyValue in frequencies)
                 {
                     bw.Write(frequencyValue);
@@ -298,70 +421,39 @@ namespace LanguageStatisticsGenerator
             return freq.Cast<uint>().Select(value => (float)Math.Log(value == 0 ? 1.0 / sum : value  / (double)sum));
         }
 
-        public void WriteGZ(string filename)
+        public void WriteGZ(string filename, string langCode)
         {
-            var freqs = new Array[] { freq1, freq2, freq3, freq4, freq5, freq6/*, freq7*/ };
-            for (int gramLength = 6; gramLength >= 1; gramLength--)
+            var freqs = new Array[] { _freq1, _freq2, _freq3, _freq4, _freq5/*, _freq6, freq7*/ };
+            for (int gramLength = NGRAM_SIZE; gramLength >= 1; gramLength--)
             {
                 Console.WriteLine("Writing {0}-grams", gramLength);
                 GetMaxAndSum(gramLength);
-                WriteStatisticsFile(gramLength, CalculateLogs(freqs[gramLength-1], sum), string.Format(filename + ".gz", gramLength));
+                WriteStatisticsFile(gramLength, CalculateLogs(freqs[gramLength-1], _sum), string.Format(filename + ".gz", gramLength), langCode);
             }
         }
     }
 
-    class Program
-    {
-        /* Source: http://wortschatz.uni-leipzig.de
-        static Dictionary<string, string> sentencesFileNames = new Dictionary<string, string>
-            {
-                {"en", "eng_news_2015_3M-sentences.txt" },
-                {"de", "deu_news_2015_3M-sentences.txt" },
-                {"fr", "fra_news_2010_1M-sentences.txt" },
-                {"es", "spa_news_2011_1M-sentences.txt" },
-                {"it", "ita_news_2010_1M-sentences.txt" },
-                {"hu", "hun_newscrawl_2011_1M-sentences.txt" },
-                {"ru", "rus_news_2010_1M-sentences.txt" },
-                {"cs", "ces_news_2005-2007_1M-sentences.txt" },
-                {"la", "lat_wikipedia_2016_100K-sentences.txt" },
-                {"el", "ell_newscrawl_2017_1M-sentences.txt" },
-            };
-        */
-
-        static Dictionary<string, string> alphabets = new Dictionary<string, string>
-        {
-                {"en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-                {"de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },
-                {"fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂŒÇÈÉÊËÎÏÔÙÛ" },
-                {"es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ" },
-                {"it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-                {"hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÖŐÚÜŰ" },
-                {"ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },
-                {"cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
-                {"la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-                {"el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
-                {"nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
-        };    
-        
-        static void Main(string[] args)
+    public class Program
+    {                     
+        public static void Main(string[] args)
         {
             if(args.Length!=2)
             {
-                Console.WriteLine("Usage: {0} textcorpusdirectory (alphabetfile | language selector)", System.AppDomain.CurrentDomain.FriendlyName);
+                Console.WriteLine("Usage: {0} textcorpusdirectory (alphabetfile | language selector)", AppDomain.CurrentDomain.FriendlyName);
                 Console.WriteLine("\nSpecify a predefined language selector or a file, that\ncontains the alphabet as a single line of text (UTF-8).");
                 Console.WriteLine("The following alphabets are predefined:");
-                foreach (var a in alphabets.OrderBy(x => x.Key))
+                foreach (var a in NGrams.alphabets.OrderBy(x => x.Key))
                     Console.WriteLine("\t{0}: {1}", a.Key, a.Value);
                 return;
             }
 
             string alphabet;
 
-            string selector = args[1].ToLower();
+            string langCode = args[1].ToLower();
 
-            if (alphabets.ContainsKey(selector))
+            if (NGrams.alphabets.ContainsKey(langCode))
             {
-                alphabet = alphabets[selector];
+                alphabet = NGrams.alphabets[langCode];
             }
             else
             {
@@ -372,10 +464,10 @@ namespace LanguageStatisticsGenerator
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(String.Format("Error while reading alphabet file '{0}'", args[1]));
+                    Console.WriteLine(string.Format("Error while reading alphabet file '{0}'", args[1]));
                     return;
                 }
-                selector = "lang";
+                langCode = "lang";
             }
 
             alphabet = alphabet.ToUpper();
@@ -383,25 +475,41 @@ namespace LanguageStatisticsGenerator
             var duplicates = alphabet.Distinct().Where(c => alphabet.Count(d => c == d) > 1);
             if (duplicates.Count() > 0)
             {
-                Console.WriteLine("Error: alphabet contains duplicate characters: '" + String.Join("", duplicates.OrderBy(c => c)) + "'");
+                Console.WriteLine("Error: alphabet contains duplicate characters: '" + string.Join("", duplicates.OrderBy(c => c)) + "'");
                 return;
             }
 
-            string outname = selector + "-{0}gram-nocs";
+            string outname = langCode + "-{0}gram-nocs";
 
             string sentencesFilename = args[0];
+
+            DateTime startDateTime = DateTime.Now;
 
             try
             {
                 Console.WriteLine("creating statistics without spaces...");
-                new NGrams(alphabet, sentencesFilename, false).WriteGZ(outname);
+                new NGrams(alphabet, sentencesFilename, false).WriteGZ(outname, langCode);
                 Console.WriteLine("creating statistics with spaces...");
-                new NGrams(alphabet, sentencesFilename, true).WriteGZ(outname + "-sp");
+                new NGrams(alphabet, sentencesFilename, true).WriteGZ(outname + "-sp", langCode);
             }
             catch(Exception ex)
             {
-                Console.WriteLine(String.Format("Error while reading text corpus file '{0}': {1}", sentencesFilename, ex.Message));
+                Console.WriteLine(string.Format("Error while reading text corpus file '{0}': {1}", sentencesFilename, ex.Message));
                 return;
+            }
+            Console.WriteLine("Creating language statistics took {0}", DateTime.Now - startDateTime);
+        }        
+    }
+    public static class ThreadExtension
+    {
+        public static void WaitAll(this IEnumerable<Task> tasks)
+        {
+            if (tasks != null)
+            {
+                foreach (var task in tasks)
+                {
+                    task.Wait();
+                }
             }
         }
     }
