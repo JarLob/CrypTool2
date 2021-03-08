@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using Font = VisualCryptography.Font;
 
@@ -42,12 +43,12 @@ namespace Cryptool.Plugins.VisualCryptography
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Plaintext", "Text to be encrypted")]
-        public string Plaintext
+        [PropertyInfo(Direction.InputData, "Plaintext", "Text or Image to be encrypted", true)]
+        public object Plaintext
         {
             get;
             set;
-        }
+        }        
 
         [PropertyInfo(Direction.OutputData, "Image 1", "First encrypted image part")]
         public byte[] Image1
@@ -97,11 +98,85 @@ namespace Cryptool.Plugins.VisualCryptography
         {
             ProgressChanged(0, 1);
 
-            //create the "plaintext image"
-            var image = CreatePlaintextImageData(Plaintext, _settings.CharactersPerRow);
+            //check if we have a string, CrypToolstream, or byte[] and encrypt it
+            if (Plaintext is ICryptoolStream)
+            {
+                EncryptImage(true);
+            }
+            else if(Plaintext is byte[])
+            {
+                EncryptImage(false);
+            }
+            else if(Plaintext is string )
+            {
+                EncryptString();
+            }
+            else if(Plaintext is null)
+            {
+                GuiLogMessage("No plaintext input provided.", NotificationLevel.Error);
+            }
+            else
+            {
+                GuiLogMessage(string.Format("Input data is a {0}. The Visual Cryptography component can only encrypt images and strings", Plaintext.GetType().Name), NotificationLevel.Error);
+            }                        
+        }
 
-            //increase number of pixels of plaintext image
-            image = ResizeImage(image.image, image.width, image.height, 4);
+        private void EncryptImage(bool isCrypToolStream)
+        {
+            //convert Input to image
+            Bitmap bmp;
+            Stream stream;
+            if (isCrypToolStream) 
+            {
+                stream = ((ICryptoolStream)Plaintext).CreateReader();
+            }
+            else
+            {
+                stream = new MemoryStream();
+                var data = (byte[])Plaintext;
+                stream.Write(data, 0, data.Length);
+            }
+            using (stream)
+            {                
+                stream.Seek(0, SeekOrigin.Begin);
+                bmp = new Bitmap(stream);
+            }  
+            //convert bmp to black and white "image array"
+            var image = new byte[bmp.Width * bmp.Height];
+            for(var x = 0; x < bmp.Width; x++)
+            {
+                for (var y = 0; y < bmp.Height; y++)
+                {
+                    var pixel = bmp.GetPixel(x, y);
+                    byte color = 0;
+                    var grayscale = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
+                    if(grayscale > 128)
+                    {
+                        color = 0xFF;
+                    }
+                    image[x + y * bmp.Width] = color;
+                }
+            }            
+            Encrypt((image, bmp.Width, bmp.Height), false);
+        }
+        
+
+        private void EncryptString()
+        {
+            string plaintext = (string)Plaintext;
+            
+            //create the "plaintext image"
+            var image = CreatePlaintextImageData(plaintext, _settings.CharactersPerRow);
+            Encrypt(image, true);
+        }
+
+        private void Encrypt((byte[] image, int width, int height) image, bool resize)
+        {
+            if (resize)
+            {
+                //increase number of pixels of plaintext image
+                image = ResizeImage(image.image, image.width, image.height, 4);
+            }
 
             //encrypt the resized image
             var encrypted_images = EncryptImage(image.image, image.width, image.height);
@@ -661,5 +736,10 @@ namespace Cryptool.Plugins.VisualCryptography
             return (mergedImage, width, height * 2);
         }
         #endregion
+
+        private void PluginProgessChanged(double value, double max)
+        {
+            OnPluginProgressChanged?.Invoke(this, new PluginProgressEventArgs(value, max));
+        }
     }
 }
