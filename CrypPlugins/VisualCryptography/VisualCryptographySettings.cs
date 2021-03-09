@@ -36,12 +36,13 @@ namespace Cryptool.Plugins.VisualCryptography
 
         private int _charactersPerRow = 15;
         private VisualPattern _visualPattern = VisualPattern.Diagonal;
+        private int _threshold = 128;
 
         #endregion
 
         #region TaskPane Settings
 
-        [TaskPane("Characters per Row", "How many characters should appear in a single row", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("CharactersPerRowCaption", "CharactersPerRowTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int CharactersPerRow
         {
             get
@@ -58,15 +59,15 @@ namespace Cryptool.Plugins.VisualCryptography
             }
         }
 
-        [TaskPane("Visual pattern", "Which visual pattern should be used?", null, 2, false, ControlType.ComboBox, 
+        [TaskPane("VisualPatternCaption", "VisualPatternTooltip", null, 2, false, ControlType.ComboBox, 
             new string[] {
-                "Horizontal",
-                "Vertical",
-                "Diagonal",
-                "HorizontalVertical",
-                "HorizontalDiagonal",
-                "VerticalDiagonal",
-                "HorizontalVerticalDiagonal"
+                "Pattern_Horizontal",
+                "Pattern_Vertical",
+                "Pattern_Diagonal",
+                "Pattern_HorizontalVertical",
+                "Pattern_HorizontalDiagonal",
+                "Pattern_VerticalDiagonal",
+                "Pattern_HorizontalVerticalDiagonal"
         })]
         public VisualPattern VisualPattern
         {
@@ -80,6 +81,23 @@ namespace Cryptool.Plugins.VisualCryptography
                 {
                     _visualPattern = value;
                     OnPropertyChanged("VisualPattern");
+                }
+            }
+        }
+
+        [TaskPane("ThresholdCaption", "ThresholdTooltip", null, 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, 255)]
+        public int Threshhold
+        {
+            get
+            {
+                return _threshold;
+            }
+            set
+            {
+                if (_threshold != value)
+                {
+                    _threshold = value;
+                    OnPropertyChanged("Threshhold");
                 }
             }
         }

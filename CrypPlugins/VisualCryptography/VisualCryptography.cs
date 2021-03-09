@@ -25,12 +25,13 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.VisualCryptography.Properties;
 using Font = VisualCryptography.Font;
 
 namespace Cryptool.Plugins.VisualCryptography
 {
     [Author("Nils Kopal", "kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Visual Cryptography", "Visual Cryptography", "VisualCryptography/userdoc.xml", new[] { "VisualCryptography/icon.png" })]
+    [PluginInfo("Cryptool.Plugins.VisualCryptography.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualCryptography/userdoc.xml", new[] { "VisualCryptography/icon.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class VisualCryptography : ICrypComponent
     {
@@ -43,21 +44,21 @@ namespace Cryptool.Plugins.VisualCryptography
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Plaintext", "Text or Image to be encrypted", true)]
+        [PropertyInfo(Direction.InputData, "PlaintextCaption", "PlaintextTooltip", true)]
         public object Plaintext
         {
             get;
             set;
         }        
 
-        [PropertyInfo(Direction.OutputData, "Image 1", "First encrypted image part")]
+        [PropertyInfo(Direction.OutputData, "Image1Caption", "Image1Tooltip")]
         public byte[] Image1
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "Image 2", "Second encrypted image part")]
+        [PropertyInfo(Direction.OutputData, "Image2", "Image2Tooltip")]
         public byte[] Image2
         {
             get;
@@ -98,7 +99,7 @@ namespace Cryptool.Plugins.VisualCryptography
         {
             ProgressChanged(0, 1);
 
-            //check if we have a string, CrypToolstream, or byte[] and encrypt it
+            //check if we have a string, a CrypToolstream, or a byte[] and encrypt it
             if (Plaintext is ICryptoolStream)
             {
                 EncryptImage(true);
@@ -107,65 +108,86 @@ namespace Cryptool.Plugins.VisualCryptography
             {
                 EncryptImage(false);
             }
-            else if(Plaintext is string )
+            else if(Plaintext is string)
             {
                 EncryptString();
             }
             else if(Plaintext is null)
             {
-                GuiLogMessage("No plaintext input provided.", NotificationLevel.Error);
+                //nothing given at all
+                GuiLogMessage(Resources.NoPlaintextInputProvided, NotificationLevel.Error);
             }
             else
             {
-                GuiLogMessage(string.Format("Input data is a {0}. The Visual Cryptography component can only encrypt images and strings", Plaintext.GetType().Name), NotificationLevel.Error);
+                //invalid data type given
+                GuiLogMessage(string.Format(Resources.InvalidInput, Plaintext.GetType().Name), NotificationLevel.Error);
             }                        
         }
 
+        /// <summary>
+        /// Encrypts an image
+        /// </summary>
+        /// <param name="isCrypToolStream"></param>
         private void EncryptImage(bool isCrypToolStream)
-        {
-            //convert Input to image
+        {            
             Bitmap bmp;
             Stream stream;
-            if (isCrypToolStream) 
-            {
-                stream = ((ICryptoolStream)Plaintext).CreateReader();
-            }
-            else
-            {
-                stream = new MemoryStream();
-                var data = (byte[])Plaintext;
-                stream.Write(data, 0, data.Length);
-            }
-            using (stream)
+            byte[] image;
+
+            //convert Input to image
+            try
             {                
-                stream.Seek(0, SeekOrigin.Begin);
-                bmp = new Bitmap(stream);
-            }  
-            //convert bmp to black and white "image array"
-            var image = new byte[bmp.Width * bmp.Height];
-            for(var x = 0; x < bmp.Width; x++)
-            {
-                for (var y = 0; y < bmp.Height; y++)
+                if (isCrypToolStream)
                 {
-                    var pixel = bmp.GetPixel(x, y);
-                    byte color = 0;
-                    var grayscale = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
-                    if(grayscale > 128)
-                    {
-                        color = 0xFF;
-                    }
-                    image[x + y * bmp.Width] = color;
+                    //we can directly read the image from the stream
+                    stream = ((ICryptoolStream)Plaintext).CreateReader();
                 }
-            }            
+                else
+                {
+                    //we have to create a stream and write the image into it
+                    //then, we can read it from the stream
+                    stream = new MemoryStream();
+                    var data = (byte[])Plaintext;
+                    stream.Write(data, 0, data.Length);
+                }
+                using (stream)
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    bmp = new Bitmap(stream);
+                }
+                //convert bmp to black and white "image array"
+                image = new byte[bmp.Width * bmp.Height];
+                for (var x = 0; x < bmp.Width; x++)
+                {
+                    for (var y = 0; y < bmp.Height; y++)
+                    {
+                        var pixel = bmp.GetPixel(x, y);
+                        byte color = 0;
+                        //the grayscale computation is based on the human perception of colors
+                        var grayscale = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
+                        if (grayscale > _settings.Threshhold)
+                        {
+                            color = 0xFF;
+                        }
+                        image[x + y * bmp.Width] = color;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(string.Format(Resources.CouldNotReadImage, ex.Message), NotificationLevel.Error);
+                return;
+            }
             Encrypt((image, bmp.Width, bmp.Height), false);
         }
         
-
+        /// <summary>
+        /// Encrypts a string
+        /// </summary>
         private void EncryptString()
         {
-            string plaintext = (string)Plaintext;
-            
             //create the "plaintext image"
+            var plaintext = (string)Plaintext;                        
             var image = CreatePlaintextImageData(plaintext, _settings.CharactersPerRow);
             Encrypt(image, true);
         }
@@ -409,12 +431,14 @@ namespace Cryptool.Plugins.VisualCryptography
             var image1 = new byte[2 * width * 2 * height];
             var image2 = new byte[2 * width * 2 * height];
             var width_height = width * height;
+            var width_2 = width * 2;
+
+            //Create random data for encryption
             var random = new RNGCryptoServiceProvider();
             var randomData = new byte[2 * width * height];
             random.GetBytes(randomData);
 
-            var width_2 = width * 2;
-            
+            //Create list of visual patterns, which is used for selecting the pattern for a pixel during encryption
             var visualPatternsList = GenerateVisualPatternsList();
             
             for (var x = 0; x < width; x++)
@@ -496,6 +520,7 @@ namespace Cryptool.Plugins.VisualCryptography
         {
             switch (pattern)
             {
+
                 case VisualPattern.Horizontal:
                     if (coinFlip)
                     {
@@ -735,11 +760,6 @@ namespace Cryptool.Plugins.VisualCryptography
             }
             return (mergedImage, width, height * 2);
         }
-        #endregion
-
-        private void PluginProgessChanged(double value, double max)
-        {
-            OnPluginProgressChanged?.Invoke(this, new PluginProgressEventArgs(value, max));
-        }
+        #endregion        
     }
 }
