@@ -13,157 +13,150 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows;
 
 namespace Cryptool.Plugins.AvalancheVisualization
-{
-   
+{   
     public class AvalancheVisualizationSettings : ISettings
     {
-
         #region Private Variables
 
-        private int keyLength;
-        private int prepSelection;
-        private int unprepSelection;
-        private int contrast;
-        private Category selectedCategory;
-
+        private int _keyLength;
+        private int _prepSelection;
+        private int _unprepSelection;
+        private int _contrast;
+        private Category _selectedCategory;
 
         #endregion
-
 
         public enum Category
         {
             Prepared = 0,
             Unprepared = 1,
-            //Hash = 2,
-
         };
 
-        #region TaskPane Settings
+        #region TaskPane Settings       
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-
-
-        [TaskPane("Category", "CategoryTooltip", "GroupName", 0, false, ControlType.ComboBox, new String[] { "PreparedCaption", "UnpreparedCaption"})]
+        [TaskPane("Category", "CategoryTooltip", "GroupName", 0, false, ControlType.ComboBox, new string[] { "PreparedCaption", "UnpreparedCaption"})]
         public Category SelectedCategory
         {
-            get { return this.selectedCategory; }
+            get 
+            {
+                return _selectedCategory; 
+            }
             set
             {
 
-                if (value != selectedCategory)
+                if (value != _selectedCategory)
                 {
-                    this.selectedCategory = value;
+                    _selectedCategory = value;
                     OnPropertyChanged("SelectedCategory");
-                }
-
-                setSettings();
-
+                    EnableDisableSettingsElements();
+                }                
             }
         }
 
-        [TaskPane("Selection", "SelectionTooltipPrep", "GroupName", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
+        [TaskPane("Selection", "SelectionTooltipPrep", "GroupName", 1, false, ControlType.ComboBox, new string[] { "AES", "DES"})]
         public int PrepSelection
         {
-            get { return this.prepSelection; }
+            get 
+            { 
+                return _prepSelection;
+            }
             set
             {
 
-                if (value != prepSelection)
+                if (value != _prepSelection)
                 {
-                    this.prepSelection = value;
+                    _prepSelection = value;
                     OnPropertyChanged("PrepSelecction");
+                    EnableDisableSettingsElements();
                 }
-
-                setSettings();
-
             }
         }
 
-        [TaskPane("Selection", "SelectionTooltipUnprep", "GroupName", 2, false, ControlType.ComboBox, new String[] { "HashFunction", "ClassicCipher","ModernCipher" })]
+        [TaskPane("Selection", "SelectionTooltipUnprep", "GroupName", 2, false, ControlType.ComboBox, new string[] { "HashFunction", "ClassicCipher","ModernCipher" })]
         public int UnprepSelection
         {
-            get { return this.unprepSelection; }
+            get 
+            { 
+                return _unprepSelection; 
+            }
             set
             {
 
-                if (value != unprepSelection)
+                if (value != _unprepSelection)
                 {
-                    this.unprepSelection = value;
+                    _unprepSelection = value;
                     OnPropertyChanged("UnprepSelecction");
+                    EnableDisableSettingsElements();
                 }
-
-                setSettings();
-
             }
         }
 
-
-        [TaskPane("KeyLength", "KeyLengthTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
+        [TaskPane("KeyLength", "KeyLengthTooltip", "GroupName", 2, false, ControlType.ComboBox, new string[] { "128 bits", "192 bits", "256 bits" })]
         public int KeyLength
         {
-            get { return this.keyLength; }
+            get 
+            { 
+                return _keyLength; 
+            }
             set
             {
-                if (((int)value) != keyLength)
+                if (value != _keyLength)
                 {
-                    this.keyLength = (int)value;
+                    _keyLength = value;
                     OnPropertyChanged("KeyLength");
                 }
             }
         }
 
-        [TaskPane("Contrast", "ContrastTooltip", "GroupName", 3, false, ControlType.ComboBox, new String[] { "red_green", "black_white" })]
+        [TaskPane("Contrast", "ContrastTooltip", "GroupName", 3, false, ControlType.ComboBox, new string[] { "red_green", "black_white" })]
         public int Contrast
         {
-            get { return this.contrast; }
+            get 
+            { 
+                return _contrast; 
+            }
             set
             {
-                this.contrast = value;
+                if (value != _contrast)
+                {
+                    _contrast = value;
                     OnPropertyChanged("Contrast");
-                
+                }                
             }
         }
-
 
         #endregion
 
         #region Private methods
 
-        private void setSettings()
+        private void EnableDisableSettingsElements()
         {
-
-            switch (this.SelectedCategory)
+            switch (SelectedCategory)
             {
                 case Category.Unprepared:
-
-                    disableSettingsElements("KeyLength");
-                    disableSettingsElements("PrepSelection");
-                    enableSettingsElements("UnprepSelection");
-
+                    DisableSettingsElements("KeyLength");
+                    DisableSettingsElements("PrepSelection");
+                    EnableSettingsElements("UnprepSelection");
                     break;
 
                 case Category.Prepared:
-
-
-                    disableSettingsElements("UnprepSelection");
-                    enableSettingsElements("PrepSelection");
-
-                    if (prepSelection == 0)
-                        enableSettingsElements("KeyLength");
+                    DisableSettingsElements("UnprepSelection");
+                    EnableSettingsElements("PrepSelection");
+                    if (_prepSelection == 0)
+                    {
+                        EnableSettingsElements("KeyLength");
+                    }
                     else
-                        disableSettingsElements("KeyLength");
-                   
-                            break;
+                    {
+                        DisableSettingsElements("KeyLength");
+                    }                   
+                    break;
 
                 default:
                     break;
@@ -176,21 +169,14 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public event PropertyChangedEventHandler PropertyChanged;
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
-
-        private void enableSettingsElements(string element)
+        private void EnableSettingsElements(string element)
         {
-            if (TaskPaneAttributeChanged != null)
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
-            }
+            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
         }
 
-        private void disableSettingsElements(string element)
+        private void DisableSettingsElements(string element)
         {
-            if (TaskPaneAttributeChanged != null)
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
-            }
+            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
         }
 
         private void OnPropertyChanged(string propertyName)
@@ -198,14 +184,11 @@ namespace Cryptool.Plugins.AvalancheVisualization
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
         }
 
-
         #endregion
 
         public void Initialize()
         {
-
+            EnableDisableSettingsElements();
         }
-
-
     }
 }
