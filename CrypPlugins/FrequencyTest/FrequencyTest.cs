@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*  
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,7 +28,7 @@ namespace Cryptool.FrequencyTest
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class FrequencyTest : ICrypComponent
     {
-        #region Const and variable definition
+        #region Const and variable definitions
 
         public const int ABSOLUTE = 0;
         public const int PERCENTAGED = 1;
@@ -23,18 +36,14 @@ namespace Cryptool.FrequencyTest
         public const int SINKOV = 3;
 
         private string stringInput;
+        private readonly IDictionary<string, double[]> _grams = new SortedDictionary<string, double[]>();
+        private readonly DataSource _datta = new DataSource();
+        private double _presentationScaler = 1.0; // the initial zoom value
+        private double _presentationBarWidth = 38.0; // the width in pixel of a single chart bar
+        private double _presentationBarHeightAdd = 8.0 + 2.0 * 26.0; // the additional heigth to a chart bar, comprised of two rectangles (3px, 5px) and two textblocks
 
-        private string stringOutput = "";
-        private int[] arrayOutput = new int[0];
-        private IDictionary<string, double[]> grams = new SortedDictionary<string, double[]>();
-        private DataSource data = new DataSource();
-        private double presentationScaler = 1.0; // the initial zoom value
-        private double presentationBarWidth = 38.0; // the width in pixel of a single chart bar
-        private double presentationBarHeightAdd = 8.0 + 2.0 * 26.0; // the additional heigth to a chart bar, comprised of two rectangles (3px, 5px) and two textblocks
-
-        private const string defaultAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private string alphabet = defaultAlphabet;
-
+        private const string DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string alphabet = DEFAULT_ALPHABET;
 
         #endregion
 
@@ -68,25 +77,12 @@ namespace Cryptool.FrequencyTest
             }
         }
 
-
         [PropertyInfo(Direction.OutputData, "StringOutputCaption", "StringOutputTooltip", false)]
-        public string StringOutput
-        {
-            get { return stringOutput; }
-        }
+        public string StringOutput { get; private set; } = "";
 
-        [PropertyInfo(Direction.OutputData , "ArrayOutputCaption", "ArrayOutputTooltip", false)]
-        public int[] ArrayOutput
-        {
-            get { return arrayOutput; }
-        }
+        [PropertyInfo(Direction.OutputData, "ArrayOutputCaption", "ArrayOutputTooltip", false)]
+        public int[] ArrayOutput { get; private set; } = new int[0];
 
-        [PropertyInfo(Direction.OutputData, "DictionaryOutputCaption", "DictionaryOutputTooltip", false)]
-        public IDictionary<string, double[]> DictionaryOutput
-        {
-            get { return grams; }
-        
-        }
         #endregion
 
         #region IPlugin Members
@@ -115,7 +111,7 @@ namespace Cryptool.FrequencyTest
 
         public void PreExecution()
         {
-            alphabet = defaultAlphabet;
+            alphabet = DEFAULT_ALPHABET;
         }
 
         public void Execute()
@@ -137,9 +133,9 @@ namespace Cryptool.FrequencyTest
             string workstring = stringInput;
 
             // Any change in the word discards and recalculates the output. This is not that effective.
-            lock (grams)
+            lock (_grams)
             {
-                grams.Clear();
+                _grams.Clear();
 
                 if (settings.BoundaryFragments == 1)
                 {
@@ -153,11 +149,10 @@ namespace Cryptool.FrequencyTest
                     ProcessWord(workstring);
                 }
 
-                double sum = grams.Values.Sum(item => item[ABSOLUTE]);
-                GuiLogMessage("Sum of all n-gram counts is: " + sum, NotificationLevel.Debug);
+                double sum = _grams.Values.Sum(item => item[ABSOLUTE]);
 
                 // calculate scaled values
-                foreach (double[] g in grams.Values)
+                foreach (double[] g in _grams.Values)
                 {
                     g[PERCENTAGED] = g[ABSOLUTE] / sum;
                     g[LOG2] = Math.Log(g[ABSOLUTE], 2);
@@ -166,36 +161,36 @@ namespace Cryptool.FrequencyTest
 
                 // OUTPUT
                 StringBuilder sb = new StringBuilder();
-                arrayOutput = new int[grams.Count];
+                ArrayOutput = new int[_grams.Count];
 
                 //here, we sort by frequency occurrence if the user wants so
                 if (settings.SortFrequencies)
                 {
-                    List<KeyValuePair<string, double[]>> list = grams.ToList();
+                    List<KeyValuePair<string, double[]>> list = _grams.ToList();
                     list.Sort(delegate(KeyValuePair<string, double[]> a, KeyValuePair<string, double[]> b)
                     {
                         return a.Value[ABSOLUTE] > b.Value[ABSOLUTE] ? -1 : 1;
                     });
 
-                    grams.Clear();
+                    _grams.Clear();
 
                     foreach (var i in list)
                     {
-                        grams.Add(i.Key, i.Value);
+                        _grams.Add(i.Key, i.Value);
                     }
                 }                
 
-                for (int i = 0; i < grams.Count; i++)
+                for (int i = 0; i < _grams.Count; i++)
                 {
-                    KeyValuePair<string, double[]> item = grams.ElementAt(i);
+                    KeyValuePair<string, double[]> item = _grams.ElementAt(i);
 
                     sb.Append(item.Key + ":");
                     sb.Append(item.Value[ABSOLUTE] + ":");
-                    sb.Append((item.Value[PERCENTAGED]) + Environment.NewLine);
+                    sb.Append(item.Value[PERCENTAGED] + Environment.NewLine);
 
-                    arrayOutput[i] = (int)item.Value[ABSOLUTE];
+                    ArrayOutput[i] = (int)item.Value[ABSOLUTE];
                 }
-                stringOutput = sb.ToString();
+                StringOutput = sb.ToString();
 
                 // update the presentation data
                 updatePresentation();
@@ -203,7 +198,6 @@ namespace Cryptool.FrequencyTest
 
             OnPropertyChanged("StringOutput");
             OnPropertyChanged("ArrayOutput");
-            OnPropertyChanged("DictionaryOutput");
 
             // Show progress finished.
             Progress(1.0, 1.0);
@@ -234,13 +228,13 @@ namespace Cryptool.FrequencyTest
 
             foreach (string g in GramTokenizer.tokenize(workstring, settings.GrammLength, settings.BoundaryFragments == 1, stepsize))
             {
-                if (!grams.ContainsKey(g))
+                if (!_grams.ContainsKey(g))
                 {
-                    grams[g] = new double[] { 1, 0, 0, 0 };
+                    _grams[g] = new double[] { 1, 0, 0, 0 };
                 }
                 else
                 {
-                    grams[g][ABSOLUTE]++;
+                    _grams[g][ABSOLUTE]++;
                 }
             }
         }
@@ -249,7 +243,7 @@ namespace Cryptool.FrequencyTest
         {
 
             // remove all entries
-            data.ValueCollection.Clear();
+            _datta.ValueCollection.Clear();
 
             //create header text
             string valueType = Properties.Resources.InPercent;
@@ -290,16 +284,16 @@ namespace Cryptool.FrequencyTest
             }
 
             //update bars
-            if (grams.Count > 0 && presentation.ActualWidth > 0)
+            if (_grams.Count > 0 && presentation.ActualWidth > 0)
             {
                 // retrieve the maximum value from all grams
-                double max = grams.Values.Max(item => item[PERCENTAGED]);
+                double max = _grams.Values.Max(item => item[PERCENTAGED]);
                 
                 // calculate the needed width for the chart (unscaled) in pixel
-                double unscaledChartWidth = (grams.Count < 10 ? 10 : grams.Count + (settings.ShowTotal ? 1 : 0)) * presentationBarWidth + 3;
-                if (grams.Count > settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0))
+                double unscaledChartWidth = (_grams.Count < 10 ? 10 : _grams.Count + (settings.ShowTotal ? 1 : 0)) * _presentationBarWidth + 3;
+                if (_grams.Count > settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0))
                 {
-                    unscaledChartWidth = (settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0)) * presentationBarWidth + 3;
+                    unscaledChartWidth = (settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0)) * _presentationBarWidth + 3;
                 }
 
                 // retrieve the maximum bar height from settings in pixel
@@ -307,41 +301,41 @@ namespace Cryptool.FrequencyTest
                 if (settings.Autozoom)
                 {
                     // calculate the scaling-value depeding on the needed width and the current presentation width
-                    presentationScaler = presentation.ActualWidth / unscaledChartWidth;
-                    settings.Scale = (int)(presentationScaler * 10000.0);
+                    _presentationScaler = presentation.ActualWidth / unscaledChartWidth;
+                    settings.Scale = (int)(_presentationScaler * 10000.0);
 
                     //set the maximum bar height to the current heigth of chart-area in presentation (best fill)
                     //maxBarHeight = presentation.chartBars.ActualHeight - presentationBarHeightAdd;
-                    maxBarHeight = (presentation.ActualHeight / presentationScaler) - (presentation.chartHeadline.ActualHeight + presentationBarHeightAdd);
+                    maxBarHeight = (presentation.ActualHeight / _presentationScaler) - (presentation.chartHeadline.ActualHeight + _presentationBarHeightAdd);
                 }
 
                 //count all grams and create a total bar
                 if (settings.ShowTotal)
                 {
-                    int sum = (int)grams.Values.Sum(item => item[ABSOLUTE]);
+                    int sum = (int)_grams.Values.Sum(item => item[ABSOLUTE]);
                     var element = new CollectionElement(1.0001 * max * (maxBarHeight / max), sum, 100, "Σ", true);
                     element.ColorA = Colors.LightGreen;
                     element.ColorB = Colors.DarkGreen;
-                    data.ValueCollection.Add(element);
+                    _datta.ValueCollection.Add(element);
                 }
 
                 // calculate presentation bars height and add the to our local DataSource
-                foreach (KeyValuePair<string, double[]> item in grams)
+                foreach (KeyValuePair<string, double[]> item in _grams)
                 {
                     double height = item.Value[PERCENTAGED] * (maxBarHeight / max);
                     CollectionElement row = new CollectionElement(height, (int)item.Value[ABSOLUTE], Math.Round(item.Value[PERCENTAGED] * 100, 2), item.Key, settings.ShowAbsoluteValues);
-                    data.ValueCollection.Add(row);
+                    _datta.ValueCollection.Add(row);
                 }
 
                 //add dummy bars
-                while (data.ValueCollection.Count + (settings.ShowTotal ? 1 : 0) < 10)
+                while (_datta.ValueCollection.Count + (settings.ShowTotal ? 1 : 0) < 10)
                 {
-                    data.ValueCollection.Add(new CollectionElement(0, 0, 0, string.Empty, false, System.Windows.Visibility.Visible));
+                    _datta.ValueCollection.Add(new CollectionElement(0, 0, 0, string.Empty, false, System.Windows.Visibility.Visible));
                 }
             }
 
             //finally, update ui
-            presentation.ShowData(data, settings.SortFrequencies, settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0));
+            presentation.ShowData(_datta, settings.SortFrequencies, settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0));
             
         }
 
