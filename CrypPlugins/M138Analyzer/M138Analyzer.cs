@@ -26,7 +26,6 @@ using Cryptool.PluginBase.Utils;
 using System.Windows.Threading;
 using System.Threading;
 using System.Linq;
-using System.Collections.ObjectModel;
 using System.Media;
 using Cryptool.CrypAnalysisViewControl;
 
@@ -41,12 +40,6 @@ namespace Cryptool.M138Analyzer
 
         private List<int[]> StripList = new List<int[]>(); //Store used strips
         List<int[]> invStripList;
-        private int QUADGRAMMULTIPLIER = 3;
-        private int TRIGRAMMULTIPLIER = 1;
-        private int DIVISOR = 4;
-        private List<int[]> BestKeyList = new List<int[]>();
-        private List<int> KeyOffsetList = new List<int>();
-        private List<string> BestListToVisualize = new List<string>();
         private int BestListLength = 20;
 
         private bool _isStopped = true;
@@ -61,13 +54,10 @@ namespace Cryptool.M138Analyzer
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
 
-        private Unigrams Unigrams;
-        private Trigrams Trigrams;
-        private Tetragrams Quadgrams;
-        private Pentagrams Pentagrams;
+        private Grams grams;
 
         private string StripAlphabet;   // alphabet used by the strips
-        private string Alphabet;        // alphabet used by the chosen language, StripAlphabet may not use characters that are not contained in Alphabet
+        private string Alphabet ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";        // alphabet used by the chosen language, StripAlphabet may not use characters that are not contained in Alphabet
 
         Dictionary<char, int> Char2Num;
         private int[] CiphertextNumbers;
@@ -174,31 +164,7 @@ namespace Cryptool.M138Analyzer
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
         public void Execute()
-        {
-            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
-            //int[] ns = new int[1000];
-            //int[] nd = new int[1000];
-
-            //sw.Start();
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    for (int j = 0; j < 1000; j++)
-            //    {
-            //        nd[j] = ns[j];
-            //    }
-            //}
-            //sw.Stop();
-            //GuiLogMessage(sw.Elapsed.ToString(), NotificationLevel.Info);
-            //sw.Reset();
-            //sw.Start();
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    Array.Copy(ns, nd, 1000);
-            //}
-            //sw.Stop();
-            //GuiLogMessage(sw.Elapsed.ToString(), NotificationLevel.Info);
-
+        {           
             int _restartNtimes;
             ResultEntry re;
             int[] _tmpKey;
@@ -210,18 +176,7 @@ namespace Cryptool.M138Analyzer
             Char2Num = Enumerable.Range(0, Alphabet.Length).ToDictionary(i => Alphabet[i]);
             StripList = strips.Select(s => MapTextIntoNumberSpace(s)).ToList();
             
-            //Dictionary<string, double> ddd = new Dictionary<string, double>();
-            //for (int i = 0; i < 26; i++)
-            //    for (int j = 0; j < 26; j++)
-            //        for (int k = 0; k < 26; k++)
-            //            for (int l = 0; l < 26; l++)
-            //            {
-            //            string s = new string(new char[] { Alphabet[i], Alphabet[j], Alphabet[k], Alphabet[l] });
-            //            ddd.Add(s, Quadgrams[i, j, k, l]);
-            //        }
-            //List<string> od = ddd.Keys.OrderByDescending(k => ddd[k]).Select(k => k + " " + ddd[k].ToString()).ToList();
-            //List<string> oa = ddd.Keys.OrderBy(k => ddd[k]).Select(k => k + " " + ddd[k].ToString()).ToList();
-
+           
             invStripList = StripList.Select(s => {
                 var inv = new int[Alphabet.Length];
                 for (int i = 0; i < s.Length; i++) inv[i] = -1;
@@ -264,7 +219,7 @@ namespace Cryptool.M138Analyzer
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
                     PlaintextNumbers = MapTextIntoNumberSpace(Plaintext);
 
-                    double _costValue1 = Quadgrams.CalculateCost(PlaintextNumbers);
+                    double _costValue1 = grams.CalculateCost(PlaintextNumbers);
 
                     //Call known-plaintext attack
                     //TextLength should be at least 25
@@ -322,33 +277,7 @@ namespace Cryptool.M138Analyzer
                     Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), Alphabet);
                     Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet);
                     PlaintextNumbers = MapTextIntoNumberSpace(Plaintext);
-                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
-                    
-                    if (CiphertextNumbers.Length < 100) //0-99, focus on trigrams
-                    {
-                        _restartNtimes = 35;
-                        TRIGRAMMULTIPLIER = 4;
-                        QUADGRAMMULTIPLIER = 1;
-                    }
-                    else if (CiphertextNumbers.Length < 200) //100-199, evenly use tri- and quadgrams
-                    {
-                        _restartNtimes = 25;
-                        TRIGRAMMULTIPLIER = 3;
-                        QUADGRAMMULTIPLIER = 3;
-                    }
-                    else if (CiphertextNumbers.Length < 300) //200-299 focus more on quadgrams
-                    {
-                        _restartNtimes = 17;
-                        TRIGRAMMULTIPLIER = 2;
-                        QUADGRAMMULTIPLIER = 4;
-                    }
-                    else
-                    { // >=300 Use mainly quadgrams
-                        _restartNtimes = 10;
-                        TRIGRAMMULTIPLIER = 1;
-                        QUADGRAMMULTIPLIER = 6;
-                    }
-                    DIVISOR = TRIGRAMMULTIPLIER + QUADGRAMMULTIPLIER;
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);                                       
 
                     _restartNtimes = settings.HillClimbRestarts;
 
@@ -403,7 +332,7 @@ namespace Cryptool.M138Analyzer
                                     _i++;
                                 }
 
-                                HillClimb(CiphertextNumbers, KeyLength, offset, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge, _tempKey, _fixedPositions);
+                                HillClimb(CiphertextNumbers, KeyLength, offset, StripList, _restartNtimes, fastConverge, _tempKey, _fixedPositions);
                             }
                             else
                             {
@@ -450,9 +379,7 @@ namespace Cryptool.M138Analyzer
 
                                     //Create Bestlist
                                     int[] _plainText = Decrypt(CiphertextNumbers, _tempKey, offset, StripList);
-                                    //double _costValue = ((TRIGRAMMULTIPLIER * Trigrams.CalculateCost(_plainText)) + (QUADGRAMMULTIPLIER * Quadgrams.CalculateCost(_plainText))) / DIVISOR;
-                                    double _costValue = Quadgrams.CalculateCost(_plainText);
-                                    //double _costValue = ((TRIGRAMMULTIPLIER * LanguageStatistics.Calculate3GramCost(Trigrams, _plainText)) + (QUADGRAMMULTIPLIER * LanguageStatistics.Calculate4GramCost(Quadgrams, _plainText))) / DIVISOR;
+                                    double _costValue = grams.CalculateCost(_plainText);
                                     AddNewBestListEntry(_tempKey, _costValue, CiphertextNumbers, offset);
                                     increaseNext = true;
                                     
@@ -489,34 +416,7 @@ namespace Cryptool.M138Analyzer
                     }
 
                     Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), StripAlphabet);
-                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
-
-                    if (CiphertextNumbers.Length < 100) //0-99, focus on trigrams
-                    {
-                        _restartNtimes = 35;
-                        TRIGRAMMULTIPLIER = 4;
-                        QUADGRAMMULTIPLIER = 1;
-                    }
-                    else if (CiphertextNumbers.Length < 200) //100-199, evenly use tri- and quadgrams
-                    {
-                        _restartNtimes = 25;
-                        TRIGRAMMULTIPLIER = 3;
-                        QUADGRAMMULTIPLIER = 4;
-                    }
-                    else if (CiphertextNumbers.Length < 300) //200-299 focus more on quadgrams
-                    {
-                        _restartNtimes = 17;
-                        TRIGRAMMULTIPLIER = 2;
-                        QUADGRAMMULTIPLIER = 4;
-                    }
-                    else
-                    { // >=300 Use mainly quadgrams
-                        _restartNtimes = 10;
-                        TRIGRAMMULTIPLIER = 2;
-                        QUADGRAMMULTIPLIER = 6;
-                    }
-                    DIVISOR = TRIGRAMMULTIPLIER + QUADGRAMMULTIPLIER;
-
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);                    
                     _restartNtimes = settings.HillClimbRestarts;
 
                     UpdateDisplayStart();
@@ -531,7 +431,7 @@ namespace Cryptool.M138Analyzer
                         if (_isStopped) return;
                         var _startTime = DateTime.Now;
                         UpdateDisplayEnd(offset, _estimatedEndTime);
-                        HillClimb(CiphertextNumbers, KeyLength, offset, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge);
+                        HillClimb(CiphertextNumbers, KeyLength, offset, StripList, _restartNtimes, fastConverge);
                         var _elapsedTime = DateTime.Now - _startTime;
                         _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - offset));
 
@@ -664,15 +564,17 @@ namespace Cryptool.M138Analyzer
         private void setLanguage()
         {
             string lang = LanguageStatistics.LanguageCode(settings.Language);
-
-            Unigrams = new Unigrams(lang);
-            Trigrams = new Trigrams(lang);
-            Quadgrams = new Tetragrams(lang);
-            //Pentagrams = new PentaGrams(lang);
-            Alphabet = Unigrams.Alphabet;
+            try
+            {
+                grams = new Pentagrams(lang);
+            }
+            catch (Exception)
+            {
+                grams = new Tetragrams(lang);
+            }
         }
 
-        private void HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, Trigrams _ngrams3, Tetragrams _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
+        private void HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
         {
             int _numberOfStrips = _stripes.Count; //Anzahl verfügbarer Streifen
             double _globalBestKeyCost = double.MinValue; //Kostenwert des globalen Maximums fuer diesen Offset
@@ -775,11 +677,7 @@ namespace Cryptool.M138Analyzer
                             }
 
                             DecryptInPlace(_cipherText, _plainText, _copykey, _keyLength, _keyOffset, _stripes);
-                            //double _costValue = (((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR) * UnigramCost(_plainText);
-                            //double _costValue = ((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR;
-                            //double _costValue = Pentagrams.CalculateCost(_plainText);
-                            double _costValue = Quadgrams.CalculateCost(_plainText);
-                            //double _costValue = Trigrams.CalculateCost(_plainText);
+                            double _costValue = grams.CalculateCost(_plainText);
 
                             if (_localBestKeyCost < _costValue) //Tested key is better than the best local key so far
                             {
@@ -859,7 +757,7 @@ namespace Cryptool.M138Analyzer
         {
             DecryptInPlace(_cipherText, plaintext, key, keyLength, _keyOffset, _stripes);
             //double score = Pentagrams.CalculateCost(plaintext);
-            double score = Quadgrams.CalculateCost(plaintext);
+            double score = grams.CalculateCost(plaintext);
             return score;
         }
 
@@ -900,7 +798,7 @@ namespace Cryptool.M138Analyzer
             oldkey = new int[key.Length];
             plaintext = new int[_cipherText.Length];
             double score = calculateScore(_cipherText, key, _keyOffset, _stripes);
-            score = Math.Exp(Quadgrams.CalculateCost(_cipherText)); ;
+            score = Math.Exp(grams.CalculateCost(_cipherText)); ;
 
             double inittemp = 0.1;
             double epsilon = 0.01;

@@ -1490,12 +1490,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="language"></param>
         /// <param name="useSpaces"></param>
-        public void LoadLangStatistics(int language, bool useSpaces, bool useNulls, int ngramsize = 5)
+        public void LoadLangStatistics(int language, bool useSpaces, bool useNulls, int ngramsize = 6)
         {
             lock (this)
             {
                 //we use a cache for each language, thus, we do not need to load and load it again
-                string key = String.Format("{0}-{1}-{2}", language, useSpaces, ngramsize);
+                string key = string.Format("{0}-{1}-{2}", language, useSpaces, ngramsize);
                 if (!NGramCache.ContainsKey(key))
                 {
                     //this is a "fallback" mechanism; it tries to load ngramsize,...,5,4,3-grams, then it fails
@@ -1507,6 +1507,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             switch (ngramsize)
                             {
                                 default:
+                                case 6:
+                                    Hexagrams hexaGrams = new Hexagrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    NGramCache.Add(key, hexaGrams);
+                                    loaded = true;
+                                    break;
                                 case 5:
                                     Pentagrams pentaGrams = new Pentagrams(LanguageStatistics.LanguageCode(language), useSpaces);
                                     NGramCache.Add(key, pentaGrams);

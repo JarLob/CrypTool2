@@ -59,7 +59,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _stop = false;
 
             DateTime lastUpdateTime = DateTime.Now;
-            int cycle = 0;
 
             //1) generate start key
             var numbers = new List<int>();
@@ -75,6 +74,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     numbers.Add(Tools.MapIntoNumberSpace("#", AnalyzerConfiguration.PlaintextMapping)[0]); //we use the #-symbol as null
                 }
             }
+            keyLetterDistributor.Init(AnalyzerConfiguration.KeyLetterLimits);
 
             var runkey = new HomophoneMapping[AnalyzerConfiguration.Keylength];
             for (var i = 0; i < AnalyzerConfiguration.Keylength; i++)
@@ -96,14 +96,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     runkey[i].PlainLetter = numbers[rnd];
                     numbers.RemoveAt(rnd);
                 }
-            }
-
-            //User may set cycles to 0; then, we have an infinityloop
-            bool infinityloop = false;
-            if (AnalyzerConfiguration.Cycles == 0)
-            {
-                infinityloop = true;
-            }
+            }            
 
             int noglobalbestcounter = 0;
             int nullsymbol = AnalyzerConfiguration.UseNulls ? Tools.MapIntoNumberSpace("#", AnalyzerConfiguration.PlaintextMapping)[0] : -1;
@@ -137,12 +130,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         // compute cost value to rate the key (fitness)
                         var costvalue = Grams.CalculateCost(plaintext.ToIntegerList(nullsymbol)) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
-                        // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))
-                        {                            
+                        {
                             //stay on the "better key"
-                            bestkeycost = costvalue;
-                            bestkey = CreateDeepKeyCopy(runkey);                            
+                            //if (costvalue > bestkeycost)
+                            //{
+                                bestkeycost = costvalue;
+                                bestkey = CreateDeepKeyCopy(runkey);
+                            //}
                         }
                         else
                         {
@@ -188,27 +183,27 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 else
                 {
                     noglobalbestcounter++;
-                    if (noglobalbestcounter == 100)
+                    if (noglobalbestcounter == 50)
                     {
-                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
-                        runkey[runkey.Length - 2].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
-                        runkey[runkey.Length - 3].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
+                        runkey[runkey.Length - 1].PlainLetter = keyLetterDistributor.GetNextLetter();
+                        runkey[runkey.Length - 2].PlainLetter = keyLetterDistributor.GetNextLetter();
+                        runkey[runkey.Length - 3].PlainLetter = keyLetterDistributor.GetNextLetter();
                         noglobalbestcounter = 0;
                     }
                 }
-                cycle++;
+                
 
                 //3.3) update progress in ui
-                if (!infinityloop && DateTime.Now > lastUpdateTime.AddSeconds(1))
+                if (DateTime.Now > lastUpdateTime.AddSeconds(1))
                 {
                     if (Progress != null && !_stop)
                     {
-                        Progress.Invoke(this, new ProgressChangedEventArgs() { Percentage = (double)cycle / (double)AnalyzerConfiguration.Cycles });
+                        Progress.Invoke(this, new ProgressChangedEventArgs() { Percentage = simulatedAnnealing.GetProgress() });
                     }
                     lastUpdateTime = DateTime.Now;
                 }
 
-            } while (cycle < AnalyzerConfiguration.Cycles || infinityloop);
+            } while (simulatedAnnealing.IsHot());
 
             //set final progress to 1.0
             if (Progress != null && !_stop)
