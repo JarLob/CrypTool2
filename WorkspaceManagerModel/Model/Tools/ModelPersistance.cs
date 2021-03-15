@@ -124,7 +124,6 @@ namespace WorkspaceManager.Model
                         GuiLogMessage("Replacing " + value, NotificationLevel.Debug);
                         plugin.Plugin.Settings.GetType().GetProperty("Text").SetValue(plugin.Plugin.Settings, replacements[value],null);
                         plugin.Plugin.GetType().GetMethod("Initialize").Invoke(plugin.Plugin, null);
-                        plugin.SettingesHaveChanges = false;
                     }
                 }
             }
@@ -398,6 +397,9 @@ namespace WorkspaceManager.Model
                     workspacemodel.AllImageModels.Remove(imageModel);
                 }
             }
+
+            //Store settings in SettingsManager of UndoRedoManager
+            workspacemodel.UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
         }
 
         /// <summary>
@@ -422,7 +424,6 @@ namespace WorkspaceManager.Model
             {
                 if (pluginModel.Plugin.Settings != null)
                 {
-                    pluginModel.SettingesHaveChanges = false;
                     PropertyInfo[] arrpInfo = pluginModel.Plugin.Settings.GetType().GetProperties();
 
                     PersistantPlugin persistantPlugin = new PersistantPlugin();

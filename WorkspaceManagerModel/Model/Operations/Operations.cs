@@ -489,6 +489,45 @@ namespace WorkspaceManagerModel.Model.Operations
         }
     }
 
+    public sealed class ChangeSettingOperation : Operation
+    {
+        private object _oldValue;
+        private object _newValue;
+        private ISettings _settings;
+        private string _propertyName;
+
+        public ChangeSettingOperation(WorkspaceModel workspaceModel, ISettings settings, string propertyName, object value) :
+            base(null)
+        {
+            _settings = settings;
+            _propertyName = propertyName;
+            _oldValue = workspaceModel.UndoRedoManager.SettingsManager.GetCurrentSettingValue(settings.GetHashCode() + "_" + propertyName);
+            _newValue = value;            
+        }
+
+        internal override object Execute(WorkspaceModel workspaceModel, bool events = true)
+        {
+            var property = _settings.GetType().GetProperty(_propertyName);
+            var currentValue = property.GetValue(_settings);
+            if(_newValue != currentValue)
+            {
+                property.SetValue(_settings, _newValue);
+            }
+            return true;
+        }
+
+        internal override void Undo(WorkspaceModel workspaceModel)
+        {
+            var property = _settings.GetType().GetProperty(_propertyName);
+            var currentValue = property.GetValue(_settings);
+            if (_oldValue != currentValue)
+            {
+                property.SetValue(_settings, _oldValue);
+            }
+        }
+    }
+
+
     [Serializable]
     public class SerializationWrapper
     {
@@ -617,7 +656,6 @@ namespace WorkspaceManagerModel.Model.Operations
                 {
                     workspaceModel.AllPluginModels.Add(pluginModel);
                     pluginModel.WorkspaceModel = workspaceModel;
-                    pluginModel.SettingesHaveChanges = false;
 
                     //add input/output connectors of this pluginModel to the WorkspaceModel
                     foreach(var myConnectorModel in pluginModel.InputConnectors)

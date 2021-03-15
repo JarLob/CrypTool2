@@ -72,18 +72,25 @@ namespace Cryptool.Plugins.Numbers
 
         private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ShowDigits")
+            if (e.PropertyName == "Number")
+            {
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.TextBox.Text = settings.Number;
+                }, null);
+            }
+            else if (e.PropertyName == "ShowDigits")
             {
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     SetStatusBar();
                 }, null);
             }
-            if (e.PropertyName == "Font")
+            else if (e.PropertyName == "Font")
             {
                 _presentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
             }
-            if (e.PropertyName == "FontSize")
+            else if (e.PropertyName == "FontSize")
             {
                 _presentation.MyFontSize = settings.FontSize;
             }

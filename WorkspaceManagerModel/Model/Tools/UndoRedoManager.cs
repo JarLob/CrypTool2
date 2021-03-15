@@ -17,22 +17,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using WorkspaceManagerModel.Model.Operations;
+using WorkspaceManagerModel.Model.Tools;
 
 namespace WorkspaceManager.Model.Tools
 {
     public class UndoRedoManager
     {
-        private WorkspaceModel WorkspaceModel = null;
-
-        private bool CurrentlyWorking { get; set; }
+        private WorkspaceModel _workspaceModel = null;
+        private Stack<Operation> _undoStack = new Stack<Operation>();
+        private Stack<Operation> _redoStack = new Stack<Operation>();
 
         internal UndoRedoManager(WorkspaceModel workspaceModel)
         {
-            WorkspaceModel = workspaceModel;
+            _workspaceModel = workspaceModel;
+            SettingsManager = new SettingsManager(workspaceModel);
         }
 
-        private Stack<Operation> UndoStack = new Stack<Operation>();
-        private Stack<Operation> RedoStack = new Stack<Operation>();
+        public SettingsManager SettingsManager
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Is an undo-operation possible?
@@ -40,7 +45,7 @@ namespace WorkspaceManager.Model.Tools
         /// <returns></returns>
         public bool CanUndo()
         {
-            return UndoStack.Count > 0;
+            return _undoStack.Count > 0;
         }
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace WorkspaceManager.Model.Tools
         /// <returns></returns>
         public bool CanRedo()
         {
-            return RedoStack.Count > 0;
+            return _redoStack.Count > 0;
         }
 
         /// <summary>
@@ -62,33 +67,33 @@ namespace WorkspaceManager.Model.Tools
                 return;
             }
             
-            this.CurrentlyWorking = true;
+            IsCurrentlyWorking = true;
             try
             {
-                Operation op = UndoStack.Pop();
-                op.Undo(WorkspaceModel);
-                RedoStack.Push(op);
+                Operation op = _undoStack.Pop();
+                op.Undo(_workspaceModel);
+                _redoStack.Push(op);
 
                 Operation nextOp = null;
-                while (UndoStack.Count > 0 &&
-                    op.GetType().Equals(UndoStack.Peek().GetType()) &&
-                    UndoStack.Peek().Identifier ==  op.Identifier &&
-                    (UndoStack.Peek() is MoveModelElementOperation ||
-                    UndoStack.Peek() is ResizeModelElementOperation ||
-                    UndoStack.Peek() is MultiOperation))
+                while (_undoStack.Count > 0 &&
+                    op.GetType().Equals(_undoStack.Peek().GetType()) &&
+                    _undoStack.Peek().Identifier ==  op.Identifier &&
+                    (_undoStack.Peek() is MoveModelElementOperation ||
+                    _undoStack.Peek() is ResizeModelElementOperation ||
+                    _undoStack.Peek() is MultiOperation))
                 {
-                    nextOp = UndoStack.Pop();
-                    RedoStack.Push(nextOp);
+                    nextOp = _undoStack.Pop();
+                    _redoStack.Push(nextOp);
                 }
 
                 if (nextOp != null)
                 {
-                    nextOp.Undo(WorkspaceModel);
+                    nextOp.Undo(_workspaceModel);
                 }
             }
             finally
             {
-                this.CurrentlyWorking = false;
+                IsCurrentlyWorking = false;
             }
         }
 
@@ -102,33 +107,33 @@ namespace WorkspaceManager.Model.Tools
                 return;
             }
 
-            this.CurrentlyWorking = true;
+            IsCurrentlyWorking = true;
             try
             {
-                Operation op = RedoStack.Pop();
-                op.Execute(WorkspaceModel);
-                UndoStack.Push(op);
+                Operation op = _redoStack.Pop();
+                op.Execute(_workspaceModel);
+                _undoStack.Push(op);
 
                 Operation nextOp = null;
-                while (RedoStack.Count > 0 &&
-                    op.GetType().Equals(RedoStack.Peek().GetType()) &&
-                    RedoStack.Peek().Identifier == op.Identifier &&
-                    (RedoStack.Peek() is MoveModelElementOperation ||
-                    RedoStack.Peek() is ResizeModelElementOperation ||
-                    RedoStack.Peek() is MultiOperation))
+                while (_redoStack.Count > 0 &&
+                    op.GetType().Equals(_redoStack.Peek().GetType()) &&
+                    _redoStack.Peek().Identifier == op.Identifier &&
+                    (_redoStack.Peek() is MoveModelElementOperation ||
+                    _redoStack.Peek() is ResizeModelElementOperation ||
+                    _redoStack.Peek() is MultiOperation))
                 {
-                    nextOp = RedoStack.Pop();                    
-                    UndoStack.Push(nextOp);
+                    nextOp = _redoStack.Pop();                    
+                    _undoStack.Push(nextOp);
                 }
 
                 if (nextOp != null)
                 {
-                    nextOp.Execute(WorkspaceModel);
+                    nextOp.Execute(_workspaceModel);
                 }
             }
             finally
             {
-                this.CurrentlyWorking = false;
+                IsCurrentlyWorking = false;
             }
         }
 
@@ -137,8 +142,8 @@ namespace WorkspaceManager.Model.Tools
         /// </summary>
         public void ClearStacks()
         {
-            UndoStack.Clear();
-            RedoStack.Clear();
+            _undoStack.Clear();
+            _redoStack.Clear();
         }
 
         /// <summary>
@@ -149,44 +154,38 @@ namespace WorkspaceManager.Model.Tools
         {
             //we do not notice any operation if we are currently working 
             //(means we undo or redo at this moment)
-            if (CurrentlyWorking)
+            if (IsCurrentlyWorking)
             {
                 return;
             }
 
-            if (RedoStack.Count > 0)
+            if (_redoStack.Count > 0)
             {
-                RedoStack.Clear();
+                _redoStack.Clear();
             }
-            this.UndoStack.Push(op);
-        }
-
-        public bool Working
-        {
-            get;
-            private set;
+            _undoStack.Push(op);
         }
 
         internal bool SavedHere
         {
             set
             {
-                foreach (var operation in UndoStack)
+                foreach (var operation in _undoStack)
                 {
                     operation.SavedHere = false;
                 }
-                foreach (var operation in RedoStack)
+                foreach (var operation in _redoStack)
                 {
                     operation.SavedHere = false;
                 }
-                if (UndoStack.Count > 0)
+                if (_undoStack.Count > 0)
                 {
-                    UndoStack.Peek().SavedHere = value;
+                    _undoStack.Peek().SavedHere = value;
                 }
             }
             get 
             { 
-                return UndoStack.Peek().SavedHere;
+                return _undoStack.Peek().SavedHere;
             }
         }
 
@@ -199,10 +198,16 @@ namespace WorkspaceManager.Model.Tools
 
             if(CanRedo())
             {
-                return RedoStack.Any(operation => operation.SavedHere);
+                return _redoStack.Any(operation => operation.SavedHere);
             }
 
             return false;
+        }
+
+        public bool IsCurrentlyWorking
+        {
+            get;
+            private set;
         }
     }
 }

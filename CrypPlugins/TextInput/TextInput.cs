@@ -70,18 +70,25 @@ namespace Cryptool.TextInput
       
     private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines")
-        {
-            setStatusBar();
-        }
-        if (e.PropertyName == "Font")
-        {
-            textInputPresentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
-        }
-        if (e.PropertyName == "FontSize")
-        {
-            textInputPresentation.MyFontSize = settings.FontSize;
-        }
+            if (e.PropertyName == "Text")
+            {
+                textInputPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    textInputPresentation.textBoxInputText.Text = settings.Text;
+                }, null);
+            }
+            else if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines")
+            {
+                setStatusBar();
+            }
+            else if (e.PropertyName == "Font")
+            {
+                textInputPresentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
+            }
+            else if (e.PropertyName == "FontSize")
+            {
+                textInputPresentation.MyFontSize = settings.FontSize;
+            }
     }
 
     void textBoxInputText_TextChanged(object sender, TextChangedEventArgs e)

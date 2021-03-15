@@ -706,7 +706,6 @@ namespace WorkspaceManager
             {
                 return;
             }
-            EventsHelper.AsynchronousPropertyChanged = false;
 
             try
             {
@@ -860,8 +859,6 @@ namespace WorkspaceManager
             stopThread.CurrentUICulture = _currentUICulture;
             stopThread.Start();
 
-            EventsHelper.AsynchronousPropertyChanged = true;
-
             if (((WorkspaceManagerSettings)this.Settings).SynchronousEvents)
             {
                 EventsHelper.AsynchronousProgressChanged = true;
@@ -928,8 +925,6 @@ namespace WorkspaceManager
                     GuiLogMessage(string.Format(Resources.WorkspaceManagerClass_Dispose_Exception_during_stopping_of_the_ExecutionEngine___0_, ex), NotificationLevel.Error);
                 }
             }
-
-            EventsHelper.AsynchronousPropertyChanged = true;
 
             try
             {

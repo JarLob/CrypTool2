@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2021 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,55 +22,32 @@ namespace Cryptool.PluginBase.Miscellaneous
 {
     public class EventsHelper
     {
+        //to allow undo/redo of settings, we forse everything to synchronous property changed events
+        public static bool AsynchronousPropertyChanged { get; set; } = false;
+        public static bool AsynchronousGuiLogMessage { get; set; } = true;
+        public static bool AsynchronousProgressChanged { get; set; } = true;
+        public static bool AsynchronousStatusChanged { get; set; } = true;
 
-        private static bool asynchronousPropertyChanged = true;
-        public static bool AsynchronousPropertyChanged
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static void GuiLogMessage(GuiLogNotificationEventHandler handler, IPlugin plugin, string message)
         {
-            get { return asynchronousPropertyChanged; }
-            set { asynchronousPropertyChanged = value; }
-        }
-
-        private static bool asynchronousGuiLogMessage = true;
-        public static bool AsynchronousGuiLogMessage
-        {
-            get { return asynchronousGuiLogMessage; }
-            set { asynchronousGuiLogMessage = value; }
-        }
-
-        private static bool asynchronousProgressChanged = true;
-        public static bool AsynchronousProgressChanged
-        {
-            get { return asynchronousProgressChanged; }
-            set { asynchronousProgressChanged = value; }
-        }
-
-        private static bool asynchronousStatusChanged = true;
-        public static bool AsynchronousStatusChanged
-        {
-            get { return asynchronousStatusChanged; }
-            set { asynchronousStatusChanged = value; }
+            GuiLogMessage(handler, plugin, new GuiLogEventArgs(message, plugin, NotificationLevel.Debug));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void GuiLogMessage(GuiLogNotificationEventHandler del, IPlugin plugin, string message)
+        public static void GuiLogMessage(GuiLogNotificationEventHandler handler, IPlugin plugin, string message, NotificationLevel level)
         {
-            GuiLogMessage(del, plugin, new GuiLogEventArgs(message, plugin, NotificationLevel.Debug));
+            GuiLogMessage(handler, plugin, new GuiLogEventArgs(message, plugin, level));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void GuiLogMessage(GuiLogNotificationEventHandler del, IPlugin plugin, string message, NotificationLevel level)
+        public static void GuiLogMessage(GuiLogNotificationEventHandler handler, IPlugin plugin, GuiLogEventArgs args)
         {
-            GuiLogMessage(del, plugin, new GuiLogEventArgs(message, plugin, level));
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void GuiLogMessage(GuiLogNotificationEventHandler del, IPlugin plugin, GuiLogEventArgs args)
-        {
-            if (del == null)
+            if (handler == null)
             {
                 return;
             }
-            Delegate[] delegates = del.GetInvocationList();
+            Delegate[] delegates = handler.GetInvocationList();
             if (AsynchronousGuiLogMessage)
             {
                 AsyncCallback cleanUp = delegate(IAsyncResult asyncResult)
@@ -84,7 +61,6 @@ namespace Cryptool.PluginBase.Miscellaneous
             }
             else
             {
-
                 foreach (GuiLogNotificationEventHandler sink in delegates)
                 {
                     sink.Invoke(plugin, args);
@@ -99,13 +75,13 @@ namespace Cryptool.PluginBase.Miscellaneous
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void PropertyChanged(PropertyChangedEventHandler del, object sender, PropertyChangedEventArgs args)
+        public static void PropertyChanged(PropertyChangedEventHandler handler, object sender, PropertyChangedEventArgs args)
         {
-            if (del == null)
+            if (handler == null)
             {
                 return;
             }
-            Delegate[] delegates = del.GetInvocationList();
+            Delegate[] delegates = handler.GetInvocationList();
             if (AsynchronousPropertyChanged)
             {
                 AsyncCallback cleanUp = delegate(IAsyncResult asyncResult)
@@ -127,19 +103,19 @@ namespace Cryptool.PluginBase.Miscellaneous
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ProgressChanged(PluginProgressChangedEventHandler del, IPlugin plugin, double value, double max)
+        public static void ProgressChanged(PluginProgressChangedEventHandler handler, IPlugin plugin, double value, double max)
         {
-            ProgressChanged(del, plugin, new PluginProgressEventArgs(value, max));
+            ProgressChanged(handler, plugin, new PluginProgressEventArgs(value, max));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ProgressChanged(PluginProgressChangedEventHandler del, IPlugin plugin, PluginProgressEventArgs args)
+        public static void ProgressChanged(PluginProgressChangedEventHandler handler, IPlugin plugin, PluginProgressEventArgs args)
         {
-            if (del == null)
+            if (handler == null)
             {
                 return;
             }
-            Delegate[] delegates = del.GetInvocationList();
+            Delegate[] delegates = handler.GetInvocationList();
             if (AsynchronousProgressChanged)
             {
                 AsyncCallback cleanUp = delegate(IAsyncResult asyncResult)
@@ -161,13 +137,13 @@ namespace Cryptool.PluginBase.Miscellaneous
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void StatusChanged(StatusChangedEventHandler del, IPlugin plugin, StatusEventArgs args)
+        public static void StatusChanged(StatusChangedEventHandler handler, IPlugin plugin, StatusEventArgs args)
         {
-            if (del == null)
+            if (handler == null)
             {
                 return;
             }
-            Delegate[] delegates = del.GetInvocationList();
+            Delegate[] delegates = handler.GetInvocationList();
             if (AsynchronousStatusChanged)
             {
                 AsyncCallback cleanUp = delegate(IAsyncResult asyncResult)
@@ -187,6 +163,5 @@ namespace Cryptool.PluginBase.Miscellaneous
                 }
             }
         }
-
     }
 }

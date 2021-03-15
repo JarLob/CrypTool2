@@ -32,7 +32,7 @@ namespace Cryptool.PluginBase.Utils
             Greek,
             Latin,
             Dutch,
-            Swdish,
+            Swedish,
             Portuguese,
             Polish
         }

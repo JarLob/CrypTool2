@@ -49,7 +49,7 @@ namespace WorkspaceManager.Model
         {
             get;
             set;
-        }
+        }        
 
         /// <summary>
         /// The executing editor
@@ -96,8 +96,8 @@ namespace WorkspaceManager.Model
                 if(UndoRedoManager.HasUnsavedChanges())
                 {
                     return true;
-                }                
-                return AllPluginModels.Any(pluginModel => pluginModel.SettingesHaveChanges);
+                }
+                return false;
             }            
         }
 
@@ -533,9 +533,14 @@ namespace WorkspaceManager.Model
         /// <param name="events">Should the model fire events?</param>
         public object ModifyModel(Operation operation, bool events = false)
         {
+            if (UndoRedoManager.IsCurrentlyWorking)
+            {
+                return false;
+            }
             var operationReturn = operation.Execute(this, events);
+            UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
 
-            if(operationReturn is Boolean)
+            if (operationReturn is Boolean)
             {
                 if (((Boolean) operationReturn) == true)
                 {
@@ -545,7 +550,7 @@ namespace WorkspaceManager.Model
                 return false;
             }
 
-            UndoRedoManager.DidOperation(operation);
+            UndoRedoManager.DidOperation(operation);            
             return operationReturn;
 
         }

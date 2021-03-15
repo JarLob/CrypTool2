@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
@@ -29,7 +28,7 @@ using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Text;
 using WorkspaceManagerModel.Properties;
-using Cryptool.PluginBase.Attributes;
+using WorkspaceManagerModel.Model.Operations;
 
 namespace WorkspaceManager.Model
 {
@@ -58,8 +57,6 @@ namespace WorkspaceManager.Model
         private PluginModelState state = PluginModelState.Normal;
         internal string PluginTypeName = null;
         private string PluginTypeAssemblyName = null;
-        [NonSerialized] 
-        internal bool SettingesHaveChanges = false;
         [NonSerialized]
         internal Type _pluginType = null;
 
@@ -126,7 +123,7 @@ namespace WorkspaceManager.Model
             {
                 if (plugin == null && PluginType != null)
                 {
-                    plugin = PluginType.CreateComponentInstance();
+                    plugin = PluginType.CreateComponentInstance();                   
                 }
                 return plugin;
             }
@@ -357,18 +354,26 @@ namespace WorkspaceManager.Model
                     }, null);
                 }                
             }
-        }        
-
+        }
         /// <summary>
         /// Called if a Setting of a Plugin is changed 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="propertyChangedEventArgs"></param>
-        public void SettingsPropertyChanged(Object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        public void SettingsPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            if(sender == plugin.Settings)
+            try
             {
-                SettingesHaveChanges = true;
+                var property = sender.GetType().GetProperty(propertyChangedEventArgs.PropertyName);
+                if (property != null && !WorkspaceModel.UndoRedoManager.IsCurrentlyWorking)
+                {
+                    var value = property.GetValue(sender);
+                    WorkspaceModel.ModifyModel(new ChangeSettingOperation(WorkspaceModel, (ISettings)sender, propertyChangedEventArgs.PropertyName, value));
+                }
+            }
+            catch(Exception)
+            {
+                //do nothing
             }
         }
 

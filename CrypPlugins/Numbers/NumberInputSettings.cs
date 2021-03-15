@@ -31,8 +31,8 @@ namespace Cryptool.Plugins.Numbers
         private double fontsize;
 
         #region Number
-        private String number = "";
-        public String Number
+        private string number = "";
+        public string Number
         {
             get 
             {

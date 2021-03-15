@@ -254,8 +254,12 @@ namespace Cryptool.Caesar
             get {return memorizeCase;}
             set
             {
-                memorizeCase = CaseSensitive ? false : value;
-                OnPropertyChanged("MemorizeCase");
+                var newMemorizeCase = CaseSensitive ? false : value;
+                if (newMemorizeCase != memorizeCase)
+                {
+                    memorizeCase = newMemorizeCase;
+                    OnPropertyChanged("MemorizeCase");
+                }
             }
         }
 
