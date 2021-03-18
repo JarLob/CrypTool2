@@ -637,7 +637,7 @@ namespace Cryptool.Plugins.CostFunction
                 case CostFunctionSettings.CostFunctionType.Entropy:
                     return RelationOperator.LessThen;
                 case CostFunctionSettings.CostFunctionType.NGramsLog2:
-                    return RelationOperator.LessThen;
+                    return RelationOperator.LargerThen;
                 case CostFunctionSettings.CostFunctionType.RegEx:
                     return RelationOperator.LargerThen;
                 default:

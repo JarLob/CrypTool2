@@ -537,22 +537,29 @@ namespace WorkspaceManager.Model
             {
                 return false;
             }
-            var operationReturn = operation.Execute(this, events);
-            UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
-
-            if (operationReturn is Boolean)
+            if ((operation is ChangeSettingOperation))
             {
-                if (((Boolean) operationReturn) == true)
-                {
-                    UndoRedoManager.DidOperation(operation);
-                    return true;
-                }
-                return false;
+                UndoRedoManager.DidOperation(operation);
+                return true;
             }
+            else
+            {
+                var operationReturn = operation.Execute(this, events);
 
-            UndoRedoManager.DidOperation(operation);            
-            return operationReturn;
+                UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
 
+                if (operationReturn is Boolean)
+                {
+                    if (((Boolean)operationReturn) == true)
+                    {
+                        UndoRedoManager.DidOperation(operation);
+                        return true;
+                    }
+                    return false;
+                }
+                UndoRedoManager.DidOperation(operation);
+                return operationReturn;
+            }
         }
 
         /// <summary>
