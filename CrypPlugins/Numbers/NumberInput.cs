@@ -79,13 +79,6 @@ namespace Cryptool.Plugins.Numbers
                     _presentation.TextBox.Text = settings.Number;
                 }, null);
             }
-            else if (e.PropertyName == "ShowDigits")
-            {
-                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    SetStatusBar();
-                }, null);
-            }
             else if (e.PropertyName == "Font")
             {
                 _presentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
@@ -94,6 +87,10 @@ namespace Cryptool.Plugins.Numbers
             {
                 _presentation.MyFontSize = settings.FontSize;
             }
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                SetStatusBar();
+            }, null);
         }
 
         private void OnCancelCommand(object sender, DataObjectPastingEventArgs e)

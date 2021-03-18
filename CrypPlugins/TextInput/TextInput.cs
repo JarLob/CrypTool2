@@ -27,60 +27,55 @@ using System.Windows.Input;
 
 namespace Cryptool.TextInput
 {
-  [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
-  [PluginInfo("Cryptool.TextInput.Properties.Resources", "PluginCaption", "PluginTooltip", "TextInput/DetailedDescription/doc.xml", "TextInput/icon.png")]
-  [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
-  [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
-  public class TextInput : DependencyObject, ICrypComponent
-  {
-    private TextInputPresentation textInputPresentation;
-
-    public TextInput()
+    [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+    [PluginInfo("Cryptool.TextInput.Properties.Resources", "PluginCaption", "PluginTooltip", "TextInput/DetailedDescription/doc.xml", "TextInput/icon.png")]
+    [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
+    [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
+    public class TextInput : DependencyObject, ICrypComponent
     {
-      settings = new TextInputSettings();
-      settings.OnLogMessage += settings_OnLogMessage;
-      settings.PropertyChanged += settings_OnPropertyChanged;
-      textInputPresentation = new TextInputPresentation();
-      Presentation = textInputPresentation;
-      textInputPresentation.UserKeyDown += textInputPresentation_UserKeyDown;
-      setStatusBar();
-    }
+        private TextInputPresentation textInputPresentation;
 
-    void textInputPresentation_UserKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-    {
-        if (settings.ManualFontSettings == false)
+        public TextInput()
         {
-            return;
+            settings = new TextInputSettings();
+            settings.OnLogMessage += settings_OnLogMessage;
+            settings.PropertyChanged += settings_OnPropertyChanged;
+            textInputPresentation = new TextInputPresentation();
+            Presentation = textInputPresentation;
+            textInputPresentation.UserKeyDown += textInputPresentation_UserKeyDown;            
         }
-        if ((e.Key == Key.Add) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-        {            
-            if (settings.FontSize < 72)
+
+        void textInputPresentation_UserKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (settings.ManualFontSettings == false)
             {
-                settings.FontSize++;
+                return;
+            }
+            if ((e.Key == Key.Add) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize < 72)
+                {
+                    settings.FontSize++;
+                }
+            }
+            else if ((e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize > 8)
+                {
+                    settings.FontSize--;
+                }
             }
         }
-        else if ((e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-        {            
-            if (settings.FontSize > 8)
-            {
-                settings.FontSize--;
-            }
-        }
-    }
-      
-    private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
+
+        private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
             if (e.PropertyName == "Text")
             {
                 textInputPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     textInputPresentation.textBoxInputText.Text = settings.Text;
                 }, null);
-            }
-            else if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines")
-            {
-                setStatusBar();
-            }
+            }            
             else if (e.PropertyName == "Font")
             {
                 textInputPresentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
@@ -89,182 +84,187 @@ namespace Cryptool.TextInput
             {
                 textInputPresentation.MyFontSize = settings.FontSize;
             }
-    }
-
-    void textBoxInputText_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        this.NotifyUpdate();
-
-        // No dispatcher necessary, handler is being called from GUI component
-        settings.Text = textInputPresentation.textBoxInputText.Text;
-        setStatusBar();
-    }
-
-      void setStatusBar()
-      {
-        // create status line string
-
-        string s = textInputPresentation.textBoxInputText.Text;
-        string label = "";
-
-        if (settings.ShowChars)
-        {
-            int chars = (s == null) ? 0 : s.Length;
-            string entity = (chars == 1) ? Properties.Resources.Char : Properties.Resources.Chars;
-            label += string.Format(" {0:#,0} " + entity, chars);
-        }
-
-        if (settings.ShowLines)
-        {
-            int lines = 0;
-            if ( s != null && s.Length > 0 )
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                lines = new Regex("\n", RegexOptions.Multiline).Matches(s).Count;
-                if (s[s.Length - 1] != '\n') lines++;
+                SetStatusBar();
+            }, null);
+            
+        }
+
+        void textBoxInputText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.NotifyUpdate();
+
+            // No dispatcher necessary, handler is being called from GUI component
+            settings.Text = textInputPresentation.textBoxInputText.Text;
+            SetStatusBar();
+        }
+
+        void SetStatusBar()
+        {
+            // create status line string
+
+            string s = textInputPresentation.textBoxInputText.Text;
+            string label = "";
+
+            if (settings.ShowChars)
+            {
+                int chars = (s == null) ? 0 : s.Length;
+                string entity = (chars == 1) ? Properties.Resources.Char : Properties.Resources.Chars;
+                label += string.Format(" {0:#,0} " + entity, chars);
             }
-            string entity = (lines == 1) ? Properties.Resources.Line : Properties.Resources.Lines;
-            if (label != "") label += ", ";
-            label += string.Format(" {0:#,0} " + entity, lines);
+
+            if (settings.ShowLines)
+            {
+                int lines = 0;
+                if (s != null && s.Length > 0)
+                {
+                    lines = new Regex("\n", RegexOptions.Multiline).Matches(s).Count;
+                    if (s[s.Length - 1] != '\n') lines++;
+                }
+                string entity = (lines == 1) ? Properties.Resources.Line : Properties.Resources.Lines;
+                if (label != "") label += ", ";
+                label += string.Format(" {0:#,0} " + entity, lines);
+            }
+
+            textInputPresentation.labelBytesCount.Content = label;
         }
 
-        textInputPresentation.labelBytesCount.Content = label;
-    }
-
-    public void NotifyUpdate()
-    {
-      OnPropertyChanged("TextOutput");
-    }
-
-    void settings_OnLogMessage(string message, NotificationLevel loglevel)
-    {
-      GuiLogMessage(message, loglevel);
-    }
-
-    private string GetInputString()
-    {
-        if (textInputPresentation.textBoxInputText.Dispatcher.CheckAccess())
+        public void NotifyUpdate()
         {
-            return textInputPresentation.textBoxInputText.Text;
+            OnPropertyChanged("TextOutput");
         }
-        else
+
+        void settings_OnLogMessage(string message, NotificationLevel loglevel)
         {
-            return (string) this.textInputPresentation.textBoxInputText.Dispatcher.Invoke(DispatcherPriority.Normal, (DispatcherOperationCallback) delegate
+            GuiLogMessage(message, loglevel);
+        }
+
+        private string GetInputString()
+        {
+            if (textInputPresentation.textBoxInputText.Dispatcher.CheckAccess())
+            {
+                return textInputPresentation.textBoxInputText.Text;
+            }
+            else
+            {
+                return (string)this.textInputPresentation.textBoxInputText.Dispatcher.Invoke(DispatcherPriority.Normal, (DispatcherOperationCallback)delegate
+              {
+                  return textInputPresentation.textBoxInputText.Text;
+              }, textInputPresentation);
+            }
+        }
+
+
+        #region Properties
+
+        [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", true)]
+        public string TextOutput
+        {
+            get
+            {
+                return GetInputString();
+            }
+            set { }
+        }
+
+        #endregion
+
+        #region IPlugin Members
+
+        public UserControl Presentation { get; private set; }
+
+        public void Initialize()
+        {
+            if (textInputPresentation.textBoxInputText != null)
+            {
+                textInputPresentation.textBoxInputText.TextChanged -= textBoxInputText_TextChanged;
+                textInputPresentation.textBoxInputText.TextChanged += textBoxInputText_TextChanged;
+
+                textInputPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    textInputPresentation.textBoxInputText.Text = settings.Text;
+                }, null);
+            }
+        }
+
+        public void Dispose()
+        {
+            textInputPresentation.textBoxInputText.TextChanged -= textBoxInputText_TextChanged;
+        }
+
+        public void Execute()
+        {
+            NotifyUpdate();
+            ShowProgress(100, 100);
+            string value = (string)this.textInputPresentation.textBoxInputText.Dispatcher.Invoke(DispatcherPriority.Normal, (DispatcherOperationCallback)delegate
             {
                 return textInputPresentation.textBoxInputText.Text;
             }, textInputPresentation);
+
+            if (string.IsNullOrEmpty(value))
+            {
+                GuiLogMessage("No input value returning null.", NotificationLevel.Debug);
+            }
         }
-    }
 
-
-    # region Properties
-
-    [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", true)]
-    public string TextOutput
-    {
-        get
+        public void Stop()
         {
-            return GetInputString();
         }
-        set { }
-    }
 
-    #endregion
+        public void PreExecution()
+        {
+        }
 
-    #region IPlugin Members
+        public void PostExecution()
+        {
+        }
 
-    public UserControl Presentation { get; private set; }
+        #endregion
 
-    public void Initialize()
-    {
-      if (textInputPresentation.textBoxInputText != null)
-      {
-          textInputPresentation.textBoxInputText.TextChanged -= textBoxInputText_TextChanged;
-          textInputPresentation.textBoxInputText.TextChanged += textBoxInputText_TextChanged;
+        private void ShowProgress(double value, double max)
+        {
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+        }
 
-          textInputPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-          {
-              textInputPresentation.textBoxInputText.Text = settings.Text;
-          }, null);
-      }
-    }
-
-    public void Dispose()
-    {
-      textInputPresentation.textBoxInputText.TextChanged -= textBoxInputText_TextChanged;
-    }
-
-    public void Execute()
-    {
-      NotifyUpdate();
-      ShowProgress(100, 100);
-      string value = (string)this.textInputPresentation.textBoxInputText.Dispatcher.Invoke(DispatcherPriority.Normal, (DispatcherOperationCallback)delegate
-      {
-          return textInputPresentation.textBoxInputText.Text;
-      }, textInputPresentation);
-
-      if (string.IsNullOrEmpty(value))
-      {
-          GuiLogMessage("No input value returning null.", NotificationLevel.Debug);
-      }
-    }
-
-    public void Stop()
-    {
-    }
-
-    public void PreExecution()
-    {
-    }
-
-    public void PostExecution()
-    {
-    }
-
-    #endregion
-
-    private void ShowProgress(double value, double max)
-    {
-      EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
-    }
-
-    #region IPlugin Members
+        #region IPlugin Members
 
 #pragma warning disable 67
-		public event StatusChangedEventHandler OnPluginStatusChanged;
+        public event StatusChangedEventHandler OnPluginStatusChanged;
 #pragma warning restore
 
-    public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
-    private void GuiLogMessage(string message, NotificationLevel logLevel)
-    {
-      if (OnGuiLogNotificationOccured != null)
-      {
-        OnGuiLogNotificationOccured(this, new GuiLogEventArgs(message, this, logLevel));
-      }
+        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            if (OnGuiLogNotificationOccured != null)
+            {
+                OnGuiLogNotificationOccured(this, new GuiLogEventArgs(message, this, logLevel));
+            }
+        }
+
+        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
+
+        private TextInputSettings settings;
+        public ISettings Settings
+        {
+            get
+            {
+                return settings;
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
-
-    public event PluginProgressChangedEventHandler OnPluginProgressChanged;
-
-    private TextInputSettings settings;
-    public ISettings Settings
-    {
-      get
-      {
-        return settings;
-      }
-    }
-
-    #endregion
-
-    #region INotifyPropertyChanged Members
-
-    public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
-    public void OnPropertyChanged(string name)
-    {
-      EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
-    }
-
-    #endregion
-  }
 }
