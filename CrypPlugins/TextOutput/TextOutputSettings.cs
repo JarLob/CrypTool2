@@ -25,6 +25,8 @@ namespace TextOutput
 {
     public class TextOutputSettings : ISettings
     {
+        public static string DEFAULT_FONT_FAMILY = "Segoe UI";  // default CT2 font
+
         public enum LineBreaksEnum
         {            
             Windows,
@@ -50,7 +52,7 @@ namespace TextOutput
         private ObservableCollection<string> fonts = new ObservableCollection<string>();
         const int maxmaxLength = int.MaxValue;
         private int maxLength = 15728640; //15 Megabyte
-        private int font;
+        private string _font;
         private double fontsize;
         private bool manualFontSettings = false;
 
@@ -65,22 +67,15 @@ namespace TextOutput
 
         public void ResetFont()
         {
-            int index = -1;
-            int i = 0;
             foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
             {
                 Fonts.Add(font.ToString());
                 if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
                 {
-                    index = i;
+                    _font = font.ToString();
                 }
-                i++;
             }
             fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
-            if (index != -1)
-            {
-                font = index;
-            }
             OnPropertyChanged("Font");
             OnPropertyChanged("FontSize");
         }
@@ -241,14 +236,25 @@ namespace TextOutput
         [TaskPane("FontCaption", "FontTooltip", "FontGroup", 9, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
         public int Font
         {
-            get { return font; }
+            get
+            {
+                var fontIndex = Fonts.IndexOf(_font);
+                if (fontIndex != -1)
+                {
+                    return fontIndex;
+                }
+                else
+                {
+                    return Fonts.IndexOf(DEFAULT_FONT_FAMILY); //standard CT2 font type
+                }
+            }
             set
             {
-                if (value != font)
+                if (Fonts[value] != _font)
                 {
                     if (manualFontSettings)
                     {
-                        font = value;
+                        _font = Fonts[value];
                     }
                     OnPropertyChanged("Font");
                 }

@@ -23,6 +23,8 @@ namespace Cryptool.TextInput
 {
     public class TextInputSettings : ISettings
     {
+        public static string DEFAULT_FONT_FAMILY = "Segoe UI";  // default CT2 font
+
         public delegate void TextInputLogMessage(string message, NotificationLevel loglevel);
         public event TextInputLogMessage OnLogMessage;
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
@@ -30,7 +32,7 @@ namespace Cryptool.TextInput
         private ObservableCollection<string> fonts = new ObservableCollection<string>();
         private bool showLines = true;
         private bool manualFontSettings = false;
-        private int font;
+        private string _font;
         private double fontsize;
 
         public ObservableCollection<string> Fonts
@@ -54,30 +56,17 @@ namespace Cryptool.TextInput
 
         public void ResetFont()
         {
-            int index = -1;
-            int i = 0;
             foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
             {
                 Fonts.Add(font.ToString());
-                if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
+                if (PluginBase.Properties.Settings.Default.FontFamily == font)
                 {
-                    index = i;
+                    _font = font.ToString();
                 }
-                i++;
             }
-            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
-            if (index != -1)
-            {
-                font = index;
-            }
+            fontsize = PluginBase.Properties.Settings.Default.FontSize;
             OnPropertyChanged("Font");
             OnPropertyChanged("FontSize");
-        }
-
-
-        private void LogMessage(string message, NotificationLevel logLevel)
-        {
-            if (OnLogMessage != null) OnLogMessage(message, logLevel);
         }
 
         private string text;
@@ -154,14 +143,25 @@ namespace Cryptool.TextInput
         [TaskPane("FontCaption", "FontTooltip", "FontGroup", 4, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
         public int Font
         {
-            get { return font; }
+            get 
+            {
+                var fontIndex = Fonts.IndexOf(_font);
+                if (fontIndex != -1)
+                {
+                    return fontIndex;
+                }
+                else
+                {
+                    return Fonts.IndexOf(DEFAULT_FONT_FAMILY); //standard CT2 font type
+                }
+            }
             set
             {
-                if (value != font)
+                if (Fonts[value] != _font)
                 {
                     if (manualFontSettings)
                     {
-                        font = value;    
+                        _font = Fonts[value];    
                     }                    
                     OnPropertyChanged("Font");
                 }
@@ -183,8 +183,8 @@ namespace Cryptool.TextInput
                     OnPropertyChanged("FontSize");
                 }
             }
-        }
-       
+        }        
+
         #endregion settings
 
         #region INotifyPropertyChanged Members
@@ -206,26 +206,17 @@ namespace Cryptool.TextInput
 
         public void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private void ShowSettingsElement(string element)
         {
-            if (TaskPaneAttributeChanged != null)
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
-            }
+            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
         }
 
         private void CollapseSettingsElement(string element)
         {
-            if (TaskPaneAttributeChanged != null)
-            {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
-            }
+            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
         }
 
         #endregion

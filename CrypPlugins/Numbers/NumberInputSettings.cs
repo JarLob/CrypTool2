@@ -23,11 +23,13 @@ using System.Collections.ObjectModel;
 namespace Cryptool.Plugins.Numbers
 {
     public class NumberInputSettings : ISettings
-    {     
+    {
+        public static string DEFAULT_FONT_FAMILY = "Segoe UI";  // default CT2 font
+
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
         private ObservableCollection<string> fonts = new ObservableCollection<string>();
         private bool manualFontSettings = false;
-        private int font;
+        private string _font;
         private double fontsize;
 
         #region Number
@@ -67,22 +69,15 @@ namespace Cryptool.Plugins.Numbers
 
         public void ResetFont()
         {
-            int index = -1;
-            int i = 0;
             foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
             {
                 Fonts.Add(font.ToString());
-                if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
+                if (PluginBase.Properties.Settings.Default.FontFamily == font)
                 {
-                    index = i;
+                    _font = font.ToString();
                 }
-                i++;
             }
-            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
-            if (index != -1)
-            {
-                font = index;
-            }
+            fontsize = PluginBase.Properties.Settings.Default.FontSize;
             OnPropertyChanged("Font");
             OnPropertyChanged("FontSize");
         }
@@ -133,14 +128,25 @@ namespace Cryptool.Plugins.Numbers
         [TaskPane("FontCaption", "FontTooltip", "FontGroup", 4, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
         public int Font
         {
-            get { return font; }
+            get
+            {
+                var fontIndex = Fonts.IndexOf(_font);
+                if (fontIndex != -1)
+                {
+                    return fontIndex;
+                }
+                else
+                {
+                    return Fonts.IndexOf(DEFAULT_FONT_FAMILY); //standard CT2 font type
+                }
+            }
             set
             {
-                if (value != font)
+                if (Fonts[value] != _font)
                 {
                     if (manualFontSettings)
                     {
-                        font = value;
+                        _font = Fonts[value];
                     }
                     OnPropertyChanged("Font");
                 }
