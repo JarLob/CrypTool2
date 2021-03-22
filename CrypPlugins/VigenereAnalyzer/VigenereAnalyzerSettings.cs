@@ -16,7 +16,7 @@
 */
 
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
+using Cryptool.PluginBase.Utils;
 using System.ComponentModel;
 
 
@@ -48,7 +48,9 @@ namespace Cryptool.VigenereAnalyzer
         private int _toKeyLength = 20;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
-        private int _language;  
+        private int _language;
+        private int _gramsType = 4; // Pentagrams
+
 
         public void Initialize()
         {
@@ -138,6 +140,24 @@ namespace Cryptool.VigenereAnalyzer
                 {
                     _language = value;
                     OnPropertyChanged("Language");
+                }
+            }
+        }
+
+        [TaskPane("GramsTypeCaption", "GramsTypeTooltip", null, 6, false, ControlType.ComboBox,
+            new string[] { "Unigrams", "Bigrams", "Trigrams", "Tetragrams", "Pentragrams" })]
+        public int GramsType
+        {
+            get
+            {
+                return _gramsType;
+            }
+            set
+            {
+                if (value != _gramsType)
+                {
+                    _gramsType = value;
+                    OnPropertyChanged("GramsType");
                 }
             }
         }

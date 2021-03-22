@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Bigrams" xml:space="preserve">
+    <value>Bigramme</value>
+  </data>
   <data name="Both" xml:space="preserve">
     <value>Trigramme + 4-Gramme</value>
   </data>
@@ -180,6 +183,12 @@
   <data name="German" xml:space="preserve">
     <value>Deutsch</value>
   </data>
+  <data name="GramsTypeCaption" xml:space="preserve">
+    <value>Gramm-Typ:</value>
+  </data>
+  <data name="GramsTypeTooltip" xml:space="preserve">
+    <value>Definiert die n-Gramm-Größe, die während der Kryptoanalyse in der Kostenfunktion verwendet werden soll.</value>
+  </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Bester Schlüssel</value>
   </data>
@@ -216,6 +225,9 @@
   <data name="NaturalLanguage" xml:space="preserve">
     <value>Natürliche Sprache</value>
   </data>
+  <data name="Pentagrams" xml:space="preserve">
+    <value>Pentagramme</value>
+  </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Bester Klartext</value>
   </data>
@@ -227,9 +239,6 @@
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Kryptoanalyse des Vigenère-Verfahrens mittels Hillclimbing.</value>
-  </data>
-  <data name="Quadgrams" xml:space="preserve">
-    <value>4-Gramme</value>
   </data>
   <data name="Random" xml:space="preserve">
     <value>Zufällig</value>
@@ -269,6 +278,9 @@
   </data>
   <data name="Trigrams" xml:space="preserve">
     <value>Trigramme</value>
+  </data>
+  <data name="Unigrams" xml:space="preserve">
+    <value>Unigramme</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>

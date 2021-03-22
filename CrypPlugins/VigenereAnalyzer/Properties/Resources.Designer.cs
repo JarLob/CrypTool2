@@ -19,7 +19,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -57,6 +57,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bigrams ähnelt.
+        /// </summary>
+        public static string Bigrams {
+            get {
+                return ResourceManager.GetString("Bigrams", resourceCulture);
             }
         }
         
@@ -250,6 +259,24 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Grams type: ähnelt.
+        /// </summary>
+        public static string GramsTypeCaption {
+            get {
+                return ResourceManager.GetString("GramsTypeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the n-gram size, which should be used in the cost function during the cryptanalysis. ähnelt.
+        /// </summary>
+        public static string GramsTypeTooltip {
+            get {
+                return ResourceManager.GetString("GramsTypeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Best Key ähnelt.
         /// </summary>
         public static string KeyCaption {
@@ -358,6 +385,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pentagrams ähnelt.
+        /// </summary>
+        public static string Pentagrams {
+            get {
+                return ResourceManager.GetString("Pentagrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Best Plaintext ähnelt.
         /// </summary>
         public static string PlaintextCaption {
@@ -390,15 +426,6 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 4-grams ähnelt.
-        /// </summary>
-        public static string Quadgrams {
-            get {
-                return ResourceManager.GetString("Quadgrams", resourceCulture);
             }
         }
         
@@ -516,6 +543,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string Trigrams {
             get {
                 return ResourceManager.GetString("Trigrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unigrams ähnelt.
+        /// </summary>
+        public static string Unigrams {
+            get {
+                return ResourceManager.GetString("Unigrams", resourceCulture);
             }
         }
         

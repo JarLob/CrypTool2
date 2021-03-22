@@ -150,15 +150,8 @@ namespace Cryptool.VigenereAnalyzer
                 return;
             }
 
-            
-            try
-            {
-                _grams = new Pentagrams(LanguageStatistics.LanguageCode(_settings.Language), false);
-            }
-            catch (Exception ex)
-            {
-                _grams = new Tetragrams(LanguageStatistics.LanguageCode(_settings.Language), false);
-            }
+            //the settings gramsType is between 0 and 4. Thus, we have to add 1 to cast it to a "GramsType", which starts at 1
+            _grams = LanguageStatistics.CreateGrams(_settings.Language, (LanguageStatistics.GramsType)(_settings.GramsType + 1), false);
 
             //Create a unique alphabet from the given (maybe permuted) alphabet
             if (!string.IsNullOrEmpty(VigenereAlphabet))

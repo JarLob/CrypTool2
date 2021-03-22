@@ -118,7 +118,7 @@ namespace Cryptool.PluginBase.Utils
             { "ru", new double[] { 0.0804, 0.0155, 0.0475, 0.0188, 0.0295, 0.0821, 0.0022, 0.008, 0.0161, 0.0798, 0.0136, 0.0349, 0.0432, 0.0311, 0.0672, 0.1061, 0.0282, 0.0538, 0.0571, 0.0583, 0.0228, 0.0041, 0.0102, 0.0058, 0.0123, 0.0055, 0.0034, 0.0003, 0.0191, 0.0139, 0.0031, 0.0063, 0.02 } }, // Russian
             //Source: https://everything2.com/title/Letter+frequency+in+several+languages
             { "la", new double[] { 0.072, 0.012, 0.033, 0.017, 0.092, 0.009, 0.014, 0.005, 0.101, 0, 0, 0.021, 0.034, 0.06, 0.044, 0.03, 0.013, 0.068, 0.068, 0.072, 0.074, 0.007, 0, 0.006, 0, 0 } }, // Latin
-        };
+        };        
 
         public static Dictionary<string, string> Alphabets = new Dictionary<string, string>()
         {
@@ -143,13 +143,40 @@ namespace Cryptool.PluginBase.Utils
         /// </summary>
         public enum GramsType
         {
-            Undefined =0 ,               // invalid type
+            Undefined = 0,               // invalid type
             Unigrams = 1,                // 1-gram
             Bigrams = 2,                 // 2-gram
             Trigrams = 3,                // 3-gram
             Tetragrams = 4,              // 4-gram
-            Pentragrams = 5,              // 5-gram
-            Hexagrams = 6
+            Pentragrams = 5,             // 5-gram
+            Hexagrams = 6                // 6.gram
+        }
+
+        /// <summary>
+        /// Creates a Grams object based on the given parameters
+        /// </summary>
+        /// <param name="language"></param>
+        /// <param name="gramsType"></param>
+        /// <param name="useSpaces"></param>
+        /// <returns></returns>
+        public static Grams CreateGrams(int language, GramsType gramsType, bool useSpaces)
+        {
+            switch (gramsType)
+            {
+                case GramsType.Unigrams:     // 1
+                    return new Unigrams(LanguageCode(language), useSpaces);
+                case GramsType.Bigrams:     // 2
+                    return new Bigrams(LanguageCode(language), useSpaces);
+                case GramsType.Trigrams:    // 3
+                    return new Trigrams(LanguageCode(language), useSpaces);
+                case GramsType.Tetragrams:  // 4
+                    return new Tetragrams(LanguageCode(language), useSpaces);
+                case GramsType.Pentragrams: // 5
+                default: // our default ngram size in CT2 is 5
+                    return new Pentagrams(LanguageCode(language), useSpaces);
+                case GramsType.Hexagrams:  // 6
+                    return new Hexagrams(LanguageCode(language), useSpaces);
+            }
         }
 
         public static string Alphabet(string language, bool useSpaces = false)

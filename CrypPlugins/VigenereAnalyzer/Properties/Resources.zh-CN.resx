@@ -261,9 +261,6 @@
   <data name="German" xml:space="preserve">
     <value>德语</value>
   </data>
-  <data name="Quadgrams" xml:space="preserve">
-    <value>4克</value>
-  </data>
   <data name="Trigrams" xml:space="preserve">
     <value>卦</value>
   </data>
@@ -284,5 +281,20 @@
   </data>
   <data name="StopIfPercentReachedTooltip" xml:space="preserve">
     <value>如果达到给定的百分比，则在密码分析组件中停止当前分析。</value>
+  </data>
+  <data name="Bigrams" xml:space="preserve">
+    <value>比格勒姆</value>
+  </data>
+  <data name="GramsTypeCaption" xml:space="preserve">
+    <value>克类型：</value>
+  </data>
+  <data name="GramsTypeTooltip" xml:space="preserve">
+    <value>定义在密码分析过程中在成本函数中使用的n-gram大小。</value>
+  </data>
+  <data name="Pentagrams" xml:space="preserve">
+    <value>五角星</value>
+  </data>
+  <data name="Unigrams" xml:space="preserve">
+    <value>克类型：</value>
   </data>
 </root>

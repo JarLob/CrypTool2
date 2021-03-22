@@ -261,9 +261,6 @@
   <data name="German" xml:space="preserve">
     <value>German</value>
   </data>
-  <data name="Quadgrams" xml:space="preserve">
-    <value>4-grams</value>
-  </data>
   <data name="Trigrams" xml:space="preserve">
     <value>Trigrams</value>
   </data>
@@ -284,5 +281,20 @@
   </data>
   <data name="StopIfPercentReachedTooltip" xml:space="preserve">
     <value>Stop the current analysis in the cryptanalytic component if the given percentage is reached.</value>
+  </data>
+  <data name="Bigrams" xml:space="preserve">
+    <value>Bigrams</value>
+  </data>
+  <data name="GramsTypeCaption" xml:space="preserve">
+    <value>Grams type:</value>
+  </data>
+  <data name="GramsTypeTooltip" xml:space="preserve">
+    <value>Defines the n-gram size, which should be used in the cost function during the cryptanalysis.</value>
+  </data>
+  <data name="Pentagrams" xml:space="preserve">
+    <value>Pentagrams</value>
+  </data>
+  <data name="Unigrams" xml:space="preserve">
+    <value>Unigrams</value>
   </data>
 </root>
