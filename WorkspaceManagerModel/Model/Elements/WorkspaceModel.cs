@@ -538,16 +538,15 @@ namespace WorkspaceManager.Model
                 return false;
             }
             if ((operation is ChangeSettingOperation))
-            {
+            {                
                 UndoRedoManager.DidOperation(operation);
+                UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
                 return true;
             }
             else
             {
                 var operationReturn = operation.Execute(this, events);
-
                 UndoRedoManager.SettingsManager.StoreCurrentSettingValues();
-
                 if (operationReturn is Boolean)
                 {
                     if (((Boolean)operationReturn) == true)
