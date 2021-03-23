@@ -21,7 +21,7 @@ namespace Cryptool.PluginBase.Utils
         /// </summary>
         public enum Languages
         {
-            Englisch,
+            English,
             German,
             Spanish,
             French,
@@ -91,9 +91,39 @@ namespace Cryptool.PluginBase.Utils
             }
         }
 
-        public static string LanguageCode(int n)
+        /// <summary>
+        /// Returns the language code for the given language id (unique integer number)
+        /// Returns string.empty, if language id is invalid
+        /// </summary>
+        /// <param name="languageId"></param>
+        /// <returns></returns>
+        public static string LanguageCode(int languageId)
         {
-            return SupportedLanguagesCodes[n % SupportedLanguages.Length];
+            if(languageId < 0 || languageId >= SupportedLanguages.Length)
+            {
+                return string.Empty;
+            }
+            return SupportedLanguagesCodes[languageId];
+        }
+
+        /// <summary>
+        /// Returns the language id (unique integer number) for the given language code
+        /// returns -1, if language code is unknown
+        /// </summary>
+        /// <param name="languageCode"></param>
+        /// <returns></returns>
+        public static int LanguageId(string languageCode)
+        {
+            var i = 0;
+            foreach(var str in SupportedLanguagesCodes)
+            {
+                if (languageCode.ToLower().Equals(str))
+                {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
         }
 
         public static Dictionary<string, double[]> Unigrams = new Dictionary<string, double[]>()
@@ -144,38 +174,44 @@ namespace Cryptool.PluginBase.Utils
         public enum GramsType
         {
             Undefined = 0,               // invalid type
-            Unigrams = 1,                // 1-gram
-            Bigrams = 2,                 // 2-gram
-            Trigrams = 3,                // 3-gram
-            Tetragrams = 4,              // 4-gram
-            Pentragrams = 5,             // 5-gram
-            Hexagrams = 6                // 6.gram
+            Unigrams = 1,                // 1-grams
+            Bigrams = 2,                 // 2-grams
+            Trigrams = 3,                // 3-grams
+            Tetragrams = 4,              // 4-grams
+            Pentragrams = 5,             // 5-grams
+            Hexagrams = 6                // 6-grams
         }
+
+        public static Grams CreateGrams(string languageCode, GramsType gramsType, bool useSpaces)
+        {
+            return CreateGrams(LanguageId(languageCode), gramsType, useSpaces);
+        }
+
 
         /// <summary>
         /// Creates a Grams object based on the given parameters
         /// </summary>
-        /// <param name="language"></param>
+        /// <param name="languageId"></param>
         /// <param name="gramsType"></param>
         /// <param name="useSpaces"></param>
         /// <returns></returns>
-        public static Grams CreateGrams(int language, GramsType gramsType, bool useSpaces)
+        public static Grams CreateGrams(int languageId, GramsType gramsType, bool useSpaces)
         {
             switch (gramsType)
             {
                 case GramsType.Unigrams:     // 1
-                    return new Unigrams(LanguageCode(language), useSpaces);
+                    return new Unigrams(LanguageCode(languageId), useSpaces);
                 case GramsType.Bigrams:     // 2
-                    return new Bigrams(LanguageCode(language), useSpaces);
+                    return new Bigrams(LanguageCode(languageId), useSpaces);
                 case GramsType.Trigrams:    // 3
-                    return new Trigrams(LanguageCode(language), useSpaces);
+                    return new Trigrams(LanguageCode(languageId), useSpaces);
                 case GramsType.Tetragrams:  // 4
-                    return new Tetragrams(LanguageCode(language), useSpaces);
+                    return new Tetragrams(LanguageCode(languageId), useSpaces);
                 case GramsType.Pentragrams: // 5
                 default: // our default ngram size in CT2 is 5
-                    return new Pentagrams(LanguageCode(language), useSpaces);
+                    return new Pentagrams(LanguageCode(languageId), useSpaces);
                 case GramsType.Hexagrams:  // 6
-                    return new Hexagrams(LanguageCode(language), useSpaces);
+                    return new Hexagrams(LanguageCode(languageId), useSpaces);
             }
         }
 

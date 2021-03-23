@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2017 Nils Kopal, Applied Information Security, Uni Kassel
+   Copyright 2021 Nils Kopal, Applied Information Security, Uni Kassel
    https://www.uni-kassel.de/eecs/fachgebiete/ais/mitarbeiter/nils-kopal-m-sc.html
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,7 +68,7 @@ namespace Cryptool.VigenereAnalyzer
             get { return _ciphertextInput; }
             set
             {
-                if (!String.IsNullOrEmpty(value) && value != _ciphertextInput)
+                if (!string.IsNullOrEmpty(value) && value != _ciphertextInput)
                 {
                     _ciphertextInput = value;
                     OnPropertyChanged("Ciphertext");
@@ -105,8 +105,8 @@ namespace Cryptool.VigenereAnalyzer
         {
             Ciphertext = null;
             VigenereAlphabet = null;            
-            _key = String.Empty;
-            _ciphertextInput = String.Empty;            
+            _key = string.Empty;
+            _ciphertextInput = string.Empty;            
             _stopped = false;
             _startTime = new DateTime();
             _endTime = new DateTime();           
@@ -269,7 +269,9 @@ namespace Cryptool.VigenereAnalyzer
             {
                 // generate random key
                 for (var i = 0; i < runkey.Length; i++)
+                {
                     runkey[i] = numalphabet[random.Next(alphabetlength)];
+                }
 
                 bool foundbetter;
                 var bestkeycost = double.MinValue;
@@ -429,10 +431,9 @@ namespace Cryptool.VigenereAnalyzer
                     }
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception e)
+                catch (Exception)
                 {
                     //wtf?
-                    //Console.WriteLine("e3: " + e);
                 }
             }, null); 
         }

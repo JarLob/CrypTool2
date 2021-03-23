@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2017 Nils Kopal, Applied Information Security, Uni Kassel
+   Copyright 2021 Nils Kopal, Applied Information Security, Uni Kassel
    http://www.uni-kassel.de/eecs/fachgebiete/ais/mitarbeiter/nils-kopal-m-sc.html
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,9 +48,8 @@ namespace Cryptool.VigenereAnalyzer
         private int _toKeyLength = 20;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
-        private int _language;
+        private string _languageCode = "en"; //default language is English
         private int _gramsType = 4; // Pentagrams
-
 
         public void Initialize()
         {
@@ -132,13 +131,13 @@ namespace Cryptool.VigenereAnalyzer
         {
             get
             {
-                return _language;
+                return LanguageStatistics.LanguageId(_languageCode);
             }
             set
             {
-                if (value != _language)
+                if (value != LanguageStatistics.LanguageId(_languageCode))
                 {
-                    _language = value;
+                    _languageCode = LanguageStatistics.LanguageCode(value);
                     OnPropertyChanged("Language");
                 }
             }
@@ -182,10 +181,7 @@ namespace Cryptool.VigenereAnalyzer
 
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
