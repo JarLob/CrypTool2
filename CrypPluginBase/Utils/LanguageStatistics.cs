@@ -182,11 +182,17 @@ namespace Cryptool.PluginBase.Utils
             Hexagrams = 6                // 6-grams
         }
 
+        /// <summary>
+        /// Creates a Grams object based on the given parameters
+        /// </summary>
+        /// <param name="languageCode"></param>
+        /// <param name="gramsType"></param>
+        /// <param name="useSpaces"></param>
+        /// <returns></returns>
         public static Grams CreateGrams(string languageCode, GramsType gramsType, bool useSpaces)
         {
             return CreateGrams(LanguageId(languageCode), gramsType, useSpaces);
         }
-
 
         /// <summary>
         /// Creates a Grams object based on the given parameters
@@ -222,294 +228,6 @@ namespace Cryptool.PluginBase.Utils
             return Alphabets[language];
         }
 
-        public static double[] Load1Grams(string language, out string alphabet, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 1, useSpaces ? "-sp" : "");
-                return Load1GramsGZ(filename, out alphabet);
-            }
-            catch (Exception ex)
-            {
-                alphabet = null;
-                return null;
-            }
-        }
-
-        public static double[,] Load2Grams(string language, out string alphabet, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 2, useSpaces ? "-sp" : "");
-                return Load2GramsGZ(filename, out alphabet);
-            }
-            catch (Exception ex)
-            {
-                alphabet = null;
-                return null;
-            }
-        }
-
-        public static double[,,] Load3Grams(string language, out string alphabet, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 3, useSpaces ? "-sp" : "");
-                return Load3GramsGZ(filename, out alphabet);
-            }
-            catch (Exception ex)
-            {
-                alphabet = null;
-                return null;
-            }
-        }
-
-        public static double[,,,] Load4Grams(string language, out string alphabet, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 4, useSpaces ? "-sp" : "");
-                return Load4GramsGZ(filename, out alphabet);
-            }
-            catch (Exception ex)
-            {
-                alphabet = null;
-                return null;
-            }
-        }
-
-        public static double[] Load1GramsGZ(string filename, out string alphabet)
-        {
-            uint[] freq;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-                {
-                    alphabet = (string)bf.Deserialize(gz);
-                    max = (uint)bf.Deserialize(gz);
-                    sum = (ulong)bf.Deserialize(gz);
-                    freq = (uint[])bf.Deserialize(gz);
-                }
-            }
-
-            double[] result = new double[alphabet.Length];
-
-            for (int a = 0; a < alphabet.Length; a++)
-                result[a] = Math.Log((freq[a] + 0.001) / max);
-
-            return result;
-        }
-
-        public static double[,] Load2GramsGZ(string filename, out string alphabet)
-        {
-            uint[,] freq;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-                {
-                    alphabet = (string)bf.Deserialize(gz);
-                    max = (uint)bf.Deserialize(gz);
-                    sum = (ulong)bf.Deserialize(gz);
-                    freq = (uint[,])bf.Deserialize(gz);
-                }
-            }
-
-            double[,] result = new double[alphabet.Length, alphabet.Length];
-
-            for (int a = 0; a < alphabet.Length; a++)
-                for (int b = 0; b < alphabet.Length; b++)
-                    result[a, b] = Math.Log((freq[a, b] + 0.001) / max);
-
-            return result;
-        }
-
-        public static double[,,] Load3GramsGZ(string filename, out string alphabet)
-        {
-            uint[,,] freq;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-                {
-                    alphabet = (string)bf.Deserialize(gz);
-                    max = (uint)bf.Deserialize(gz);
-                    sum = (ulong)bf.Deserialize(gz);
-                    freq = (uint[,,])bf.Deserialize(gz);
-                }
-            }
-
-            double[,,] result = new double[alphabet.Length, alphabet.Length, alphabet.Length];
-
-            for (int a = 0; a < alphabet.Length; a++)
-                for (int b = 0; b < alphabet.Length; b++)
-                    for (int c = 0; c < alphabet.Length; c++)
-                        result[a, b, c] = Math.Log((freq[a, b, c] + 0.001) / max);
-
-            return result;
-        }
-
-        public static double[,,,] Load4GramsGZ(string filename, out string alphabet)
-        {
-            uint[,,,] freq;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-                {
-                    alphabet = (string)bf.Deserialize(gz);
-                    max = (uint)bf.Deserialize(gz);
-                    sum = (ulong)bf.Deserialize(gz);
-                    freq = (uint[,,,])bf.Deserialize(gz);
-                }
-            }
-
-            double[,,,] result = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-
-            for (int a = 0; a < alphabet.Length; a++)
-                for (int b = 0; b < alphabet.Length; b++)
-                    for (int c = 0; c < alphabet.Length; c++)
-                        for (int d = 0; d < alphabet.Length; d++)
-                            result[a, b, c, d] = Math.Log((freq[a, b, c, d] + 0.001) / max);
-
-            return result;
-        }
-
-        public static double Calculate1GramCost(double[] ngrams, int[] plaintext)
-        {
-            int end = plaintext.Length;
-            if (end <= 0) return 0;
-
-            double value = 0;
-
-            for (int i = 0; i < end; i++)
-            {
-                value += ngrams[plaintext[i]];
-            }
-
-            return value / end;
-        }
-
-        public static double Calculate2GramCost(double[,] ngrams, int[] plaintext)
-        {
-            int end = plaintext.Length - 1;
-            if (end <= 0) return 0;
-
-            double value = 0;
-
-            for (int i = 0; i < end; i++)
-                value += ngrams[plaintext[i], plaintext[i + 1]];
-
-            return value / end;
-        }
-
-        public static double Calculate3GramCost(double[,,] ngrams, int[] plaintext)
-        {
-            int end = plaintext.Length - 2;
-            if (end <= 0) return 0;
-
-            double value = 0;
-
-            for (int i = 0; i < end; i++)
-                value += ngrams[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
-
-            return value / end;
-        }
-
-        public static double Calculate4GramCost(double[,,,] ngrams, int[] plaintext)
-        {
-            int end = plaintext.Length - 3;
-            if (end <= 0) return 0;
-
-            double value = 0;
-
-            for (int i = 0; i < end; i++)
-                value += ngrams[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];
-
-            return value / end;
-        }
-        public static double[,,] Load3Grams(string language, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.bin", language, 3, useSpaces ? "-sp" : "");
-                return Load3Grams(filename, Alphabet(language, useSpaces));
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-        public static double[,,,] Load4Grams(string language, bool useSpaces = false)
-        {
-            try
-            {
-                string filename = String.Format("{0}-{1}gram-nocs{2}.bin", language, 4, useSpaces ? "-sp" : "");
-                return Load4Grams(filename, Alphabet(language, useSpaces));
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Load 3Gram file
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="alphabet"></param>
-        static double[,,] Load3Grams(string filename, string alphabet)
-        {
-            var _trigrams = new double[alphabet.Length, alphabet.Length, alphabet.Length];
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var reader = new BinaryReader(fileStream))
-                for (int i = 0; i < alphabet.Length; i++)
-                    for (int j = 0; j < alphabet.Length; j++)
-                        for (int k = 0; k < alphabet.Length; k++)
-                            _trigrams[i, j, k] = BitConverter.ToDouble(reader.ReadBytes(8), 0);
-
-            return _trigrams;
-        }
-
-        /// <summary>
-        /// Load 4Gram file
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="alphabet"></param>
-        static double[,,,] Load4Grams(string filename, string alphabet)
-        {
-            var _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var reader = new BinaryReader(fileStream))
-                for (int i = 0; i < alphabet.Length; i++)
-                    for (int j = 0; j < alphabet.Length; j++)
-                        for (int k = 0; k < alphabet.Length; k++)
-                            for (int l = 0; l < alphabet.Length; l++)
-                                _quadgrams[i, j, k, l] = BitConverter.ToDouble(reader.ReadBytes(8), 0);
-
-            return _quadgrams;
-        }
-
         /// <summary>
         /// Calculate cost value based on index of coincidence
         /// </summary>
@@ -517,17 +235,21 @@ namespace Cryptool.PluginBase.Utils
         /// <returns></returns>
         public static double CalculateIoC(int[] plaintext)
         {
-            Dictionary<int, UInt64> countChars = new Dictionary<int, UInt64>();
+            Dictionary<int, long> countChars = new Dictionary<int, long>();
 
             foreach (int c in plaintext)
+            {
                 if (countChars.ContainsKey(c)) countChars[c]++; else countChars.Add(c, 1);
+            }
 
-            UInt64 value = 0;
+            long value = 0;
 
-            foreach (UInt64 cnt in countChars.Values)
+            foreach (long cnt in countChars.Values)
+            {
                 value += cnt * (cnt - 1);
+            }
 
-            UInt64 N = (UInt64)plaintext.Length;
+            long N = plaintext.Length;
             return (double)value / (N * (N - 1));
         }
 
@@ -661,14 +383,69 @@ namespace Cryptool.PluginBase.Utils
     /// Abstract super class for nGrams classes
     /// </summary>
     public abstract class Grams
-    {
+    {        
+        public Grams(string language, bool useSpaces)
+        {
+            string filename = string.Format("{0}-{1}gram-nocs{2}.gz", language, GramSize(), useSpaces ? "-sp" : "");
+            try
+            {
+                LoadGZ(filename);
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                throw new Exception(string.Format("Did not find the specified language statistics file for language={0} and useSpaces={1}: {2}", language, useSpaces, filename), fileNotFoundException);
+            }
+        }
+
+        /// <summary>
+        /// Alphabet of this Grams object
+        /// </summary>
         public string Alphabet { get; protected set; }
-        public int[] addLetterIndicies = null;
+
+        protected int[] addLetterIndicies = null;
+
+        /// <summary>
+        /// Calculates the cost value of the given text stored in the array of integers
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public abstract double CalculateCost(int[] text);
+
+        /// <summary>
+        /// Calculates the cost value of the given text stored in the list of integers
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public abstract double CalculateCost(List<int> text);
+
+        /// <summary>
+        /// Calculates the cost value of the given text. Uses the alphabet of this Gram object to convert
+        /// from string to numbers before calculation
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public double CalculateCost(string text)
+        {
+            return CalculateCost(MapTextIntoNumberSpace(text, Alphabet));
+        }
+
+        /// <summary>
+        /// Returns the size of this Grams, e.g. 4 for tetragrams
+        /// </summary>
+        /// <returns></returns>
         public abstract int GramSize();
+
+        /// <summary>
+        /// Returns the type of this Grams object
+        /// </summary>
+        /// <returns></returns>
         public abstract GramsType GramsType();
 
+        /// <summary>
+        /// Method which loads the frequencies from a CT2 language statistics file
+        /// </summary>
+        /// <param name="filename"></param>
+        public abstract void LoadGZ(string filename);
 
         /// <summary>
         /// This method reduces the alphabet by "blending out" letters that are not in this alphabet
@@ -709,13 +486,11 @@ namespace Cryptool.PluginBase.Utils
     {
         public float[] Frequencies;
 
-        public Unigrams(string language, bool useSpaces = false)
+        public Unigrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 1, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
             Frequencies = (float[])file.LoadFrequencies(1);
@@ -792,13 +567,11 @@ namespace Cryptool.PluginBase.Utils
     {
         public float[,] Frequencies;
 
-        public Bigrams(string language, bool useSpaces = false)
+        public Bigrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 2, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
             Frequencies = (float[,])file.LoadFrequencies(2);
@@ -883,13 +656,11 @@ namespace Cryptool.PluginBase.Utils
     {
         public float[,,] Frequencies;
 
-        public Trigrams(string language, bool useSpaces = false)
+        public Trigrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 3, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
             Frequencies = (float[,,])file.LoadFrequencies(3);
@@ -982,13 +753,11 @@ namespace Cryptool.PluginBase.Utils
     {
         public float[,,,] Frequencies;
 
-        public Tetragrams(string language, bool useSpaces = false)
+        public Tetragrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 4, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
             Frequencies = (float[,,,])file.LoadFrequencies(4);
@@ -1087,15 +856,13 @@ namespace Cryptool.PluginBase.Utils
 
     public class Pentagrams : Grams
     {
-        public float[,,,,] Frequencies;        
+        public float[,,,,] Frequencies;
 
-        public Pentagrams(string language, bool useSpaces = false)
+        public Pentagrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 5, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
             Frequencies = (float[,,,,])file.LoadFrequencies(5);
@@ -1203,13 +970,11 @@ namespace Cryptool.PluginBase.Utils
     {
         public float[,,,,,] Frequencies;
 
-        public Hexagrams(string language, bool useSpaces = false)
+        public Hexagrams(string language, bool useSpaces = false) : base(language, useSpaces)
         {
-            string filename = String.Format("{0}-{1}gram-nocs{2}.gz", language, 6, useSpaces ? "-sp" : "");
-            LoadGZ(filename);
         }
 
-        private void LoadGZ(string filename)
+        public override void LoadGZ(string filename)
         {
             var file = new LanguageStatisticsFile(filename);
             Frequencies = (float[,,,,,])file.LoadFrequencies(6);
