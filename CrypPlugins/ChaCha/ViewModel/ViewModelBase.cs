@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     /// <summary>
     /// Base class for all view models.

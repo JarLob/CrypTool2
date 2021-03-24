@@ -8,7 +8,7 @@
     <ProjectGuid>{19D20024-BBCA-4BAE-A56E-97B08B05A959}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.BB84ErrorDetector</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.BB84ErrorDetector</RootNamespace>
     <AssemblyName>BB84ErrorDetector</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

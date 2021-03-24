@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial3
     /// <summary>
     /// Interaktionslogik für FilterSlide3.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class FilterSlide3 : UserControl
     {
         public FilterSlide3()

@@ -19,14 +19,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Diagnostics;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Resources;
 
 namespace Nihilist
 {
-    [Author("Fabian Enkler", "enkler@cryptool.org", "", "")]
+    [Author("Fabian Enkler", "enkler@CrypTool.org", "", "")]
     [PluginInfo("Nihilist.Properties.Resources", "PluginCaption", "PluginTooltip", "Nihilist/DetailedDescription/doc.xml", "Nihilist/Images/icon3.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Nihilist : ICrypComponent

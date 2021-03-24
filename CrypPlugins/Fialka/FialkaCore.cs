@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Fialka
+namespace CrypTool.Fialka
 {
     /// <summary>
     /// Contains the Fialka cipher implementation. To make this implementation as similar to real Fialka machine as it is possible,

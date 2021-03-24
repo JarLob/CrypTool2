@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using CrypCloud.Core.CloudComponent;
 using CrypCloud.Core.Properties;
 using CrypCloud.Core.utils;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using VoluntLib2;
 using WorkspaceManager.Model;
 using VoluntLib2.ManagementLayer;

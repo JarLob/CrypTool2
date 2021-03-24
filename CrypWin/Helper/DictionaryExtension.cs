@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
   /// <summary>
   /// DicHelper: creates new entry if not exists. 

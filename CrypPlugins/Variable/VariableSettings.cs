@@ -15,10 +15,10 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Variable
+namespace CrypTool.Plugins.Variable
 {
     class VariableSettings : ISettings
     {

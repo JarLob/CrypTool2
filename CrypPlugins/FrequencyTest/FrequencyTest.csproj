@@ -8,7 +8,7 @@
     <ProjectGuid>{BBE9497C-4AE2-4493-A611-DEBB37DFBBC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.FrequencyTest</RootNamespace>
+    <RootNamespace>CrypTool.FrequencyTest</RootNamespace>
     <AssemblyName>FrequencyTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -18,18 +18,18 @@
 
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.Generic;
 using System.IO;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Linq;
 
-namespace Cryptool.CylinderCipher
+namespace CrypTool.CylinderCipher
 {
     [Author("Nils Kopal", "nils.kopal@uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.CylinderCipher.Properties.Resources", "PluginCaption", "PluginTooltip", "CylinderCipher/DetailedDescription/doc.xml", "CylinderCipher/Images/icon.png")]
+    [PluginInfo("CrypTool.CylinderCipher.Properties.Resources", "PluginCaption", "PluginTooltip", "CylinderCipher/DetailedDescription/doc.xml", "CylinderCipher/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class CylinderCipher : ICrypComponent
     {

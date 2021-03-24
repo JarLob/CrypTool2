@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.PluginBase.Attributes
+namespace CrypTool.PluginBase.Attributes
 {
     /************************ Ct2BuildType ************************/
     public enum Ct2BuildType

@@ -18,9 +18,9 @@
 using System;
 using System.Drawing;
 using System.IO;
-using Cryptool.Plugins.VisualDecoder.Model;
+using CrypTool.Plugins.VisualDecoder.Model;
 
-namespace Cryptool.Plugins.VisualDecoder.Decoders
+namespace CrypTool.Plugins.VisualDecoder.Decoders
 {
     /// <summary>
     /// base class for all dimcode decoder

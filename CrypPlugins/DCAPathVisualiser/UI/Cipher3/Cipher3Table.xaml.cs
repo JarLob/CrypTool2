@@ -27,7 +27,7 @@ namespace DCAPathVisualiser.UI.Cipher3
     /// <summary>
     /// Interaktionslogik für Cipher3Table.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
     public partial class Cipher3Table : UserControl, INotifyPropertyChanged
     {
         private int _currentRound;

@@ -40,7 +40,7 @@ namespace DCAPathFinder.UI.Tutorial2
     /// <summary>
     /// Interaktionslogik für AnalysisOfSBoxSlide2.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class AnalysisOfSBoxSlide2 : UserControl, INotifyPropertyChanged
     {
         private ObservableCollection<DifferenceDistribution> _differenceDistributionData = null;

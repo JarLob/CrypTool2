@@ -20,15 +20,15 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.VisualDecoder.Decoders;
-using Cryptool.Plugins.VisualDecoder.Model;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.VisualDecoder.Decoders;
+using CrypTool.Plugins.VisualDecoder.Model;
 using ZXing;
 
-namespace Cryptool.Plugins.VisualDecoder
+namespace CrypTool.Plugins.VisualDecoder
 {
-    [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
+    [Author("Christopher Konze", "Christopher.Konze@CrypTool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
     [PluginInfo("VisualDecoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualDecoder/userdoc.xml", new[] { "VisualDecoder/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class VisualDecoder : ICrypComponent

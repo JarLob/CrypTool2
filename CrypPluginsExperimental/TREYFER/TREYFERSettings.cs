@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.TREYFER
+namespace CrypTool.TREYFER
     {
     public class TREYFERSettings : ISettings
     {

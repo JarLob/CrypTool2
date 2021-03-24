@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WorkspaceManager.View.Visuals"
-             xmlns:ctbase="clr-namespace:Cryptool.PluginBase;assembly=CrypPluginBase"
+             xmlns:ctbase="clr-namespace:CrypTool.PluginBase;assembly=CrypPluginBase"
              xmlns:model="clr-namespace:WorkspaceManager.Model;assembly=WorkspaceManagerModel"
              mc:Ignorable="d">
     <UserControl.Resources>

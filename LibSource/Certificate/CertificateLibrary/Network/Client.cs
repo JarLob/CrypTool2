@@ -93,7 +93,7 @@ namespace CrypTool.CertificateLibrary.Network
 
         private const int FALLBACK_CONNECTION_TIMEOUT = 30;
 
-        private const string FALLBACK_SERVER_HOST = "cloud.cryptool.org";
+        private const string FALLBACK_SERVER_HOST = "cloud.CrypTool.org";
 
         private const int FALLBACK_SERVER_PORT = 10443;
 

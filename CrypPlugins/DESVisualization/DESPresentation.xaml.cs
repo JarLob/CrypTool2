@@ -10,12 +10,12 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Cryptool.DESVisualization
+namespace CrypTool.DESVisualization
 {
     /// <summary>
     /// Interaction logic for DESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.DESVisualization.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.DESVisualization.Properties.Resources")]
     public partial class DESPresentation : UserControl
     {
 

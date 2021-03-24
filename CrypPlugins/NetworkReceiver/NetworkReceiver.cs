@@ -24,18 +24,18 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Timers;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.NetworkSender;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.NetworkSender;
 using NetworkReceiver;
 using NetworkSender;
 
 #endregion
 
-namespace Cryptool.Plugins.NetworkReceiver
+namespace CrypTool.Plugins.NetworkReceiver
 {
-    [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
+    [Author("Christopher Konze", "Christopher.Konze@CrypTool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
     [PluginInfo("NetworkReceiver.Properties.Resources", "PluginCaption", "PluginTooltip", "NetworkReceiver/userdoc.xml", new[] {"NetworkReceiver/Images/package.png"})]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class NetworkReceiver : ICrypComponent
@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.NetworkReceiver
         #region IPlugin Data Properties
 
         [PropertyInfo(Direction.OutputData, "StreamOutputCaption", "StreamOutputTooltip")]
-        public ICryptoolStream PackageStream { get; private set; }
+        public ICrypToolStream PackageStream { get; private set; }
 
         [PropertyInfo(Direction.OutputData, "SingleOutputCaption", "SingleOutputTooltip")]
         public byte[] SingleOutput { get; set; }

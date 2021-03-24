@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             xmlns:p="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase" xmlns:Controls="clr-namespace:KeySearcher.Presentation.Controls" d:DesignHeight="500" d:DesignWidth="600">
+             xmlns:p="clr-namespace:CrypTool.PluginBase.Properties;assembly=CrypPluginBase" xmlns:Controls="clr-namespace:KeySearcher.Presentation.Controls" d:DesignHeight="500" d:DesignWidth="600">
     <UserControl.Resources>
         <Controls:NodeBaseToStringConverter x:Key="NodeBaseToStringConverter"/>
     </UserControl.Resources>

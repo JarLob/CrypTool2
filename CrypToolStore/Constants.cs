@@ -14,11 +14,11 @@
    limitations under the License.
 */
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     public class Constants
     {
-        public static string ServerAddress = "store.cryptool.org";
+        public static string ServerAddress = "store.CrypTool.org";
         public static int ServerPort = 15151;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 
-namespace Cryptool.KasiskiTest
+namespace CrypTool.KasiskiTest
 {
     public class DataSource
     {

@@ -1,7 +1,7 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.KasiskiTest
+namespace CrypTool.KasiskiTest
 {
    public  class KasiskiTestSettings : ISettings
     {

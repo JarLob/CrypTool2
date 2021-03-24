@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial2
     /// <summary>
     /// Interaktionslogik für IntroductionHeader.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class IntroductionHeader : UserControl
     {
         public IntroductionHeader()

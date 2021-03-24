@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cryptool.Plugins.CostFunction
+namespace CrypTool.Plugins.CostFunction
 {
     /// <summary>
     /// An implementation of fast regex matching algorithm.

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WorkspaceManager.View.Visuals"
              xmlns:model="clr-namespace:WorkspaceManager.Model;assembly=WorkspaceManagerModel"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:p="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase" 
+             xmlns:p="clr-namespace:CrypTool.PluginBase.Properties;assembly=CrypPluginBase" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>

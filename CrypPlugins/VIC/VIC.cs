@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Linq.Expressions;
 using System.Windows;
 
-namespace Cryptool.Plugins.VIC
+namespace CrypTool.Plugins.VIC
 {
     [Author("Adam Petro", "adam.petro.655@gmail.com", "Institute of Computer Science and Mathematics, Faculty of Electrical Engineering and Information Technology, Slovak University of Technology", "https://uim.fei.stuba.sk")]
-    [PluginInfo("Cryptool.Plugins.VIC.Properties.Resources", "ComponentName", "ComponentDescription", "VIC/userdoc.xml", new[] { "VIC/Images/VIC.png" })]
+    [PluginInfo("CrypTool.Plugins.VIC.Properties.Resources", "ComponentName", "ComponentDescription", "VIC/userdoc.xml", new[] { "VIC/Images/VIC.png" })]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
 
 

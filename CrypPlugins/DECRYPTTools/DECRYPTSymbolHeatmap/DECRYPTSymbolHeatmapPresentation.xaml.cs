@@ -20,9 +20,9 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.Plugins.DECRYPTTools.Util;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
     /// <summary>
     /// Interaktionslogik für DECRYPTHeatmapPresentation.xaml

@@ -13,12 +13,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.DECRYPTTools.Util
+namespace CrypTool.Plugins.DECRYPTTools.Util
 {
     /// <summary>
     /// The decoder is for decoding the tokenized TextDocuments

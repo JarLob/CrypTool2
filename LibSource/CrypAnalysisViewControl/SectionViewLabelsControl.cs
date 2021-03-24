@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace Cryptool.CrypAnalysisViewControl
+namespace CrypTool.CrypAnalysisViewControl
 {
     public class SectionViewLabelsControl : ItemsControl
     {

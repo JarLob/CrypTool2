@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Windows;
-using Cryptool.Core;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for ContactDevelopersDialog.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class ContactDevelopersDialog : Window
     {
         public ContactDevelopersDialog()

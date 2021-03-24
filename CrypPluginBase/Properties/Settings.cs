@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Configuration;
 
-namespace Cryptool.PluginBase.Properties
+namespace CrypTool.PluginBase.Properties
 {
     public sealed partial class Settings
     {

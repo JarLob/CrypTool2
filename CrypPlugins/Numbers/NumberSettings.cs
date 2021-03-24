@@ -14,10 +14,10 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Numbers
+namespace CrypTool.Plugins.Numbers
 {
     public enum NumberOperation
     {

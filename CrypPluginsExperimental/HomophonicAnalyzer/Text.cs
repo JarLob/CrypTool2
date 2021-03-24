@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     class Text
     {

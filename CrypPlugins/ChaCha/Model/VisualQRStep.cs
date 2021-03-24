@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Cryptool.Plugins.ChaCha.Model
+namespace CrypTool.Plugins.ChaCha.Model
 {
     /// <summary>
     /// Class for each step during one quarterround with focus on visualization.

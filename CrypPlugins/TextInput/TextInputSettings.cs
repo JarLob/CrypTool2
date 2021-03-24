@@ -14,12 +14,12 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Cryptool.TextInput
+namespace CrypTool.TextInput
 {
     public class TextInputSettings : ISettings
     {

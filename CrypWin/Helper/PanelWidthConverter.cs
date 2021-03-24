@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
     class PanelWidthConverter : IValueConverter
     {

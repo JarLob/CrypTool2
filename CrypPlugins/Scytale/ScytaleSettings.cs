@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Scytale
+namespace CrypTool.Scytale
 {
 
     public class ScytaleSettings : ISettings

@@ -13,8 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase.Attributes;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.Plugins.DECRYPTTools.Util;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,9 +22,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [Localization("Cryptool.Plugins.DECRYPTTools.Properties.Resources")]
+    [Localization("CrypTool.Plugins.DECRYPTTools.Properties.Resources")]
     [SettingsTab("DECRYPTSettingsTab", "/MainSettings/")]
     public partial class DECRYPTSettingsTab : UserControl
     {

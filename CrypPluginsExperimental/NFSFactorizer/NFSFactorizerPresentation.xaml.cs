@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cryptool.Plugins.NFSFactorizer
+namespace CrypTool.Plugins.NFSFactorizer
 {
     /// <summary>
     /// Interaction logic for NFSFactorizerPresentation.xaml

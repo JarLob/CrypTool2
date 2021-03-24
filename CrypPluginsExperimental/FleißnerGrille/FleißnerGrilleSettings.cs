@@ -15,11 +15,11 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using FleißnerGrille.Properties;
 
-namespace Cryptool.Plugins.FleißnerGrille
+namespace CrypTool.Plugins.FleißnerGrille
 {
     // HOWTO: rename class (click name, press F2)
     public class FleißnerGrilleSettings : ISettings

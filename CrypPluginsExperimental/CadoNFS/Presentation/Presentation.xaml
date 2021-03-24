@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
+             xmlns:crypanalysisviewcontrol="clr-namespace:CrypTool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <TabControl>

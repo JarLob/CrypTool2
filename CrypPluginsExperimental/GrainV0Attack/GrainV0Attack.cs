@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.GrainV0.Attack
+namespace CrypTool.Plugins.GrainV0.Attack
 {
     //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Cryptool.MD5.Presentation.Converters
+namespace CrypTool.MD5.Presentation.Converters
 {
     class UintToLittleEndianHexStringConverter : IValueConverter
     {

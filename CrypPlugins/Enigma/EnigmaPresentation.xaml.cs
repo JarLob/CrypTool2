@@ -12,10 +12,10 @@ using System.Windows.Media.Animation;
 using System.Threading;
 using System.Windows.Threading;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -130,7 +130,7 @@ namespace Cryptool.Enigma
 
         #endregion
 
-        #region Cryptool coomunication
+        #region CrypTool coomunication
         private void sizeChanged(Object sender, EventArgs eventArgs)
         {
             this.mainmainmain.RenderTransform = new ScaleTransform(this.ActualWidth / this.mainmainmain.ActualWidth,

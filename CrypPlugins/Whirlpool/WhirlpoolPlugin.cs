@@ -25,9 +25,9 @@
 
 using System.ComponentModel;
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace Whirlpool
 {
@@ -106,7 +106,7 @@ namespace Whirlpool
     /// </summary>
     /// <value>The input input.</value>
     [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", false)]
-    public ICryptoolStream InputStream
+    public ICrypToolStream InputStream
     {
       get
       {
@@ -177,7 +177,7 @@ namespace Whirlpool
     /// </summary>
     /// <value>The output data stream.</value>
     [PropertyInfo(Direction.OutputData, "HashOutputStreamCaption", "HashOutputStreamTooltip", true)]
-    public ICryptoolStream HashOutputStream
+    public ICrypToolStream HashOutputStream
     {
       get
       {

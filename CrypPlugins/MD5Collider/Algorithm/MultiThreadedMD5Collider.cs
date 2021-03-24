@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     /// <summary>
     /// Wraps an existing <c>IMD5ColliderAlgorithm</c> implementation to execute it in parallel using multiple threads

@@ -9,7 +9,7 @@ namespace BooleanOperators
     /// <summary>
     /// Interaktionslogik für Button.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("BooleanOperators.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("BooleanOperators.Properties.Resources")]
     public partial class ButtonInputPresentation : UserControl
     {
 

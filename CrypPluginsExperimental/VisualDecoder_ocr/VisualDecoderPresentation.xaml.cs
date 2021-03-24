@@ -25,7 +25,7 @@ namespace VisualDecoder_ocr
     /// <summary>
     /// Interaktionslogik für DimCodeEncoderPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("VisualDecoder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("VisualDecoder.Properties.Resources")]
     public partial class VisualDecoderPresentation : UserControl
     {
         public VisualDecoderPresentation()

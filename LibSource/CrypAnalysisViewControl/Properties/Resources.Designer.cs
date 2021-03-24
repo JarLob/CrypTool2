@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.CrypAnalysisViewControl.Properties {
+namespace CrypTool.CrypAnalysisViewControl.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.CrypAnalysisViewControl.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.CrypAnalysisViewControl.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

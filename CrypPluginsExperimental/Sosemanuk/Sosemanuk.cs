@@ -15,11 +15,11 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 
-namespace Cryptool.Plugins.Sosemanuk
+namespace CrypTool.Plugins.Sosemanuk
 {
     [Author("Robin Nelle", "rnelle@mail.uni-mannheim.de", "Uni Mannheim - Lehrstuhl Prof. Dr. Armknecht", "http://ls.wim.uni-mannheim.de/")]
     [PluginInfo("Sosemanuk.Properties.Resources", "PluginCaption", "PluginTooltip", "Sosemanuk/DetailedDescription/doc.xml", "Sosemanuk/Images/icon.jpg")]

@@ -13,18 +13,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.Plugins.DECRYPTTools.Util;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.DECRYPTTools.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.DECRYPTTools.Properties.Resources")]
     public partial class DECRYPTViewerPresentation : UserControl, INotifyPropertyChanged
     {
         private DECRYPTViewer Plugin;

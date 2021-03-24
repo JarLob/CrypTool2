@@ -4,7 +4,7 @@ package de.ct2.ipc.messages;
 //option go_package = "github.com/golang/protobuf/protoc-gen-go/descriptor;descriptor";
 option java_package = "org.cryptool.ipc.messages";
 option java_outer_classname = "Ct2IpcMessages";
-option csharp_namespace = "Cryptool.Plugins.Ipc.Messages";
+option csharp_namespace = "CrypTool.Plugins.Ipc.Messages";
 option objc_class_prefix = "ct2ipc";
 option cc_enable_arenas = true;
 

@@ -4,13 +4,13 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace IDPAnalyser
 {
-    [Author("George Lasry, Armin Krauß", "krauss@cryptool.org", "CrypTool", "http://www.uni-due.de")]
+    [Author("George Lasry, Armin Krauß", "krauss@CrypTool.org", "CrypTool", "http://www.uni-due.de")]
     [PluginInfo("IDPAnalyser.Properties.Resources", "PluginCaption", "PluginTooltip", "IDPAnalyser/DetailedDescription/doc.xml", "IDPAnalyser/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class IDPAnalyser : ICrypComponent
@@ -108,11 +108,11 @@ namespace IDPAnalyser
 
         #region IPlugin Member
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
 
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         public ISettings Settings
         {

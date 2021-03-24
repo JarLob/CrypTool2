@@ -21,9 +21,9 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.NLFSR
+namespace CrypTool.NLFSR
 {
     /// <summary>
     /// Interaction logic for NLFSRPresentation.xaml

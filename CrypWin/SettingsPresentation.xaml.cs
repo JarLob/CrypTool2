@@ -6,17 +6,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
 using System.Reflection;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for SettingsPresentation.xaml
     /// </summary>
     [TabColor("gray")]
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class SettingsPresentation : UserControl
     {
         private static SettingsPresentation singleton = null;

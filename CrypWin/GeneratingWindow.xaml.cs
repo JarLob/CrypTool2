@@ -2,15 +2,15 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
 
     /// <summary>
     /// Interaction logic for GeneratingWindow.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.Properties.Resources")]
+    [Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class GeneratingWindow : Window
     {
         private const int GwlStyle = -16;

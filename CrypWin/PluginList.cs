@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     [SerializableAttribute]
     public class PluginInformation

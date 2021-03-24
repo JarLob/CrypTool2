@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace TranspositionAnalyser
 {
-    [Cryptool.PluginBase.Attributes.Localization("TranspositionAnalyser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("TranspositionAnalyser.Properties.Resources")]
     public partial class TranspositionAnalyserQuickWatchPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();

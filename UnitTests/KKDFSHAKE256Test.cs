@@ -20,7 +20,7 @@ namespace Tests.TemplateAndPluginTests
         }
         
         byte[] outputData = null;
-        Cryptool.Plugins.KKDFSHAKE256.KKDFSHAKE256 pluginInstance;
+        CrypTool.Plugins.KKDFSHAKE256.KKDFSHAKE256 pluginInstance;
 
         /// <summary>
         /// The method contains the unittests
@@ -28,7 +28,7 @@ namespace Tests.TemplateAndPluginTests
         [TestMethod]
         public void KKDFSHAKE256TestMethod()
         {
-            pluginInstance = (Cryptool.Plugins.KKDFSHAKE256.KKDFSHAKE256)TestHelpers.GetPluginInstance("KKDFSHAKE256");
+            pluginInstance = (CrypTool.Plugins.KKDFSHAKE256.KKDFSHAKE256)TestHelpers.GetPluginInstance("KKDFSHAKE256");
             pluginInstance.PropertyChanged += PluginInstance_PropertyChanged;
             var scenario = new PluginTestScenario(pluginInstance, new[] { "SKM", "Key", "OutputBytes", ".DisplayPres" }, new[] { "KeyMaterial" });
             object[] output;

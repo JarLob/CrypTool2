@@ -18,14 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAOracle;
 using DCAOracle.Properties;
 
 
-namespace Cryptool.Plugins.DCAOracle
+namespace CrypTool.Plugins.DCAOracle
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("DCAOracle.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAOracle/userdoc.xml", new[] { "DCAOracle/Images/IC_Oracle.png" })]
@@ -40,7 +40,7 @@ namespace Cryptool.Plugins.DCAOracle
         private bool _newMessageDiff;
         private int _messagePairsCount;
         private bool _newMessagePairsCount;
-        private ICryptoolStream _messagePairsOutput;
+        private ICrypToolStream _messagePairsOutput;
 
         #endregion
 
@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.DCAOracle
         /// Property for the generated message pairs
         /// </summary>
         [PropertyInfo(Direction.OutputData, "MessagePairsOutput", "MessagePairsOutputToolTip")]
-        public ICryptoolStream MessagePairsOutput
+        public ICrypToolStream MessagePairsOutput
         {
             get { return _messagePairsOutput; }
             set

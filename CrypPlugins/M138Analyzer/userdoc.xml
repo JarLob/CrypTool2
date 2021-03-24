@@ -6,14 +6,14 @@
   <language culture="ru" />
   <language culture="de-DE" />
   <introduction lang="en">
-    This component implements different attacks on the <docRef item="Cryptool.M_138.M_138">M-138</docRef>, an American cipher device. For more information about the 
+    This component implements different attacks on the <docRef item="CrypTool.M_138.M_138">M-138</docRef>, an American cipher device. For more information about the 
     M-138, please see the dedicated M-138 component.
     There are three different attacks implemented in this component. A known-plaintext attack, a partially-known-plaintext attack and a ciphertext-only attack.    
   </introduction>
   <introduction lang="zh-CN">该组件对美国密码设备M-138实施不同的攻击。有关M-138的更多信息，请参阅专用的M-138组件。在此组件中实施了三种不同的攻击。已知明文攻击，部分已知明文攻击和仅密文攻击。</introduction>
   <introduction lang="ru">Этот компонент реализует различные атаки на M-138, американское шифровальное устройство. Для получения дополнительной информации о M-138 см. Специальный компонент M-138. В этом компоненте реализованы три различные атаки. Атака с известным-открытым текстом, атака частично известного текста и атака только с использованием шифрованного текста.</introduction>
   <introduction lang="de-DE">
-    Diese Komponente implementiert verschiedene Attacken auf die <docRef item="Cryptool.M_138.M_138">M-138</docRef>, ein amerikanisches Verschlüsselungswerkzeug. Für mehr Informationen über die M-138
+    Diese Komponente implementiert verschiedene Attacken auf die <docRef item="CrypTool.M_138.M_138">M-138</docRef>, ein amerikanisches Verschlüsselungswerkzeug. Für mehr Informationen über die M-138
     sehen Sie sich bitte die eigenständige M-138-Komponente an.
     Es sind drei verschiedene Angriffsarten implementiert. Ein Known-Plaintext, ein Ciphertext-Only und ein Partially-Known-Plaintext Angriff.
   </introduction>

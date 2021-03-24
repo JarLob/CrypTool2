@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Christian Bender, Universität Siegen
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +25,14 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Numerics;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using HKDFSHA256.Properties;
 using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Crypto.Macs;
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Cryptool.Plugins.HKDFSHA256
+namespace CrypTool.Plugins.HKDFSHA256
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("HKDFSHA256.Properties.Resources", "PluginCaption", "HKDFSHA256Tooltip", "HKDFSHA256/userdoc.xml", new[] { "HKDFSHA256/images/icon.png" })]

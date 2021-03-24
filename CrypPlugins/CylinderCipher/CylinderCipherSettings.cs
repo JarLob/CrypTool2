@@ -16,10 +16,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CylinderCipher
+namespace CrypTool.CylinderCipher
 {
     public class CylinderCipherSettings : ISettings
     {

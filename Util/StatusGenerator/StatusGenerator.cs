@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cryptool.Core;
-using Cryptool.PluginBase;
+using CrypTool.Core;
+using CrypTool.PluginBase;
 
 namespace StatusGenerator
 {

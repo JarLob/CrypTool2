@@ -8,7 +8,7 @@
     <ProjectGuid>{98B733EB-58B4-4FC3-B2A7-FF1E9A75CF25}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Convertor</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Convertor</RootNamespace>
     <AssemblyName>StringEncoder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

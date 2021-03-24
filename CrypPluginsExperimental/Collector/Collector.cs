@@ -15,14 +15,14 @@
 */
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.Plugins.Collector
+namespace CrypTool.Plugins.Collector
 {
-    [Author("Armin Krauß", "krauss@cryptool.org", "", "")]
+    [Author("Armin Krauß", "krauss@CrypTool.org", "", "")]
     [PluginInfo("Collector.Properties.Resources", "PluginCaption", "PluginTooltip", "Collector/DetailedDescription/doc.xml", new[] { "CrypWin/images/default.png" })]
     [AutoAssumeFullEndProgress(false)]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.Collector
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return null; }
             set {  }

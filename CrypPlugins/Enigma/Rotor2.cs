@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
     class Rotor2 : Canvas
     {

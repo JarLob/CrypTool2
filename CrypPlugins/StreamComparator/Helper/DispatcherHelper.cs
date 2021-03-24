@@ -18,7 +18,7 @@ using System;
 using System.Windows.Threading;
 using System.Reflection;
 
-namespace Cryptool.StreamComparator
+namespace CrypTool.StreamComparator
 {
   public static class DispatcherHelper
   {

@@ -17,7 +17,7 @@
 using System.Linq;
 
 
-namespace Cryptool.Fialka
+namespace CrypTool.Fialka
 {
     public class FialkaConstants
     {

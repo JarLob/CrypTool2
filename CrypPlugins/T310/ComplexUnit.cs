@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.T310
+namespace CrypTool.Plugins.T310
 {
 
     /// <summary>

@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     public delegate void CrypCoreExceptionEventHandler(object sender, PluginManagerEventArgs args);
     public delegate void CrypCoreDebugEventHandler(object sender, PluginManagerEventArgs args);

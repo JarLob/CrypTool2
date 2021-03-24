@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Helper.Converter
+namespace CrypTool.Plugins.ChaCha.Helper.Converter
 {
     /// <summary>
     /// Converter which maps the key length (128-bit or 256-bit) into a RichTextBox Width.

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@ using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Numerics;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Hill
+namespace CrypTool.Plugins.Hill
 {
-    [Author("Armin Krauß", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.Hill.Properties.Resources", "PluginCaption", "PluginTooltip", "Hill/DetailedDescription/doc.xml", new[] { "Hill/Hill.png" })]
+    [Author("Armin Krauß", "coredevs@CrypTool.org", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.Hill.Properties.Resources", "PluginCaption", "PluginTooltip", "Hill/DetailedDescription/doc.xml", new[] { "Hill/Hill.png" })]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Hill : ICrypComponent
     {

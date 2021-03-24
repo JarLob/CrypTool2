@@ -2,16 +2,16 @@ using System;
 using System.ComponentModel;
 using System.Xml.Linq;
 using System.Windows.Controls;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
 
 namespace Wizard
 {
     [TabColor("royalblue")]
     [EditorInfo("wizard", true, false, false, true, false, false)]
-    [Author("Simone Sauer", "sauer@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Simone Sauer", "sauer@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Wizard.Properties.Resources", "PluginCaption", "PluginTooltip", "Wizard/DetailedDescription/doc.xml", "Wizard/wizard.png")]
     public class Wizard : IEditor
     {

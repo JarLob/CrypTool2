@@ -11,11 +11,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Cryptool.FrequencyTest
+namespace CrypTool.FrequencyTest
 {
     public class FrequencyTestSettings : ISettings
     {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cryptool.MD5.Presentation.States.AddingLengthPresentation"
+﻿<UserControl x:Class="CrypTool.MD5.Presentation.States.AddingLengthPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="400" Width="800">

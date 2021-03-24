@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:e="clr-namespace:WorkspaceManager.View.VisualComponents"
-             xmlns:pluginbase="clr-namespace:Cryptool.PluginBase;assembly=CrypPluginBase"
+             xmlns:pluginbase="clr-namespace:CrypTool.PluginBase;assembly=CrypPluginBase"
              xmlns:local="clr-namespace:WorkspaceManager.View.Visuals"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700" Background="Transparent"

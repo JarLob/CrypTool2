@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase.Editor
+namespace CrypTool.PluginBase.Editor
 {
     public static class EditorExtension
     {

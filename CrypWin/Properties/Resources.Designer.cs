@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.CrypWin.Properties {
+namespace CrypTool.CrypWin.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.CrypWin.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.CrypWin.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.CrypWin.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -527,9 +527,9 @@ namespace Cryptool.CrypWin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static System.Drawing.Icon cryptool {
+        internal static System.Drawing.Icon CrypTool {
             get {
-                object obj = ResourceManager.GetObject("cryptool", resourceCulture);
+                object obj = ResourceManager.GetObject("CrypTool", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -537,9 +537,9 @@ namespace Cryptool.CrypWin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool 2 has been minimized to tray due to running tasks. ähnelt.
         /// </summary>
-        internal static string Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_ {
+        internal static string CrypTool_2_0_has_been_backgrounded_due_to_running_tasks_ {
             get {
-                return ResourceManager.GetString("Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_", resourceCulture);
+                return ResourceManager.GetString("CrypTool_2_0_has_been_backgrounded_due_to_running_tasks_", resourceCulture);
             }
         }
         
@@ -564,9 +564,9 @@ namespace Cryptool.CrypWin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static System.Drawing.Icon cryptoolP2P {
+        internal static System.Drawing.Icon CrypToolP2P {
             get {
-                object obj = ResourceManager.GetObject("cryptoolP2P", resourceCulture);
+                object obj = ResourceManager.GetObject("CrypToolP2P", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -1085,7 +1085,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.cryptool.org/cryptool2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.CrypTool.org/CrypTool2 ähnelt.
         /// </summary>
         internal static string Homepage {
             get {
@@ -1366,9 +1366,9 @@ namespace Cryptool.CrypWin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        internal static byte[] old_www_cryptool_org {
+        internal static byte[] old_www_CrypTool_org {
             get {
-                object obj = ResourceManager.GetObject("old_www_cryptool_org", resourceCulture);
+                object obj = ResourceManager.GetObject("old_www_CrypTool_org", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -2682,9 +2682,9 @@ namespace Cryptool.CrypWin.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        internal static byte[] www_cryptool_org {
+        internal static byte[] www_CrypTool_org {
             get {
-                object obj = ResourceManager.GetObject("www_cryptool_org", resourceCulture);
+                object obj = ResourceManager.GetObject("www_CrypTool_org", resourceCulture);
                 return ((byte[])(obj));
             }
         }

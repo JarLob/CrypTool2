@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.PluginBase.IO;
-using Cryptool.Plugins.Cryptography.Encryption;
+using CrypTool.PluginBase.IO;
+using CrypTool.Plugins.Cryptography.Encryption;
 
 namespace Tests.TemplateAndPluginTests
 {

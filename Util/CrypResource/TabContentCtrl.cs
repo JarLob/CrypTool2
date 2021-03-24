@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Cryptool.Resource
+namespace CrypTool.Resource
 {
     public partial class TabContentCtrl : UserControl
     {

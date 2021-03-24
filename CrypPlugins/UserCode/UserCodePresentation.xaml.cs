@@ -16,7 +16,7 @@
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace Cryptool.Plugins.UserCode
+namespace CrypTool.Plugins.UserCode
 {
   /// <summary>
   /// Interaction logic for NumberInputPresentation.xaml

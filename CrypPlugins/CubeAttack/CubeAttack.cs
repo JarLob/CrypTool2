@@ -4,15 +4,15 @@ using System.Text;
 using System.IO;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.CubeAttack
+namespace CrypTool.CubeAttack
 {
     [Author("David Oruba", "david.oruba@web.de", "Uni-Bochum", "http://www.ruhr-uni-bochum.de/")]
-    [PluginInfo("Cryptool.CubeAttack.Properties.Resources", "PluginCaption", "PluginTooltip", "CubeAttack/DetailedDescription/doc.xml", "CubeAttack/Images/ca_color.png")]
+    [PluginInfo("CrypTool.CubeAttack.Properties.Resources", "PluginCaption", "PluginTooltip", "CubeAttack/DetailedDescription/doc.xml", "CubeAttack/Images/ca_color.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class CubeAttack : ICrypComponent
     {
@@ -46,7 +46,7 @@ namespace Cryptool.CubeAttack
         [PropertyInfo(Direction.OutputData, 
             "OutputSuperpolyCaption", "OutputSuperpolyTooltip",
             false)]
-        public ICryptoolStream OutputSuperpoly
+        public ICrypToolStream OutputSuperpoly
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Cryptool.CubeAttack
         [PropertyInfo(Direction.OutputData, 
             "OutputKeyBitsCaption", "OutputKeyBitsTooltip", 
             false)]
-        public ICryptoolStream OutputKeyBits
+        public ICrypToolStream OutputKeyBits
         {
             get
             {

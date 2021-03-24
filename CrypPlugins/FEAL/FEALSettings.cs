@@ -15,11 +15,11 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using static CrypTool.PluginBase.Miscellaneous.BlockCipherHelper;
 
-namespace Cryptool.Plugins.FEAL
+namespace CrypTool.Plugins.FEAL
 {  
     public enum FealAlgorithmType
     {

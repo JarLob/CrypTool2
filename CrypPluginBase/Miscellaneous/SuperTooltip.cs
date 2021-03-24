@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Shapes;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
   public class SuperTooltip : ToolTip
   {

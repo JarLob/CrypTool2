@@ -2,15 +2,15 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypWin.SettingsTabs
+namespace CrypTool.CrypWin.SettingsTabs
 {
     /// <summary>
     /// Interaction logic for NotificationIconSettingsTab.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.SettingsTabs.Resources.res")]
+    [Localization("CrypTool.CrypWin.SettingsTabs.Resources.res")]
     [SettingsTab("NotificationIconSettings", "/MainSettings/", 1.0)]
     public partial class NotificationIconSettingsTab : UserControl
     {

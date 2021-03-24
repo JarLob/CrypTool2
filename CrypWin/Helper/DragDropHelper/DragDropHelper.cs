@@ -192,7 +192,7 @@ namespace DragDropListBox
 
 		private void DropTarget_PreviewDragEnter(object sender, DragEventArgs e)
 		{
-            if (e.Data.GetData("Cryptool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
+            if (e.Data.GetData("CrypTool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
                 return;
 
 			this.targetItemsControl = (ItemsControl)sender;
@@ -210,7 +210,7 @@ namespace DragDropListBox
 
 		private void DropTarget_PreviewDragOver(object sender, DragEventArgs e)
 		{
-            if (e.Data.GetData("Cryptool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
+            if (e.Data.GetData("CrypTool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
                 return;
 
 			object draggedItem = e.Data.GetData(this.format.Name);
@@ -227,7 +227,7 @@ namespace DragDropListBox
 
 		private void DropTarget_PreviewDrop(object sender, DragEventArgs e)
 		{
-            if (e.Data.GetData("Cryptool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
+            if (e.Data.GetData("CrypTool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
                 return;
 
 			object draggedItem = e.Data.GetData(this.format.Name);
@@ -259,7 +259,7 @@ namespace DragDropListBox
 			// Dragged Adorner is only created once on DragEnter + every time we enter the window. 
 			// It's only removed once on the DragDrop, and every time we leave the window. (so no need to remove it here)
 
-            if (e.Data.GetData("Cryptool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
+            if (e.Data.GetData("CrypTool.PluginBase.Editor.DragDropDataObject") != null || e.Source is UserControl)
                 return;
 			object draggedItem = e.Data.GetData(this.format.Name);
 

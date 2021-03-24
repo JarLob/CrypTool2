@@ -11,22 +11,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypTutorials
+namespace CrypTool.CrypTutorials
 {
     /// <summary>
     /// Interaction logic for CrypTutorialsSettingsTab.xaml
     /// </summary>
     [SettingsTab("VideoTutorialsSettings", "/MainSettings/", 0.5)]
-    [Localization("Cryptool.CrypTutorials.Properties.Resources")]
+    [Localization("CrypTool.CrypTutorials.Properties.Resources")]
     public partial class CrypTutorialsSettingsTab : UserControl
     {
         public CrypTutorialsSettingsTab(Style settingsStyle)
         {
             Resources.Add("settingsStyle", settingsStyle);
             InitializeComponent();
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { Cryptool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { CrypTool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
         }
     }
 }

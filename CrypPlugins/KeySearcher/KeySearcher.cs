@@ -20,15 +20,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text; 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Numerics;
 using CrypCloud.Core.CloudComponent;
 using KeySearcher.CrypCloud;
@@ -40,7 +40,7 @@ using OpenCLNet;
 
 namespace KeySearcher
 {
-    [Author("Sven Rech, Nils Kopal, Raoul Falk, Dennis Nolte", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Sven Rech, Nils Kopal, Raoul Falk, Dennis Nolte", "rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("KeySearcher.Properties.Resources", "PluginCaption", "PluginTooltip", "KeySearcher/DetailedDescription/doc.xml", "KeySearcher/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class KeySearcher : ACloudCompatible
@@ -157,9 +157,9 @@ namespace KeySearcher
         #endregion
 
         /* BEGIN: following lines are from Arnie - 2010.01.12 */
-        private ICryptoolStream csEncryptedData;
+        private ICrypToolStream csEncryptedData;
         [PropertyInfo(Direction.InputData, "CSEncryptedDataCaption", "CSEncryptedDataTooltip", false)]
-        public virtual ICryptoolStream CSEncryptedData
+        public virtual ICrypToolStream CSEncryptedData
         {
             get { return this.csEncryptedData; }
             set
@@ -167,7 +167,7 @@ namespace KeySearcher
                 if (value != this.csEncryptedData)
                 {
                     this.csEncryptedData = value;
-                    this.encryptedData = GetByteFromCryptoolStream(value);
+                    this.encryptedData = GetByteFromCrypToolStream(value);
                     OnPropertyChanged("CSEncryptedData");
                 }
             }
@@ -192,16 +192,16 @@ namespace KeySearcher
         /// <summary>
         /// When the Input-Slot changed, set this variable to true, so the new Stream will be transformed to byte[]
         /// </summary>
-        private byte[] GetByteFromCryptoolStream(ICryptoolStream cryptoolStream)
+        private byte[] GetByteFromCrypToolStream(ICrypToolStream CrypToolStream)
         {
             byte[] encryptedByteData = null;
 
-            if (cryptoolStream != null)
+            if (CrypToolStream != null)
             {
-                using (CStreamReader reader = cryptoolStream.CreateReader())
+                using (CStreamReader reader = CrypToolStream.CreateReader())
                 {
                     if (reader.Length > Int32.MaxValue)
-                    throw(new Exception("CryptoolStream length is longer than the Int32.MaxValue"));
+                    throw(new Exception("CrypToolStream length is longer than the Int32.MaxValue"));
 
                     encryptedByteData = reader.ReadFully();
             }
@@ -411,7 +411,7 @@ namespace KeySearcher
                 IsKeySearcherRunning = true;
                 localBruteForceStopwatch.Reset();
 
-                //either byte[] CStream input or CryptoolStream Object input
+                //either byte[] CStream input or CrypToolStream Object input
                 if (encryptedData != null || csEncryptedData != null) //to prevent execution on initialization
                 {
                     if (ControlMaster == null)
@@ -1326,7 +1326,7 @@ namespace KeySearcher
 
             if (path == "")
             {
-                //using the default save folder %APPDATA%\Local\Cryptool2
+                //using the default save folder %APPDATA%\Local\CrypTool2
                 path = string.Format("{0}\\UserRanking{1}.csv", DirectoryHelper.DirectoryLocal, dataIdentifier);
             }
 
@@ -1354,7 +1354,7 @@ namespace KeySearcher
             {
                 try
                 {
-                    //using the default save folder %APPDATA%\Local\Cryptool2
+                    //using the default save folder %APPDATA%\Local\CrypTool2
                     using (StreamWriter sw = new StreamWriter(string.Format("{0}\\Maschine{1}.csv", DirectoryHelper.DirectoryLocal, dataIdentifier)))
                     {
                         sw.WriteLine("Maschineid" + ";" + "Name" + ";" + "Sum" + ";" + "Users");

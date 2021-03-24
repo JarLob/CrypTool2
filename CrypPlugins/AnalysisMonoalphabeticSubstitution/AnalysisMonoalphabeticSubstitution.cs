@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,25 +18,25 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.AnalysisMonoalphabeticSubstitution.Properties;
-using Cryptool.PluginBase.Utils;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.AnalysisMonoalphabeticSubstitution.Properties;
+using CrypTool.PluginBase.Utils;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String key_string, String plaintext_string);
     delegate void UpdateKeyDisplay(KeyCandidate keyCan);
 
     [Author("Andreas Grüner", "Andreas.Gruener@web.de", "Humboldt University Berlin", "http://www.hu-berlin.de")]
-    [PluginInfo("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
+    [PluginInfo("CrypTool.AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
     public class AnalysisMonoalphabeticSubstitution : ICrypComponent

@@ -34,7 +34,7 @@ namespace DCAKeyRecovery.UI
     /// <summary>
     /// Interaktionslogik für KeyRecoveryPres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
     public partial class KeyRecoveryPres : UserControl, INotifyPropertyChanged
     {
         private Algorithms _tutorialNumber;

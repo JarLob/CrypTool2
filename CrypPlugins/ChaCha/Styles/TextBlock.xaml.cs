@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaChaVisualizationV2.Styles
+namespace CrypTool.Plugins.ChaChaVisualizationV2.Styles
 {
     /// <summary>
     /// Interaction logic for TextBlock.xaml

@@ -15,7 +15,7 @@
 */
 using System.Drawing;
 
-namespace Cryptool.Plugins.VisualEncoder.Model
+namespace CrypTool.Plugins.VisualEncoder.Model
 {
     public class LegendItem
     {

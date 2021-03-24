@@ -18,16 +18,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 // for IControl
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 
-namespace Cryptool.Trivium
+namespace CrypTool.Trivium
 {
-    [Author("Soeren Rinne, David Oruba & Daehyun Strobel", "soeren.rinne@cryptool.org", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.trust.ruhr-uni-bochum.de/")]
+    [Author("Soeren Rinne, David Oruba & Daehyun Strobel", "soeren.rinne@CrypTool.org", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.trust.ruhr-uni-bochum.de/")]
     [PluginInfo("Trivium.Properties.Resources", "PluginCaption", "PluginTooltip", "Trivium/DetailedDescription/doc.xml", "Trivium/icon.png", "Trivium/Images/encrypt.png", "Trivium/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Trivium : ICrypComponent

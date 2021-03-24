@@ -15,11 +15,11 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAToyCiphers;
 
-namespace Cryptool.Plugins.DCAToyCiphers
+namespace CrypTool.Plugins.DCAToyCiphers
 {
     public class DCAToyCiphersSettings : ISettings
     {

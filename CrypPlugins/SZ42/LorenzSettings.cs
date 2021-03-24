@@ -14,10 +14,10 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.SZ42
+namespace CrypTool.Plugins.SZ42
 {
     public class LorenzSettings : ISettings
     {

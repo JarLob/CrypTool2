@@ -1,8 +1,8 @@
-﻿<UserControl x:Class="Cryptool.CrypWin.SettingsTabs.PluginsSettingsTab"
+﻿<UserControl x:Class="CrypTool.CrypWin.SettingsTabs.PluginsSettingsTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:SettingsTabs="clr-namespace:Cryptool.CrypWin.SettingsTabs" mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:SettingsTabs="clr-namespace:CrypTool.CrypWin.SettingsTabs" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" xmlns:my="clr-namespace:Startcenter;assembly=Startcenter">
     <Grid>
         <Image Source="/CrypWin;component/images/LogoBlau.png" Opacity="0.1" />

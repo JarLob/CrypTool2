@@ -33,18 +33,18 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 using System;
-using Cryptool.Plugins.Blowfish.Properties;
-using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
-using Cryptool.Plugins.Blowfish.Threefish;
+using CrypTool.Plugins.Blowfish.Properties;
+using static CrypTool.PluginBase.Miscellaneous.BlockCipherHelper;
+using CrypTool.Plugins.Blowfish.Threefish;
 
-namespace Cryptool.Plugins.Blowfish
+namespace CrypTool.Plugins.Blowfish
 {
-    [Author("Nils Kopal", "Nils.Kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.Blowfish.Properties.Resources", "PluginCaption", "PluginTooltip", "Blowfish/userdoc.xml", "Blowfish/Images/icon.png")]
+    [Author("Nils Kopal", "Nils.Kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.Blowfish.Properties.Resources", "PluginCaption", "PluginTooltip", "Blowfish/userdoc.xml", "Blowfish/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Blowfish : ICrypComponent
     {
@@ -55,8 +55,8 @@ namespace Cryptool.Plugins.Blowfish
         private byte[] _InputKey = null;
         private byte[] _InputIV = null;
         private byte[] _InputTweak = null;
-        private ICryptoolStream _OutputStreamWriter;
-        private ICryptoolStream _InputStream;
+        private ICrypToolStream _OutputStreamWriter;
+        private ICrypToolStream _InputStream;
         
         private bool _stop = false;
                 
@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get; 
             set;
@@ -119,7 +119,7 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {

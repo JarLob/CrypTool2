@@ -24,9 +24,9 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
@@ -35,7 +35,7 @@ using System.Drawing.Text;
 using net.watermark;
 using Image = System.Drawing.Image;
 
-namespace Cryptool.Plugins.WatermarkCreator
+namespace CrypTool.Plugins.WatermarkCreator
 {
 
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
@@ -86,7 +86,7 @@ namespace Cryptool.Plugins.WatermarkCreator
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "ImageCaption", "ImageTooltip")]
-        public ICryptoolStream InputPicture 
+        public ICrypToolStream InputPicture 
         {
             get;
             set;
@@ -100,7 +100,7 @@ namespace Cryptool.Plugins.WatermarkCreator
         }
 
         [PropertyInfo(Direction.OutputData, "WatermarkImageCaption", "WatermarkImageTooltip")]
-        public ICryptoolStream OutputPicture
+        public ICrypToolStream OutputPicture
         {
             get;
             set;

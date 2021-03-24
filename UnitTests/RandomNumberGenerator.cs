@@ -45,7 +45,7 @@ namespace Tests.TemplateAndPluginTests
         }
 
         byte[] outputData = null;
-        Cryptool.Plugins.RandomNumberGenerator.RandomNumberGenerator pluginInstance;
+        CrypTool.Plugins.RandomNumberGenerator.RandomNumberGenerator pluginInstance;
 
         /// <summary>
         /// The method contains the unittests
@@ -53,7 +53,7 @@ namespace Tests.TemplateAndPluginTests
         [TestMethod]
         public void RandomNumberGeneratorTestMethod()
         {
-            pluginInstance = (Cryptool.Plugins.RandomNumberGenerator.RandomNumberGenerator)TestHelpers.GetPluginInstance("RandomNumberGenerator");
+            pluginInstance = (CrypTool.Plugins.RandomNumberGenerator.RandomNumberGenerator)TestHelpers.GetPluginInstance("RandomNumberGenerator");
             var scenario = new PluginTestScenario(pluginInstance, new[] { ".AlgorithmType", ".OutputType", ".OutputLength", ".Seed", ".a", ".b", ".Modulus" }, new[] { "Output" });
             object[] output;
 

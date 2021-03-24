@@ -2,12 +2,12 @@
 using System.Windows.Controls;
 using BlockmodeVisualizer;
 
-namespace Cryptool.Plugins.BlockmodeVisualizer
+namespace CrypTool.Plugins.BlockmodeVisualizer
 {
     /// <summary>
     /// Interaktionslogik für BVPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("BlockmodeVisualizer.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("BlockmodeVisualizer.Properties.Resources")]
     public partial class BVPresentation : UserControl
     {
         #region Fields

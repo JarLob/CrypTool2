@@ -56,7 +56,7 @@
  * [including the GNU Public Licence.]
  */
 
-/*Note: Modified by Sven Rech for Cryptool2 */
+/*Note: Modified by Sven Rech for CrypTool2 */
 
 #ifndef HEADER_NEW_DES_H
 #define HEADER_NEW_DES_H

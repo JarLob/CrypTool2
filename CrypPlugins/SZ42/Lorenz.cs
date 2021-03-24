@@ -14,14 +14,14 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Cryptool.Plugins.SZ42
+namespace CrypTool.Plugins.SZ42
 {
     [Author("Wilmer Daza", "mr.wadg@gmail.com", "University of Magdalena", "http://www.unimagdalena.edu.co")]
     [PluginInfo("SZ42.Properties.Resources", "PluginCaption", "PluginTooltip", "SZ42/DetailedDescription/doc.xml", "SZ42/Images/sz42.png")]

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Class which implements the actions for state addition and little-endian step in ChaCha Hash.

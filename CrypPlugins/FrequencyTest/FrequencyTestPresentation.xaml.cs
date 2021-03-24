@@ -19,12 +19,12 @@ using System.Threading;
 using System.Windows.Threading;
 using System;
 
-namespace Cryptool.FrequencyTest
+namespace CrypTool.FrequencyTest
 {
     /// <summary>
     /// Interaction logic for FrequencyTestPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.FrequencyTest.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.FrequencyTest.Properties.Resources")]
     public partial class FrequencyTestPresentation : UserControl
     {
         public  FrequencyTestPresentation()

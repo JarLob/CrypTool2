@@ -15,16 +15,16 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.PlayfairAnalyzer
+namespace CrypTool.Plugins.PlayfairAnalyzer
 {
     [Author("George Lasry, Armin Krauß", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", new[] { "PlayfairAnalyzer/Images/icon.png" })]
+    [PluginInfo("CrypTool.Plugins.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", new[] { "PlayfairAnalyzer/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class PlayfairAnalyzer : ICrypComponent
     {

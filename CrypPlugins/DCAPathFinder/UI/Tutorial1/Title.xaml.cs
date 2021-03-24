@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial1
     /// <summary>
     /// Interaktionslogik für Title.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class Title : UserControl
     {
         public Title()

@@ -38,7 +38,7 @@ namespace DCAKeyRecovery.UI.Cipher3
     /// <summary>
     /// Interaktionslogik für Cipher3LastRoundResultView.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
     public partial class Cipher3LastRoundResultView : UserControl, INotifyPropertyChanged
     {
         private string _attackLastRoundHeader;

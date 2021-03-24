@@ -5,7 +5,7 @@
 
 #include "Job.h"
 
-class Cryptool
+class CrypTool
 {
     private:
 	std::vector<cl::Platform> platforms;
@@ -30,7 +30,7 @@ class Cryptool
 	std::list<std::pair<float, int> >::iterator isInTop(std::list<std::pair<float, int> >& top, float val, bool LargerThen);
 	void initTop(std::list<std::pair<float, int> >& top, bool LargerThen);
     public:
-	Cryptool();
+	CrypTool();
 	JobResult doOpenCLJob(const Job& j);
     std::string getDeviceName();
 };

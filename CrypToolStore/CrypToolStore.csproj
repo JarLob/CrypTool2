@@ -7,7 +7,7 @@
     <ProjectGuid>{0182E69C-7F75-4B4F-953D-748D9A6D168E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.CrypToolStore</RootNamespace>
+    <RootNamespace>CrypTool.CrypToolStore</RootNamespace>
     <AssemblyName>CrypToolStore</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Base class for all ChaCha Hash action creators.

@@ -1,12 +1,12 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel;
+﻿using CrypTool.Plugins.ChaCha.ViewModel;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.View
+namespace CrypTool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl
     {
         public ChaChaPresentation(ChaCha chachaVisualization)

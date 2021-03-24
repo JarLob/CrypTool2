@@ -66,7 +66,7 @@
   </introduction>
   <usage lang="en">
     Simply drag the <i>ISAP Bit Commitment Scheme</i> component to your workspace and connect a component, that outputs a boolean
-    (for instance the <docRef item="Cryptool.Plugins.BooleanOperators.BooleanInput" /> component), to the <i>InputBit</i> input connector.
+    (for instance the <docRef item="CrypTool.Plugins.BooleanOperators.BooleanInput" /> component), to the <i>InputBit</i> input connector.
     A value of <i>true</i> means $m=1$ and <i>false</i> means $m=0$. <newline />
     Optionally, you can connect to the <i>Dimension</i> and the <i>S</i> input connectors to define these integer
     values (By default, <i>Dimension</i> is 7 and <i>S</i> is 128).
@@ -80,7 +80,7 @@
   <usage lang="ru">Просто перетащите компонент BitCommitmentScheme в рабочее пространство и подключите компонент, который выводит логическое (например, компонент) на входной разъем InputBit. Значение true означает $ m = 1 $, а false означает $ m = 0 $. При желании вы можете подключиться к входным разъемам Dimension и S для определения этих целых значений (по умолчанию размер равен 7, а S - 128). В компоненте BitCommitmentScheme имеется много выходных разъемов (см. Ниже), которые позволяют получить результаты алгоритма. Выход сообщения журнала дает много информации о промежуточных шагах используемого алгоритма и его результатах.</usage>
   <usage lang="de">
     Ziehen Sie einfach die <i>ISAP Bit-Commitment-Verfahren</i>-Komponente auf den Arbeitsbereich und verbinden den Eingang <i>Eingabe-Bit</i> mit
-    einer Komponente, die einen booleschen Wert generiert (zum Beispiel mit der <docRef item="Cryptool.Plugins.BooleanOperators.BooleanInput" />-Komponente).
+    einer Komponente, die einen booleschen Wert generiert (zum Beispiel mit der <docRef item="CrypTool.Plugins.BooleanOperators.BooleanInput" />-Komponente).
     Hierbei bedeutet der Wert <i>wahr</i>, dass $m=1$ und <i>falsch</i>, dass $m=0$.<newline />
     Optional kann man an den Eingängen <i>Dimension</i> und <i>S</i> Werte für diese Parameter angeben, ansonsten werden die voreingestellten Werte
     <i>Dimension</i>=7 und <i>S</i>=128 verwendet.

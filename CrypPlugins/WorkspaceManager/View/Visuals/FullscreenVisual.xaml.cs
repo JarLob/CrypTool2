@@ -10,7 +10,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinFullscreenVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class FullscreenVisual : UserControl, INotifyPropertyChanged
     {
         #region Events

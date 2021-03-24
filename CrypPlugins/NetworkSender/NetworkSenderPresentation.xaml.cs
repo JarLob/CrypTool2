@@ -3,11 +3,11 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.NetworkSender
+namespace CrypTool.Plugins.NetworkSender
 {
-    [Cryptool.PluginBase.Attributes.Localization("NetworkSender.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("NetworkSender.Properties.Resources")]
     public partial class NetworkSenderPresentation : UserControl
     {
         private const int MaxStoredPackage = 100;

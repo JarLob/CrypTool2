@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     /// <summary>
     /// A port of Vlastimil Klima's reference implementation of his tunneling technique

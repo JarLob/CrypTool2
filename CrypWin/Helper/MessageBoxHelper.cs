@@ -16,7 +16,7 @@
 
 using System.Windows;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
   public static class MessageBoxHelper
   {

@@ -12,7 +12,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinWindowVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class ImageVisual : UserControl, IUpdateableView, IRouting
     {
         #region Properties

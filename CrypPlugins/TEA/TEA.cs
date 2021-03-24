@@ -17,13 +17,13 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.TEA
+namespace CrypTool.TEA
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.crypto.ruhr-uni-bochum.de/")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.de", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.crypto.ruhr-uni-bochum.de/")]
     [PluginInfo("TEA.Properties.Resources", "PluginCaption", "PluginTooltip", "TEA/DetailedDescription/doc.xml", "TEA/Images/tea.png", "TEA/Images/encrypt.png", "TEA/Images/decrypt.png", "TEA/Images/encryptX.png", "TEA/Images/decryptX.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class TEA : ICrypComponent
@@ -57,7 +57,7 @@ namespace Cryptool.TEA
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -85,7 +85,7 @@ namespace Cryptool.TEA
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -188,7 +188,7 @@ namespace Cryptool.TEA
                 StatusChanged((int)teaimages[settings.Action * 3 + settings.Version]);
 
                 outputStream = new CStreamWriter();
-                ICryptoolStream inputdata = InputStream;
+                ICrypToolStream inputdata = InputStream;
 
                 if (action == 0)
                     inputdata = BlockCipherHelper.AppendPadding(InputStream, settings.padmap[settings.Padding], 8);

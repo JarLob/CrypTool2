@@ -8,7 +8,7 @@
     <ProjectGuid>{E3D15A1E-65D0-457A-9894-7F4E36369163}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Cryptography.Encryption</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Cryptography.Encryption</RootNamespace>
     <AssemblyName>DES</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

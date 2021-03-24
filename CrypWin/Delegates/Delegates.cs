@@ -16,9 +16,9 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
   /// <summary>
   /// Fired by TaskPane if ShowPluginDescription button was pressed

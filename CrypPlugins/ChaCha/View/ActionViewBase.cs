@@ -1,11 +1,11 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Helper.Validation;
-using Cryptool.Plugins.ChaCha.ViewModel;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.Helper.Validation;
+using CrypTool.Plugins.ChaCha.ViewModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.View
+namespace CrypTool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Class with helper methods which all views whose view model implements IActionNavigation use.

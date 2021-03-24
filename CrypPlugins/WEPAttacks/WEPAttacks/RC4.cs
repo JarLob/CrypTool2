@@ -1,4 +1,4 @@
-﻿namespace Cryptool.WEPAttacks
+﻿namespace CrypTool.WEPAttacks
 {
     public class RC4
     {

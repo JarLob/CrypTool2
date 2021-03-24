@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Properties;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Properties;
 using System.Linq;
 using System.Text;
-using static Cryptool.PluginBase.Utils.LanguageStatistics;
+using static CrypTool.PluginBase.Utils.LanguageStatistics;
 
-namespace Cryptool.PluginBase.Utils
+namespace CrypTool.PluginBase.Utils
 {
     public class LanguageStatistics
     {

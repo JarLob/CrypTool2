@@ -15,10 +15,10 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 // for [MethodImpl(MethodImplOptions.Synchronized)]
 using System.Runtime.CompilerServices;
 // for QuickwatchPresentation
@@ -26,10 +26,10 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 // MathParser
 
-namespace Cryptool.NLFSR
+namespace CrypTool.NLFSR
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
-    [PluginInfo("Cryptool.NLFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "NLFSR/DetailedDescription/doc.xml", "NLFSR/Images/NLFSR.png", "NLFSR/Images/encrypt.png", "NLFSR/Images/decrypt.png")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
+    [PluginInfo("CrypTool.NLFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "NLFSR/DetailedDescription/doc.xml", "NLFSR/Images/NLFSR.png", "NLFSR/Images/encrypt.png", "NLFSR/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.ToolsRandomNumbers)]
     public class NLFSR : ICrypComponent
     {
@@ -232,7 +232,7 @@ namespace Cryptool.NLFSR
             {
                 // create some input
                 String dummystring = "1010";
-                // this.inputSeed = new CryptoolStream();
+                // this.inputSeed = new CrypToolStream();
                 inputSeed = dummystring;
                 // write a warning to the outside world
                 GuiLogMessage("WARNING - No Seed provided. Using dummy data (" + dummystring + ").", NotificationLevel.Warning);

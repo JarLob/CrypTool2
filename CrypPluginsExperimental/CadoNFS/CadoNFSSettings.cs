@@ -16,10 +16,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.CadoNFS
+namespace CrypTool.Plugins.CadoNFS
 {
     public class CadoNFSSettings : ISettings
     {

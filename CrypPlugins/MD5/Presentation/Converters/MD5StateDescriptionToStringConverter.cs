@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Data;
-using Cryptool.MD5.Algorithm;
-using Cryptool.PluginBase;
+using CrypTool.MD5.Algorithm;
+using CrypTool.PluginBase;
 
-namespace Cryptool.MD5.Presentation.Converters
+namespace CrypTool.MD5.Presentation.Converters
 {
     class MD5StateDescriptionToStringConverter : IValueConverter
     {

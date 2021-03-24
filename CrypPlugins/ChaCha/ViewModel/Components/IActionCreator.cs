@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Interface to streamline the development process of action creation.

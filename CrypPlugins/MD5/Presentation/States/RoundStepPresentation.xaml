@@ -1,7 +1,7 @@
 ﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Cryptool_MD5_Presentation_Displays="clr-namespace:Cryptool.MD5.Presentation.Displays" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Class="Cryptool.MD5.Presentation.States.RoundStepPresentation"
+    xmlns:CrypTool_MD5_Presentation_Displays="clr-namespace:CrypTool.MD5.Presentation.Displays" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Class="CrypTool.MD5.Presentation.States.RoundStepPresentation"
     Height="400" Width="800" mc:Ignorable="d" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -185,7 +185,7 @@
         </Path>
         <Path x:Name="path6" Fill="White" Stroke="Black" HorizontalAlignment="Left" Margin="185.5,123.5,0,0" VerticalAlignment="Top" Width="192" Height="46" Data="M0.5,0.5 L189.5,45.5"/>
 
-        <Cryptool_MD5_Presentation_Displays:RoundAndStepDisplay VerticalAlignment="Top" HorizontalAlignment="Left" DataContext="{Binding CurrentState}" Margin="8,8,0,0"/>
+        <CrypTool_MD5_Presentation_Displays:RoundAndStepDisplay VerticalAlignment="Top" HorizontalAlignment="Left" DataContext="{Binding CurrentState}" Margin="8,8,0,0"/>
 
         <Path x:Name="path15" Fill="White" Stretch="Fill"  Stroke="Black" HorizontalAlignment="Right" Margin="0,62,65,47.5" Width="1" Data="M740,62 L740,351.5"/>
         <Path x:Name="path16" Fill="White" Stretch="Fill"  Stroke="Black" HorizontalAlignment="Right" Margin="0,60,181,47.5" Width="1" Data="M618,60 L618,351.5"/>
@@ -233,9 +233,9 @@
         <Path x:Name="path9" Fill="White" Stretch="Fill"  HorizontalAlignment="Left" Margin="148,188,0,186" Width="212.5" Data="M148,214 L343.5,229.5" Stroke="Black"/>
         <Path x:Name="path11" Fill="White" Stretch="Fill"   HorizontalAlignment="Left" Margin="164,0,0,134" VerticalAlignment="Bottom" Width="180.5" Height="8" Data="M128,262 L343.5,275.5" Stroke="Black"/>
         <Path x:Name="path14" Stretch="Fill"   Margin="392,0,294,87" VerticalAlignment="Bottom" Height="67" Data="M392,324 L505.5,269.5" Stroke="Black" Fill="White"/>
-        <Cryptool_MD5_Presentation_Displays:FunctionNameDisplay HorizontalAlignment="Right" Margin="0,97,323,0" Width="56" VerticalAlignment="Top" Height="44" FunctionName="{Binding CurrentState.RoundFunctionName}"/>
-        <Cryptool_MD5_Presentation_Displays:ShiftedCompressionVariableDisplay Margin="332,0,8,8" VerticalAlignment="Bottom" Height="50" Width="460" DataContext="{Binding CurrentState}"/>
-        <Cryptool_MD5_Presentation_Displays:CompressionVariableDisplay Margin="332,8,8,0" VerticalAlignment="Top" Height="50" Width="460" DataContext="{Binding LastState}"/>
+        <CrypTool_MD5_Presentation_Displays:FunctionNameDisplay HorizontalAlignment="Right" Margin="0,97,323,0" Width="56" VerticalAlignment="Top" Height="44" FunctionName="{Binding CurrentState.RoundFunctionName}"/>
+        <CrypTool_MD5_Presentation_Displays:ShiftedCompressionVariableDisplay Margin="332,0,8,8" VerticalAlignment="Bottom" Height="50" Width="460" DataContext="{Binding CurrentState}"/>
+        <CrypTool_MD5_Presentation_Displays:CompressionVariableDisplay Margin="332,8,8,0" VerticalAlignment="Top" Height="50" Width="460" DataContext="{Binding LastState}"/>
         <Label Margin="360.5,101,0,0" VerticalAlignment="Top" Height="35" Content="+" Style="{DynamicResource labelStyle}" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" Template="{DynamicResource functionLabelStyle}" HorizontalAlignment="Left" Width="30" FontSize="16" Background="White">
             <Label.Effect>
                 <DropShadowEffect/>
@@ -261,9 +261,9 @@
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <Cryptool_MD5_Presentation_Displays:LabelledIntegerDisplay Caption="AC" Margin="127,165.298,0,186" HorizontalAlignment="Left" Width="117.755" Value="{Binding CurrentState.AdditionConstant}"/>
-        <Cryptool_MD5_Presentation_Displays:LabelledIntegerDisplay Caption="SC" Margin="127,0,0,122.646" HorizontalAlignment="Left" Width="117.755" Value="{Binding CurrentState.ShiftConstant}" VerticalAlignment="Bottom" Height="48.702"/>
-        <Cryptool_MD5_Presentation_Displays:DataIntegerDisplay Margin="12,101,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="298" Height="46" DisplayedValues="{Binding CurrentState.DataAsIntegers}" HighlightedValue="{Binding CurrentState.MessagePartIndex}"/>
+        <CrypTool_MD5_Presentation_Displays:LabelledIntegerDisplay Caption="AC" Margin="127,165.298,0,186" HorizontalAlignment="Left" Width="117.755" Value="{Binding CurrentState.AdditionConstant}"/>
+        <CrypTool_MD5_Presentation_Displays:LabelledIntegerDisplay Caption="SC" Margin="127,0,0,122.646" HorizontalAlignment="Left" Width="117.755" Value="{Binding CurrentState.ShiftConstant}" VerticalAlignment="Bottom" Height="48.702"/>
+        <CrypTool_MD5_Presentation_Displays:DataIntegerDisplay Margin="12,101,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="298" Height="46" DisplayedValues="{Binding CurrentState.DataAsIntegers}" HighlightedValue="{Binding CurrentState.MessagePartIndex}"/>
         <Label Margin="12,165.298,669,186" Name="label1" VerticalContentAlignment="Center" Content="{Loc Addition_constant}" />
         <Label Height="48.702" HorizontalAlignment="Left" Margin="12,0,0,119" Name="label2" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Width="119" Content="{Loc Shift_constant}" />
         <Label Height="28" HorizontalAlignment="Left" Margin="12,73,0,0" Name="label3" VerticalAlignment="Top" Width="298" HorizontalContentAlignment="Center" Content="{Loc Selected_part_from_input_data_block}" />

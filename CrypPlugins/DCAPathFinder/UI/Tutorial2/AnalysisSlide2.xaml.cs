@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial2
     /// <summary>
     /// Interaktionslogik für AnalysisSlide2.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class AnalysisSlide2 : UserControl
     {
         public AnalysisSlide2()

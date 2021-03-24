@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2020 Nils Kopal <kopal<AT>cryptool.org>
+   Copyright 2020 Nils Kopal <kopal<AT>CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ using System.IO;
 using Path = System.IO.Path;
 using System.Windows;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Cryptool.CrypConsole
+namespace CrypTool.CrypConsole
 {  
     public partial class Main : Window
     {
@@ -244,7 +244,7 @@ namespace Cryptool.CrypConsole
 
                     if (component.GetName().ToLower().Equals(param.Name.ToLower()))
                     {
-                        if (component.PluginType.FullName.Equals("Cryptool.TextInput.TextInput"))
+                        if (component.PluginType.FullName.Equals("CrypTool.TextInput.TextInput"))
                         {
                             var settings = component.Plugin.Settings;
                             var textProperty = settings.GetType().GetProperty("Text");

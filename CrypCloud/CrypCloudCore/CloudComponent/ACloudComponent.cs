@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace CrypCloud.Core.CloudComponent
 {

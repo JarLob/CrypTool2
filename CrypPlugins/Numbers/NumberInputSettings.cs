@@ -15,12 +15,12 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 using System.Collections.ObjectModel;
 
-namespace Cryptool.Plugins.Numbers
+namespace CrypTool.Plugins.Numbers
 {
     public class NumberInputSettings : ISettings
     {

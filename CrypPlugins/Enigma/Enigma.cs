@@ -24,15 +24,15 @@ using System.Text;
 using System.Windows.Controls;
 using System.ComponentModel;
 
-//Cryptool 2.0 specific includes
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+//CrypTool 2.0 specific includes
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
-    [Author("Arno Wacker, Matthäus Wander", "arno.wacker@cryptool.org", "Universität Kassel, Universität Duisburg-Essen", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.Enigma.Properties.Resources", "PluginCaption", "PluginTooltip", "Enigma/DetailedDescription/doc.xml",
+    [Author("Arno Wacker, Matthäus Wander", "arno.wacker@CrypTool.org", "Universität Kassel, Universität Duisburg-Essen", "http://www.ais.uni-kassel.de")]
+    [PluginInfo("CrypTool.Enigma.Properties.Resources", "PluginCaption", "PluginTooltip", "Enigma/DetailedDescription/doc.xml",
       "Enigma/Images/Enigma.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Enigma : ICrypComponent
@@ -400,7 +400,7 @@ namespace Cryptool.Enigma
         }
 
         /// <summary>
-        /// Logs a message to the Cryptool console
+        /// Logs a message to the CrypTool console
         /// </summary>
         public void LogMessage(string msg, NotificationLevel level)
         {

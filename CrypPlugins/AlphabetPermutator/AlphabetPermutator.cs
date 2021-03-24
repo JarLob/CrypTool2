@@ -17,8 +17,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 

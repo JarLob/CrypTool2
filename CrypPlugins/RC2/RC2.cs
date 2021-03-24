@@ -20,21 +20,21 @@ using System.Reflection;
 using System.IO;
 using System.ComponentModel;
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "RC2/DetailedDescription/doc.xml", "RC2/icon.png", "RC2/Images/encrypt.png", "RC2/Images/decrypt.png")]
+    [PluginInfo("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "RC2/DetailedDescription/doc.xml", "RC2/icon.png", "RC2/Images/encrypt.png", "RC2/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class RC2 : ICrypComponent
     {
         #region Private variables
         private RC2Settings settings;
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private CStreamWriter outputStreamWriter;
         private byte[] inputKey;
         private byte[] inputIV;
@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                 ConfigureAlg(p_alg);
 
                 outputStreamWriter = new CStreamWriter();
-                ICryptoolStream inputdata = InputStream;
+                ICrypToolStream inputdata = InputStream;
 
                 if (action == 0)
                     inputdata = BlockCipherHelper.AppendPadding(InputStream, settings.padmap[settings.Padding], p_alg.BlockSize / 8);

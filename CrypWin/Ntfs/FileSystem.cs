@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Permissions;
-using Resources = Cryptool.CrypWin.Ntfs.Resources;
+using Resources = CrypTool.CrypWin.Ntfs.Resources;
 
 namespace Trinet.Core.IO.Ntfs
 {

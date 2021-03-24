@@ -1,4 +1,4 @@
-﻿<Window x:Class="Cryptool.CrypWin.ContactDevelopersDialog"
+﻿<Window x:Class="CrypTool.CrypWin.ContactDevelopersDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Loc Contact_Developers}" Height="400" Width="600" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" Icon="/CrypWin;component/images/contact.png" MinWidth="400" MinHeight="400">

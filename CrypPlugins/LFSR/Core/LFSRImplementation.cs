@@ -18,18 +18,18 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 
-using Cryptool.PluginBase.Utils.ObjectDeconstruct;
-using Cryptool.PluginBase.Utils.Datatypes;
-using static Cryptool.PluginBase.Utils.Datatypes.Datatypes;
-using static Cryptool.LFSR.LFSRErrors;
+using CrypTool.PluginBase.Utils.ObjectDeconstruct;
+using CrypTool.PluginBase.Utils.Datatypes;
+using static CrypTool.PluginBase.Utils.Datatypes.Datatypes;
+using static CrypTool.LFSR.LFSRErrors;
 
-namespace Cryptool.LFSR
+namespace CrypTool.LFSR
 {
-    using Cryptool.LFSR.Implementation;
-    using Cryptool.PluginBase.Utils;
-    using Cryptool.PluginBase.Utils.Logging;
-    using Cryptool.PluginBase.Utils.StandaloneComponent;
-    using Cryptool.PluginBase.Utils.StandaloneComponent.Common;
+    using CrypTool.LFSR.Implementation;
+    using CrypTool.PluginBase.Utils;
+    using CrypTool.PluginBase.Utils.Logging;
+    using CrypTool.PluginBase.Utils.StandaloneComponent;
+    using CrypTool.PluginBase.Utils.StandaloneComponent.Common;
 
     public class LFSRAPI : AbstractComponentAPI<LFSRParameters>
     {
@@ -137,7 +137,7 @@ namespace Cryptool.LFSR
             {
                 if (e.Kind == ErrorKinds.Unexpected)
                 {
-                    Log(Cryptool.LFSR.ConvertTo.String(e), LogLevels.Error);
+                    Log(CrypTool.LFSR.ConvertTo.String(e), LogLevels.Error);
                 }
                 else
                 {

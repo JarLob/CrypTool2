@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using AESVisualization;
 using System.Threading;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows;
 using System.Windows.Threading;
 using System.Collections;
 
 
-namespace Cryptool.Plugins.AESVisualization
+namespace CrypTool.Plugins.AESVisualization
 {
-    [Author("Matthias Becher", "matthias.becher2193@mail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
+    [Author("Matthias Becher", "matthias.becher2193@mail.com", "Universität Mannheim", "http://CrypTool2.vs.uni-due.de")]
     [PluginInfo("AESVisualization.Properties.Resources", "PluginCaption", "PluginTooltip", "AESVisualization/userdoc.xml", new[] { "AESVisualization/images/AES.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class AESVisualization : ICrypComponent
@@ -100,7 +100,7 @@ namespace Cryptool.Plugins.AESVisualization
         /// You can add more output properties ot other type if needed.
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {

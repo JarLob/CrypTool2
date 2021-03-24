@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     /// <summary>
     /// Manager for a worker thread that runs a <c>IMD5ColliderAlgorithm</c> belonging to a <c>MultiThreadedMD5Collider</c>

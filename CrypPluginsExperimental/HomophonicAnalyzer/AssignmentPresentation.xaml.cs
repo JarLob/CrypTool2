@@ -16,12 +16,12 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     /// <summary>
     /// Interaktionslogik für AssignmentPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("HomophonicAnalyzer.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("HomophonicAnalyzer.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

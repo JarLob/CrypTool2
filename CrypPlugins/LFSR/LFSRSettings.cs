@@ -14,14 +14,14 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 // for Visibility
 using System.Windows;
 
-namespace Cryptool.LFSR
+namespace CrypTool.LFSR
 {
     public class LFSRSettings : ISettings
     {

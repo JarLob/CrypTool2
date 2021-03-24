@@ -17,10 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Playfair
+namespace CrypTool.Playfair
 {
     public class PlayfairSettings : ISettings
     {

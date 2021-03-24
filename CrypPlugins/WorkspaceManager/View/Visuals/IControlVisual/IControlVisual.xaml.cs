@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Collections.ObjectModel;
 
 namespace WorkspaceManager.View.Visuals

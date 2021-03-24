@@ -24,7 +24,7 @@ namespace DCAPathFinder.UI.Tutorial1
     /// <summary>
     /// Interaktionslogik für IntroductionSlide1.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class IntroductionSlide1 : UserControl, INotifyPropertyChanged
     {
         private ObservableCollection<XorTableMapping> _xorData = null;

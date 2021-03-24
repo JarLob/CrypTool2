@@ -1,8 +1,8 @@
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.CramerShoup
+namespace CrypTool.Plugins.CramerShoup
 {
     public class CramerShoupSettings : ISettings
     {

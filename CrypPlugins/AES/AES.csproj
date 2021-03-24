@@ -8,7 +8,7 @@
     <ProjectGuid>{2A81A3B2-ABC0-4850-9C89-3830AD07FD6B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Cryptography.Encryption</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Cryptography.Encryption</RootNamespace>
     <AssemblyName>AES</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

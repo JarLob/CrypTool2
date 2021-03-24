@@ -13,10 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.DGK
+namespace CrypTool.Plugins.DGK
 {
     /// <summary>
     /// Settings class for the DGKKeyGenerator plugin
@@ -115,4 +115,4 @@ namespace Cryptool.Plugins.DGK
 
     }//end DGKKeyGeneratorSettings
 
-}//end Cryptool.Plugins.DGK
+}//end CrypTool.Plugins.DGK

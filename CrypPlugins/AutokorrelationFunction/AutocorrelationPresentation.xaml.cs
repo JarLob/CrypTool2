@@ -1,12 +1,12 @@
 ﻿using System.Windows.Controls;
 
 
-namespace Cryptool.Plugins.AutokorrelationFunction
+namespace CrypTool.Plugins.AutokorrelationFunction
 {
     /// <summary>
     /// Interaction logic for AutocorrelationPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AutokorrelationFunction.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("AutokorrelationFunction.Properties.Resources")]
     public partial class AutocorrelationPresentation : UserControl
     {
         public AutocorrelationPresentation()

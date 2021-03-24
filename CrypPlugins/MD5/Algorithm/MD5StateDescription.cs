@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.MD5.Algorithm
+namespace CrypTool.MD5.Algorithm
 {
     /// <summary>
     /// Options for description of <see cref="PresentableMD5"/> algorithm's current state

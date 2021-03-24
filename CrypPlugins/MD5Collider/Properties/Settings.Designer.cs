@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Plugins.MD5Collider.Properties {
+namespace CrypTool.Plugins.MD5Collider.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

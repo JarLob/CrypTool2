@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Documents;
 using System.Xml.Linq;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public static class XMLHelper
     {

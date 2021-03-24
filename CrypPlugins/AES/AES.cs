@@ -21,18 +21,18 @@ using System.IO;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using NativeCryptography;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Control;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
-    [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "AES/DetailedDescription/doc.xml", "AES/Images/AES.png", "AES/Images/encrypt.png", "AES/Images/decrypt.png", "AES/Images/Rijndael.png")]
+    [Author("Arno Wacker", "arno.wacker@CrypTool.org", "Universität Kassel", "http://www.ais.uni-kassel.de")]
+    [PluginInfo("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "AES/DetailedDescription/doc.xml", "AES/Images/AES.png", "AES/Images/encrypt.png", "AES/Images/decrypt.png", "AES/Images/Rijndael.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class AES : ContextBoundObject, ICrypComponent
     {
@@ -63,7 +63,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -92,7 +92,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -230,7 +230,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
                 outputStreamWriter = new CStreamWriter();
 
-                ICryptoolStream inputdata = InputStream;
+                ICrypToolStream inputdata = InputStream;
 
                 string mode = action == 0 ? "encryption" : "decryption";
                 long inbytes, outbytes;
@@ -331,7 +331,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
                 DateTime stopTime = DateTime.Now;
                 TimeSpan duration = stopTime - startTime;
-                // (outputStream as CryptoolStream).FinishWrite();
+                // (outputStream as CrypToolStream).FinishWrite();
 
                 if (!stop)
                 {

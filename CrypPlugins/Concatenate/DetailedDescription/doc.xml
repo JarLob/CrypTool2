@@ -16,7 +16,7 @@
     Connect the two inputs of the component with the data streams you want to concatenate.
     The data stream that is connected to the second input will be appended at the end of the data stream of the first input.
     The resulting data stream is sent to the output of the component.<newline />
-    You can also use this component to join two byte arrays. To do this, first convert the byte arrays to data streams with the <docRef item="Cryptool.Plugins.Converter.Converter" /> component
+    You can also use this component to join two byte arrays. To do this, first convert the byte arrays to data streams with the <docRef item="CrypTool.Plugins.Converter.Converter" /> component
     and concatenate them with this component.
 
   </usage>
@@ -27,7 +27,7 @@
     Der Datenstrom, der am zweiten Eingang anliegt, wird an das Ende des Datenstroms, der am ersten Eingang anliegt, angehängt.
     Der neu entstandene Datenstrom wird am Ausgang der Komponente ausgegeben.<newline />
     Die Komponente kann auch dazu verwendet werden, Byte-Arrays miteinander zu verbinden.
-    Hierfür müssen die beiden Byte-Arrays mit der <docRef item="Cryptool.Plugins.Converter.Converter" />-Komponente in Datenströme umgewandelt werden und
+    Hierfür müssen die beiden Byte-Arrays mit der <docRef item="CrypTool.Plugins.Converter.Converter" />-Komponente in Datenströme umgewandelt werden und
     können dann mit dieser Komponente konkateniert werden.
   </usage>
   <presentation lang="en"></presentation>

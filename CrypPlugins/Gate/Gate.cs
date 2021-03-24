@@ -14,14 +14,14 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Runtime.Remoting.Contexts;
 
 namespace Gate
 {
-    [Author("Matthäus Wander", "wander@cryptool.org", "Universität Duisburg-Essen, Fachgebiet Verteilte Systeme", "http://www.vs.uni-due.de")]
+    [Author("Matthäus Wander", "wander@CrypTool.org", "Universität Duisburg-Essen, Fachgebiet Verteilte Systeme", "http://www.vs.uni-due.de")]
     [PluginInfo("Gate.Properties.Resources", "PluginCaption", "PluginTooltip", "Gate/DetailedDescription/doc.xml", "Gate/gate_closed_32.png", "Gate/gate_open_32.png")]
     [Synchronization]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
@@ -87,7 +87,7 @@ namespace Gate
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get
             {

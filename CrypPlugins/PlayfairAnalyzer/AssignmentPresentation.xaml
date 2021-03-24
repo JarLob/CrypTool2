@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="Cryptool.PlayfairAnalyzer.AssignmentPresentation"
+﻿<UserControl x:Class="CrypTool.PlayfairAnalyzer.AssignmentPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     mc:Ignorable="d" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
-    xmlns:converters="clr-namespace:Cryptool.PlayfairAnalyzer.Converters"
+    xmlns:crypanalysisviewcontrol="clr-namespace:CrypTool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
+    xmlns:converters="clr-namespace:CrypTool.PlayfairAnalyzer.Converters"
     x:Name="presentation"
     d:DesignHeight="263">
     <UserControl.Resources>

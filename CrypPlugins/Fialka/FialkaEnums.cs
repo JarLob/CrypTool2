@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Fialka
+namespace CrypTool.Fialka
 {
     public class FialkaEnums
     {

@@ -1,4 +1,4 @@
-﻿namespace Cryptool.WEP
+﻿namespace CrypTool.WEP
 {
     public class RC4
     {

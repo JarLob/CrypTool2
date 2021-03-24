@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using Cryptool.MD5.Algorithm;
+using CrypTool.MD5.Algorithm;
 using System.Reflection;
-using Cryptool.MD5.Presentation.States;
+using CrypTool.MD5.Presentation.States;
 
 
-namespace Cryptool.MD5.Presentation.Helpers
+namespace CrypTool.MD5.Presentation.Helpers
 {
     public class PresentationControlFactory
     {

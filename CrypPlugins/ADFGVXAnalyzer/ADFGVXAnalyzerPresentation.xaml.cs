@@ -1,4 +1,4 @@
-﻿using Cryptool.CrypAnalysisViewControl;
+﻿using CrypTool.CrypAnalysisViewControl;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace ADFGVXAnalyzer
 {
-    [Cryptool.PluginBase.Attributes.Localization("ADFGVXAnalyzer.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("ADFGVXAnalyzer.Properties.Resources")]
     public partial class ADFGVXAnalyzerPresentation : UserControl
     {
 

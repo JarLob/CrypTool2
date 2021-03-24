@@ -15,10 +15,10 @@
 */
 using System.Collections.Generic;
 using System.Drawing;
-using Cryptool.Plugins.VisualDecoder.Model;
+using CrypTool.Plugins.VisualDecoder.Model;
 using ZXing;
 
-namespace Cryptool.Plugins.VisualDecoder.Decoders
+namespace CrypTool.Plugins.VisualDecoder.Decoders
 {
     /// <summary>
     /// The ZXingDecoder is a common decoder class for all the dimCodes that are supported by the ZXing Libery.

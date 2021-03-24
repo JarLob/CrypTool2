@@ -15,14 +15,14 @@
 */
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Numerics;
 
-namespace Cryptool.Plugins.Paillier
+namespace CrypTool.Plugins.Paillier
 {
     [Author("Armin Krauss, Martin Franz", "", "", "")]
     [PluginInfo("Paillier.Properties.Resources",
@@ -246,7 +246,7 @@ namespace Cryptool.Plugins.Paillier
                     inputm = Encoding.UTF8.GetBytes((String)value);
                 else if (value is CStreamWriter)
                 {
-                    CStreamReader reader = ((ICryptoolStream)value).CreateReader();
+                    CStreamReader reader = ((ICrypToolStream)value).CreateReader();
                     reader.WaitEof();
                     inputm = new byte[reader.Length];
                     reader.Seek(0, System.IO.SeekOrigin.Begin);

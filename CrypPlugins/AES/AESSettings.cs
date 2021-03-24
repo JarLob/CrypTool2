@@ -17,10 +17,10 @@
 using System;
 using System.Windows;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     public class AESSettings : ISettings
     {

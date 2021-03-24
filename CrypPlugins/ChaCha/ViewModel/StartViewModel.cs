@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.ViewModel.Components;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     internal class StartViewModel : ViewModelBase, INavigation
     {

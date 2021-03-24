@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Documents;
 using System.Diagnostics;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
   public class DescriptionHyperlink : Hyperlink
   {

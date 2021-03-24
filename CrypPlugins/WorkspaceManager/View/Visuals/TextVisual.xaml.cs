@@ -14,7 +14,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinTextVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class TextVisual : UserControl, IUpdateableView, IRouting
     {
         #region Properties

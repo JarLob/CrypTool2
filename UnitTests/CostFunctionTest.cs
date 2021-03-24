@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.Plugins.CostFunction;
+using CrypTool.Plugins.CostFunction;
 
 namespace Tests
 {

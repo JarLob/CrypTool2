@@ -1,6 +1,6 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.RegularExpressions
+namespace CrypTool.Plugins.RegularExpressions
 {
     class RegExMatchSettings : ISettings
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.PlayfairAnalyzer
+namespace CrypTool.Plugins.PlayfairAnalyzer
 {
     class SimulatedAnnealing
     {

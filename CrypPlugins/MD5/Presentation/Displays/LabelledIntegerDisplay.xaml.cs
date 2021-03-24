@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.MD5.Presentation.Displays
+namespace CrypTool.MD5.Presentation.Displays
 {
     /// <summary>
     /// Interaction logic for LabelledIntegerDisplay.xaml

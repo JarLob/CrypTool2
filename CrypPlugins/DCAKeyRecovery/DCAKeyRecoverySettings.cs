@@ -17,12 +17,12 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAKeyRecovery;
 using DCAKeyRecovery.Properties;
 
-namespace Cryptool.Plugins.DCAKeyRecovery
+namespace CrypTool.Plugins.DCAKeyRecovery
 {
     public class DCAKeyRecoverySettings : ISettings
     {

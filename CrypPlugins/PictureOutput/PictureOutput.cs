@@ -15,8 +15,8 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Threading;
@@ -24,14 +24,14 @@ using System.Threading;
 
 namespace PictureOutput
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("PictureOutput.Properties.Resources", "PluginCaption", "PluginTooltip", "PictureOutput/DetailedDescription/doc.xml", "PictureOutput/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class PictureOutput : ICrypComponent
     {
         private PictureOutputPresentation _presentation = null;
         private byte[] _data = null;
-        private ICryptoolStream _stream = null;
+        private ICrypToolStream _stream = null;
 
         public PictureOutput()
         {
@@ -149,7 +149,7 @@ namespace PictureOutput
         }
 
         [PropertyInfo(Direction.InputData, "pictureInputCaption", "pictureInputTooltip", false)]
-        public ICryptoolStream PictureStream
+        public ICrypToolStream PictureStream
         {
             set { _stream = value; }
         }     

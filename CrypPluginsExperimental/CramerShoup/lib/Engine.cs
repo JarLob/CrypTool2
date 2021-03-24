@@ -4,7 +4,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Utilities;
 using Org.BouncyCastle.Crypto;
 
-namespace Cryptool.Plugins.CramerShoup.lib
+namespace CrypTool.Plugins.CramerShoup.lib
 {
     public class ECCramerShoupEngine
     {

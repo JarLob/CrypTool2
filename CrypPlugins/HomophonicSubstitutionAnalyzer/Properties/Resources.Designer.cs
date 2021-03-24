@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

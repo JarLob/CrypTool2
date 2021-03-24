@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.A5
+namespace CrypTool.Plugins.A5
 {
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("A5.Properties.Resources", "A5", "Encrypt the plaintext", "A5/userdoc.xml", new[] { "A5/Images/gsm.png" })]

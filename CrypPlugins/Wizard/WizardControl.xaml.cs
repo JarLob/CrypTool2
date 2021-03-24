@@ -20,10 +20,10 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Globalization;
 using System.Xml.Schema;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Miscellaneous;
 using KeyTextBox;
 using WorkspaceManager.Model;
 using Path = System.IO.Path;
@@ -34,7 +34,7 @@ namespace Wizard
     /// <summary>
     /// Interaction logic for WizardControl.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
     public partial class WizardControl : UserControl
     {
         private class PageInfo
@@ -1164,7 +1164,7 @@ namespace Wizard
                     currentManager = (WorkspaceManager.WorkspaceManagerClass) OnOpenEditor(typeof (WorkspaceManager.WorkspaceManagerClass), null);
                     currentManager.Open(model);
                     persistance.HandleTemplateReplacement(file, model);
-                    if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_RunTemplate)
+                    if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_RunTemplate)
                     {
                         currentManager.OnFileLoaded += NewEditorOnFileLoaded;
                     }
@@ -1198,7 +1198,7 @@ namespace Wizard
 
         private void NewEditorOnFileLoaded(IEditor editor, string filename)
         {
-            if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_RunTemplate && currentManager.CanExecute)
+            if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_RunTemplate && currentManager.CanExecute)
                 currentManager.Execute();
             currentManager.OnFileLoaded -= NewEditorOnFileLoaded;
             OnOpenTab(currentManager, new TabInfo() { Title = _title }, null);
@@ -1577,7 +1577,7 @@ namespace Wizard
 
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
+            if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
             {
                 Storyboard mainGridStoryboardLeft = (Storyboard) FindResource("MainGridStoryboardNext1");
                 mainGridStoryboardLeft.Begin();
@@ -1591,7 +1591,7 @@ namespace Wizard
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             canStopOrExecute = false;
-            if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
+            if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
             {
                 Storyboard mainGridStoryboardLeft = (Storyboard) FindResource("MainGridStoryboardBack1");
                 mainGridStoryboardLeft.Begin();
@@ -1690,7 +1690,7 @@ namespace Wizard
                 SetupPage(nextElement);
             }
 
-            if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
+            if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
             {
                 Storyboard mainGridStoryboardLeft = (Storyboard) FindResource("MainGridStoryboardNext2");
                 mainGridStoryboardLeft.Begin();
@@ -1903,7 +1903,7 @@ namespace Wizard
                 SetupPage(grandParent);
             }
 
-            if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
+            if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_ShowAnimations)
             {
                 Storyboard mainGridStoryboardLeft = (Storyboard) FindResource("MainGridStoryboardBack2");
                 mainGridStoryboardLeft.Begin();

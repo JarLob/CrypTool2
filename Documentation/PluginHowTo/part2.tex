@@ -186,11 +186,11 @@ public string OutputString
 }
 \end{lstlisting}
 
-You can basically use any data type. If your component deals with potentially large amounts of binary data, you may want to use the \textit{ICryptoolStream} data type instead of \textit{byte[]}. More information about how to use the \textit{ICryptoolStream} can be found in the CrypTool 2 wiki: \url{https://trac.ct2.cryptool.org/wiki/ICryptoolStreamUsage}. You will need to include the namespace \textit{Cryptool.PluginBase.IO}. Here's an example how to use \textit{ICryptoolStream} for an output property:
+You can basically use any data type. If your component deals with potentially large amounts of binary data, you may want to use the \textit{ICrypToolStream} data type instead of \textit{byte[]}. More information about how to use the \textit{ICrypToolStream} can be found in the CrypTool 2 wiki: \url{https://trac.ct2.cryptool.org/wiki/ICrypToolStreamUsage}. You will need to include the namespace \textit{CrypTool.PluginBase.IO}. Here's an example how to use \textit{ICrypToolStream} for an output property:
 
 \begin{lstlisting}
-[PropertyInfo(Direction.OutputData, "CryptoolStream output", "The raw CryptoolStream data after processing with the Caesar cipher", false)]
-public ICryptoolStream OutputData
+[PropertyInfo(Direction.OutputData, "CrypToolStream output", "The raw CrypToolStream data after processing with the Caesar cipher", false)]
+public ICrypToolStream OutputData
 {
 	get
 	{

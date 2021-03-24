@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.CrypWin.Resources {
+namespace CrypTool.CrypWin.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.CrypWin.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.CrypWin.Resources.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.CrypWin.Resources.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -144,9 +144,9 @@ namespace Cryptool.CrypWin.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool ähnelt.
         /// </summary>
-        public static string crypTool {
+        public static string CrypTool {
             get {
-                return ResourceManager.GetString("crypTool", resourceCulture);
+                return ResourceManager.GetString("CrypTool", resourceCulture);
             }
         }
         
@@ -360,7 +360,7 @@ namespace Cryptool.CrypWin.Resources {
         ///&lt;html&gt;
         ///&lt;head&gt;
         ///&lt;meta charset=&quot;utf-8&quot;/&gt;
-        ///&lt;title&gt;Cryptool 2 Log Messages&lt;/title&gt;
+        ///&lt;title&gt;CrypTool 2 Log Messages&lt;/title&gt;
         ///&lt;style type=&quot;text/css&quot;&gt;
         ///
         ///table{table-layout:fixed;border-spacing:1px;font:10px &apos;Verdana&apos;, Arial, Helvetica, sans-serif;background:#E7E7E7;color:#000000;width:100%;font-weight:bold}

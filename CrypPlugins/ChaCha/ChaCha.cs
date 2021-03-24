@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Model;
-using Cryptool.Plugins.ChaCha.View;
-using Cryptool.Plugins.ChaCha.ViewModel;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.Model;
+using CrypTool.Plugins.ChaCha.View;
+using CrypTool.Plugins.ChaCha.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,10 +30,10 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Cryptool.Plugins.ChaCha
+namespace CrypTool.Plugins.ChaCha
 {
     [Author("Ramdip Gill", "r.gill@stud.uni-heidelberg.de", "Universität Heidelberg", "https://www.uni-heidelberg.de/de")]
-    [PluginInfo("Cryptool.Plugins.ChaCha.Properties.Resources", "ChaChaCaption", "ChaChaTooltip", "ChaCha/userdoc.xml", new[] { "ChaCha/Images/ChaCha.png" })]
+    [PluginInfo("CrypTool.Plugins.ChaCha.Properties.Resources", "ChaChaCaption", "ChaChaTooltip", "ChaCha/userdoc.xml", new[] { "ChaCha/Images/ChaCha.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class ChaCha : ICrypComponent, IValidatableObject, INotifyPropertyChanged
     {
@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.ChaCha
         /// Input text which should be en- or decrypted with ChaCha.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -119,7 +119,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICrypToolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {

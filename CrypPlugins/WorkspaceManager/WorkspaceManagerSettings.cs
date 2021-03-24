@@ -1,5 +1,5 @@
 ﻿using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
 namespace WorkspaceManager
@@ -19,12 +19,12 @@ namespace WorkspaceManager
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_GuiUpdateInterval;
+                return CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_GuiUpdateInterval;
             }
             set
             {
-                Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_GuiUpdateInterval = value;
-                Cryptool.PluginBase.Properties.Settings.Default.Save();
+                CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_GuiUpdateInterval = value;
+                CrypTool.PluginBase.Properties.Settings.Default.Save();
                 OnPropertyChanged("GuiUpdateInterval");
             }
         }
@@ -33,12 +33,12 @@ namespace WorkspaceManager
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SleepTime;
+                return CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_SleepTime;
             }
             set
             {
-                Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SleepTime = value;
-                Cryptool.PluginBase.Properties.Settings.Default.Save();
+                CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_SleepTime = value;
+                CrypTool.PluginBase.Properties.Settings.Default.Save();
                 OnPropertyChanged("SleepTime");
             }
         }        
@@ -47,12 +47,12 @@ namespace WorkspaceManager
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_BenchmarkPlugins;
+                return CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_BenchmarkPlugins;
             }
             set
             {
-                Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_BenchmarkPlugins = value;
-                Cryptool.PluginBase.Properties.Settings.Default.Save();
+                CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_BenchmarkPlugins = value;
+                CrypTool.PluginBase.Properties.Settings.Default.Save();
                 OnPropertyChanged("BenchmarkPlugins");
             }
         }
@@ -61,12 +61,12 @@ namespace WorkspaceManager
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SynchronousEvents;
+                return CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_SynchronousEvents;
             }
             set
             {
-                Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SynchronousEvents = value;
-                Cryptool.PluginBase.Properties.Settings.Default.Save();
+                CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_SynchronousEvents = value;
+                CrypTool.PluginBase.Properties.Settings.Default.Save();
                 OnPropertyChanged("SynchronousEvents");
             }
         }
@@ -75,12 +75,12 @@ namespace WorkspaceManager
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_LogLevel;
+                return CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_LogLevel;
             }
             set
             {
-                Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_LogLevel = value;
-                Cryptool.PluginBase.Properties.Settings.Default.Save();
+                CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_LogLevel = value;
+                CrypTool.PluginBase.Properties.Settings.Default.Save();
                 OnPropertyChanged("LogLevel");
             }
         }

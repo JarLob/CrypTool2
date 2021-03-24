@@ -15,11 +15,11 @@
 */
 using System;
 using System.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace Cryptool.Plugins.M209
+namespace CrypTool.Plugins.M209
 {
     public class M209Settings : ISettings
     {

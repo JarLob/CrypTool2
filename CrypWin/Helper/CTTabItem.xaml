@@ -1,9 +1,9 @@
-﻿<TabItem x:Class="Cryptool.CrypWin.Helper.CTTabItem"
+﻿<TabItem x:Class="CrypTool.CrypWin.Helper.CTTabItem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cryptool.CrypWin.Helper" xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:CrypTool.CrypWin.Helper" xmlns:System="clr-namespace:System;assembly=mscorlib"
          mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300" Style="{DynamicResource ResourceKey=TabStyle}">
     <TabItem.Resources>

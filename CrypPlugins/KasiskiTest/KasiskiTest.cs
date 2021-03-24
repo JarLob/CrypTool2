@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Cryptool.KasiskiTest
+namespace CrypTool.KasiskiTest
 {
-    [Author("Georgi Angelov & Danail Vazov", "vazov@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [Author("Georgi Angelov & Danail Vazov", "vazov@CrypTool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("KasiskiTest.Properties.Resources", "PluginCaption", "PluginTooltip", "KasiskiTest/DetailedDescription/doc.xml", "KasiskiTest/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class KasiskiTest : ICrypComponent

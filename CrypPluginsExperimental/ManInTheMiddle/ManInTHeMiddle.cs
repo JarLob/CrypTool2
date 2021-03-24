@@ -1,6 +1,6 @@
 ﻿using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Xml;
 using System.Xml.Schema;
 using System.Web.Services.Description;

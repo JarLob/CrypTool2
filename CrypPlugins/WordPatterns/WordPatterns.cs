@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 namespace WordPatterns
@@ -17,7 +17,7 @@ namespace WordPatterns
      * - improve performance
      * - support wildcard (*)
      */
-    [Author("Matthäus Wander", "wander@cryptool.org", "Fachgebiet Verteilte Systeme, Universität Duisburg-Essen", "http://www.vs.uni-due.de")]
+    [Author("Matthäus Wander", "wander@CrypTool.org", "Fachgebiet Verteilte Systeme, Universität Duisburg-Essen", "http://www.vs.uni-due.de")]
     [PluginInfo("WordPatterns.Properties.Resources", "PluginCaption", "PluginTooltip", "WordPatterns/DetailedDescription/doc.xml", "WordPatterns/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class WordPatterns : ICrypComponent

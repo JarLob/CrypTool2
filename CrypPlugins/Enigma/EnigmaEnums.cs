@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
 
     enum rotorEnum { I = 0, II = 1, III = 2, IV = 3, V = 4, VI = 5, VII = 6, VIII = 7 };

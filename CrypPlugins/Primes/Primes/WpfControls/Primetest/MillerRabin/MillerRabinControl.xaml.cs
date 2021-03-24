@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Threading;
 using System.Numerics;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using Primes.Bignum;
 using Primes.WpfControls.Validation.Validator;
 using Primes.WpfControls.Components;

@@ -1,4 +1,4 @@
-﻿<ResourceDictionary x:Class="Cryptool.Plugins.ChaChaVisualizationV2.Styles.TextBlock"
+﻿<ResourceDictionary x:Class="CrypTool.Plugins.ChaChaVisualizationV2.Styles.TextBlock"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="ShiftLabel" TargetType="{x:Type TextBlock}">

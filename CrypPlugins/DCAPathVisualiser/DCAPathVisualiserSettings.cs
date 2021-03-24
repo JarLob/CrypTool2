@@ -15,11 +15,11 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAPathVisualiser;
 
-namespace Cryptool.Plugins.DCAPathVisualiser
+namespace CrypTool.Plugins.DCAPathVisualiser
 {
     public class DCAPathVisualiserSettings : ISettings
     {

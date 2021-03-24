@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.PluginBase.Editor
+namespace CrypTool.PluginBase.Editor
 {
   /// <summary>
   /// This class is used to give assembly and type to editor via drag and drop. 

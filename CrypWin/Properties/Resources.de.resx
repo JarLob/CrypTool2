@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cryptool" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\cryptool.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CrypTool" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\CrypTool.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="No_update_available_" xml:space="preserve">
     <value>Kein Update verfügbar</value>
@@ -238,7 +238,7 @@
   <data name="Information" xml:space="preserve">
     <value>Hinweis</value>
   </data>
-  <data name="Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_" xml:space="preserve">
+  <data name="CrypTool_2_0_has_been_backgrounded_due_to_running_tasks_" xml:space="preserve">
     <value>CrypTool 2 wurde wegen laufender Aufgaben im Hintergrund versteckt.</value>
   </data>
   <data name="System_Infos" xml:space="preserve">
@@ -926,7 +926,7 @@
     <value>Kurzinfo kopieren</value>
   </data>
   <data name="Homepage" xml:space="preserve">
-    <value>https://www.cryptool.org/cryptool2</value>
+    <value>https://www.CrypTool.org/CrypTool2</value>
   </data>
   <data name="SI_System_Type" xml:space="preserve">
     <value>Systemtyp</value>

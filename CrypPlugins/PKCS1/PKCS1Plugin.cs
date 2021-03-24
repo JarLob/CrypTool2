@@ -1,7 +1,7 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using PKCS1.WpfVisualization;
 using PKCS1.Library;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace PKCS1
 {

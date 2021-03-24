@@ -17,7 +17,7 @@ namespace Startcenter
     /// <summary>
     /// Interaction logic for RSSViewer.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
     public partial class RSSViewer : UserControl
     {
         private List<RssItem> _rssItems;

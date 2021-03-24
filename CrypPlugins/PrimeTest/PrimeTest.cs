@@ -1,5 +1,5 @@
-﻿using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+﻿using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Numerics;
 
 namespace PrimeTest
@@ -10,13 +10,13 @@ namespace PrimeTest
   {
     #region IPlugin Members
 
-    public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+    public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
     private void FireOnPluginStatusChangedEvent()
     {
       if (OnPluginStatusChanged != null) OnPluginStatusChanged(this, new StatusEventArgs(0));
     }
 
-    public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+    public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
     private void FireOnGuiLogNotificationOccuredEvent(string message, NotificationLevel lvl)
     {
       if (OnGuiLogNotificationOccured != null) OnGuiLogNotificationOccured(this, new GuiLogEventArgs(message, this, lvl));
@@ -26,7 +26,7 @@ namespace PrimeTest
       FireOnGuiLogNotificationOccuredEvent(message, NotificationLevel.Error);
     }
 
-    public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+    public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
     private void FireOnPluginProgressChangedEvent(string message, NotificationLevel lvl)
     {
       if (OnPluginProgressChanged != null) OnPluginProgressChanged(this, new PluginProgressEventArgs(0, 0));
@@ -37,7 +37,7 @@ namespace PrimeTest
         EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
     }
 
-    public Cryptool.PluginBase.ISettings Settings
+    public CrypTool.PluginBase.ISettings Settings
     {
       get { return new PrimeTestSettings(); }
     }

@@ -14,11 +14,11 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Cryptool.Substitution
+namespace CrypTool.Substitution
 {
     public class SubstitutionSettings : ISettings
     {

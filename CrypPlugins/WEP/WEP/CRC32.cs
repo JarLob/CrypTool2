@@ -2,7 +2,7 @@
 using System.Collections;
 using System.IO;
 
-namespace Cryptool.WEP
+namespace CrypTool.WEP
 {
     /// <summary>
     /// This class determines a CRC32-Value for an input.

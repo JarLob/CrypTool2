@@ -13,11 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
     public enum NGramsType
     {

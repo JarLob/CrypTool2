@@ -16,15 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 
 
-namespace Cryptool.Plugins.T310
+namespace CrypTool.Plugins.T310
 {
-    [Author("Jörg Drobick, Matthäus Wander", "ct2contact@cryptool.org", "", "")]
+    [Author("Jörg Drobick, Matthäus Wander", "ct2contact@CrypTool.org", "", "")]
     [PluginInfo("T_310.Properties.Resources", "PluginCaption", "PluginTooltip", "T310/DetailedDescription/doc.xml", "T310/Images/t310.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class T310 : ICrypComponent

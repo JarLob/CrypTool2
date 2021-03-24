@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 namespace Tests.TemplateAndPluginTests
 {
@@ -16,14 +16,14 @@ namespace Tests.TemplateAndPluginTests
             var pluginInstance = TestHelpers.GetPluginInstance("StegoLeastSignificantBit");
             var scenario = new PluginTestScenario(pluginInstance, new[] { "InputData", "InputCarrier", "InputPassword", ".Action", ".CustomizeRegions", ".OutputFileFormat" }, new[] { "OutputData", "OutputCarrier" });
 
-            CStreamWriter carrierImage = new CStreamWriter("Templates\\Steganography\\cryptool2.jpg", true);
+            CStreamWriter carrierImage = new CStreamWriter("Templates\\Steganography\\CrypTool2.jpg", true);
 
             foreach (TestVector vector in testvectors)
             {
                 object[] output1 = scenario.GetOutputs(new object[] { vector.message.ToStream(), carrierImage, vector.password.ToStream(), 0, false, 1 });
-                object[] output2 = scenario.GetOutputs(new object[] { null, (ICryptoolStream)output1[1], vector.password.ToStream(), 1, false, 1 });
+                object[] output2 = scenario.GetOutputs(new object[] { null, (ICrypToolStream)output1[1], vector.password.ToStream(), 1, false, 1 });
                 // check if hiding and extracting the secret message leaves it unchanged
-                Assert.AreEqual(vector.message, ((ICryptoolStream)output2[0]).ToByteArray().ToString2(), "Unexpected value in test #" + vector.n + ".");
+                Assert.AreEqual(vector.message, ((ICrypToolStream)output2[0]).ToByteArray().ToString2(), "Unexpected value in test #" + vector.n + ".");
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
 
 
 namespace Sigaba
 {
-    [Author("Julian Weyers", "weyers@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Julian Weyers", "weyers@CrypTool.org", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     [PluginInfo("Sigaba.Properties.Resources", "PluginCaption", "PluginToolTip", "Enigma/DetailedDescription/doc.xml", "Sigaba/Images/Icon.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Sigaba : ICrypComponent

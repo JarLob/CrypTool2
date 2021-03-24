@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaCha.ContentTemplate.Localization
+namespace CrypTool.Plugins.ChaCha.ContentTemplate.Localization
 {
     /// <summary>
     /// Interaction logic for en_US.xaml

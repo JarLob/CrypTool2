@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     /// <summary>
     /// An abstract base class for regular implementations of <c>IMD5ColliderAlgorithm</c>

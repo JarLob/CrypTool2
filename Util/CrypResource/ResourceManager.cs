@@ -6,10 +6,10 @@ using System.Data;
 using System.Resources;
 using System.Collections;
 using System.Reflection;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.IO;
 
-namespace Cryptool.Resource
+namespace CrypTool.Resource
 {
     public class ResourceManager
     {

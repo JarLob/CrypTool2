@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Cryptool.BooleanFunctionParser.BooleanFunctionParser">
+  <Class Name="CrypTool.BooleanFunctionParser.BooleanFunctionParser">
     <Position X="4.5" Y="1" Width="2.75" />
     <TypeIdentifier>
       <HashCode>gACggIIAHDUQBQSgpAAIAEAgiAKAAxUAsECEBEgmxAA=</HashCode>
@@ -8,14 +8,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Cryptool.BooleanFunctionParser.BooleanFunctionParserPresentation">
+  <Class Name="CrypTool.BooleanFunctionParser.BooleanFunctionParserPresentation">
     <Position X="7.5" Y="6.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAABAAAAAA=</HashCode>
       <FileName>BooleanFunctionParserPresentation.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cryptool.BooleanFunctionParser.BooleanFunctionParserSettings">
+  <Class Name="CrypTool.BooleanFunctionParser.BooleanFunctionParserSettings">
     <Position X="7.5" Y="1" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAYAQAAQAAAAUEAQIgAAEEIBgAAAABAAAAAQAAACQEA=</HashCode>

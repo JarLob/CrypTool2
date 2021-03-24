@@ -11,7 +11,7 @@ namespace AESVisualization
     /// <summary>
     /// Interaction logic for AESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AESVisualization.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("AESVisualization.Properties.Resources")]
     public partial class AESPresentation : UserControl
     {
         public TextBlock tempBlock = new TextBlock();

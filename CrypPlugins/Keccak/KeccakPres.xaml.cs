@@ -2,12 +2,12 @@
 using System.Windows.Controls;
 using System.Threading;
 
-namespace Cryptool.Plugins.Keccak
+namespace CrypTool.Plugins.Keccak
 {
     /// <summary>
     /// Interaktionslogik für KeccakPres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Keccak.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Keccak.Properties.Resources")]
     public partial class KeccakPres : UserControl
     {
         public AutoResetEvent buttonNextClickedEvent;

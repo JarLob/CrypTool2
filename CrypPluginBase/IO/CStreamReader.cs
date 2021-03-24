@@ -20,7 +20,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
-namespace Cryptool.PluginBase.IO
+namespace CrypTool.PluginBase.IO
 {
     /// <summary>
     /// Read from a CStream. Use POSIX Read() or more convenient ReadFully() to retrieve data

@@ -4,14 +4,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for Splash/About window
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class Splash : Window
     {
         public Splash()

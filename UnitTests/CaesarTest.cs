@@ -34,7 +34,7 @@ namespace Tests.TemplateAndPluginTests
         //
         // Sources of the test vectors:
         //  http://en.wikipedia.org/wiki/Caesar_cipher
-        //  Cryptool1-Testvectors
+        //  CrypTool1-Testvectors
         //
         TestVector[] testvectors = new TestVector[] {
             new TestVector () { n=0, key=24, alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ", input="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern", output="Dpylx hyer gk imknjcrr tcpuyfpjmqrcl Ryvg oscp bspaf Zywcpl".ToUpper(), sensitivity=false },

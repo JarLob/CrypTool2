@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Utils;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     class HillclimbingAttacker
     {

@@ -16,14 +16,14 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Utils.Datatypes; using static Cryptool.PluginBase.Utils.Datatypes.Datatypes;
-using Cryptool.PluginBase.Utils.Logging;
-using Cryptool.PluginBase.Utils.StandaloneComponent.Common;
+using CrypTool.PluginBase.Utils.Datatypes; using static CrypTool.PluginBase.Utils.Datatypes.Datatypes;
+using CrypTool.PluginBase.Utils.Logging;
+using CrypTool.PluginBase.Utils.StandaloneComponent.Common;
 
-namespace Cryptool.PluginBase.Utils.StandaloneComponent
+namespace CrypTool.PluginBase.Utils.StandaloneComponent
 {
-    using Cryptool.PluginBase.Utils.Logging;
-    using Cryptool.PluginBase.Utils.StandaloneComponent.Common;
+    using CrypTool.PluginBase.Utils.Logging;
+    using CrypTool.PluginBase.Utils.StandaloneComponent.Common;
     using System.Windows.Controls;
 
     // Parameters (Settings) (perfunctory, for easier adaption of tighter modeling later)
@@ -130,7 +130,7 @@ namespace Cryptool.PluginBase.Utils.StandaloneComponent
     }
 }
 
-namespace Cryptool.PluginBase.Utils.StandaloneComponent.Common
+namespace CrypTool.PluginBase.Utils.StandaloneComponent.Common
 {
     public class ComponentProgress
     {

@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.MiniTreyfer
+namespace CrypTool.MiniTreyfer
 {
     public class MiniTreyferSettings : ISettings
     {

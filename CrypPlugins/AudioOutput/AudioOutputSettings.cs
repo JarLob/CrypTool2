@@ -15,11 +15,11 @@
 */
 using System;
 using System.Collections.ObjectModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using NAudio.Wave;
 
-namespace Cryptool.Plugins.AudioOutput
+namespace CrypTool.Plugins.AudioOutput
 {
     public class AudioOutputSettings : ISettings
     {

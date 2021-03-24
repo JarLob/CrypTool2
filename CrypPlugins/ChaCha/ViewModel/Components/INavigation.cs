@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+﻿namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Interface for page view models which are navigable to by the page navigation.

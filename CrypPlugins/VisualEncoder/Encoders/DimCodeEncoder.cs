@@ -18,10 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using Cryptool.Plugins.VisualEncoder.Model;
+using CrypTool.Plugins.VisualEncoder.Model;
 
 
-namespace Cryptool.Plugins.VisualEncoder.Encoders
+namespace CrypTool.Plugins.VisualEncoder.Encoders
 {
     class DimCodeEncoder
     {

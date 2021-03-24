@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ using System.Windows.Media.Imaging;
 using Emgu.CV;
 using System.IO;
 using System.Drawing.Imaging;
-using Cryptool.Plugins.Webcam;
+using CrypTool.Plugins.Webcam;
 using Encoder = System.Drawing.Imaging.Encoder;
 
 namespace Webcam

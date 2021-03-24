@@ -16,14 +16,14 @@
 
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Vigenere
+namespace CrypTool.Vigenere
 {
     [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.Vigenere.Properties.Resources", "PluginCaption", "PluginTooltip", "Vigenere/DetailedDescription/doc.xml",
+    [PluginInfo("CrypTool.Vigenere.Properties.Resources", "PluginCaption", "PluginTooltip", "Vigenere/DetailedDescription/doc.xml",
       "Vigenere/Images/icon.png", "Vigenere/Images/encrypt.png", "Vigenere/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Vigenere : ICrypComponent

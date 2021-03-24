@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using System.Linq;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     /// <summary>
     /// This class is used to maintain global informations about all loaded components.

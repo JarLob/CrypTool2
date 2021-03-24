@@ -19,11 +19,11 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.PlayfairAnalyzer
+namespace CrypTool.PlayfairAnalyzer
 {
-    [PluginBase.Attributes.Localization("Cryptool.PlayfairAnalyzer.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.PlayfairAnalyzer.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

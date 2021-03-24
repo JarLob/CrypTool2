@@ -17,7 +17,7 @@
 using System;
 using System.Reflection;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]    
     public class TaskPaneAttribute : Attribute

@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 
-namespace Cryptool.Plugins.Blowfish.Threefish
+namespace CrypTool.Plugins.Blowfish.Threefish
 {
     internal class Threefish256 : ThreefishAlgorithm
     {

@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial3
     /// <summary>
     /// Interaktionslogik für AttackFirstRound.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class AttackFirstRound : UserControl
     {
         public AttackFirstRound()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     public static class FuzzySearch
     {

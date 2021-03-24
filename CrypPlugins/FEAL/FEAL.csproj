@@ -8,7 +8,7 @@
     <ProjectGuid>{67F284AB-E392-4395-B2E7-14ED18E5825F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.FEAL</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.FEAL</RootNamespace>
     <AssemblyName>FEAL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

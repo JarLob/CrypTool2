@@ -10,7 +10,7 @@
 // $Date::                                                                                    $://
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
 namespace Whirlpool

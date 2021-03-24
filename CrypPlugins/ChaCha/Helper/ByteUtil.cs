@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Cryptool.Plugins.ChaCha.Helper
+namespace CrypTool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// This class handles all byte operations.

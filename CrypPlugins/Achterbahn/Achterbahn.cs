@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 
 using System;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Achterbahn
+namespace CrypTool.Achterbahn
 {
-    [Author("Armin Krauss","krauss@cryptool.org","CrypTool","http://www.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Achterbahn.Properties.Resources", "PluginCaption", "PluginTooltip", "Achterbahn/DetailedDescription/doc.xml", "Achterbahn/Images/icon.png")]
+    [Author("Armin Krauss","krauss@CrypTool.org","CrypTool","http://www.vs.uni-due.de")]
+    [PluginInfo("CrypTool.Achterbahn.Properties.Resources", "PluginCaption", "PluginTooltip", "Achterbahn/DetailedDescription/doc.xml", "Achterbahn/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Achterbahn : ICrypComponent
     {

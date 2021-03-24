@@ -77,7 +77,7 @@ public class CtAPI {
 
     /**
      * Replacement of System.out.printf, so that output is displayed in the terminal
-     * as well as in Cryptool.
+     * as well as in CrypTool.
      *
      * @param format  - format, e.g. "%s", or "%3d %s\n"
      * @param objects - list of object to print.
@@ -89,7 +89,7 @@ public class CtAPI {
 
     /**
      * Replacement of System.out.print, so that output is displayed in the terminal
-     * as well as in Cryptool.
+     * as well as in CrypTool.
      *
      * @param s - String to be printed.
      */
@@ -100,7 +100,7 @@ public class CtAPI {
 
     /**
      * Replacement of System.out.println, so that output is displayed in the terminal
-     * as well as in Cryptool.
+     * as well as in CrypTool.
      *
      * @param s - String to be printed.
      */
@@ -182,7 +182,7 @@ public class CtAPI {
         updateOutput(OUTPUT_VALUE_SCORE, String.format("%,d", result.score));
         updateOutput(OUTPUT_VALUE_KEY, result.keyString);
         updateOutput(OUTPUT_VALUE_PLAINTEXT, result.plaintextString);
-        // In Cryptool log, we only show a short version of the key.
+        // In CrypTool log, we only show a short version of the key.
         logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
         // but we print the longer one in the terminal.
         System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);

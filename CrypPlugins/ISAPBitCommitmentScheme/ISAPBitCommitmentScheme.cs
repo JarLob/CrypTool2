@@ -2,13 +2,13 @@
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using ISAPCommitmentSchemeWrapper;
 
 namespace ISAPBitCommitmentScheme
 {
-    [Author("Sven Rech and Martin Schmidt", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.vs.uni-duisburg-essen.de")]
+    [Author("Sven Rech and Martin Schmidt", "rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.vs.uni-duisburg-essen.de")]
     [PluginInfo("ISAPBitCommitmentScheme.Properties.Resources", "PluginCaption", "PluginTooltip", "ISAPBitCommitmentScheme/DetailedDescription/doc.xml", "ISAPBitCommitmentScheme/Images/icon.png")]
     [ComponentCategory(ComponentCategory.Protocols)]
     public class ISAPBitCommitmentScheme : ICrypComponent

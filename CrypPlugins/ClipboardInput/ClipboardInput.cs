@@ -17,16 +17,16 @@
 using System;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Forms;
 using System.Threading;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 namespace ClipboardInput
 {
   // Retrieves data from clipboard and passes it on as a stream
-  [Author("Timm Korte", "cryptool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
+  [Author("Timm Korte", "CrypTool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
   [PluginInfo("ClipboardInput.Properties.Resources", "PluginCaption", "PluginTooltip", "ClipboardInput/DetailedDescription/doc.xml", "ClipboardInput/icon.png")]
   [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
   public class ClipboardInput : ICrypComponent
@@ -75,7 +75,7 @@ namespace ClipboardInput
 
     #region Interface
     [PropertyInfo(Direction.OutputData, "StreamOutputCaption", "StreamOutputTooltip", true)]
-    public ICryptoolStream StreamOutput
+    public ICrypToolStream StreamOutput
     {
       get
       {
@@ -87,24 +87,24 @@ namespace ClipboardInput
 
         if (Data != null && Data != string.Empty)
         {
-            ICryptoolStream cryptoolStream = null;
+            ICrypToolStream CrypToolStream = null;
           switch (settings.Format)
           { //0="Text", 1="Hex", 2="Base64"
             case 1:
               GuiLogMessage("converting " + Data.Length + " bytes of clipboard data from hex...", NotificationLevel.Debug);
-              cryptoolStream = Hex2Stream(Data);
+              CrypToolStream = Hex2Stream(Data);
               break;
             case 2:
               GuiLogMessage("converting " + Data.Length + " bytes of clipboard data from base64...", NotificationLevel.Debug);
-              cryptoolStream = Base642Stream(Data);
+              CrypToolStream = Base642Stream(Data);
               break;
             default:
               GuiLogMessage("converting " + Data.Length + " bytes of clipboard data from text...", NotificationLevel.Debug);
-              cryptoolStream = Text2Stream(Data);
+              CrypToolStream = Text2Stream(Data);
               break;
           }
           Progress(1.0, 1.0);
-          return cryptoolStream;
+          return CrypToolStream;
         }
         else
         {
@@ -118,12 +118,12 @@ namespace ClipboardInput
     }
     #endregion
 
-    private ICryptoolStream Text2Stream(string data)
+    private ICrypToolStream Text2Stream(string data)
     {
         return new CStreamWriter(Encoding.UTF8.GetBytes(data));
     }
 
-    private ICryptoolStream Base642Stream(string data)
+    private ICrypToolStream Base642Stream(string data)
     {
       byte[] temp = new byte[0];
       try
@@ -138,7 +138,7 @@ namespace ClipboardInput
         return new CStreamWriter(temp);
     }
 
-    private ICryptoolStream Hex2Stream(string data)
+    private ICrypToolStream Hex2Stream(string data)
     {
         return new CStreamWriter(ToByteArray(data));
     }

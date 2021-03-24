@@ -19,9 +19,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using UserControl = System.Windows.Controls.UserControl;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Numbers
+namespace CrypTool.Plugins.Numbers
 {
     /// <summary>
     /// Interaction logic for NumberInputPresentation.xaml

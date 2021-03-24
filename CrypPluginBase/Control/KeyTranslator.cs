@@ -16,7 +16,7 @@
 
 using System.Runtime;
 
-namespace Cryptool.PluginBase.Control
+namespace CrypTool.PluginBase.Control
 {
     /// <summary>
     /// This interface defines the method needed for mapping an abstract key representation to the corresponding concrete key data.

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.SpanishStripCipher
+namespace CrypTool.Plugins.SpanishStripCipher
 {
    [Author("Prof. Christof Paar, Prof. Gregor Leander, Luis Alberto Benthin Sanguino", "Luis.BenthinSanguino@rub.de", "Ruhr-Universität Bochum - Chair for Embedded Security", "http://www.emsec.rub.de/chair/home/")]
    [PluginInfo("SpanishStripCipher.Properties.Resources", "PluginCaption", "PluginTooltip", "SpanishStripCipher/DetailedDescription/doc.xml", new[] { "SpanishStripCipher/Images/SpanishStripCipher.png" })]

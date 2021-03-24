@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.SZ42
+namespace CrypTool.Plugins.SZ42
 {
     /// <summary>
     /// Class that represents a wheel

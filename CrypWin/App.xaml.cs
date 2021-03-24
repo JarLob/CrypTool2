@@ -18,12 +18,12 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Cryptool.Core;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase.Miscellaneous;
 using Application = System.Windows.Application;
 
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for App.xaml

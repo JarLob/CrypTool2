@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Cryptool.CrypWin.SettingsTabs.MainSettingsTab"
+﻿<UserControl x:Class="CrypTool.CrypWin.SettingsTabs.MainSettingsTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:Cryptool.CrypWin.Properties" 
-             xmlns:SettingsTabs="clr-namespace:Cryptool.CrypWin.SettingsTabs" mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:p="clr-namespace:CrypTool.CrypWin.Properties" 
+             xmlns:SettingsTabs="clr-namespace:CrypTool.CrypWin.SettingsTabs" mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <SettingsTabs:NegateConverter x:Key="negateConverter"/>        

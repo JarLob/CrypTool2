@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 
 
-namespace Cryptool.Plugins.StreamSplitter
+namespace CrypTool.Plugins.StreamSplitter
 {
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Mostafa Dahshan", "mdahshan@ksu.edu.sa", "King Saud University", "http://fac.ksu.edu.sa/mdahshan")]
@@ -51,7 +51,7 @@ namespace Cryptool.Plugins.StreamSplitter
         /// You can add more input properties of other type if needed.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip")]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -78,13 +78,13 @@ namespace Cryptool.Plugins.StreamSplitter
         /// You can add more output properties ot other type if needed.
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputStream1Caption", "OutputStream1Tooltip")]
-        public ICryptoolStream OutputStream1
+        public ICrypToolStream OutputStream1
         {
             get { return outputPart1; }
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStream2Caption", "OutputStream2Tooltip")]
-        public ICryptoolStream OutputStream2
+        public ICrypToolStream OutputStream2
         {
             get { return outputPart2; }
         }

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
  
 using System.ComponentModel;
 using System.Windows; 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous; 
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous; 
 
-namespace Cryptool.Plugins.NetworkSender {
+namespace CrypTool.Plugins.NetworkSender {
     public class NetworkSenderSettings : ISettings {
         public static int udpProtocol = 0;
         public static int tcpProtocol = 1;

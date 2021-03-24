@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.MD5.Presentation.Converters
+namespace CrypTool.Plugins.MD5.Presentation.Converters
 {
     public class HighlightIndexToBrushConverter : IValueConverter
     {

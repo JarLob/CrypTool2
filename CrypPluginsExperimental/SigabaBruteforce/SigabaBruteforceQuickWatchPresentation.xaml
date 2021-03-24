@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="SigabaBruteforce.SigabaBruteforceQuickWatchPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"    
+    xmlns:crypanalysisviewcontrol="clr-namespace:CrypTool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"    
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 

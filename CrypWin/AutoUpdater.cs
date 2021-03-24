@@ -25,14 +25,14 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using Microsoft.Win32;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     class AutoUpdater
     {
@@ -47,8 +47,8 @@ namespace Cryptool.CrypWin
         private static AutoUpdater autoUpdater = null;
         // URI where the updates can be found on our webserver
         // changed due to general update of the website on 18.01.2012
-        //private const string XmlPath = "https://www.cryptool.org/cryptool2/downloads/Builds/CT2_Versions.xml";
-        private const string XmlPath = "https://www.cryptool.org/ct2download/Builds/CT2_Versions.xml";
+        //private const string XmlPath = "https://www.CrypTool.org/CrypTool2/downloads/Builds/CT2_Versions.xml";
+        private const string XmlPath = "https://www.CrypTool.org/ct2download/Builds/CT2_Versions.xml";
         private readonly string TempPath = DirectoryHelper.DirectoryLocalTemp;
 
 
@@ -61,7 +61,7 @@ namespace Cryptool.CrypWin
         /// <summary>
         /// Changed URI to ct2 trac subdomain to allow nightly builds show changelogs again
         /// </summary>
-        private string changelogTemplate = "https://trac.ct2.cryptool.org/log/trunk?format=rss&action=stop_on_copy&mode=stop_on_copy&rev=§&stop_rev=$"; //§ new $ current build
+        private string changelogTemplate = "https://trac.ct2.CrypTool.org/log/trunk?format=rss&action=stop_on_copy&mode=stop_on_copy&rev=§&stop_rev=$"; //§ new $ current build
         private string changelog;
         private string changelogText;
         private string updateName;

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Web;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Properties;

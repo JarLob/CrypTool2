@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 
 namespace BB84KeyGenerator
 {
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.Plugins.BB84KeyGenerator.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.Plugins.BB84KeyGenerator.Properties.Resources")]
     public partial class BB84KeyGeneratorPresentation : UserControl
     {
         private string firstBases;

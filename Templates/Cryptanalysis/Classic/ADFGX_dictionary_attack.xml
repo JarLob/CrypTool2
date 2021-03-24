@@ -19,7 +19,7 @@
   <icon file="ADFGX_dictionary_attack.png" />
   <relevantPlugins>
     <plugin name="ADFGVX" />
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
     <plugin name="CostFunction" />
   </relevantPlugins>
   <replacements lang="de">

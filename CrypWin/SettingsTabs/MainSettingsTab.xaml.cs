@@ -22,17 +22,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Linq;
-using Cryptool.Core;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
+using CrypTool.Core;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.CrypWin.SettingsTabs
+namespace CrypTool.CrypWin.SettingsTabs
 {
     /// <summary>
     /// Interaction logic for NotificationIconSettingsTab.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.SettingsTabs.Resources.res")]
+    [Localization("CrypTool.CrypWin.SettingsTabs.Resources.res")]
     [SettingsTab("MainSettings", "/", 1.0)]
     public partial class MainSettingsTab : UserControl
     {
@@ -141,10 +141,10 @@ namespace Cryptool.CrypWin.SettingsTabs
         {
             int processID = Process.GetCurrentProcess().Id;
             string exePath = Process.GetCurrentProcess().MainModule.FileName;
-            string cryptoolFolderPath = Path.GetDirectoryName(exePath);
+            string CrypToolFolderPath = Path.GetDirectoryName(exePath);
             string updaterPath = Path.Combine(DirectoryHelper.BaseDirectory, "CrypUpdater.exe");
 
-            string parameters = "\"dummy\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
+            string parameters = "\"dummy\" " + "\"" + CrypToolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
             Process.Start(updaterPath, parameters);
             App.Current.Shutdown();
         }
@@ -173,9 +173,9 @@ namespace Cryptool.CrypWin.SettingsTabs
                 //restart CT2
                 int processID = Process.GetCurrentProcess().Id;
                 string exePath = Process.GetCurrentProcess().MainModule.FileName;
-                string cryptoolFolderPath = Path.GetDirectoryName(exePath);
+                string CrypToolFolderPath = Path.GetDirectoryName(exePath);
                 string updaterPath = Path.Combine(DirectoryHelper.BaseDirectory, "CrypUpdater.exe");
-                string parameters = "\"dummy\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
+                string parameters = "\"dummy\" " + "\"" + CrypToolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
                 Process.Start(updaterPath, parameters);
                 Application.Current.Shutdown();
             }

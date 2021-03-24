@@ -24,12 +24,12 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-// Cryptool 2.0 specific includes
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+// CrypTool 2.0 specific includes
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
     public class EnigmaSettings : ISettings
     {

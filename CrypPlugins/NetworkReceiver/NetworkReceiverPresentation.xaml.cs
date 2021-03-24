@@ -18,11 +18,11 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.NetworkReceiver
+namespace CrypTool.Plugins.NetworkReceiver
 {
-    [Cryptool.PluginBase.Attributes.Localization("NetworkReceiver.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("NetworkReceiver.Properties.Resources")]
     public partial class NetworkReceiverPresentation : UserControl
     {
         public const int MaxStoredPackage = 100;

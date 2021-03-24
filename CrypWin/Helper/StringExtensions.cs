@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
   public static class StringExtensions
   {

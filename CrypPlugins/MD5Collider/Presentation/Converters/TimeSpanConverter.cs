@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.MD5Collider.Presentation.Converters
+namespace CrypTool.Plugins.MD5Collider.Presentation.Converters
 {
     [ValueConversion(typeof(TimeSpan), typeof(string))]
     class TimeSpanConverter : IValueConverter

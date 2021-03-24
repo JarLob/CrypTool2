@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.GrainV0.Chipher
+namespace CrypTool.Plugins.GrainV0.Chipher
 {
     public class GrainV0Settings : ISettings
     {

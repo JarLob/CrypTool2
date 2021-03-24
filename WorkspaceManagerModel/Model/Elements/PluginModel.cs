@@ -17,10 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Threading;
 using System.Windows.Controls;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using WorkspaceManager.Execution;
 using System.Reflection;
 using System.ComponentModel;
@@ -148,6 +148,11 @@ namespace WorkspaceManager.Model
                 }
                 if (PluginTypeName != null)
                 {
+                    //0: fix namespace:
+                    //we changed the namespace from Cryptool to CrypTool
+                    //this here takes care that we can still load old models
+                    PluginTypeName = PluginTypeName.Replace("Cryptool", "CrypTool");
+
                     //1. check, if assembly has already been loaded for this type
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
                     foreach (Assembly assembly in assemblies)
@@ -582,8 +587,8 @@ namespace WorkspaceManager.Model
                                 var encoding = new UTF8Encoding();
                                 data = encoding.GetBytes((string)data);
                             }
-                            //Cast from System.String (UTF8) -> ICryptoolStream
-                            else if (connectorModel.ConnectorType.FullName == "Cryptool.PluginBase.IO.ICryptoolStream" && data.GetType().FullName == "System.String")
+                            //Cast from System.String (UTF8) -> ICrypToolStream
+                            else if (connectorModel.ConnectorType.FullName == "CrypTool.PluginBase.IO.ICrypToolStream" && data.GetType().FullName == "System.String")
                             {
                                 var writer = new CStreamWriter();
                                 var str = (string)data;
@@ -597,8 +602,8 @@ namespace WorkspaceManager.Model
                                 data = writer;
 
                             }
-                            //Cast from ICryptoolStream -> System.String (UTF8)
-                            else if (connectorModel.ConnectorType.FullName == "System.String" && data.GetType().FullName == "Cryptool.PluginBase.IO.CStreamWriter")
+                            //Cast from ICrypToolStream -> System.String (UTF8)
+                            else if (connectorModel.ConnectorType.FullName == "System.String" && data.GetType().FullName == "CrypTool.PluginBase.IO.CStreamWriter")
                             {
                                 var writer = (CStreamWriter)data;
                                 using (var reader = writer.CreateReader())

@@ -21,13 +21,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.DECRYPTTools.Util;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.DECRYPTTools.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.DECRYPTTools.Properties.Resources")]
     public partial class DECRYPTDownloaderPresentation : UserControl
     {
         private DECRYPTDownloader Plugin;        

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.RegularExpressions
+namespace CrypTool.Plugins.RegularExpressions
 {
-    [Author("Daniel Kohnen", "kohnen@cryptool.org", "Universität Duisburg Essen", "http://www.uni-due.de")]
+    [Author("Daniel Kohnen", "kohnen@CrypTool.org", "Universität Duisburg Essen", "http://www.uni-due.de")]
     [PluginInfo("Regular Expression Match", "Matching Regular Expression", "RegularExpressions/Description/RegexMatchDescript.xaml", new[] { "RegularExpressions/icons/regmatchicon.png"})]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class RegExMatch : ICrypComponent

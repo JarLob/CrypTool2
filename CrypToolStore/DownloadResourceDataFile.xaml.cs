@@ -21,9 +21,9 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     public partial class DownloadResourceDataFileWindow : Window
     {        

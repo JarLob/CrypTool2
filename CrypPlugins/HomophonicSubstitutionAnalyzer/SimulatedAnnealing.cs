@@ -16,7 +16,7 @@
 */
 using System;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
     public class SimulatedAnnealing
     {

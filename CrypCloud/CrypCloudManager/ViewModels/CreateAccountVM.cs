@@ -32,7 +32,7 @@ namespace CrypCloud.Manager.ViewModels
                 Avatar = Username,
                 Email = Email,
                 Password = Password.ToUnsecuredString(),
-                World = "Cryptool"
+                World = "CrypTool"
             }; 
 
             CAServerHelper.RegisterCertificate(request, ShowVerification, HandleProcessingError, ErrorHandler);

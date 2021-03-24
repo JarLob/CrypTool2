@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Helper.Validation;
-using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.Helper.Validation;
+using CrypTool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     /// <summary>
     /// View model base for all view models which implement action navigation

@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.Helper
+﻿namespace CrypTool.Plugins.ChaCha.Helper
 {
     internal static class Digits
     {

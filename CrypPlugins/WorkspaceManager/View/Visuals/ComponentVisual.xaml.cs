@@ -17,7 +17,7 @@ using WorkspaceManager.View.VisualComponents;
 using System.Collections;
 using WorkspaceManagerModel.Model.Interfaces;
 using System.Windows.Controls.Primitives;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Threading;
 using System.Threading;
 
@@ -26,7 +26,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinFunctionVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class ComponentVisual : UserControl, IRouting, IZOrdering, INotifyPropertyChanged, IUpdateableView
     {
 
@@ -104,31 +104,31 @@ namespace WorkspaceManager.View.Visuals
                 var s = State = (BinComponentState)Enum.Parse(typeof(BinComponentState), Model.ViewState.ToString());
                 if (s == BinComponentState.Default)
                 {
-                    if (Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 1)
+                    if (CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 1)
                     {
                         State = HasComponentPresentation ? BinComponentState.Presentation : BinComponentState.Min;
                         return;
                     }
-                    if (Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 2)
+                    if (CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 2)
                     {
                         State = BinComponentState.Min;
                         return;
                     }
-                    if (Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 0)
+                    if (CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_ComponentAppearance == 0)
                     {
-                        var x = Model.PluginType.GetCustomAttributes(typeof(Cryptool.PluginBase.Attributes.ComponentVisualAppearance), false);
+                        var x = Model.PluginType.GetCustomAttributes(typeof(CrypTool.PluginBase.Attributes.ComponentVisualAppearance), false);
 
                         if (x != null)
                         {
                             if (x.Count() != 0)
                             {
-                                var y = (Cryptool.PluginBase.Attributes.ComponentVisualAppearance)x[0];
-                                if (y.DefaultVisualAppearance == Cryptool.PluginBase.Attributes.ComponentVisualAppearance.VisualAppearanceEnum.Opened)
+                                var y = (CrypTool.PluginBase.Attributes.ComponentVisualAppearance)x[0];
+                                if (y.DefaultVisualAppearance == CrypTool.PluginBase.Attributes.ComponentVisualAppearance.VisualAppearanceEnum.Opened)
                                 {
                                     State = HasComponentPresentation ? BinComponentState.Presentation : BinComponentState.Min;
                                     return;
                                 }
-                                if (y.DefaultVisualAppearance == Cryptool.PluginBase.Attributes.ComponentVisualAppearance.VisualAppearanceEnum.Closed)
+                                if (y.DefaultVisualAppearance == CrypTool.PluginBase.Attributes.ComponentVisualAppearance.VisualAppearanceEnum.Closed)
                                 {
                                     State = BinComponentState.Min;
                                     return;

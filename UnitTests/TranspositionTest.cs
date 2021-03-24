@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 namespace Tests.TemplateAndPluginTests
 {

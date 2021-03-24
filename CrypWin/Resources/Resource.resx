@@ -181,7 +181,7 @@
   <data name="tutorial_file_not_available" xml:space="preserve">
     <value>The tutorial file is not available.</value>
   </data>
-  <data name="crypTool" xml:space="preserve">
+  <data name="CrypTool" xml:space="preserve">
     <value>CrypTool</value>
   </data>
   <data name="pluginManager" xml:space="preserve">

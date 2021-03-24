@@ -223,7 +223,7 @@
     <value>2. KKDF SHAKE256的构造</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
-    <value>发生错误。请在Cryptool2的日志中找到详细信息。</value>
+    <value>发生错误。请在CrypTool2的日志中找到详细信息。</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
     <value>4.计算完成</value>

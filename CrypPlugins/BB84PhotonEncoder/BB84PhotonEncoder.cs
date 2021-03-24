@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Windows.Threading;
 using System.Threading;
 using System.Text;
 
-namespace Cryptool.Plugins.BB84PhotonEncoder
+namespace CrypTool.Plugins.BB84PhotonEncoder
 {
     
     [Author("Benedict Beuscher", "benedict.beuscher@stud.uni-due.de", "Uni Duisburg-Essen", "http://www.uni-due.de/")]
 
-    [PluginInfo("Cryptool.Plugins.BB84PhotonEncoder.Properties.Resources", "res_photonEncodingCaption", "res_photonEncodingTooltip", "BB84PhotonEncoder/userdoc.xml", new[] { "BB84PhotonEncoder/images/icon.png" })]
+    [PluginInfo("CrypTool.Plugins.BB84PhotonEncoder.Properties.Resources", "res_photonEncodingCaption", "res_photonEncodingTooltip", "BB84PhotonEncoder/userdoc.xml", new[] { "BB84PhotonEncoder/images/icon.png" })]
     
     [ComponentCategory(ComponentCategory.Protocols)]
     public class BB84PhotonEncoder : ICrypComponent

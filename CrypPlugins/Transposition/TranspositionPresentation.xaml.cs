@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace Transposition
 {

@@ -19,11 +19,11 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.EnigmaAnalyzer
+namespace CrypTool.EnigmaAnalyzer
 {
-    [PluginBase.Attributes.Localization("Cryptool.EnigmaAnalyzer.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.EnigmaAnalyzer.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

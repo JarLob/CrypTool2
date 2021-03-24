@@ -17,14 +17,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Media;
 
-namespace Cryptool.FrequencyTest
+namespace CrypTool.FrequencyTest
 {
-    [Author("Georgi Angelov, Danail Vazov, Matthäus Wander, Nils Kopal", "angelov@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
-    [PluginInfo("Cryptool.FrequencyTest.Properties.Resources",  "PluginCaption", "PluginTooltip", "FrequencyTest/DetailedDescription/doc.xml", "FrequencyTest/icon.png")]
+    [Author("Georgi Angelov, Danail Vazov, Matthäus Wander, Nils Kopal", "angelov@CrypTool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [PluginInfo("CrypTool.FrequencyTest.Properties.Resources",  "PluginCaption", "PluginTooltip", "FrequencyTest/DetailedDescription/doc.xml", "FrequencyTest/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class FrequencyTest : ICrypComponent
     {

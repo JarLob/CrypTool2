@@ -18,7 +18,7 @@ using System;
 using System.Windows.Media.Animation;
 using System.Windows;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
     public class CosDoubleAnimation : DoubleAnimationBase
     {

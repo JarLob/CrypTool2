@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,23 +18,23 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Threading;
 using System.Text;
 using AvalancheVisualization;
 using System.Linq;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using AvalancheVisualization.Properties;
 
-namespace Cryptool.Plugins.AvalancheVisualization
+namespace CrypTool.Plugins.AvalancheVisualization
 {
     // HOWTO: Change author name, email address, organization and URL.
-    [Author("Camilo Echeverri", "caeche20@hotmail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
+    [Author("Camilo Echeverri", "caeche20@hotmail.com", "Universität Mannheim", "http://CrypTool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("AvalancheVisualization.Properties.Resources", "PluginCaption", "AvalancheTooltip", "AvalancheVisualization/userdoc.xml", new[] { "AvalancheVisualization/Images/Avalanche.png" })]
@@ -51,8 +51,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #region Private Variables
 
         private readonly AvalancheVisualizationSettings settings = new AvalancheVisualizationSettings();
-        private ICryptoolStream text;
-        private ICryptoolStream key;
+        private ICrypToolStream text;
+        private ICrypToolStream key;
         private string outputStream;
 
         byte[] originalText;
@@ -85,7 +85,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputKey", "InputKeyTooltip", false)]
-        public ICryptoolStream Key
+        public ICrypToolStream Key
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
         [PropertyInfo(Direction.InputData, "InputMessage", "InputMessageTooltip", true)]
-        public ICryptoolStream Text
+        public ICrypToolStream Text
         {
             get
             {

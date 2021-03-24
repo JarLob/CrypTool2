@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Globalization;
 
-namespace Cryptool.RPNExpression
+namespace CrypTool.RPNExpression
 {
     public enum RPNTokenType
     {

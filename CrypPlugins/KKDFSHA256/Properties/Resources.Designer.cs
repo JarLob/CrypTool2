@@ -319,7 +319,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured. Please find detailed information in the log of Cryptool2. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured. Please find detailed information in the log of CrypTool2. ähnelt.
         /// </summary>
         internal static string PresErrorText {
             get {

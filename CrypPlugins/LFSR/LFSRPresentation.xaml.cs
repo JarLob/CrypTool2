@@ -21,9 +21,9 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.LFSR
+namespace CrypTool.LFSR
 {
     /// <summary>
     /// Interaction logic for LFSRPresentation.xaml

@@ -15,16 +15,16 @@
 */
 
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Caesar
+namespace CrypTool.Caesar
 {
-    [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
-    [PluginInfo("Cryptool.Caesar.Properties.Resources", "PluginCaption", "PluginTooltip", "Caesar/DetailedDescription/doc.xml",
+    [Author("Arno Wacker", "arno.wacker@CrypTool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
+    [PluginInfo("CrypTool.Caesar.Properties.Resources", "PluginCaption", "PluginTooltip", "Caesar/DetailedDescription/doc.xml",
         new[] { "Caesar/Images/Caesar.png", "Caesar/Images/encrypt.png", "Caesar/Images/decrypt.png" } )]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Caesar : ICrypComponent

@@ -8,7 +8,7 @@
     <ProjectGuid>{90C44C4A-CF96-48AF-873A-BA903EAB7B10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.BB84PhotonEncoder</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.BB84PhotonEncoder</RootNamespace>
     <AssemblyName>BB84PhotonEncoder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

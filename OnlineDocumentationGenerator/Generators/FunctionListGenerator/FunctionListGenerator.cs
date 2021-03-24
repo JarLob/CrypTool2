@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Reflection;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Localization;
 using OnlineDocumentationGenerator.Utils;
@@ -44,7 +44,7 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
 
         //
         // Generate a list of the functions implemented in CT2 for
-        // https://www.cryptool.org/de/ctp-dokumentation-de/ctp-functions-de
+        // https://www.CrypTool.org/de/ctp-dokumentation-de/ctp-functions-de
         //
         public override void Generate(TemplateDirectory templatesDir)
         {

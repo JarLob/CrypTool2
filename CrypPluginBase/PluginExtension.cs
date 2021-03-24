@@ -19,14 +19,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Properties;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Properties;
 using System.Resources;
 using System.Globalization;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     public static class PluginExtension
     {

@@ -8,7 +8,7 @@
     <ProjectGuid>{07BBFCE4-CAFB-41F4-A888-6D847D6DC3F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.BerlekampMassey</RootNamespace>
+    <RootNamespace>CrypTool.BerlekampMassey</RootNamespace>
     <AssemblyName>BerlekampMassey</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

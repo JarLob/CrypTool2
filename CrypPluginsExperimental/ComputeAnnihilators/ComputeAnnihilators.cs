@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Cryptool.ComputeAnnihilators
+namespace CrypTool.ComputeAnnihilators
 {
     [Author("Abdeljalil Bourbahh", "bourbahh@yahoo.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
     [PluginInfo("Alg.Attack: Compute annihilators", "compute annihilators of Function, Set of bitsquence or a set XZ (Z-functions)", "ComputeAnnihilators/DetailedDescription/Description.xaml", new[] { "ComputeAnnihilators/Images/ann.png"}) ]

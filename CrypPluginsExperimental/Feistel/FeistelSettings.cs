@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Feistel
+namespace CrypTool.Feistel
 {
     public class FeistelSettings : ISettings
     {

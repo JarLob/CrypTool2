@@ -17,7 +17,7 @@
 using System;
 using System.Reflection;
 
-namespace Cryptool.MD5.Algorithm
+namespace CrypTool.MD5.Algorithm
 {
     /// <summary>
     /// The state of a <see cref="PresentableMD5"/> algorithm

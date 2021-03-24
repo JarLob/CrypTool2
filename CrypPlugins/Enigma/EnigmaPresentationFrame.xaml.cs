@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

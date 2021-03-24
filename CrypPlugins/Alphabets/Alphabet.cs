@@ -15,17 +15,17 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.Alphabets
+namespace CrypTool.Alphabets
 {
     [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.Alphabets.Properties.Resources", "PluginCaption", "PluginTooltip", "Alphabets/DetailedDescription/doc.xml", "Alphabets/icon.gif")]
+    [PluginInfo("CrypTool.Alphabets.Properties.Resources", "PluginCaption", "PluginTooltip", "Alphabets/DetailedDescription/doc.xml", "Alphabets/icon.gif")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class Alphabet : ICrypComponent
     {

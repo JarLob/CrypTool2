@@ -73,7 +73,7 @@
 	-->
     The most famous cryptosystem with homomorphic properties is the one by Paillier <ref id="Paillier"/>. First we will see how the Paillier key generation process works. After that, we will show that the Paillier cryptosystem indeed has homomorphic properties.
     <newline/>
-    CrypTool 2 (CT2) contains an implementation of the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem. Among the available components, there are components for key generation (<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), an example for encryption and decryption with Paillier (called “Paillier Text”), as well as examples which apply the homomorphic properties of the cryptosystem (“Paillier Addition”, “Paillier Blinding” and “Paillier Voting”).
+    CrypTool 2 (CT2) contains an implementation of the <docRef item="CrypTool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem. Among the available components, there are components for key generation (<docRef item="CrypTool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), an example for encryption and decryption with Paillier (called “Paillier Text”), as well as examples which apply the homomorphic properties of the cryptosystem (“Paillier Addition”, “Paillier Blinding” and “Paillier Voting”).
     <newline/>
     <img src="OnlineDocumentationGenerator/StaticDocs/Images/CT2-Paillier.png"/>
 
@@ -123,7 +123,7 @@
     <newline/><newline/>
     The DGK cryptosystem <ref id="DGK"/> has the same homomorphic properties as Paillier.
     <newline/>
-    CT2 contains an implementation of the <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef> cryptosystem. There is a component for key generation (<docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef>) and an example for encryption and decryption with DGK.
+    CT2 contains an implementation of the <docRef item="CrypTool.Plugins.DGK.DGK">DGK</docRef> cryptosystem. There is a component for key generation (<docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef>) and an example for encryption and decryption with DGK.
 
 
 
@@ -250,7 +250,7 @@
     <newline/><newline/>
 
     Das wohl bekannteste Kryptosystem mit homomorphen Eigenschaften ist das von Paillier <ref id="Paillier"/>. Wir sehen zunächst, wie die Schlüsselerzeugung, die Verschlüsselung und die Entschlüsselung funktionieren, und zeigen dann, dass das Paillier-Kryptosystem homomorphe Eigenschaften besitzt.
-    In CrypTool 2 (CT2) ist das <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef>-Kryptosystem implementiert. Unter den fertigen Vorlagen finden sich Methoden zur Erzeugung der kryptographischen Schlüssel (<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), ein Beispiel für eine Ver- und Entschlüsselung mittels Paillier (Paillier Text), sowie Beispiele, die die homomorphen Eigenschaften von Paillier anwenden (Paillier Addition, Paillier Blinding und Paillier Voting).
+    In CrypTool 2 (CT2) ist das <docRef item="CrypTool.Plugins.Paillier.Paillier">Paillier</docRef>-Kryptosystem implementiert. Unter den fertigen Vorlagen finden sich Methoden zur Erzeugung der kryptographischen Schlüssel (<docRef item="CrypTool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), ein Beispiel für eine Ver- und Entschlüsselung mittels Paillier (Paillier Text), sowie Beispiele, die die homomorphen Eigenschaften von Paillier anwenden (Paillier Addition, Paillier Blinding und Paillier Voting).
     <newline/>
     <img src="OnlineDocumentationGenerator/StaticDocs/Images/CT2-Paillier.png"/>
 
@@ -298,7 +298,7 @@
     <newline/><newline/>
     Das DGK-Kryptosystem <ref id="DGK"/> hat die gleichen homomorphen Eigenschaften wie Paillier.
     <newline/>
-    In CT2 ist das <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef>-Kryptosystem implementiert. Es gibt eine Komponente zur Schlüsselerzeugung (<docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef>) und ein Beispiel zum Ver- und Entschlüsseln mit DGK.
+    In CT2 ist das <docRef item="CrypTool.Plugins.DGK.DGK">DGK</docRef>-Kryptosystem implementiert. Es gibt eine Komponente zur Schlüsselerzeugung (<docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef>) und ein Beispiel zum Ver- und Entschlüsseln mit DGK.
 
 
 
@@ -397,9 +397,9 @@
     </linkReference>
 
     <linkReference id="JCT_HE">
-      <link lang="en" url="https://www.cryptool.org/en/jcryptool"/>
+      <link lang="en" url="https://www.CrypTool.org/en/jCrypTool"/>
       <caption lang="en">JCrypTool — The cryptography e-learning platform</caption>
-      <link lang="de-DE" url="https://www.cryptool.org/de/jcryptool"/>
+      <link lang="de-DE" url="https://www.CrypTool.org/de/jCrypTool"/>
       <caption lang="de">JCrypTool — E-Learning-Plattform für Kryptographie</caption>
     </linkReference>
 

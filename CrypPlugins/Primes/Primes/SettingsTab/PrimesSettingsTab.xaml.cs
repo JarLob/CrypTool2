@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using Microsoft.Win32;
 
 namespace Primes.SettingsTab

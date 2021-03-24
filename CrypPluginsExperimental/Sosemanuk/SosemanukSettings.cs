@@ -15,10 +15,10 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Sosemanuk
+namespace CrypTool.Plugins.Sosemanuk
 {
     public class SosemanukSettings : ISettings
     {

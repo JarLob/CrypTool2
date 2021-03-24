@@ -14,18 +14,18 @@
    limitations under the License.
 */
 
-// using Cryptool.PluginBase.Miscellaneous; // for [MethodImpl(MethodImplOptions.Synchronized)]
+// using CrypTool.PluginBase.Miscellaneous; // for [MethodImpl(MethodImplOptions.Synchronized)]
 using System;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.LFSR.Implementation;
+using CrypTool.PluginBase;
+using CrypTool.LFSR.Implementation;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Utils.StandaloneComponent.Compat;
-using Cryptool.PluginBase.Utils.Datatypes; using static Cryptool.PluginBase.Utils.Datatypes.Datatypes;
+using CrypTool.PluginBase.Utils.StandaloneComponent.Compat;
+using CrypTool.PluginBase.Utils.Datatypes; using static CrypTool.PluginBase.Utils.Datatypes.Datatypes;
 using System.Text;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.Utils;
 
-namespace Cryptool.LFSR
+namespace CrypTool.LFSR
 {
 
     public class LFSRSettings : AbstractComponentSettingsCompat<LFSRParameters>
@@ -133,8 +133,8 @@ namespace Cryptool.LFSR
 
     }
 
-    [Author("Simon Leischnig", "leischnig@cryptool.org", "At Home", "https://github.io/hi")]
-    [PluginInfo("Cryptool.LFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "LFSR/DetailedDescription/doc.xml", "LFSR/Images/LFSR.png", "LFSR/Images/encrypt.png", "LFSR/Images/decrypt.png")]
+    [Author("Simon Leischnig", "leischnig@CrypTool.org", "At Home", "https://github.io/hi")]
+    [PluginInfo("CrypTool.LFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "LFSR/DetailedDescription/doc.xml", "LFSR/Images/LFSR.png", "LFSR/Images/encrypt.png", "LFSR/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.ToolsRandomNumbers)]
     public class LFSRComponent : AbstractStandaloneComponentCompat<LFSRAPI, LFSRParameters>
     {
@@ -306,8 +306,8 @@ namespace Cryptool.LFSR
 
         private static string BuildPolynomialFromBinary(char [] tapSequence, int roundNumber)
         {
-            string polyDescription = Cryptool.LFSR.Properties.Resources.RoundNumber + " " + roundNumber + "; " ;
-            polyDescription += Cryptool.LFSR.Properties.Resources.Feedback_polynomial + ": \n";
+            string polyDescription = CrypTool.LFSR.Properties.Resources.RoundNumber + " " + roundNumber + "; " ;
+            polyDescription += CrypTool.LFSR.Properties.Resources.Feedback_polynomial + ": \n";
 
             StringBuilder polynomialBuilder = new StringBuilder();
             polynomialBuilder.Append(polyDescription);

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaCha.ContentTemplate
+namespace CrypTool.Plugins.ChaCha.ContentTemplate
 {
     /// <summary>
     /// Interaction logic for ViewboxButton.xaml

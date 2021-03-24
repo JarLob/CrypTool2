@@ -16,11 +16,11 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.Plugins.BLAKE
+namespace CrypTool.Plugins.BLAKE
 {
     [Author("Diego Alejandro Gómez", "diego.gomezy@udea.edu.co", "Universidad de Antioquia", "http://www.udea.edu.co")]
     [PluginInfo("BLAKE.Properties.Resources", "PluginCaption", "PluginTooltip", "BLAKE/DetailedDescription/doc.xml",
@@ -112,7 +112,7 @@ namespace Cryptool.Plugins.BLAKE
         /// Input data to be hashed.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputDataStreamCaption", "InputDataStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;

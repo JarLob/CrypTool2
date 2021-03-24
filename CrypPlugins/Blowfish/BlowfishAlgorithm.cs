@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Plugins.Blowfish
+namespace CrypTool.Plugins.Blowfish
 {
     /// <summary>
     /// Implementation of Bruce Schneier's Blowfish cipher. 

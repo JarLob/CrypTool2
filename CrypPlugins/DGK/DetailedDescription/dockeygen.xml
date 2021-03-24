@@ -8,7 +8,7 @@
   <introduction lang="de-DE">
     Das DGK-Kryptosystem ist ein homomorphes Verschlüsselungsverfahren, das 2007 von I. Damgård, M. Geisler und H. Krøigaard vorgestellt wurde.
     <newline /><newline />
-    Die homomorphen Eigenschaften von DGK und weitere <b>Referenzen</b> werden in der Onlinehilfe der <docRef item="Cryptool.Plugins.DGK.DGK">DGK-Komponente</docRef> und
+    Die homomorphen Eigenschaften von DGK und weitere <b>Referenzen</b> werden in der Onlinehilfe der <docRef item="CrypTool.Plugins.DGK.DGK">DGK-Komponente</docRef> und
     im <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_de.html">Tutorial</internal> "Homomorphe Chiffren und ihre Bedeutung in der Kryptographie" (in der Online-Hilfe unter "Allgemein") genauer erläutert.
     <newline /><newline />
     Diese Komponente generiert einen zufälligen öffentlichen und privaten Schlüssel für das DGK-Verschlüsselungsverfahren.
@@ -16,7 +16,7 @@
   <usage lang="en">
     The DGK cryptosystem is a homomorphic cryptosystem, that was presented by I. Damgård, M. Geisler, and M. Krøigaard in 2007.
     <newline /><newline />
-    The homomorphic properties of this cryptosystem and further <b>references</b> are described in the online help of the <docRef item="Cryptool.Plugins.DGK.DGK">DGK component</docRef> and in the <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_en.html">tutorial</internal> "Homomorphic Ciphers and their Importance in Cryptography" (in the online help below "Common").
+    The homomorphic properties of this cryptosystem and further <b>references</b> are described in the online help of the <docRef item="CrypTool.Plugins.DGK.DGK">DGK component</docRef> and in the <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_en.html">tutorial</internal> "Homomorphic Ciphers and their Importance in Cryptography" (in the online help below "Common").
     <newline /><newline />
     This component generates the public and the private key for the DGK encryption.
   </usage>
@@ -67,10 +67,10 @@
   <references>
     <linkReference id="dgk">
       <caption lang="en">
-        See the online help for the <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef> component
+        See the online help for the <docRef item="CrypTool.Plugins.DGK.DGK">DGK</docRef> component
       </caption>
       <caption lang="de-DE">
-        Siehe die Hilfe zur <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef>-Komponente.
+        Siehe die Hilfe zur <docRef item="CrypTool.Plugins.DGK.DGK">DGK</docRef>-Komponente.
       </caption>
     </linkReference>
   </references>

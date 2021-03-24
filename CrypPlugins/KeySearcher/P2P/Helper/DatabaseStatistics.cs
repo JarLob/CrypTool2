@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using KeySearcher.P2P.Presentation;
 
 namespace KeySearcher.P2P.Helper

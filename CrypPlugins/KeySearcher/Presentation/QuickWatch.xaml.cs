@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using KeySearcherPresentation.Controls;
 
 namespace KeySearcherPresentation
@@ -11,7 +11,7 @@ namespace KeySearcherPresentation
     /// Interaction logic for QuickWatch.xaml
     /// </summary>
     [TabColor("pink")]
-    [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class QuickWatch : UserControl
     {
         public static readonly DependencyProperty IsP2PEnabledProperty =

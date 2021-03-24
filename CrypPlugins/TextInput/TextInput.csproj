@@ -8,7 +8,7 @@
     <ProjectGuid>{475E8850-4D82-4C5E-AD19-5FDA82BC7576}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.TextInput</RootNamespace>
+    <RootNamespace>CrypTool.TextInput</RootNamespace>
     <AssemblyName>TextInput</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

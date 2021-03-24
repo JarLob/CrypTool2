@@ -13,7 +13,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinDataVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class DataVisual : UserControl, INotifyPropertyChanged
     {
         #region events

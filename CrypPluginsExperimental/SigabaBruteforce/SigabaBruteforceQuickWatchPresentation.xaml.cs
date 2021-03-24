@@ -1,4 +1,4 @@
-﻿using Cryptool.CrypAnalysisViewControl;
+﻿using CrypTool.CrypAnalysisViewControl;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace SigabaBruteforce
 {
-    [global::Cryptool.PluginBase.Attributes.Localization("SigabaBruteforce.Properties.Resources")]
+    [global::CrypTool.PluginBase.Attributes.Localization("SigabaBruteforce.Properties.Resources")]
     public partial class SigabaBruteforceQuickWatchPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();

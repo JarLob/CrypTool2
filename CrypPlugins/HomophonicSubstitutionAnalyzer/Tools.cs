@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
     public class Tools
     {

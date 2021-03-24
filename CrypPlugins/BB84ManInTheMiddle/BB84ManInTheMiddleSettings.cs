@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.BB84ManInTheMiddle
+namespace CrypTool.Plugins.BB84ManInTheMiddle
 {
     // HOWTO: rename class (click name, press F2)
     public class BB84ManInTheMiddleSettings : ISettings
@@ -35,7 +35,7 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
 
         public BB84ManInTheMiddleSettings()
         {
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
         }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -189,13 +189,13 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
         {
             get
             {
-                return Cryptool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed;
+                return CrypTool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed;
             }
             set
             {
-                if (Cryptool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed != value)
+                if (CrypTool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed != value)
                 {
-                    Cryptool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed = value;
+                    CrypTool.PluginBase.Properties.Settings.Default.BB84_AnimationSpeed = value;
                     OnPropertyChanged("SpeedSetting");
                 }
             }

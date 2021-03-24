@@ -3,9 +3,9 @@ using System.Threading;
 using System.Windows.Threading;
 
 
-namespace Cryptool.KasiskiTest
+namespace CrypTool.KasiskiTest
 {
-    [Cryptool.PluginBase.Attributes.Localization("KasiskiTest.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KasiskiTest.Properties.Resources")]
     public partial class KasiskiTestPresentation: UserControl
     {
 

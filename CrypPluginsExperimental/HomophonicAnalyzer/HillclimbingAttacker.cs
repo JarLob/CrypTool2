@@ -7,9 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     class HillclimbingAttacker
     {

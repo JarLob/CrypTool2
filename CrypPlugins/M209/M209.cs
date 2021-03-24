@@ -19,13 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.M209
+namespace CrypTool.Plugins.M209
 {
     [Author("Martin Jedrychowski, Martin Switek", "jedry@gmx.de, Martin_Switek@gmx.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.M209.Properties.Resources", "PluginCaption", "PluginTooltip", "M209/DetailedDescription/doc.xml",
+    [PluginInfo("CrypTool.M209.Properties.Resources", "PluginCaption", "PluginTooltip", "M209/DetailedDescription/doc.xml",
       "M209/Images/M-209.jpg", "M209/Images/encrypt.png", "M209/Images/decrypt.png")]
     
     [ComponentCategory(ComponentCategory.CiphersClassic)]

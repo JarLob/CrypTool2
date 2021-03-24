@@ -1,4 +1,4 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using System.ComponentModel;
 
 namespace WebService
@@ -102,7 +102,7 @@ namespace WebService
        }
        
        private string targetFileName;
-      [TaskPane( "TargetFilenameCaption", "TargetFilenameTooltip", null, 0, true, ControlType.SaveFileDialog, FileExtension = "Cryptool Alphabet (*.cta)|*.cta")]
+      [TaskPane( "TargetFilenameCaption", "TargetFilenameTooltip", null, 0, true, ControlType.SaveFileDialog, FileExtension = "CrypTool Alphabet (*.cta)|*.cta")]
        public string TargetFilename
        {
            get { return targetFileName; }
@@ -124,7 +124,7 @@ namespace WebService
           }
       }
       //private int animationSpeed = 3;
-      //[TaskPane( "AnimationSpeedCaption", "AnimationSpeedTooltip", "Animation", 9, false, ControlType.NumericUpDown, Cryptool.PluginBase.ValidationType.RangeInteger, 1, 5)]
+      //[TaskPane( "AnimationSpeedCaption", "AnimationSpeedTooltip", "Animation", 9, false, ControlType.NumericUpDown, CrypTool.PluginBase.ValidationType.RangeInteger, 1, 5)]
       //public int AnimationSpeed
       //{
       //    get

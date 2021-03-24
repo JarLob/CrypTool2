@@ -14,12 +14,12 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Numerics;
 
-namespace Cryptool.Plugins.DGK
+namespace CrypTool.Plugins.DGK
 {
     [Author("Armin Krauss, Martin Franz", "", "", "http://www.uni-due.de")]
     [PluginInfo("DGK.Properties.Resources", "PluginKeyCaption", "PluginKeyTooltip", "DGK/DetailedDescription/dockeygen.xml", "DGK/Image/DGKKey.png")]
@@ -61,9 +61,9 @@ namespace Cryptool.Plugins.DGK
         
         #region events
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -392,7 +392,7 @@ namespace Cryptool.Plugins.DGK
         }
 
         /// <summary>
-        /// Logs a message to cryptool
+        /// Logs a message to CrypTool
         /// </summary>
         private void GuiLogMessage(string p, NotificationLevel notificationLevel)
         {
@@ -417,4 +417,4 @@ namespace Cryptool.Plugins.DGK
 
     }//end DGKKeyGenerator
 
-}//end Cryptool.Plugins.DGK
+}//end CrypTool.Plugins.DGK

@@ -16,7 +16,7 @@
  * the License.
  */
 /*
-* Converted and modified by Alexander Hirsch <hirsch@cryptool.org>
+* Converted and modified by Alexander Hirsch <hirsch@CrypTool.org>
 */
 
 namespace FormatPreservingEncryptionWeydstone

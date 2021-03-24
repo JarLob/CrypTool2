@@ -14,10 +14,10 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Trivium
+namespace CrypTool.Trivium
 {
     public class TriviumSettings : ISettings
     {

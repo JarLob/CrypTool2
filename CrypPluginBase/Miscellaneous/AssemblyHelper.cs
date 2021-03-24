@@ -17,9 +17,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     /*
      * Access assembly information of executing assembly (which is CrypPluginBase).

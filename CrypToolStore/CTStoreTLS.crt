@@ -2,7 +2,7 @@ Bag Attributes
     friendlyName: CTStoreTLS
     localKeyID: AE E7 19 D8 55 FA 49 F8 A2 F8 4E EA CC 28 80 E8 51 9E 2E 80 
 subject=/CN=CTStoreTLS/O=/OU=/C=/emailAddress=
-issuer=/CN=CrypTool 2.0 Certificate Authority/O=Universit\xC3\xA4t Kassel/OU=Angewandte Informationssicherheit (AIS)/C=DE/emailAddress=certificates@cryptool.org
+issuer=/CN=CrypTool 2.0 Certificate Authority/O=Universit\xC3\xA4t Kassel/OU=Angewandte Informationssicherheit (AIS)/C=DE/emailAddress=certificates@CrypTool.org
 -----BEGIN CERTIFICATE-----
 MIIEGTCCAwGgAwIBAgIIEL7cYpdAiVswDQYJKoZIhvcNAQEFBQAwgbQxKzApBgNV
 BAMMIkNyeXBUb29sIDIuMCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkxHDAaBgNVBAoM

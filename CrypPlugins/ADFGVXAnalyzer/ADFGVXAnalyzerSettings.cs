@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.ObjectModel;
 
 namespace ADFGVXAnalyzer

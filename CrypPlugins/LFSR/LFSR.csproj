@@ -8,7 +8,7 @@
     <ProjectGuid>{809EEF0F-DE14-4300-9E3E-A60A7DFFB3EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.LFSR</RootNamespace>
+    <RootNamespace>CrypTool.LFSR</RootNamespace>
     <AssemblyName>LFSR</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

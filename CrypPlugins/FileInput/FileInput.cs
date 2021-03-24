@@ -18,9 +18,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace FileInput
 {
@@ -180,7 +180,7 @@ namespace FileInput
         #region Properties
 
         [PropertyInfo(Direction.OutputData, "StreamOutputCaption", "StreamOutputTooltip", true)]
-        public ICryptoolStream StreamOutput
+        public ICrypToolStream StreamOutput
         {
             get { return cstreamWriter; }
             set { } // readonly

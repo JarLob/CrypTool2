@@ -1,5 +1,5 @@
-﻿using Cryptool.CrypAnalysisViewControl;
-using Cryptool.PluginBase.Control;
+﻿using CrypTool.CrypAnalysisViewControl;
+using CrypTool.PluginBase.Control;
 using System;
 using System.Linq;
 using System.Text;

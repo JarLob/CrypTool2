@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cryptool.Plugins.WebHits
+namespace CrypTool.Plugins.WebHits
 {
     public class Url
     {

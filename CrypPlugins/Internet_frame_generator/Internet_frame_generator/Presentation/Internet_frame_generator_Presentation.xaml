@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cryptool.Internet_frame_generator.Internet_frame_generator_Presentation"
+﻿<UserControl x:Class="CrypTool.Internet_frame_generator.Internet_frame_generator_Presentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="Auto" Width="Auto" MinWidth="640" MinHeight="480">

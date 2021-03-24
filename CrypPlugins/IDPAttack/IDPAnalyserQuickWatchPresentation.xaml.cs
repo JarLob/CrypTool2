@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace IDPAnalyser
 {
-    [Cryptool.PluginBase.Attributes.Localization("IDPAnalyser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("IDPAnalyser.Properties.Resources")]
     public partial class IDPAnalyserQuickWatchPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();

@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.KKDFSHA256
+namespace CrypTool.Plugins.KKDFSHA256
 {
     /// <summary>
     /// Interaktionslogik für KKDFSHA256Pres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("KKDFSHA256.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KKDFSHA256.Properties.Resources")]
     public partial class KKDFSHA256Pres : UserControl
     {
 

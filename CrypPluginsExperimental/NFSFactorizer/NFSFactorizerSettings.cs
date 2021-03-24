@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 using System;
 using System.Windows;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.NFSFactorizer
+namespace CrypTool.Plugins.NFSFactorizer
 {
     // HOWTO: rename class (click name, press F2)
     public class NFSFactorizerSettings : ISettings

@@ -18,12 +18,12 @@ using System;
 using System.Linq;
 using System.Text;
 
-//Cryptool 2.0 specific includes
-using Cryptool.PluginBase;
+//CrypTool 2.0 specific includes
+using CrypTool.PluginBase;
 using System.Diagnostics;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
 
     internal partial class EnigmaCore

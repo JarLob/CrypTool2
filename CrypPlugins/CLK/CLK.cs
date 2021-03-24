@@ -15,10 +15,10 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 //timer
 using System.Timers;
 // for mouse click
@@ -31,10 +31,10 @@ using System.Windows;
 //using System.IO;
 //using System.Runtime.CompilerServices;
 
-namespace Cryptool.CLK
+namespace CrypTool.CLK
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
-    [PluginInfo("Cryptool.Plugins.CLK.Properties.Resources", "PluginCaption", "PluginTooltip", "CLK/DetailedDescription/doc.xml", "CLK/icon.png", "CLK/Images/true.png", "CLK/Images/false.png")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
+    [PluginInfo("CrypTool.Plugins.CLK.Properties.Resources", "PluginCaption", "PluginTooltip", "CLK/DetailedDescription/doc.xml", "CLK/icon.png", "CLK/Images/true.png", "CLK/Images/false.png")]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
   public class CLK : DependencyObject, ICrypComponent
   {

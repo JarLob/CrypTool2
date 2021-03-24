@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase.Control
+namespace CrypTool.PluginBase.Control
 {
     public interface IControlTranspoEncryption : IControl, IDisposable
     {

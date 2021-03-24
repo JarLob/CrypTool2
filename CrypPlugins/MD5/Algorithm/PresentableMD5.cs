@@ -18,9 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.MD5.Algorithm
+namespace CrypTool.MD5.Algorithm
 {
     /// <summary>
     /// Implements an MD5 algorithm that can be executed step by step and allows inspection of state anytime during execution
@@ -194,7 +194,7 @@ namespace Cryptool.MD5.Algorithm
         /// Assigns a data source and initializes the algorithm, putting it into "initialized" state
         /// </summary>
         /// <param name="cStream">Data source</param>
-        public void Initialize(ICryptoolStream cStream)
+        public void Initialize(ICrypToolStream cStream)
         {
             DataStream = cStream.CreateReader();
 

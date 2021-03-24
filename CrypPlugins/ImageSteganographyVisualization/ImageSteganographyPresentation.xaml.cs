@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace ImageSteganographyVisualization
 {
-    [Cryptool.PluginBase.Attributes.Localization("ImageSteganographyVisualization.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("ImageSteganographyVisualization.Properties.Resources")]
 
     public partial class ImageSteganographyPresentation : UserControl
     {

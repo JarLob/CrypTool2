@@ -26,7 +26,7 @@ namespace CrypResourceLocator
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Cryptool Plugins (*.dll)|*.dll";
+            dlg.Filter = "CrypTool Plugins (*.dll)|*.dll";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 try

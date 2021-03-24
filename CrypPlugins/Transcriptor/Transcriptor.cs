@@ -15,20 +15,20 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using Transcriptor;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System;
 using Transcriptor.Properties;
 
-namespace Cryptool.Plugins.Transcriptor
+namespace CrypTool.Plugins.Transcriptor
 {
     [Author("Olga Groh", "o_groh@student.uni-kassel.de", "Uni Kassel", "www.uni-kassel.de")]
     [PluginInfo("Transcriptor.Properties.Resources", "PluginCaption", "PluginTooltip", "Transcriptor/DetailedDescription/doc.xml", new[] { "Transcriptor/icon.png" })]
@@ -57,7 +57,7 @@ namespace Cryptool.Plugins.Transcriptor
         /// The Image File from the user
         /// </summary>
         [PropertyInfo(Direction.InputData, "ImageFileName", "ImageToolTip", true)]
-        public ICryptoolStream Image
+        public ICrypToolStream Image
         {
             get;
             set;

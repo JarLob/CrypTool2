@@ -1,11 +1,11 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.ViewModel.Components;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle, IDiffusion
     {

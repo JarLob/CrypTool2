@@ -1,10 +1,10 @@
 ﻿using BlockmodeVisualizer;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.BlockmodeVisualizer;
-using Cryptool.Plugins.Cryptography.Encryption;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.BlockmodeVisualizer;
+using CrypTool.Plugins.Cryptography.Encryption;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.TemplateAndPluginTests;
-using BV = Cryptool.Plugins.BlockmodeVisualizer.BlockmodeVisualizer;
+using BV = CrypTool.Plugins.BlockmodeVisualizer.BlockmodeVisualizer;
 
 namespace UnitTests
 {

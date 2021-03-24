@@ -1,8 +1,8 @@
-﻿<UserControl x:Class="Cryptool.Plugins.MD5Collider.Presentation.QuickWatchPresentation"
+﻿<UserControl x:Class="CrypTool.Plugins.MD5Collider.Presentation.QuickWatchPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:converters="clr-namespace:Cryptool.Plugins.MD5Collider.Presentation.Converters"
+    xmlns:converters="clr-namespace:CrypTool.Plugins.MD5Collider.Presentation.Converters"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:properties="clr-namespace:Cryptool.Plugins.MD5Collider.Properties"
+    xmlns:properties="clr-namespace:CrypTool.Plugins.MD5Collider.Properties"
     x:Name="ucQuickWatchPresentation"
     Height="100" Width="270" DataContext="{Binding Collider,ElementName=ucQuickWatchPresentation}" Background="AntiqueWhite">
     <UserControl.Resources>

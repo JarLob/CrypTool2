@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.MD5Collider.Algorithm
+﻿namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     public abstract class StatusConstants
     {

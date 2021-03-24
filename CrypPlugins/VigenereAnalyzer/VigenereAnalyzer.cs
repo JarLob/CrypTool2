@@ -17,23 +17,23 @@
 using System;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Utils;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.PluginBase.Utils;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.VigenereAnalyzer
+namespace CrypTool.VigenereAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String keyString, String plaintextString);
     public delegate int[] DecryptVigenereFunction(int[] plaintext, int[] key, int[] alphabet, int offset, int[] oldciphertext);
 
     [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.VigenereAnalyzer.Properties.Resources",
+    [PluginInfo("CrypTool.VigenereAnalyzer.Properties.Resources",
     "PluginCaption", "PluginTooltip", "", "VigenereAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class VigenereAnalyzer : ICrypComponent

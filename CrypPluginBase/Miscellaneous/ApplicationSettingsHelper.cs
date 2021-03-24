@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class ApplicationSettingsHelper
     {

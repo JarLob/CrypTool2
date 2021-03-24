@@ -22,7 +22,7 @@ using System.IO;
 using System.Xml;
 using System.IO.Compression;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     /// <summary>
     /// PluginManager Class  
@@ -69,7 +69,7 @@ namespace Cryptool.Core
         /// <summary>
         /// Folder for plugins of CrypToolStore
         /// </summary>
-        private readonly string crypToolStorePluginFolder;
+        private readonly string CrypToolStorePluginFolder;
 
         /// <summary>
         /// Loaded Assemblies
@@ -90,17 +90,17 @@ namespace Cryptool.Core
         /// Loads all assemblies from CrypPlugins and the given CrypToolStore sub folder
         /// </summary>
         /// <param name="disabledAssemblies"></param>
-        /// <param name="crypToolStoreSubFolder"></param>
-        public PluginManager(HashSet<string> disabledAssemblies, string crypToolStoreSubFolder)
+        /// <param name="CrypToolStoreSubFolder"></param>
+        public PluginManager(HashSet<string> disabledAssemblies, string CrypToolStoreSubFolder)
         {
-            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypToolStoreDirectory);
-            this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
-            this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, "plugins");  
+            this.CrypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypToolStoreDirectory);
+            this.CrypToolStorePluginFolder = Path.Combine(CrypToolStorePluginFolder, CrypToolStoreSubFolder);
+            this.CrypToolStorePluginFolder = Path.Combine(CrypToolStorePluginFolder, "plugins");  
 
             //create folder for CrypToolStore if it does not exsit
-            if (!Directory.Exists(crypToolStorePluginFolder))
+            if (!Directory.Exists(CrypToolStorePluginFolder))
             {
-                Directory.CreateDirectory(crypToolStorePluginFolder);
+                Directory.CreateDirectory(CrypToolStorePluginFolder);
             }
 
             //update everything of the CrypToolStore, i.e. installations, deletions, and updates
@@ -135,9 +135,9 @@ namespace Cryptool.Core
         public Dictionary<string, Type> LoadTypes(AssemblySigningRequirement state)
         {
             availablePluginsApproximation = AvailablePluginsApproximation(new DirectoryInfo(crypPluginsFolder));
-            availablePluginsApproximation += AvailablePluginsApproximation(new DirectoryInfo(crypToolStorePluginFolder), true);
+            availablePluginsApproximation += AvailablePluginsApproximation(new DirectoryInfo(CrypToolStorePluginFolder), true);
             int currentPosition = FindAssemblies(new DirectoryInfo(crypPluginsFolder), state, foundAssemblies, 0);
-            FindAssemblies(new DirectoryInfo(crypToolStorePluginFolder), state, foundAssemblies, currentPosition, true);
+            FindAssemblies(new DirectoryInfo(CrypToolStorePluginFolder), state, foundAssemblies, currentPosition, true);
             LoadTypes(foundAssemblies);
             return this.loadedTypes;
         }
@@ -251,7 +251,7 @@ namespace Cryptool.Core
         /// <param name="foundAssemblies">list of found assemblies</param>
         private void LoadTypes(Dictionary<string, Assembly> foundAssemblies)
         {
-            string interfaceName = "Cryptool.PluginBase.IPlugin";
+            string interfaceName = "CrypTool.PluginBase.IPlugin";
 
             foreach (Assembly asm in foundAssemblies.Values)
             {
@@ -337,7 +337,7 @@ namespace Cryptool.Core
         /// </summary>
         private void UpdateCrypToolStoreFoldersAndPlugins()
         {
-            foreach (string xmlfilename in Directory.GetFiles(crypToolStorePluginFolder, "*.xml"))
+            foreach (string xmlfilename in Directory.GetFiles(CrypToolStorePluginFolder, "*.xml"))
             {
                 try
                 {
@@ -381,8 +381,8 @@ namespace Cryptool.Core
             string id = idNode.InnerText;
             string version = versionNode.InnerText;
 
-            string assemblyzipfilename = Path.Combine(crypToolStorePluginFolder, String.Format("assembly-{0}-{1}.zip",id,version));
-            string pluginfoldername = Path.Combine(crypToolStorePluginFolder, String.Format("plugin-{0}", id, version));
+            string assemblyzipfilename = Path.Combine(CrypToolStorePluginFolder, String.Format("assembly-{0}-{1}.zip",id,version));
+            string pluginfoldername = Path.Combine(CrypToolStorePluginFolder, String.Format("plugin-{0}", id, version));
 
             if (Directory.Exists(pluginfoldername) &&
                  (type.Equals("installation") ||

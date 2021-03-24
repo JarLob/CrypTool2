@@ -17,7 +17,7 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Threading;
 using System.Numerics;
 
@@ -158,7 +158,7 @@ namespace WorkspaceManagerModel.Model.Tools
                 return BitConverter.ToString(value).Replace("-", " ");
             }
 
-            var stream = data as ICryptoolStream;
+            var stream = data as ICrypToolStream;
             if (stream != null)
             {
                 var reader = stream.CreateReader();

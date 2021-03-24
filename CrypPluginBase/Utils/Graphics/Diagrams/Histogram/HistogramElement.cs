@@ -1,6 +1,6 @@
 ﻿
 
-namespace Cryptool.PluginBase.Utils.Graphics.Diagrams.Histogram
+namespace CrypTool.PluginBase.Utils.Graphics.Diagrams.Histogram
 {
     public class HistogramElement
     {

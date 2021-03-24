@@ -15,12 +15,12 @@
 */
 using System.Collections.Generic;
 using System.Drawing;
-using Cryptool.Plugins.VisualEncoder.Model;
+using CrypTool.Plugins.VisualEncoder.Model;
 using ZXing;
 using VisualEncoder.Properties;
 using ZXing.Common;
 
-namespace Cryptool.Plugins.VisualEncoder.Encoders
+namespace CrypTool.Plugins.VisualEncoder.Encoders
 {
     class QRCode : DimCodeEncoder
     {

@@ -18,7 +18,7 @@
   <keywords lang="de">Wortmuster, Angriff</keywords>
   <icon file="WordPatterns.png" />
   <relevantPlugins>
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
     <plugin name="WordPatterns" />
   </relevantPlugins>
   <replacements lang="de">

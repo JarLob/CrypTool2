@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{396928CC-32FC-4540-A685-17E22F603D77}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Cryptool.CrypConsole</RootNamespace>
+    <RootNamespace>CrypTool.CrypConsole</RootNamespace>
     <AssemblyName>CrypConsole</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

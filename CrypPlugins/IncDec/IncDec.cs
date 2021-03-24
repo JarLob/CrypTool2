@@ -15,13 +15,13 @@
 */
 
 using System.Windows.Controls;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace IncDec
 {
-  [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+  [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
   [PluginInfo("IncDec.Properties.Resources", "PluginCaption", "PluginTooltip", "IncDec/DetailedDescription/doc.xml", "IncDec/increment.png", "IncDec/decrement.png")]
   [ComponentCategory(ComponentCategory.ToolsMisc)]
   public class IncDec : ICrypComponent
@@ -103,7 +103,7 @@ namespace IncDec
         EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
     }
 
-    public Cryptool.PluginBase.ISettings Settings
+    public CrypTool.PluginBase.ISettings Settings
     {
       get { return settings; }
     }

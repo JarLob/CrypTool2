@@ -1,7 +1,7 @@
 ﻿using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
     [Serializable()]
     public abstract class StoredTab

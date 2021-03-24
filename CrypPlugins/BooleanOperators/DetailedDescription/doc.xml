@@ -20,7 +20,7 @@
   <usage lang="en">
     CrypTool contains a lot of functions which enable the user to work with boolean algebra. The easiest way to enter a boolean
     value ("true"/"false") is the boolean input. Using a setting the user may select if the input outputs "true" or "false". To
-    connect boolean values in cryptool there exists a boolean binary operator who gets two boolean inputs and returns one boolean
+    connect boolean values in CrypTool there exists a boolean binary operator who gets two boolean inputs and returns one boolean
     output based on these. The operator may act as one of the following operations: AND, OR, NAND, NOR, XOR.
     The operators work as followed:
     <list><item><b>UND:</b>
@@ -34,12 +34,12 @@
       </item><item><b>XOR:</b>
         Operator returns "true" if exactly only one input is "true"
       </item></list>
-    To display a boolean value cryptool has the "Boolean Output".
+    To display a boolean value CrypTool has the "Boolean Output".
     Boolean values can be inverted using the "Boolean Not Operator" ("true" becomes "false" – "false" becomes "true").    
     The "Boolean If-Else Operator" returns at one output "true" and the other "false" if its input is "true".
   </usage>
   <usage lang="zh-CN">CrypTool包含许多使用户能够使用布尔代数的功能。输入布尔值（“ true” /“ false”）的最简单方法是布尔输入。使用设置，用户可以选择输入是输出“ true”还是“ false”。为了将密码中的布尔值连接起来，存在一个布尔二进制运算符，该运算符获取两个布尔输入并基于这些布尔输入返回一个布尔输出。运算符可以充当以下操作之一：AND，OR，NAND，NOR，XOR。运算符的工作方式如下：UND：如果两个输入均为“ true”，则运算符返回“ true”。ODER：如果至少一个输入为“ true”，则运算符返回“ true”。NAND：如果两个输入均为“ false”，运算符返回“ true”。 NOR：如果至少一个输入为“ false”，则运算符返回“ false” XOR：如果恰好只有一个输入为“ true”，则运算符返回“ true”。要显示布尔值，cryptolol具有“ Boolean Output”。可以使用“布尔非运算符”来反转布尔值（“ true”变为“ false” –“ false”变为“ true”）。如果“布尔If-Else运算符”的输入为“ true”，则返回一个输出“ true”，而另一个返回“ false”。</usage>
-  <usage lang="ru">CrypTool содержит множество функций, которые позволяют пользователю работать с булевой алгеброй. Самый простой способ ввести логическое значение («true» / «false») - это логический ввод. Используя настройку, пользователь может выбрать, будет ли вход вывести «истина» или «ложь». Для связывания логических значений в cryptool существует логический двоичный оператор, который получает два логических входа и возвращает на их основе один булевский вывод. Оператор может действовать как одна из следующих операций: AND, OR, NAND, NOR, XOR. Операторы работают следующим образом: UND: оператор возвращает «true», если оба входа являются «истинными». ODER: оператор возвращает «true», если хотя бы один вход «true» NAND: оператор возвращает «true», если оба входа «false», NOR: оператор возвращает «false», если хотя бы один вход «false» XOR: оператор возвращает «true», если только один вход «true». Для отображения логического значения cryptool имеет «Boolean Output». Булевы значения могут быть инвертированы с использованием «Логического оператора» («true» становится «false» - «false» становится «true»). Оператор Boolean If-Else возвращает на одном выходе «true», а другой «false», если его вход «true».</usage>
+  <usage lang="ru">CrypTool содержит множество функций, которые позволяют пользователю работать с булевой алгеброй. Самый простой способ ввести логическое значение («true» / «false») - это логический ввод. Используя настройку, пользователь может выбрать, будет ли вход вывести «истина» или «ложь». Для связывания логических значений в CrypTool существует логический двоичный оператор, который получает два логических входа и возвращает на их основе один булевский вывод. Оператор может действовать как одна из следующих операций: AND, OR, NAND, NOR, XOR. Операторы работают следующим образом: UND: оператор возвращает «true», если оба входа являются «истинными». ODER: оператор возвращает «true», если хотя бы один вход «true» NAND: оператор возвращает «true», если оба входа «false», NOR: оператор возвращает «false», если хотя бы один вход «false» XOR: оператор возвращает «true», если только один вход «true». Для отображения логического значения CrypTool имеет «Boolean Output». Булевы значения могут быть инвертированы с использованием «Логического оператора» («true» становится «false» - «false» становится «true»). Оператор Boolean If-Else возвращает на одном выходе «true», а другой «false», если его вход «true».</usage>
   <usage lang="de-DE">
     CrypTool verfügt über eine Reihe von Funktionen, die die Arbeit mit booleschen Operatoren bzw boolscher Algebra ermöglichen. Als
     einfache Eingabemöglichkeit eines Wahrheitswertes ("Wahr"/"Falsch") gibt es die "Boolesche Eingabe". Mittels Einstellung kann der

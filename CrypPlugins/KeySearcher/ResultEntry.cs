@@ -1,4 +1,4 @@
-﻿using Cryptool.CrypAnalysisViewControl;
+﻿using CrypTool.CrypAnalysisViewControl;
 using System;
 using System.ComponentModel;
 

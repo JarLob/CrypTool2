@@ -15,14 +15,14 @@
 */
 
 using System;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Numerics;
 
-namespace Cryptool.Plugins.RSA
+namespace CrypTool.Plugins.RSA
 {
     [Author("Dennis Nolte, Raoul Falk, Sven Rech, Nils Kopal", "", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("RSA.Properties.Resources", "PluginKeyCaption", "PluginKeyTooltip", "RSA/DetailedDescription/dockeygen.xml", "RSA/iconkey.png")]
@@ -57,9 +57,9 @@ namespace Cryptool.Plugins.RSA
         
         #region events
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -520,7 +520,7 @@ namespace Cryptool.Plugins.RSA
         }
 
         /// <summary>
-        /// Logs a message to cryptool
+        /// Logs a message to CrypTool
         /// </summary>
         private void GuiLogMessage(string p, NotificationLevel notificationLevel)
         {
@@ -540,4 +540,4 @@ namespace Cryptool.Plugins.RSA
     
     }//end RSAKeyGenerator
 
-}//end Cryptool.Plugins.RSA
+}//end CrypTool.Plugins.RSA

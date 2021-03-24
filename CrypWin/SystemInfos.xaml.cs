@@ -9,19 +9,19 @@ using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Security.Cryptography.X509Certificates;
 using System.Management;
 using Microsoft.Win32;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for SystemInfos.xaml
     /// </summary>
     [TabColor("pink")]
-    [Localization("Cryptool.CrypWin.Properties.Resources")]
+    [Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class SystemInfos : UserControl
     {
         /// <summary>

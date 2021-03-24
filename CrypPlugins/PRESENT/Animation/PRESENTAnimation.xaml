@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="Cryptool.PRESENT.PRESENTAnimation"
+﻿<UserControl x:Class="CrypTool.PRESENT.PRESENTAnimation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ec="clr-namespace:Cryptool.PRESENT"
+    xmlns:ec="clr-namespace:CrypTool.PRESENT"
     Height="Auto" Width="Auto" MinWidth="640" MinHeight="480">
     <Grid>
         <TabControl Name="tabControl">
@@ -54,7 +54,7 @@
                                 HorizontalAlignment="Center"
                                 TextAlignment="Center"
                                 TextWrapping="WrapWithOverflow"
-                                Margin="0,446,0,14" Text="Animation by Timm Korte / korte-cryptool@easycrypt.de" Grid.ColumnSpan="2"/>
+                                Margin="0,446,0,14" Text="Animation by Timm Korte / korte-CrypTool@easycrypt.de" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabSettings" Header="{Loc Settings}">

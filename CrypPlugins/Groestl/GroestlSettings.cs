@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Groestl
+namespace CrypTool.Plugins.Groestl
 {
     public enum GroestlVariant { Groestl224, Groestl256, Groestl384, Groestl512 };
     public class GroestlSettings : ISettings

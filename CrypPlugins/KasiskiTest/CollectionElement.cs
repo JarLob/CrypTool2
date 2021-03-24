@@ -1,4 +1,4 @@
-﻿namespace Cryptool.KasiskiTest
+﻿namespace CrypTool.KasiskiTest
 {
     public class CollectionElement
     {

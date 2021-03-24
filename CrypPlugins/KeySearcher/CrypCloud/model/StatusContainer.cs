@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using KeySearcherPresentation.Controls;
 
 namespace KeySearcher.CrypCloud

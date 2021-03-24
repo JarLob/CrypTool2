@@ -1,5 +1,5 @@
 /*
-   Copyright 2008-2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,10 +23,10 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Numerics;
 using System.Windows.Documents;
 using DiffMatchPatch;
@@ -35,7 +35,7 @@ using System.Windows.Input;
 
 namespace TextOutput
 {
-    [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+    [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("TextOutput.Properties.Resources", "PluginCaption", "PluginTooltip", "TextOutput/DetailedDescription/doc.xml", "TextOutput/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
@@ -227,7 +227,7 @@ namespace TextOutput
             }, null);
         }
 
-        private byte[] ConvertStreamToByteArray( ICryptoolStream stream )
+        private byte[] ConvertStreamToByteArray( ICrypToolStream stream )
         {
             CStreamReader reader = stream.CreateReader();
             reader.WaitEof(); // does not support chunked streaming
@@ -273,9 +273,9 @@ namespace TextOutput
                 byte[] byteArray = GetByteArray((byte[])value);
                 result = BitConverter.ToString(byteArray).Replace("-", " ");
             }
-            else if (value is ICryptoolStream)
+            else if (value is ICrypToolStream)
             {
-                byte[] byteArray = ConvertStreamToByteArray((ICryptoolStream)value);
+                byte[] byteArray = ConvertStreamToByteArray((ICrypToolStream)value);
                 result = BitConverter.ToString(byteArray).Replace("-", " ");
             }
             else if (value is System.Collections.IEnumerable)

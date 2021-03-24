@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     class Mapping
     {

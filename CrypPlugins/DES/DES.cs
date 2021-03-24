@@ -5,15 +5,15 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Security.Cryptography;
 using System.Reflection;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Control;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
-    [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
-    [PluginInfo("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "DES/DetailedDescription/doc.xml", "DES/icon.png", "DES/Images/encrypt.png", "DES/Images/decrypt.png")]
+    [Author("Arno Wacker", "arno.wacker@CrypTool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
+    [PluginInfo("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "DES/DetailedDescription/doc.xml", "DES/icon.png", "DES/Images/encrypt.png", "DES/Images/decrypt.png")]
     [FunctionList("3DES")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class DES : ICrypComponent
@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -94,7 +94,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
         
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -303,7 +303,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                 ConfigureAlg(p_alg);
 
                 outputStreamWriter = new CStreamWriter();
-                ICryptoolStream inputdata = InputStream;
+                ICrypToolStream inputdata = InputStream;
 
                 // append 1-0 padding (special handling, as it's not present in System.Security.Cryptography.PaddingMode)
                 if (action == 0)

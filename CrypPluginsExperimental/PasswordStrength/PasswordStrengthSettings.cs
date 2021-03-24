@@ -17,10 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.PasswordStrength
+namespace CrypTool.Plugins.PasswordStrength
 {
     public class PasswordStrengthSettings : ISettings
     {

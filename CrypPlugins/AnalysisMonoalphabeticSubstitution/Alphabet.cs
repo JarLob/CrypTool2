@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     /// <summary>
     /// Representation of an alphabet

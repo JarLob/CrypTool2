@@ -15,12 +15,12 @@
 */
 using System.Collections.Generic;
 using System.Drawing;
-using Cryptool.Plugins.VisualEncoder.Model;
+using CrypTool.Plugins.VisualEncoder.Model;
 using ZXing;
 using ZXing.Common;
 using VisualEncoder.Properties;
 
-namespace Cryptool.Plugins.VisualEncoder.Encoders
+namespace CrypTool.Plugins.VisualEncoder.Encoders
 {
     class PDF417 : DimCodeEncoder
     {

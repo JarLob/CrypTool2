@@ -19,7 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Reflection;
 using WorkspaceManagerModel.Properties;
 

@@ -1,19 +1,19 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Helper.Converter;
-using Cryptool.Plugins.ChaCha.Helper.Validation;
-using Cryptool.Plugins.ChaCha.ViewModel;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.Helper.Converter;
+using CrypTool.Plugins.ChaCha.Helper.Validation;
+using CrypTool.Plugins.ChaCha.ViewModel;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 
-namespace Cryptool.Plugins.ChaCha.View
+namespace CrypTool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for Diffusion.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.ChaCha.Properties.Resources")]
     public partial class Diffusion : UserControl
     {
         public Diffusion()

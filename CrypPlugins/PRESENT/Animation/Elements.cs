@@ -20,7 +20,7 @@ using System.Windows;
 using System;
 using System.Windows.Controls;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
     public class ElementBuilder
     {

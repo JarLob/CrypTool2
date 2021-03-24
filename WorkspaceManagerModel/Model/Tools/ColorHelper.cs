@@ -18,7 +18,7 @@ using System;
 using System.Numerics;
 using System.Windows.Media;
 using System.IO;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace WorkspaceManager.Model
 {

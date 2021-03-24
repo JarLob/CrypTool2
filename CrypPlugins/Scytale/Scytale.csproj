@@ -8,7 +8,7 @@
     <ProjectGuid>{56617BC2-3504-410C-AB98-E551EFCE4E3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Scytale</RootNamespace>
+    <RootNamespace>CrypTool.Scytale</RootNamespace>
     <AssemblyName>Scytale</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

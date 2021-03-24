@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
 
     class Walze : Canvas

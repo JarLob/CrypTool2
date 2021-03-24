@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CrypTool 2 Team")]
-[assembly: AssemblyProduct("Cryptool")]
+[assembly: AssemblyProduct("CrypTool")]
 [assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

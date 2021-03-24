@@ -15,7 +15,7 @@
 */
 
 
-namespace Cryptool.Plugins.VisualDecoder.Model
+namespace CrypTool.Plugins.VisualDecoder.Model
 {
     class DimCodeDecoderItem
     {

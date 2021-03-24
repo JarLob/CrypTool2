@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,18 +16,18 @@
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Numerics;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Security.Cryptography;
 
 
-namespace Cryptool.Plugins.BB84PhotonbaseGenerator
+namespace CrypTool.Plugins.BB84PhotonbaseGenerator
 {
     
     [Author("Benedict Beuscher", "benedict.beuscher@stud.uni-due.de", "Uni Duisburg-Essen", "http://www.uni-due.de/")]
 
-    [PluginInfo("Cryptool.Plugins.BB84PhotonbaseGenerator.Properties.Resources", "res_BaseGeneratorCaption", "res_BaseGeneratorTooltip", "BB84PhotonbaseGenerator/userdoc.xml", new[] { "BB84PhotonbaseGenerator/images/icon.png" })]
+    [PluginInfo("CrypTool.Plugins.BB84PhotonbaseGenerator.Properties.Resources", "res_BaseGeneratorCaption", "res_BaseGeneratorTooltip", "BB84PhotonbaseGenerator/userdoc.xml", new[] { "BB84PhotonbaseGenerator/images/icon.png" })]
 
     [ComponentCategory(ComponentCategory.Protocols)]
 

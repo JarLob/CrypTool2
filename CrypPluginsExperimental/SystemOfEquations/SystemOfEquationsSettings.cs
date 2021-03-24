@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.SystemOfEquations
+namespace CrypTool.SystemOfEquations
 {
     class SystemOfEquationsSettings : ISettings
     {

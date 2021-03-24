@@ -18,12 +18,12 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.BerlekampMassey
+namespace CrypTool.BerlekampMassey
 {
   /// <summary>
     /// Interaction logic for BerlekampMasseyPresentation.xaml
   /// </summary>
-  [Cryptool.PluginBase.Attributes.Localization("Cryptool.BerlekampMassey.Properties.Resources")]
+  [CrypTool.PluginBase.Attributes.Localization("CrypTool.BerlekampMassey.Properties.Resources")]
   public partial class BerlekampMasseyPresentation : UserControl
   {
       public BerlekampMasseyPresentation()

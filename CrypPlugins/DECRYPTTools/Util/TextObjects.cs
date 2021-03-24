@@ -19,7 +19,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.DECRYPTTools.Util
+namespace CrypTool.Plugins.DECRYPTTools.Util
 {
 
     /// <summary>

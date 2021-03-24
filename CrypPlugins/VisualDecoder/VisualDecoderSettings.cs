@@ -14,10 +14,10 @@
    limitations under the License.
 */
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.VisualDecoder
+namespace CrypTool.Plugins.VisualDecoder
 {
     public class VisualDecoderSettings : ISettings
     {

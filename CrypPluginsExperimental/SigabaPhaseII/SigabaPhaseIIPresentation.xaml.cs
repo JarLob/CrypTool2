@@ -19,7 +19,7 @@ namespace SigabaPhaseII
     /// Interaction logic for SigabaPhaseIIPresentation.xaml
     /// </summary>
     
-    [global::Cryptool.PluginBase.Attributes.Localization("SigabaPhaseII.Properties.Resources")]
+    [global::CrypTool.PluginBase.Attributes.Localization("SigabaPhaseII.Properties.Resources")]
     public partial class SigabaPhaseIIPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();

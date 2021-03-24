@@ -17,16 +17,16 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.TextInput
+namespace CrypTool.TextInput
 {
     /// <summary>
     /// Interaction logic for TextInputPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.TextInput.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.TextInput.Properties.Resources")]
     [TabColor("red")]
     public partial class TextInputPresentation : UserControl, INotifyPropertyChanged
     {

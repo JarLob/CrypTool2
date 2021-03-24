@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
   /// <summary>
   /// Used in Expander.xaml style for Settings-Pane

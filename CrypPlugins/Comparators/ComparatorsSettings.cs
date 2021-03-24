@@ -14,9 +14,9 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.Comparators
+namespace CrypTool.Plugins.Comparators
 {
     public class ComparatorsSettings : ISettings
     {

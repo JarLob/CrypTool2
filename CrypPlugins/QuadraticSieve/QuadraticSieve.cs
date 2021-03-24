@@ -18,9 +18,9 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq; 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Threading;
 using System.IO;
@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using QuadraticSieve.Properties;
 
-namespace Cryptool.Plugins.QuadraticSieve
+namespace CrypTool.Plugins.QuadraticSieve
 {
     /// <summary>
     /// This class wraps the msieve algorithm in version 1.42 which you can find at http://www.boo.net/~jasonp/qs.html
@@ -42,7 +42,7 @@ namespace Cryptool.Plugins.QuadraticSieve
     /// 
     /// For further information on quadratic sieve or msieve please have a look at the above mentioned URL
     /// </summary>
-    [Author("Sven Rech", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Sven Rech", "rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("QuadraticSieve.Properties.Resources", "PluginCaption", "PluginTooltip", "QuadraticSieve/DetailedDescription/doc.xml", "QuadraticSieve/iconqs.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     class QuadraticSieve : DependencyObject, ICrypComponent
@@ -131,7 +131,7 @@ namespace Cryptool.Plugins.QuadraticSieve
         /// <summary>
         /// Getter / Setter for the settings of this plugin
         /// </summary>
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return this.settings; }
             set

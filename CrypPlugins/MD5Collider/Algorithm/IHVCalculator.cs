@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     /// <summary>
     /// Calculates the IHV (intermediate hash value) from applying the MD5 compression function to a given byte array

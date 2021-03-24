@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OnlineDocumentationGenerator.DocInformations;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace OnlineDocumentationGenerator.Generators
 {

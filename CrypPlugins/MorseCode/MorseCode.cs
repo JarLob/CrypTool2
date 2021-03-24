@@ -20,14 +20,14 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using MorseCode;
 using System.Threading;
 using System;
 using System.Media;
 
-namespace Cryptool.Plugins.MorseCode
+namespace CrypTool.Plugins.MorseCode
 {
     [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Universität Kassel", "http://www.uc.uni-kassel.de/")]
     [PluginInfo("MorseCode.Properties.Resources", "PluginCaption", "PluginTooltip", "MorseCode/userdoc.xml", new[] { "MorseCode/icon.png" })]

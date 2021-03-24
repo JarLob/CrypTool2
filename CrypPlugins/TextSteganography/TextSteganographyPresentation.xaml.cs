@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace TextSteganography
 {
-    [Cryptool.PluginBase.Attributes.Localization("TextSteganography.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("TextSteganography.Properties.Resources")]
     public partial class TextSteganographyPresentation : UserControl
     {
         private TextSteganography textSteg; 

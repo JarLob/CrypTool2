@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.Model
+﻿namespace CrypTool.Plugins.ChaCha.Model
 {
     /// <summary>
     /// Class for the values inside the state matrix.

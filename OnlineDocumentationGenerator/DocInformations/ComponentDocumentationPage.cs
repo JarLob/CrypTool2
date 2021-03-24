@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using OnlineDocumentationGenerator.DocInformations.Localization;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 

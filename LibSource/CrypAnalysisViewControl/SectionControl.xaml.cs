@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Cryptool.CrypAnalysisViewControl
+namespace CrypTool.CrypAnalysisViewControl
 {
     public class SectionControl : ContentControl
     {

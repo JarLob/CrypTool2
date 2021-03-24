@@ -13,13 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.Core;
-using Cryptool.CrypWin;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.CrypWin;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using System;
@@ -32,12 +32,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Linq;
 
-namespace Cryptool.OnlineDocumentationEditor
+namespace CrypTool.OnlineDocumentationEditor
 {
     [TabColor("LightSeaGreen")]
     [EditorInfo("xml", true, false, false, true, false, false)]    
     [Author("Nils Kopal", "kopal@cryptool.org", "University of Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.OnlineDocumentationEditor.Properties.Resources", "PluginCaption", "PluginTooltip", null, "OnlineDocumentationEditor/icon.png")]
+    [PluginInfo("CrypTool.OnlineDocumentationEditor.Properties.Resources", "PluginCaption", "PluginTooltip", null, "OnlineDocumentationEditor/icon.png")]
     public class OnlineDocumentationEditor : IEditor
     {
 

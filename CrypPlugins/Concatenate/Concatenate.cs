@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace Concatenate
 {
-    [Author("Matthäus Wander", "wander@cryptool.org", "Uni Duisburg-Essen", "http://www.vs.uni-due.de")]
+    [Author("Matthäus Wander", "wander@CrypTool.org", "Uni Duisburg-Essen", "http://www.vs.uni-due.de")]
     [PluginInfo("Concatenate.Properties.Resources", "PluginCaption", "PluginTooltip", "Concatenate/DetailedDescription/doc.xml", "Concatenate/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class Concatenate : ICrypComponent
@@ -35,13 +35,13 @@ namespace Concatenate
         private CStreamWriter outputStreamWriter;
 
         [PropertyInfo(Direction.InputData, "InputStream1Caption", "InputStream1Tooltip", true)]
-        public ICryptoolStream InputStreamOne { get; set; }
+        public ICrypToolStream InputStreamOne { get; set; }
 
         [PropertyInfo(Direction.InputData, "InputStream2Caption", "InputStream2Tooltip", true)]
-        public ICryptoolStream InputStreamTwo { get; set; }
+        public ICrypToolStream InputStreamTwo { get; set; }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get { return outputStreamWriter; }
         }

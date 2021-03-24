@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.ChaCha.Helper
+namespace CrypTool.Plugins.ChaCha.Helper
 {
     internal static class Formatter
     {

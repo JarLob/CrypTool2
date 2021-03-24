@@ -17,13 +17,13 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAPathFinder;
 using DCAPathFinder.Logic;
 using DCAPathFinder.Properties;
 
-namespace Cryptool.Plugins.DCAPathFinder
+namespace CrypTool.Plugins.DCAPathFinder
 {
     public class DCAPathFinderSettings : ISettings
     {

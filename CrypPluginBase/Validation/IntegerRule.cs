@@ -18,7 +18,7 @@ using System;
 using System.Windows.Controls;
 using System.Globalization;
 
-namespace Cryptool.PluginBase.Validation
+namespace CrypTool.PluginBase.Validation
 {
   public class IntegerRule : ValidationRule
   {

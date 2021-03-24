@@ -17,10 +17,10 @@
 using System;
 using System.Text;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows;
 
-namespace Cryptool.Plugins.CostFunction
+namespace CrypTool.Plugins.CostFunction
 {
     public class CostFunctionSettings : ISettings
     {

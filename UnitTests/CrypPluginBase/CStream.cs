@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
@@ -340,7 +340,7 @@ namespace Tests.CrypPluginBase
         [TestMethod]
         public void TestEmpty()
         {
-            ICryptoolStream empty = CStreamWriter.Empty;
+            ICrypToolStream empty = CStreamWriter.Empty;
 
             CStreamReader reader = empty.CreateReader();
             byte[] buf = new byte[1024];

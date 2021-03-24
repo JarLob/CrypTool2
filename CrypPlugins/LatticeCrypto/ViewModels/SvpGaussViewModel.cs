@@ -14,7 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using LatticeCrypto.Views;
 using Microsoft.Win32;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace LatticeCrypto.ViewModels
 {

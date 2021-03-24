@@ -12,8 +12,8 @@ namespace WorkspaceManager.View.VisualComponents
     /// </summary>
     public partial class ZoomScrollViewer : ScrollViewer
     {
-        private double min = Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MinScale,
-                       max = Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MaxScale;
+        private double min = CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_MinScale,
+                       max = CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_MaxScale;
 
         private const double delta = 0.15;
 

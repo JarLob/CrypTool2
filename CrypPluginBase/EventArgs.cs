@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
 
   public class StatusEventArgs : EventArgs

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Olaf Versteeg <olaf.versteeg@cryptool.org>
+   Copyright 2018 Olaf Versteeg <olaf.versteeg@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,16 +22,16 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using BlockmodeVisualizer;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.BlockmodeVisualizer
+namespace CrypTool.Plugins.BlockmodeVisualizer
 {
-    [Author("Olaf Versteeg", "olaf.versteeg@cryptool.org", "University of Kassel",
+    [Author("Olaf Versteeg", "olaf.versteeg@CrypTool.org", "University of Kassel",
         "http://www.uni-kassel.de/eecs/en/homepage.html")]
-    [PluginInfo("Cryptool.Plugins.BlockmodeVisualizer.Properties.Resources", "plugin_caption", "plugin_tooltip",
+    [PluginInfo("CrypTool.Plugins.BlockmodeVisualizer.Properties.Resources", "plugin_caption", "plugin_tooltip",
         "BlockmodeVisualizer/userdoc.xml", "BlockmodeVisualizer/Images/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class BlockmodeVisualizer : ICrypComponent
@@ -67,7 +67,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "text_input_caption", "text_input_tooltip", true)]
-        public ICryptoolStream TextInput { get; set; }
+        public ICrypToolStream TextInput { get; set; }
 
         [PropertyInfo(Direction.InputData, "tag_input_caption", "tag_input_tooltip", false)]
         public byte[] TagInput { get; set; }
@@ -79,10 +79,10 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         public byte[] InitializationVector { get; set; }
 
         [PropertyInfo(Direction.InputData, "ad_caption", "ad_tooltip", false)]
-        public ICryptoolStream AssociatedData { get; set; }
+        public ICrypToolStream AssociatedData { get; set; }
 
         [PropertyInfo(Direction.OutputData, "text_output_caption", "text_output_tooltip", true)]
-        public ICryptoolStream TextOutput { get; set; }
+        public ICrypToolStream TextOutput { get; set; }
 
         [PropertyInfo(Direction.OutputData, "tag_output_caption", "tag_output_tooltip", false)]
         public byte[] TagOutput { get; set; }

@@ -16,13 +16,13 @@
 using System;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 namespace CSVReader
 {
-    [Author("Nils Kopal", "Nils.Kopal@cryptool.org", "Universität Kassel", "http://www.ais.uni-kassel.de")]
+    [Author("Nils Kopal", "Nils.Kopal@CrypTool.org", "Universität Kassel", "http://www.ais.uni-kassel.de")]
     [PluginInfo("CSVReader.Properties.Resources", "PluginCaption", "PluginTooltip", "CSVReader/DetailedDescription/doc.xml", "CSVReader/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class CSVReader : ICrypComponent

@@ -1,9 +1,9 @@
-﻿using Cryptool.PluginBase.Utils;
+﻿using CrypTool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     /**
      *  Dictionary attacker is based on the Decrypto project and "Robust Dictionary Attack of Short Simple

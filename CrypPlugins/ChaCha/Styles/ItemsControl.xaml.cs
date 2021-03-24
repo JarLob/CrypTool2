@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaCha.Styles
+namespace CrypTool.Plugins.ChaCha.Styles
 {
     /// <summary>
     /// Interaction logic for ItemsControl.xaml

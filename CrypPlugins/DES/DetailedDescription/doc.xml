@@ -14,7 +14,7 @@
     The involvement of the NSA in the design of the algorithm also nourished suspicions about a backdoor.
     <newline /><newline />
     A sequence of three DES encryptions using two or three different DES keys is called Triple DES (two or three key Triple DES). By this trick, the effective key length is 112 resp. 168 bit.
-    Today, Triple DES is wide-spread for symmetric encryption. Due to its worse performance Triple DES is replaced by the modern <docRef item="Cryptool.Plugins.Cryptography.Encryption.AES">AES</docRef> algorithm.
+    Today, Triple DES is wide-spread for symmetric encryption. Due to its worse performance Triple DES is replaced by the modern <docRef item="CrypTool.Plugins.Cryptography.Encryption.AES">AES</docRef> algorithm.
     <newline /><newline /><section headline="A remark about the parity bits:">
       With encryption using the DES algorithm, the lowest order bit in each key byte is not used for encryption or decryption as it is used as a parity bit.
       As a result it is possible to to find a key via brute-force analysis that is not identical to the key which was used to encrypt the document.
@@ -45,7 +45,7 @@
     <newline /><newline />
     Durch das Hintereinanderausführen von drei DES-Verschlüsselungen unter Verwendung von zwei oder drei verschiedenen 56 Bit DES-Schlüsseln erhält man das sogenannte Triple-DES-Verfahren (zwei oder drei Schlüssel Triple-DES).
     Durch diesen Trick erhält man eine effektive Schlüssellänge von 112 oder 168 Bit. Triple-DES ist heute weit verbreitet für die symmetrische Verschlüsselung.
-    Aufgrund seiner schlechten Performance wird Triple-DES durch das modernere <docRef item="Cryptool.Plugins.Cryptography.Encryption.AES">AES</docRef>-Verfahren ersetzt.
+    Aufgrund seiner schlechten Performance wird Triple-DES durch das modernere <docRef item="CrypTool.Plugins.Cryptography.Encryption.AES">AES</docRef>-Verfahren ersetzt.
     <newline /><newline /><section headline="Bemerkung zu den Paritätsbits:">
       Beim Verschlüsseln mit dem DES-Verschlüsselungsverfahren wird für die Ver-/Entschlüsselung von jedem Schlüssel-Byte das niederwertigste Bit nicht verwendet, da es als Paritätsbit genutzt wird.
       Dadurch kann es bei der Brute-Force-Analyse passieren, dass ein Schlüssel gefunden wird, der nicht mit dem Schlüssel, mit dem das Dokument verschlüsselt ist, identisch ist.

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Cryptool.Core;
-using Cryptool.CrypWin.Properties;
-using Cryptool.CrypWin.Resources;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.CrypWin.Properties;
+using CrypTool.CrypWin.Resources;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using CrypWin.Helper;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public partial class MainWindow
     {
@@ -147,7 +147,7 @@ namespace Cryptool.CrypWin
                 }
                 else
                 {
-                    logMessage.Plugin = Resource.crypTool;
+                    logMessage.Plugin = Resource.CrypTool;
                     logMessage.Title = "-";
                 }
 

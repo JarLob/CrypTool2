@@ -8,7 +8,7 @@
     <ProjectGuid>{C8ACE050-4B85-41B6-90F4-5105674BB968}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Achterbahn</RootNamespace>
+    <RootNamespace>CrypTool.Achterbahn</RootNamespace>
     <AssemblyName>Achterbahn</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

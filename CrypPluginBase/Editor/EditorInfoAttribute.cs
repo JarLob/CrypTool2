@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase.Editor
+namespace CrypTool.PluginBase.Editor
 {
     /// <summary>
     /// The default file-extension for the editor used by CrypWin to display 

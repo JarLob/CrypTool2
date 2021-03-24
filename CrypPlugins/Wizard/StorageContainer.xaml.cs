@@ -11,7 +11,7 @@ namespace Wizard
     /// <summary>
     /// Interaction logic for StorageContainer.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
     public partial class StorageContainer : UserControl
     {
         private readonly Action<StorageControl> _showOverlayAction;
@@ -63,20 +63,20 @@ namespace Wizard
         {
             var key = _defaultKey;
             var newEntry = new StorageEntry(key, _getValueDelegate(), null);
-            var storage = Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage ?? new ArrayList();
+            var storage = CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage ?? new ArrayList();
             storage.Add(newEntry);
             Save(storage);
         }
 
         private static void Save(ArrayList storage)
         {
-            Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage = storage;
-            Cryptool.PluginBase.Properties.Settings.Default.Save();
+            CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage = storage;
+            CrypTool.PluginBase.Properties.Settings.Default.Save();
         }
 
         private void LoadButtonClicked(object sender, RoutedEventArgs e)
         {
-            var storage = Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage;
+            var storage = CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage;
             if (storage != null)
             {
                 var entries = storage.Cast<StorageEntry>().Where(x => x.Key == _defaultKey).OrderBy(x => x.Created).ToList();
@@ -99,7 +99,7 @@ namespace Wizard
         private void RemoveButtonClick(object sender, RoutedEventArgs e)
         {
             var entryToRemove = (StorageEntry)((Button)sender).Tag;
-            var storage = Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage;
+            var storage = CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage;
             Debug.Assert(storage != null);
 
             var res = MessageBox.Show(Properties.Resources.RemoveEntryQuestion, Properties.Resources.RemoveEntry, MessageBoxButton.YesNo, MessageBoxImage.Question);

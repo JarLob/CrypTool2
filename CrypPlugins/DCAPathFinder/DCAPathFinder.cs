@@ -25,9 +25,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAPathFinder;
 using DCAPathFinder.Logic;
 using DCAPathFinder.Logic.Cipher1;
@@ -38,7 +38,7 @@ using DCAPathFinder.UI;
 using DCAPathFinder.UI.Tutorial2;
 using Newtonsoft.Json;
 
-namespace Cryptool.Plugins.DCAPathFinder
+namespace CrypTool.Plugins.DCAPathFinder
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("DCAPathFinder.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml",

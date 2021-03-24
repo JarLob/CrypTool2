@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using LatticeCrypto.Models;
 using LatticeCrypto.Properties;
 using LatticeCrypto.Utilities;

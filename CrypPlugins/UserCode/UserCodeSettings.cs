@@ -15,10 +15,10 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.UserCode
+namespace CrypTool.Plugins.UserCode
 {
     class UserCodeSettings : ISettings
     {

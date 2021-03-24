@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     /// <summary>
     /// Interaction logic for UnhandledExceptionDialog.xaml

@@ -23,7 +23,7 @@ namespace Tests.TemplateAndPluginTests
         }
 
         byte[] outputData = null;
-        Cryptool.Plugins.HKDFSHA256.HKDFSHA256 pluginInstance;
+        CrypTool.Plugins.HKDFSHA256.HKDFSHA256 pluginInstance;
 
         /// <summary>
         /// The method contains the unittests for the RFC implementation of HKDFSHA256
@@ -31,7 +31,7 @@ namespace Tests.TemplateAndPluginTests
         [TestMethod]
         public void HKDFSHA256TestMethod_RFC_8bCTR()
         {
-            pluginInstance = (Cryptool.Plugins.HKDFSHA256.HKDFSHA256)TestHelpers.GetPluginInstance("HKDFSHA256");
+            pluginInstance = (CrypTool.Plugins.HKDFSHA256.HKDFSHA256)TestHelpers.GetPluginInstance("HKDFSHA256");
             pluginInstance.PropertyChanged += PluginInstance_PropertyChanged;
             var scenario = new PluginTestScenario(pluginInstance, new[] { "SKM", "CTXInfo", "Salt", "OutputBytes", ".InfinityOutput", ".DisplayPres" }, new[] { "KeyMaterial" });
             object[] output;
@@ -60,7 +60,7 @@ namespace Tests.TemplateAndPluginTests
         [TestMethod]
         public void HKDFSHA256TestMethod_nonRFC_32bCTR()
         {
-            pluginInstance = (Cryptool.Plugins.HKDFSHA256.HKDFSHA256)TestHelpers.GetPluginInstance("HKDFSHA256");
+            pluginInstance = (CrypTool.Plugins.HKDFSHA256.HKDFSHA256)TestHelpers.GetPluginInstance("HKDFSHA256");
             pluginInstance.PropertyChanged += PluginInstance_PropertyChanged;
             var scenario = new PluginTestScenario(pluginInstance, new[] { "SKM", "CTXInfo", "Salt", "OutputBytes", ".InfinityOutput", ".DisplayPres" }, new[] { "KeyMaterial" });
             object[] output;

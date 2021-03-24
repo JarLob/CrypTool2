@@ -5,20 +5,20 @@
   <language culture="ru" />
   <language culture="de-DE" />
   <introduction lang="en">
-    This component implements three attacks against the secret key of the Wired Equivalent Privacy protocol (<docRef item="Cryptool.WEP.WEP" />).
+    This component implements three attacks against the secret key of the Wired Equivalent Privacy protocol (<docRef item="CrypTool.WEP.WEP" />).
     The three attacks are FMS, KoreK and PTW: different attacks with different fundamentals and different probabilities of success.
   </introduction>
   <introduction lang="zh-CN">该组件针对有线等效保密协议（）的秘密密钥实施三种攻击。这三种攻击分别是FMS，KoreK和PTW：不同的攻击具有不同的基础和不同的成功概率。</introduction>
   <introduction lang="ru">Этот компонент реализует три атаки на секретный ключ протокола Wired Equivalent Privacy (). Три атаки - это FMS, KoreK и PTW: различные атаки с разными фундаментальными особенностями и разные вероятности успеха.</introduction>
   <introduction lang="de-DE">
-    Diese Komponente implementiert drei Angriffe auf den geheimen Schlüssel des Wired Equivalent Privacy-Protokolls (<docRef item="Cryptool.WEP.WEP" />).
+    Diese Komponente implementiert drei Angriffe auf den geheimen Schlüssel des Wired Equivalent Privacy-Protokolls (<docRef item="CrypTool.WEP.WEP" />).
     Die drei Angriffe sind der FMS-Angriff, der KoreK-Angriff und der PTW-Angriff, die jeweils auf einem anderen Prinzip aufbauen und unterschiedliche Erfolgswahrscheinlichkeiten besitzen.
 </introduction>
   <usage lang="en">
     You can choose the attack from the drop-down menu in the component settings.
     <newline /><newline />
     The packets, that the component requires for cryptanalysis, have to be provided at the input as a data stream.
-    You can use the <docRef item="Cryptool.Internet_frame_generator.Internet_frame_generator" /> and the <docRef item="Cryptool.WEP.WEP" /> components to generate any amount of suitable packets.
+    You can use the <docRef item="CrypTool.Internet_frame_generator.Internet_frame_generator" /> and the <docRef item="CrypTool.WEP.WEP" /> components to generate any amount of suitable packets.
     <newinle /><newinle />
     When the workspace is executed, the component reads all available packets and tries to discover the secret WEP key with the selected attack method.
     If the WEP key could not be recovered with the provided packets, the component outputs the value "False" at its output.
@@ -36,7 +36,7 @@
     Wählen Sie in den Einstellungen der Komponente die Angriffsart aus.
     <newline /><newline />
     Die von der Komponente für die Kryptoanalyse benötigten Pakete müssen am Eingang als Datenstrom eingegeben werden.
-    Sie können die <docRef item="Cryptool.Internet_frame_generator.Internet_frame_generator" />-Komponente und die <docRef item="Cryptool.WEP.WEP" />-Komponente verwenden,
+    Sie können die <docRef item="CrypTool.Internet_frame_generator.Internet_frame_generator" />-Komponente und die <docRef item="CrypTool.WEP.WEP" />-Komponente verwenden,
     um eine beliebige Anzahl geeigneter Pakete zu generieren.
     <newline /><newline />
     Wenn der Arbeitsbereich ausgeführt wird, liest die Komponente alle anliegenden Pakete ein und versucht, mit der gewählten Angriffsmethode den geheimen WEP-Schlüssel zu rekonstruieren.

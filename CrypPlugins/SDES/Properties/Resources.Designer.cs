@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
+namespace CrypTool.Plugins.Cryptography.Encryption.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

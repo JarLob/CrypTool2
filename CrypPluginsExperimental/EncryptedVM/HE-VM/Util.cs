@@ -4,7 +4,7 @@ using System.IO;
 
 using Microsoft.Research.SEAL;
 
-namespace Cryptool.Plugins.EncryptedVM
+namespace CrypTool.Plugins.EncryptedVM
 {
     class Util
     {

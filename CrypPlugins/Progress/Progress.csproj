@@ -8,7 +8,7 @@
     <ProjectGuid>{4B38C2B2-8A4E-469F-8C24-2E2F1B4A55B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Progress</RootNamespace>
+    <RootNamespace>CrypTool.Progress</RootNamespace>
     <AssemblyName>Progress</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

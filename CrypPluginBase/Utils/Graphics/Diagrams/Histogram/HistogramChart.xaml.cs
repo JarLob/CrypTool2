@@ -4,12 +4,12 @@ using System.Threading;
 using System.Windows.Threading;
 
 
-namespace Cryptool.PluginBase.Utils.Graphics.Diagrams.Histogram
+namespace CrypTool.PluginBase.Utils.Graphics.Diagrams.Histogram
 {
     /// <summary>
     /// Interaction logic for FrequencyTestPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.PluginBase.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.PluginBase.Properties.Resources")]
     public partial class HistogramChart : UserControl
     {
 

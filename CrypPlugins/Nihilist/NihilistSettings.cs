@@ -15,7 +15,7 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace Nihilist
 {

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Cryptool.BooleanFunctionParser.BooleanFunctionParser">
+  <Class Name="CrypTool.BooleanFunctionParser.BooleanFunctionParser">
     <Position X="4.5" Y="1" Width="2.75" />
     <Members>
       <Method Name="BooleanFunctionParser" Hidden="true" />
@@ -26,7 +26,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Cryptool.PluginBase.IPlugin">
+  <Interface Name="CrypTool.PluginBase.IPlugin">
     <Position X="7.5" Y="1" Width="2.25" />
     <TypeIdentifier />
   </Interface>

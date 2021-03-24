@@ -18,8 +18,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 namespace TextOutput

@@ -15,23 +15,23 @@
 */
 
 using System;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 
-namespace Cryptool.HMAC
+namespace CrypTool.HMAC
 {
-    [Author("Holger Pretzsch", "cryptool@holger-pretzsch.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.HMAC.Properties.Resources", "PluginCaption", "PluginTooltip", "HMAC/DetailedDescription/doc.xml", "HMAC/HMAC.png")]
+    [Author("Holger Pretzsch", "CrypTool@holger-pretzsch.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("CrypTool.HMAC.Properties.Resources", "PluginCaption", "PluginTooltip", "HMAC/DetailedDescription/doc.xml", "HMAC/HMAC.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class HMAC : ICrypComponent
     {
         #region Private variables
 
         private HMACSettings settings;
-        private ICryptoolStream inputData;
+        private ICrypToolStream inputData;
         private byte[] key;
         private byte[] outputData;
 
@@ -52,7 +52,7 @@ namespace Cryptool.HMAC
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputData
+        public ICrypToolStream InputData
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Cryptool.HMAC
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStreamCaption", "OutputDataStreamTooltip", false)]
-        public ICryptoolStream OutputDataStream
+        public ICrypToolStream OutputDataStream
         {
             get
             {

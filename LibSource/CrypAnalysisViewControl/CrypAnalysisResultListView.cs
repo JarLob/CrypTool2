@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cryptool.CrypAnalysisViewControl
+namespace CrypTool.CrypAnalysisViewControl
 {
     public partial class CrypAnalysisResultListView : ListView
     {

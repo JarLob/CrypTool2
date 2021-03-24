@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using KeySearcher.Properties;
 
 namespace KeySearcher.Helper

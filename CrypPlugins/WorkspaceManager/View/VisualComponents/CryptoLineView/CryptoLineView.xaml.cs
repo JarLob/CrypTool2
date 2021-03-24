@@ -1,4 +1,4 @@
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 using QuadTreeLib;
 using System;
 using System.Collections.Generic;

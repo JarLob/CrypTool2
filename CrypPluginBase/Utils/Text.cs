@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 
-namespace Cryptool.PluginBase.Utils
+namespace CrypTool.PluginBase.Utils
 {
     public class Text
     {

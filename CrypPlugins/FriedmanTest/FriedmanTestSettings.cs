@@ -1,5 +1,5 @@
 ﻿using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
 namespace FriedmanTest

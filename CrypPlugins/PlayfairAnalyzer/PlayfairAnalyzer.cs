@@ -14,27 +14,27 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Threading;
 using System.Windows.Threading;
 using System.IO;
 using System.Text;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 using PlayfairAnalysis.Common;
 using PlayfairAnalysis;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Cryptool.PlayfairAnalyzer
+namespace CrypTool.PlayfairAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String keyString, String plaintextString);
 
-    [Author("George Lasry, Nils Kopal", "George.Lasry@cryptool.org", "Uni Kassel", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", "PlayfairAnalyzer/icon.png")]
+    [Author("George Lasry, Nils Kopal", "George.Lasry@CrypTool.org", "Uni Kassel", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", "PlayfairAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class PlayfairAnalyzer : ICrypComponent
     {    

@@ -8,7 +8,7 @@
     <ProjectGuid>{A0C14415-299F-4507-8891-159F5E8100C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.EncryptedVM</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.EncryptedVM</RootNamespace>
     <AssemblyName>EncryptedVM</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

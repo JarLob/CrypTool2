@@ -15,21 +15,21 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Windows.Threading;
 using System.Threading;
 using System;
 using System.Text;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.Plugins.DECRYPTTools.Util;
 using System.Threading.Tasks;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECRYPTTools.Properties.Resources", "DecodeDownloaderPluginCaption", "DecodeDownloaderPluginTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.DECRYPTTools.Properties.Resources", "DecodeDownloaderPluginCaption", "DecodeDownloaderPluginTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
     [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECRYPTDownloader : ICrypComponent
     {

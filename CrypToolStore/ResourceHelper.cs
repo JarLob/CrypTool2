@@ -15,13 +15,13 @@
 */
 using System;
 using System.IO;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows;
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     /// <summary>
     /// This class allows to locate and download resources from CrypToolStore
@@ -132,29 +132,29 @@ namespace Cryptool.CrypToolStore
         internal static string GetResourcesFolder()
         {
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
-            string crypToolStoreSubFolder = "";
+            string CrypToolStoreSubFolder = "";
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
                 case Ct2BuildType.Nightly:
-                    crypToolStoreSubFolder = "Nightly";
+                    CrypToolStoreSubFolder = "Nightly";
                     break;
                 case Ct2BuildType.Beta:
-                    crypToolStoreSubFolder = "Beta";
+                    CrypToolStoreSubFolder = "Beta";
                     break;
                 case Ct2BuildType.Stable:
-                    crypToolStoreSubFolder = "Release";
+                    CrypToolStoreSubFolder = "Release";
                     break;
                 default: //if no known version is given, we assume developer
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
             }
-            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "resources");
-            return crypToolStorePluginFolder;
+            string CrypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, CrypToolStoreSubFolder);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, "resources");
+            return CrypToolStorePluginFolder;
         }
     }
 }

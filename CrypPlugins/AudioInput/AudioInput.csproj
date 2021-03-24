@@ -7,7 +7,7 @@
     <ProjectGuid>{78799748-99DE-4FE7-A7E8-2BF6A85E5492}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.AudioInput</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.AudioInput</RootNamespace>
     <AssemblyName>AudioInput</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

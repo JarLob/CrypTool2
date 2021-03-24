@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cryptool.Plugins.Tools
+namespace CrypTool.Plugins.Tools
 {
     class KeePassQualityEstimation
     {

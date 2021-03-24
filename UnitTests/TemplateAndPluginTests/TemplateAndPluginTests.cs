@@ -80,7 +80,7 @@ namespace Tests.TemplateAndPluginTests
             var scenario = new PluginTestScenario(pluginInstance, new[] { ".CipherType", ".SubstitutionPass", ".TranspositionPass", "InputString" }, new[] { "OutputString" });
 
             //Test 1:
-            if (!scenario.Test(new [] { (object)Cryptool.ADFGVX.ADFGVXSettings.CipherTypeEnum.ADFGX, "WIKPEDAZYXVUTSRQONMLHGFCB", "BEOBACHTUNGSLISTE", "Munitionierung beschleunigen Punkt Soweit nicht eingesehen auch bei Tag" }, new[] { "GXGGADDDGDXXAFADDFAAXAFDFFXFDGDXGAGGAAXFAGADFAAADGFAXXADADFFFDDADFGAXGXAFXGXFXDAFAGFXXFAXGFDXFFDFAGXXGXXADGXGFXDFFDGAXXFFFFGDX" }))
+            if (!scenario.Test(new [] { (object)CrypTool.ADFGVX.ADFGVXSettings.CipherTypeEnum.ADFGX, "WIKPEDAZYXVUTSRQONMLHGFCB", "BEOBACHTUNGSLISTE", "Munitionierung beschleunigen Punkt Soweit nicht eingesehen auch bei Tag" }, new[] { "GXGGADDDGDXXAFADDFAAXAFDFFXFDGDXGAGGAAXFAGADFAAADGFAXXADADFFFDDADFGAXGXAFXGXFXDAFAGFXXFAXGFDXFFDFAGXXGXXADGXGFXDFFDGAXXFFFFGDX" }))
             {
                 TestHelpers.TestFail(1);
             }

@@ -10,7 +10,7 @@
     In both cases the third party receives the encrypted program, which can be executed using the virtual machine. The encrypted result will then be returned to the user.<newline />
     To be able to execute an encrypted program, homomorphic encryption is used.<newline />
     The process of executing a program can be described as follows:
-    <enum><item>Generate keys <!-- (<docRef item="Cryptool.Plugins.EncryptedVMKeyGen"/>) --></item><item>Assemble and encrypt program code into machine code <!-- (<docRef item="Cryptool.Plugins.EncryptedVMAssembler"/>) --></item><item>Execute the machine code <!-- (<docRef item="Cryptool.Plugins.EncryptedVMMachine"/>) --></item><item><b>Decrypt and interpret the result</b></item></enum>
+    <enum><item>Generate keys <!-- (<docRef item="CrypTool.Plugins.EncryptedVMKeyGen"/>) --></item><item>Assemble and encrypt program code into machine code <!-- (<docRef item="CrypTool.Plugins.EncryptedVMAssembler"/>) --></item><item>Execute the machine code <!-- (<docRef item="CrypTool.Plugins.EncryptedVMMachine"/>) --></item><item><b>Decrypt and interpret the result</b></item></enum>
 	All these steps are available by using plugins in <i>CrypTool 2</i>.<newline />
 	The used virtual machine is based on <i>ShapeCPU</i> and works in conjunction with <i>SEAL</i> (Simple Encrypted Arithmetic Library), which implements the Fan-Vercauteren homomorphic cryptosystem.
 	
@@ -31,7 +31,7 @@
     In beiden Fällen erhält die dritte Partei das verschlüsselte Programm und führt es mittels der virtuellen Maschine aus. Das verschlüsselte Ergebnis wird danach an den Nutzer zurückübermittelt.<newline />
     Die Möglichkeit, ein verschlüsseltes Programm auszuführen, wird durch die Nutzung eines homomorphen Kryptosystems erreicht.<newline />
     Der Ablauf beim Ausführen eines verschlüsselten Programms sieht wie folgt aus:
-    <enum><item>Schlüsselgenerierung <!-- (<docRef item="Cryptool.Plugins.EncryptedVMKeyGen"/>) --></item><item>Assemblierung und Verschlüsselung des Programmcodes in Maschinencode <!-- (<docRef item="Cryptool.Plugins.EncryptedVMAssembler"/>) --></item><item>Ausführen des Maschinencodes <!-- (<docRef item="Cryptool.Plugins.EncryptedVMMachine"/>) --></item><item><b>Entschlüsselung und Interpretation des Ergebnisses</b></item></enum>
+    <enum><item>Schlüsselgenerierung <!-- (<docRef item="CrypTool.Plugins.EncryptedVMKeyGen"/>) --></item><item>Assemblierung und Verschlüsselung des Programmcodes in Maschinencode <!-- (<docRef item="CrypTool.Plugins.EncryptedVMAssembler"/>) --></item><item>Ausführen des Maschinencodes <!-- (<docRef item="CrypTool.Plugins.EncryptedVMMachine"/>) --></item><item><b>Entschlüsselung und Interpretation des Ergebnisses</b></item></enum>
     Alle diese Schritte sind einzeln als Plugins im <i>CrypTool 2</i> verfügbar.<newline />
     Die verschlüsselt arbeitende virtuelle Maschine basiert auf <i>ShapeCPU</i> und wird in Kombination mit der Kryptobibliothek <i>SEAL</i> (Simple Encrypted Arithmetic Library), welche die homomorphe Verschlüsselung nach <i>Fan-Vercauteren</i> umsetzt, genutzt.
 

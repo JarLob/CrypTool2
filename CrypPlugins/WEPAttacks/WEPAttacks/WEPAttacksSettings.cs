@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.WEPAttacks
+namespace CrypTool.WEPAttacks
 {
     /// <summary>
     /// Some settings for the <see cref="WEPAttacks"/> plugin.

@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.KKDFSHAKE256
+namespace CrypTool.Plugins.KKDFSHAKE256
 {
     /// <summary>
     /// interaction logic for KKDFSHAKE256Pres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("KKDFSHAKE256.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KKDFSHAKE256.Properties.Resources")]
     public partial class KKDFSHAKE256Pres : UserControl
     {
         public AutoResetEvent buttonNextClickedEvent;

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Windows.Controls;
 
-namespace Cryptool.Progress
+namespace CrypTool.Progress
 {
     /// <summary>
     /// Interaction logic for ProgressPresentation.xaml

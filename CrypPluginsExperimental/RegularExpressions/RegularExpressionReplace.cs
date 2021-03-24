@@ -14,14 +14,14 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace RegularExpressions
 {
-    [Author("Armin Wiefels", "wiefels@cryptool.org", "Uni Due", "http://www.uni-due.de")]
+    [Author("Armin Wiefels", "wiefels@CrypTool.org", "Uni Due", "http://www.uni-due.de")]
     [PluginInfo("Regular Expression Replace", "", "RegularExpressions/Description/RegexReplaceDescript.xaml", new[] { "RegularExpressions/icons/regreplaceicon.png" })]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class RegularExpressionReplace : ICrypComponent

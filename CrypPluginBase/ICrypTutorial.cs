@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     public interface ICrypTutorial : IPlugin
     {

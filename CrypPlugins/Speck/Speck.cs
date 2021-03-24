@@ -18,15 +18,15 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using Speck;
 using Speck.Properties;
 
 // ReSharper disable once IdentifierTypo
 // ReSharper disable once CheckNamespace
-namespace Cryptool.Plugins.Speck
+namespace CrypTool.Plugins.Speck
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("Speck.Properties.Resources", "PluginCaption", "PluginTooltip", "Speck/userdoc.xml",
@@ -38,8 +38,8 @@ namespace Cryptool.Plugins.Speck
         #region Private Variables
 
         private readonly SpeckSettings _settings = new SpeckSettings();
-        private ICryptoolStream _inputStream;
-        private ICryptoolStream _outputStream;
+        private ICrypToolStream _inputStream;
+        private ICrypToolStream _outputStream;
         private byte[] _inputKey;
         // ReSharper disable once InconsistentNaming
         private byte[] _inputIV;
@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.Speck
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get { return _inputStream; }
             set
@@ -75,7 +75,7 @@ namespace Cryptool.Plugins.Speck
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get { return _outputStream; }
             set

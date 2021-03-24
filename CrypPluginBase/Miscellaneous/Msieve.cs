@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Numerics;
 using System.Threading;
 using System.Collections;
 using System.Diagnostics;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     /// <summary>
     /// This class is responsible for loading the msieve dll and offers some functions

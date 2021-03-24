@@ -14,10 +14,10 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.CaesarAnalysisHelper
+namespace CrypTool.CaesarAnalysisHelper
 {
     public enum Language
     {

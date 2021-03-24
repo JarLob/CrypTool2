@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
 using System;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.CypherMatrixHash
+namespace CrypTool.Plugins.CypherMatrixHash
 {
     [Author("Michael Schäfer", "michael.schaefer@rub.de", null, null)]
     [PluginInfo("CypherMatrixHash.Properties.Resources", "PluginCaption", "PluginTooltip", "CypherMatrixHash/doc.xml", new[] { "CrypWin/images/default.png" })]
@@ -59,7 +59,7 @@ namespace Cryptool.Plugins.CypherMatrixHash
         #region Data Properties and private writers
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
@@ -79,7 +79,7 @@ namespace Cryptool.Plugins.CypherMatrixHash
         }
 
         [PropertyInfo(Direction.OutputData, "DebugDataCaption", "DebugDataTooltip", false)]
-        public ICryptoolStream OutputDebug
+        public ICrypToolStream OutputDebug
         {
             get
             {

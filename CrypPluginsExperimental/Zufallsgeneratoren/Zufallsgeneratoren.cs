@@ -16,14 +16,14 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Numerics;
 
-namespace Cryptool.Plugins.Zufallsgeneratoren
+namespace CrypTool.Plugins.Zufallsgeneratoren
 {
     [Author("Philipp Eisen", "philipp.iron@gmail.com", "University of Mannheim", "http://www.uni-mannheim.de/")]
     [PluginInfo("Zufallsgeneratoren.Properties.Resources", "PluginCaption", "PluginTooltip", "Zufallsgeneratoren/userdoc.xml", new[] { "Zufallsgeneratoren/Images/Random.png" })]
@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.Zufallsgeneratoren
         private int amountOfNumbers;
         private int seed;
         private bool hasSeed = false;
-        private ICryptoolStream data;
+        private ICrypToolStream data;
         private bool littleEndian;
         private BigInteger[] outputNumbers;
 
@@ -101,7 +101,7 @@ namespace Cryptool.Plugins.Zufallsgeneratoren
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip", false)]
-        public ICryptoolStream OutputData
+        public ICrypToolStream OutputData
         {
             get
             {

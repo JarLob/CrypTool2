@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-namespace Cryptool.SystemOfEquations
+namespace CrypTool.SystemOfEquations
 {
     class LFSR
     {

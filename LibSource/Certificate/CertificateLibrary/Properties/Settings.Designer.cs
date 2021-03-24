@@ -25,7 +25,7 @@ namespace CrypTool.CertificateLibrary.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cloud.cryptool.org")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cloud.CrypTool.org")]
         public string PCP_SERVER_ADDRESS {
             get {
                 return ((string)(this["PCP_SERVER_ADDRESS"]));

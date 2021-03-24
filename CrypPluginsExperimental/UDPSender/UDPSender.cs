@@ -17,15 +17,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Net.Sockets;
 using System.Net;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 
 
-namespace Cryptool.Plugins.UDPSender
+namespace CrypTool.Plugins.UDPSender
 {
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Mirko Sartorius", "mirkosartorius@web.de", "Uni Kassel", "http://cryptool2.vs.uni-due.de")]
@@ -91,7 +91,7 @@ namespace Cryptool.Plugins.UDPSender
         /// You can add more input properties of other type if needed.
         /// </summary>
         [PropertyInfo(Direction.InputData, "StreamInput", "StreamInputTooltip")]
-        public ICryptoolStream PackageStream
+        public ICrypToolStream PackageStream
         {
             get;
             set;

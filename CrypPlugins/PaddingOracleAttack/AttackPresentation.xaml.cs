@@ -2,13 +2,13 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.PaddingOracleAttack
+namespace CrypTool.Plugins.PaddingOracleAttack
 {
     /// <summary>
     /// Interaction logic for AttackPresentation.xaml
     /// </summary>
 
-    [Cryptool.PluginBase.Attributes.Localization("PaddingOracleAttack.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("PaddingOracleAttack.Properties.Resources")]
     public partial class AttackPresentation : UserControl
     {
         public AttackPresentation()

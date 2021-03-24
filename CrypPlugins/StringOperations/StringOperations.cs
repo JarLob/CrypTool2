@@ -18,13 +18,13 @@ using System.ComponentModel;
 using System.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using StringOperations.Properties;
 using System.Collections.Generic;
 
 namespace StringOperations
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("StringOperations.Properties.Resources", "PluginCaption", "PluginTooltip", "StringOperations/DetailedDescription/doc.xml", "StringOperations/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class StringOperations : ICrypComponent

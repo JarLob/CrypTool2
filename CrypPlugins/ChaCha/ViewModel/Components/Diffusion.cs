@@ -1,4 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
+﻿using CrypTool.Plugins.ChaCha.Helper;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     internal static class Diffusion
     {

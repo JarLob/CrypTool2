@@ -17,7 +17,7 @@
 using System;
 using System.Windows.Controls;
 
-namespace Cryptool.PRESENT {
+namespace CrypTool.PRESENT {
     /// <summary>
     /// Führen Sie die Schritte 1a oder 1b und anschließend Schritt 2 aus, um dieses benutzerdefinierte Steuerelement in einer XAML-Datei zu verwenden.
     ///

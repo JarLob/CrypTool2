@@ -13,13 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.BlindSignatureGenerator
+namespace CrypTool.Plugins.BlindSignatureGenerator
 {
     public class BlindSignatureVerifierSettings : ISettings
     {

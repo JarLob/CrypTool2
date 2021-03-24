@@ -19,7 +19,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace Cryptool.PluginBase.Validation
+namespace CrypTool.PluginBase.Validation
 {
   public class RegExRule : ValidationRule
   {

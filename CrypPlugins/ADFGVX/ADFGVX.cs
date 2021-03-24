@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.ADFGVX
+namespace CrypTool.ADFGVX
 {
-    [Author("Matthäus Wander","wander@cryptool.org","Uni Duisburg-Essen","http://www.vs.uni-due.de")]
-    [PluginInfo("Cryptool.ADFGVX.Properties.Resources", "PluginCaption", "PluginTooltip", "ADFGVX/DetailedDescription/doc.xml", "ADFGVX/Images/icon.png", "ADFGVX/Images/encrypt.png", "ADFGVX/Images/decrypt.png")]
+    [Author("Matthäus Wander","wander@CrypTool.org","Uni Duisburg-Essen","http://www.vs.uni-due.de")]
+    [PluginInfo("CrypTool.ADFGVX.Properties.Resources", "PluginCaption", "PluginTooltip", "ADFGVX/DetailedDescription/doc.xml", "ADFGVX/Images/icon.png", "ADFGVX/Images/encrypt.png", "ADFGVX/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class ADFGVX : ICrypComponent
     {

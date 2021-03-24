@@ -52,9 +52,9 @@
 
   <references>
     <linkReference id="BOOK">
-      <link url="https://www.cryptool.org/en/ctp-documentation/ctbook" lang="en"/>
+      <link url="https://www.CrypTool.org/en/ctp-documentation/ctbook" lang="en"/>
       <caption lang="en">The CrypTool book on the CrypTool webpage</caption>
-      <link url="https://www.cryptool.org/de/ctp-dokumentation/ctbuch" lang="de-DE" />
+      <link url="https://www.CrypTool.org/de/ctp-dokumentation/ctbuch" lang="de-DE" />
       <caption lang="de-DE">Das CrypTool-Buch auf der CrypTool-Webseite</caption>
     </linkReference>
   </references>

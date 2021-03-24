@@ -3,8 +3,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 
 namespace Tests.TemplateAndPluginTests
 {   
@@ -42,7 +42,7 @@ namespace Tests.TemplateAndPluginTests
             return pluginType.CreateComponentInstance();
         }
 
-        public static ICryptoolStream HexToStream(this string HexString)
+        public static ICrypToolStream HexToStream(this string HexString)
         {
             return HexString.HexToByteArray().ToStream();
         }
@@ -86,18 +86,18 @@ namespace Tests.TemplateAndPluginTests
             return buffer;
         }
 
-        public static byte[] ToByteArray(this ICryptoolStream stream)
+        public static byte[] ToByteArray(this ICrypToolStream stream)
         {
             if (stream == null) return new byte[0];
             return stream.CreateReader().ToByteArray();
         }
 
-        public static ICryptoolStream ToStream(this byte[] buf)
+        public static ICrypToolStream ToStream(this byte[] buf)
         {
             return new CStreamWriter(buf);
         }
 
-        public static ICryptoolStream ToStream(this string s)
+        public static ICrypToolStream ToStream(this string s)
         {
             return s.ToByteArray().ToStream();
         }
@@ -107,7 +107,7 @@ namespace Tests.TemplateAndPluginTests
             return BitConverter.ToString(buf).Replace("-", string.Empty).ToUpper();
         }
 
-        public static string ToHex(this ICryptoolStream stream)
+        public static string ToHex(this ICrypToolStream stream)
         {
             if (stream == null) return "";
             return stream.ToByteArray().ToHex();
@@ -120,8 +120,8 @@ namespace Tests.TemplateAndPluginTests
 
         public static string ToHex(this object obj)
         {
-            if (obj is ICryptoolStream)
-                return ((ICryptoolStream)obj).ToHex();
+            if (obj is ICrypToolStream)
+                return ((ICrypToolStream)obj).ToHex();
 
             if (obj is byte[])
                 return ((byte[])obj).ToHex();

@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:properties="clr-namespace:Cryptool.CrypAnalysisViewControl.Properties"
-    xmlns:local="clr-namespace:Cryptool.CrypAnalysisViewControl">
+    xmlns:properties="clr-namespace:CrypTool.CrypAnalysisViewControl.Properties"
+    xmlns:local="clr-namespace:CrypTool.CrypAnalysisViewControl">
 
     <Style TargetType="{x:Type local:SectionViewLabelsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
         <Setter Property="VerticalAlignment" Value="Top" />

@@ -1,16 +1,16 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.ViewModel;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.ViewModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.View
+namespace CrypTool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for StateMatrixInitialization.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.ChaCha.Properties.Resources")]
     public partial class StateMatrixInit : UserControl
     {
         public StateMatrixInit()

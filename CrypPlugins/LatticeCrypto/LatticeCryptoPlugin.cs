@@ -1,4 +1,4 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using LatticeCrypto.Views;
 
 namespace LatticeCrypto

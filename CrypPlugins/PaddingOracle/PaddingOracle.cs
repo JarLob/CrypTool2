@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Attributes;
 using System.Windows.Threading;
 using System.Threading;
 using System.Windows;
 using System;
 
-namespace Cryptool.Plugins.PaddingOracle
+namespace CrypTool.Plugins.PaddingOracle
 {
-    [Author("Alexander Juettner", "alex@juettner-online.com", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Alexander Juettner", "alex@juettner-online.com", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     [PluginInfo("PaddingOracle.Properties.Resources", "PluginCaption", "PluginTooltip", "PaddingOracle/DetailedDescription/doc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.PaddingOracle
 
         private readonly PaddingOracleSettings settings = new PaddingOracleSettings();
 
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private OraclePresentation pres = new OraclePresentation();
         //private PropertyChangedEventHandler seventHandler;
         RoutedPropertyChangedEventHandler<double> rviewEventHandler;
@@ -56,7 +56,7 @@ namespace Cryptool.Plugins.PaddingOracle
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputDecCaption", "InputDecTooltip")]
-        public ICryptoolStream DecryptedInputStream
+        public ICrypToolStream DecryptedInputStream
         {
             get { return inputStream; }
             set

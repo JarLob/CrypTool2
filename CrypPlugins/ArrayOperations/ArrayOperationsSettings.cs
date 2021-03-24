@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System;
 
 namespace ArrayOperations

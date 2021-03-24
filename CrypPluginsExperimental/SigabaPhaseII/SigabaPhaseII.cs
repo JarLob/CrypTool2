@@ -20,10 +20,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
-using SigabaBruteforce.Cryptool.PluginBase.Control;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
+using SigabaBruteforce.CrypTool.PluginBase.Control;
 
 namespace SigabaPhaseII
 {

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text;
 using System.IO;
 using System;
@@ -30,7 +30,7 @@ using Keccak.Properties;
 using System.Windows;
 
 
-namespace Cryptool.Plugins.Keccak
+namespace CrypTool.Plugins.Keccak
 {
     [Author("Max Brandi", "max.brandi@rub.de", null, null)]
     [PluginInfo("Keccak.Properties.Resources", "PluginCaption", "PluginDescription", "Keccak/Documentation/doc.xml", new[] { "Keccak/images/icon.png" })]
@@ -49,21 +49,21 @@ namespace Cryptool.Plugins.Keccak
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputDataStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputDataStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "DebugStreamCaption", "DebugDataStreamTooltip", true)]
-        public ICryptoolStream DebugStream
+        public ICrypToolStream DebugStream
         {
             get;
             set;

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 
@@ -14,7 +14,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for LogPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class LogVisual : UserControl, INotifyPropertyChanged
     {
         #region events

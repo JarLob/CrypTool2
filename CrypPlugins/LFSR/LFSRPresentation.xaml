@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="Cryptool.LFSR.LFSRPresentation"
+﻿<UserControl x:Class="CrypTool.LFSR.LFSRPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
-    xmlns:properties="clr-namespace:Cryptool.LFSR.Properties"
+    xmlns:properties="clr-namespace:CrypTool.LFSR.Properties"
     Height="Auto" Width="Auto" Margin="0" Background="White" BorderBrush="Black" BorderThickness="1">
 
     <Viewbox Stretch="Uniform">

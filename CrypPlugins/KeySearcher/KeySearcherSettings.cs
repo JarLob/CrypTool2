@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel; 
 using KeySearcher.Properties;
@@ -92,7 +92,7 @@ namespace KeySearcher
         public void Initialize()
         {            
             OpenCLGroupVisiblity();
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate
                                                     {
                                                         OpenCLGroupVisiblity();
                                                     };
@@ -261,7 +261,7 @@ namespace KeySearcher
             if (TaskPaneAttributeChanged == null)
                 return;
 
-            if (!Cryptool.PluginBase.Properties.Settings.Default.KeySearcher_UseOpenCL)
+            if (!CrypTool.PluginBase.Properties.Settings.Default.KeySearcher_UseOpenCL)
             {
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("OpenCLDevice", Visibility.Collapsed)));
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("OpenCLMode", Visibility.Collapsed)));
@@ -341,7 +341,7 @@ namespace KeySearcher
             {
                 if (OpenCLDevice != -1 && (deviceSettings.Count > OpenCLDevice) && (value != deviceSettings[OpenCLDevice].mode))
                 {
-                    if (Cryptool.PluginBase.Properties.Settings.Default.KeySearcher_EnableHighLoad || value != 2)
+                    if (CrypTool.PluginBase.Properties.Settings.Default.KeySearcher_EnableHighLoad || value != 2)
                         deviceSettings[OpenCLDevice].mode = value;
                     else
                         keysearcher.GuiLogMessage(

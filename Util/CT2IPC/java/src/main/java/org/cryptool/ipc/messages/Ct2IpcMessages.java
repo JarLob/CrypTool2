@@ -4753,7 +4753,7 @@ public final class Ct2IpcMessages {
       "\014currentValue\030\002 \001(\001\"3\n\nCt2Goodbye\022\020\n\010exi" +
       "tCode\030\001 \001(\005\022\023\n\013exitMessage\030\002 \001(\tBW\n\031org." +
       "cryptool.ipc.messagesB\016Ct2IpcMessages\370\001\001" +
-      "\242\002\006ct2ipc\252\002\035Cryptool.Plugins.Ipc.Message" +
+      "\242\002\006ct2ipc\252\002\035CrypTool.Plugins.Ipc.Message" +
       "sb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

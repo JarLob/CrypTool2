@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ using System.Numerics;
 using System.Threading;
 using System.Windows.Controls;
 using CrypCloud.Core.CloudComponent;
-using Cryptool.PluginBase; 
+using CrypTool.PluginBase; 
 
-namespace Cryptool.Plugins.ACloudTest
+namespace CrypTool.Plugins.ACloudTest
 {
-    [Author("Anonymous", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Anonymous", "coredevs@CrypTool.org", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     [PluginInfo("Cloud Test Component", "Subtract one number from another", "ACloudTest/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ACloudTest : ACloudComponent

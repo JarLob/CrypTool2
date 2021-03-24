@@ -17,13 +17,13 @@
 using System;
 using System.ComponentModel;
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CRC
+namespace CrypTool.CRC
 {
-    [Author("Matthäus Wander, Armin Krauß", "wander@cryptool.org", "Fachgebiet Verteilte Systeme, Universität Duisburg-Essen", "http://www.vs.uni-due.de")]
+    [Author("Matthäus Wander, Armin Krauß", "wander@CrypTool.org", "Fachgebiet Verteilte Systeme, Universität Duisburg-Essen", "http://www.vs.uni-due.de")]
     [PluginInfo("CRC.Properties.Resources", "PluginCaption", "PluginTooltip", "CRC/DetailedDescription/doc.xml", "CRC/Images/CRC.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class CRC : ICrypComponent
@@ -63,14 +63,14 @@ namespace Cryptool.CRC
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", false)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -142,7 +142,7 @@ namespace Cryptool.CRC
 
             // calculate CRC value
 
-            byte[] input = ICryptoolStreamToByteArray(InputStream);
+            byte[] input = ICrypToolStreamToByteArray(InputStream);
 
             UInt64 crc;
 
@@ -218,7 +218,7 @@ namespace Cryptool.CRC
             return buffer;
         }
 
-        private byte[] ICryptoolStreamToByteArray(ICryptoolStream stream)
+        private byte[] ICrypToolStreamToByteArray(ICrypToolStream stream)
         {
             return CStreamReaderToByteArray(stream.CreateReader());
         }

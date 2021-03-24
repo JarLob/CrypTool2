@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.CramerShoup.lib
+﻿namespace CrypTool.Plugins.CramerShoup.lib
 {
     public class ECCramerShoupKeyPair
     {

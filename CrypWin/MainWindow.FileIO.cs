@@ -19,16 +19,16 @@ using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using Cryptool.Core;
-using Cryptool.CrypWin.Helper;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
+using CrypTool.Core;
+using CrypTool.CrypWin.Helper;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
 using Microsoft.Win32;
 using System.Windows.Documents;
 using System.Linq;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public enum FileOperationResult
     {

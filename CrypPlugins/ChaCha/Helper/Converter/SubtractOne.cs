@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Helper.Converter
+namespace CrypTool.Plugins.ChaCha.Helper.Converter
 {
     internal class SubtractOne : IValueConverter
     {

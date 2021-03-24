@@ -16,13 +16,13 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Scytale
+namespace CrypTool.Scytale
 {
-    [Author("F. Enkler, A. Wacker", "enkler@cryptool.org, wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
-    [PluginInfo("Cryptool.Scytale.Properties.Resources", "PluginCaption", "PluginTooltip", "Scytale/DetailedDescription/doc.xml", "Scytale/icon.png")]
+    [Author("F. Enkler, A. Wacker", "enkler@CrypTool.org, wacker@CrypTool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
+    [PluginInfo("CrypTool.Scytale.Properties.Resources", "PluginCaption", "PluginTooltip", "Scytale/DetailedDescription/doc.xml", "Scytale/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Scytale : ICrypComponent
     {

@@ -21,12 +21,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Color = System.Windows.Media.Color;
 
-namespace Cryptool.Plugins.VisualDecoder
+namespace CrypTool.Plugins.VisualDecoder
 {
     /// <summary>
     /// Interaktionslogik für DimCodeEncoderPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("VisualDecoder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("VisualDecoder.Properties.Resources")]
     public partial class VisualDecoderPresentation : UserControl
     {
         public VisualDecoderPresentation()

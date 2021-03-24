@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.LAMBDA1
+namespace CrypTool.Plugins.LAMBDA1
 {
     /// <summary>
     /// The block cipher LAMBDA1 from East Germany

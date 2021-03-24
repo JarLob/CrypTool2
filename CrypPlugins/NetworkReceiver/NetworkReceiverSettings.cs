@@ -20,10 +20,10 @@ using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.NetworkReceiver
+namespace CrypTool.Plugins.NetworkReceiver
 {
     public class NetworkReceiverSettings : ISettings
     {

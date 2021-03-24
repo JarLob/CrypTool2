@@ -19,7 +19,7 @@ namespace KeySearcher.Helper
         static MachineName()
         {
             MachineNameToUse = GenerateMachineNameToUse();
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Default_PropertyChanged);
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Default_PropertyChanged);
         }
 
         private static void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -36,13 +36,13 @@ namespace KeySearcher.Helper
 
         private static string GenerateMachineNameToUse()
         {            
-            if (!Cryptool.PluginBase.Properties.Settings.Default.KeySearcher_Anonymize)
+            if (!CrypTool.PluginBase.Properties.Settings.Default.KeySearcher_Anonymize)
             {
                 return realMachineName;
             }
             else
             {
-                return String.Format("{0}_{1:X}", realMachineName.Substring(0, Cryptool.PluginBase.Properties.Settings.Default.KeySearcher_MachNameChars), id);
+                return String.Format("{0}_{1:X}", realMachineName.Substring(0, CrypTool.PluginBase.Properties.Settings.Default.KeySearcher_MachNameChars), id);
             }
         }
     }

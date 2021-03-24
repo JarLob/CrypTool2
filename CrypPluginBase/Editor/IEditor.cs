@@ -15,9 +15,9 @@
 */
 
 using System;
-using Cryptool.Core;
+using CrypTool.Core;
 
-namespace Cryptool.PluginBase.Editor
+namespace CrypTool.PluginBase.Editor
 {
     public interface IEditor : IPlugin
     {

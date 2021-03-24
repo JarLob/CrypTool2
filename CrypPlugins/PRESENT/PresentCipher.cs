@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
   public abstract class PresentCipher : SymmetricAlgorithm
   {

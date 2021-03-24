@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.NetworkSender
+namespace CrypTool.Plugins.NetworkSender
 {
     public class PresentationPackage
     {

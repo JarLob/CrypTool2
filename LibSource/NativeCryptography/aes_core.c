@@ -28,7 +28,7 @@
 /* Note: rewritten a little bit to provide error control and an OpenSSL-
    compatible API */
 
-/* Note: Modified by Sven Rech for Cryptool 2 */
+/* Note: Modified by Sven Rech for CrypTool 2 */
 
 #include "aes_core.h"
 #include <assert.h>

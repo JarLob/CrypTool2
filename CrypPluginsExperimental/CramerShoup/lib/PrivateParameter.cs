@@ -1,7 +1,7 @@
 ﻿using System;
 using Org.BouncyCastle.Math;
 
-namespace Cryptool.Plugins.CramerShoup.lib
+namespace CrypTool.Plugins.CramerShoup.lib
 {
     public class ECCramerShoupPrivateParameter : ECCramerShoupParameter
     {

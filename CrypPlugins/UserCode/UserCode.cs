@@ -17,8 +17,8 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Numerics;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -28,10 +28,10 @@ using Microsoft.CSharp;
 using System.Runtime.Remoting;
 using AurelienRibon.Ui.SyntaxHighlightBox;
 
-namespace Cryptool.Plugins.UserCode
+namespace CrypTool.Plugins.UserCode
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.UserCode.Properties.Resources", "PluginCaption", "PluginTooltip", null, "UserCode/icons/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.UserCode.Properties.Resources", "PluginCaption", "PluginTooltip", null, "UserCode/icons/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class UserCode : ICrypComponent
     {
@@ -289,7 +289,7 @@ namespace Cryptool.Plugins.UserCode
                 appDomain.SetData("input4", Input4);
                 appDomain.SetData("input5", Input5);
 
-                userCodeObject = appDomain.CreateInstanceFrom(compilerResults.PathToAssembly, "Cryptool.Plugins.UserCode.UserClass");
+                userCodeObject = appDomain.CreateInstanceFrom(compilerResults.PathToAssembly, "CrypTool.Plugins.UserCode.UserClass");
 
                 Output1 = appDomain.GetData("output1");
                 Output2 = appDomain.GetData("output2");

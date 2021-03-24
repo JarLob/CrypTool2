@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using StartCenter;
 using System.IO;
 
@@ -11,7 +11,7 @@ namespace Startcenter
     /// <summary>
     /// Interaction logic for Startcenter.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
     public partial class Startcenter : UserControl
     {
         private Panels _panelsObj;

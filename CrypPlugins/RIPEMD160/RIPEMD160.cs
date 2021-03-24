@@ -14,12 +14,12 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Documents;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace RIPEMD160
 {
@@ -29,7 +29,7 @@ namespace RIPEMD160
     public class RIPEMD160 : ICrypComponent
     {
         #region Private variables
-        private ICryptoolStream inputData;
+        private ICrypToolStream inputData;
         private byte[] outputData;
         #endregion
 
@@ -41,7 +41,7 @@ namespace RIPEMD160
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputData
+        public ICrypToolStream InputData
         {
             get 
             {
@@ -58,7 +58,7 @@ namespace RIPEMD160
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStreamCaption", "OutputDataStreamTooltip", true)]
-        public ICryptoolStream OutputDataStream
+        public ICrypToolStream OutputDataStream
         {
           get
           {
@@ -104,7 +104,7 @@ namespace RIPEMD160
             else
             {            
                 if (inputData == null)
-                    GuiLogMessage("Received null value for CryptoolStream.", NotificationLevel.Warning);
+                    GuiLogMessage("Received null value for CrypToolStream.", NotificationLevel.Warning);
                 else
                     GuiLogMessage("No input stream.", NotificationLevel.Warning);
             }

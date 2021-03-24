@@ -8,7 +8,7 @@
     <ProjectGuid>{DB36F62A-9567-40B9-A5E5-B8CFFBAFDE3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Blowfish</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Blowfish</RootNamespace>
     <AssemblyName>Blowfish</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

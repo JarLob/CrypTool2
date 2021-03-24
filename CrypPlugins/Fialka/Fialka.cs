@@ -15,14 +15,14 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Fialka
+namespace CrypTool.Fialka
 {
     [Author("Eugen Antal, Tomáš Sovič", "eugen.antal@stuba.sk", "FEI STU Bratislava", "http://www.fei.stuba.sk/")]
    
-    [PluginInfo("Cryptool.Fialka.Properties.Resources", "PluginCaption", "PluginTooltip", "Fialka/DetailedDescription/userdoc.xml", "Fialka/Images/FialkaRot.png")]
+    [PluginInfo("CrypTool.Fialka.Properties.Resources", "PluginCaption", "PluginTooltip", "Fialka/DetailedDescription/userdoc.xml", "Fialka/Images/FialkaRot.png")]
    
     [ComponentCategory(ComponentCategory.CiphersClassic)]
 

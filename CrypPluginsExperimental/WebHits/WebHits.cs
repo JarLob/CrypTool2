@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,24 +15,24 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Net;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
-using Cryptool.Plugins.WebHits.Properties;
+using CrypTool.Plugins.WebHits.Properties;
 
 
-namespace Cryptool.Plugins.WebHits
+namespace CrypTool.Plugins.WebHits
 {
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Olga Kieselmann", "kieselmann@uni-kassel.de", "CrypTool 2 Team", "http://www.ais.uni-kassel.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Cryptool.Plugins.WebHits.Properties.Resources", "WebHitsCaption", "PluginTooltip", "WebHits/DetailedDescription/doc.xml", new[] { "WebHits/images/search.png" })]
+    [PluginInfo("CrypTool.Plugins.WebHits.Properties.Resources", "WebHitsCaption", "PluginTooltip", "WebHits/DetailedDescription/doc.xml", new[] { "WebHits/images/search.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class WebHits : ICrypComponent

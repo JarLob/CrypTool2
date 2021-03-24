@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.RPNExpression
+namespace CrypTool.RPNExpression
 {
     public static class RPNFunctionUtils
     {

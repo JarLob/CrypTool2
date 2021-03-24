@@ -6,16 +6,16 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CrypWin.SettingsTabs
+namespace CrypTool.CrypWin.SettingsTabs
 {
     /// <summary>
     /// Interaction logic for PluginsSettingsTab.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.SettingsTabs.Resources.res")]
+    [Localization("CrypTool.CrypWin.SettingsTabs.Resources.res")]
     [SettingsTab("PluginSettings", "/", 0.5)]
     public partial class PluginsSettingsTab : UserControl
     {

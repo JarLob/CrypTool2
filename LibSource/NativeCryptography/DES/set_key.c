@@ -65,7 +65,7 @@
  */
 //#include "des_locl.h"
 
-/*Note: Modified by Sven Rech for Cryptool2 */
+/*Note: Modified by Sven Rech for CrypTool2 */
 
 #ifdef OPENSSL_FIPS
 #include <openssl/fips.h>

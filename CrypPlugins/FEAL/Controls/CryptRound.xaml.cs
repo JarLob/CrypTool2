@@ -17,7 +17,7 @@
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.FEAL.Controls
+namespace CrypTool.Plugins.FEAL.Controls
 {
     /// <summary>
     /// Interaktionslogik für CryptRound.xaml

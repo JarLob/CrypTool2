@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cryptool.Substitution
+namespace CrypTool.Substitution
 {
     /// <summary>
     /// Interaktionslogik für SubstitutionPresentation.xaml

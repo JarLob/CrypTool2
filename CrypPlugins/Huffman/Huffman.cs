@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Collections.Generic;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using Huffman;
 
-namespace Cryptool.Plugins.Huffman
+namespace CrypTool.Plugins.Huffman
 {
     [Author("Marko Lazić", "marko.lazic.14@singimail.rs", "Singidunum University", "http://eng.singidunum.ac.rs/")]
     [PluginInfo("Huffman.Properties.Resources", "PluginCaption", "PluginTooltip",

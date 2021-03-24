@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Documents;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using Primes.WpfControls.Components;
 using Primes.Bignum;
 using Primes.Library;

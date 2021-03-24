@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.PluginBase.Control
+namespace CrypTool.PluginBase.Control
 {
 
   /// <summary>

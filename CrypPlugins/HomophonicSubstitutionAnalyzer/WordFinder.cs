@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
     public class WordFinder
     {

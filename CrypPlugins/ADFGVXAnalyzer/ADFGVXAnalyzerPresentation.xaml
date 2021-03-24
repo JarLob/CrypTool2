@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:ADFGVXAnalyzer.Properties"
-    xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
+    xmlns:crypanalysisviewcontrol="clr-namespace:CrypTool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
     d:DesignHeight="263">
 
     <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc LocalLabel}" ResultListCaption="{Loc TopTenLabel}">

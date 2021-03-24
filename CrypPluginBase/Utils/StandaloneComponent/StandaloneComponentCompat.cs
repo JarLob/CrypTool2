@@ -14,23 +14,23 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows;
-using Cryptool.PluginBase.Utils.StandaloneComponent;
-using Cryptool.PluginBase.Utils.StandaloneComponent.Common;
+using CrypTool.PluginBase.Utils.StandaloneComponent;
+using CrypTool.PluginBase.Utils.StandaloneComponent.Common;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Utils.Logging;
+using CrypTool.PluginBase.Utils.Logging;
 
-namespace Cryptool.PluginBase.Utils.StandaloneComponent.Compat
+namespace CrypTool.PluginBase.Utils.StandaloneComponent.Compat
 {
 
     public static class Compat
     {
         public static dynamic ThrowCompatIncomplete(String msg)
         {
-            throw new Exception($"CT2 component compat (Cryptool.Component.StandaloneCompat) has a bug: {msg}");
+            throw new Exception($"CT2 component compat (CrypTool.Component.StandaloneCompat) has a bug: {msg}");
         }
         public static NotificationLevel ConvertNotificationLevel(LogLevel level)
         {

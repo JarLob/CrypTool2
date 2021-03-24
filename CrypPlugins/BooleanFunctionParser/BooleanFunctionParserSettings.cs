@@ -14,11 +14,11 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.BooleanFunctionParser
+namespace CrypTool.BooleanFunctionParser
 {
     class BooleanFunctionParserSettings : ISettings
     {

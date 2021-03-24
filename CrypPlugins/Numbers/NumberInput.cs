@@ -17,21 +17,21 @@
 using System;
 using System.Linq;
 using System.Windows;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.Numbers
+namespace CrypTool.Plugins.Numbers
 {
-    [Author("Sven Rech, Nils Kopal", "sven.rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.Numbers.Properties.Resources", "PluginInputCaption", "PluginInputTooltip", "Numbers/DetailedDescription/doc.xml", "Numbers/icons/inputIcon.png")]
+    [Author("Sven Rech, Nils Kopal", "sven.rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.Numbers.Properties.Resources", "PluginInputCaption", "PluginInputTooltip", "Numbers/DetailedDescription/doc.xml", "Numbers/icons/inputIcon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
     public class NumberInput : ICrypComponent
@@ -226,16 +226,16 @@ namespace Cryptool.Plugins.Numbers
 
         #region IPlugin Members
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
 
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
         private void GuiLogMessage(string p, NotificationLevel notificationLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(p, this, notificationLevel));
         }
 
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         private void ProgressChanged(double value, double max)
         {

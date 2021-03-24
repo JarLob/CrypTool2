@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,13 +21,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Cryptool.Plugins.DECRYPTTools.Util;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.DECRYPTTools.Util;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECRYPTTools.Properties.Resources", "DECRYPTClustererCaption", "DECRYPTClustererTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.DECRYPTTools.Properties.Resources", "DECRYPTClustererCaption", "DECRYPTClustererTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
     [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECRYPTClusterer : ICrypComponent
     {

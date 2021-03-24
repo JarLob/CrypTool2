@@ -23,10 +23,10 @@ using WorkspaceManager.View.VisualComponents.CryptoLineView;
 using WorkspaceManagerModel.Model.Tools;
 using WorkspaceManagerModel.Model.Interfaces;
 using WorkspaceManagerModel.Model.Operations;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Properties;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Properties;
 
 namespace WorkspaceManager.View.Visuals
 {
@@ -373,7 +373,7 @@ namespace WorkspaceManager.View.Visuals
     /// <summary>
     /// Interaction logic for BinEditorVisual.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WorkspaceManager.Properties.Resources")]
     public partial class EditorVisual : UserControl, IUpdateableView, INotifyPropertyChanged
     {
         #region Events
@@ -2340,11 +2340,11 @@ namespace WorkspaceManager.View.Visuals
             if (this.State != BinEditorState.READY)
                 return;
 
-            if (e.Data.GetDataPresent("Cryptool.PluginBase.Editor.DragDropDataObject") && !(e.Source is ComponentVisual))
+            if (e.Data.GetDataPresent("CrypTool.PluginBase.Editor.DragDropDataObject") && !(e.Source is ComponentVisual))
             {
                 try
                 {
-                    DragDropDataObject obj = e.Data.GetData("Cryptool.PluginBase.Editor.DragDropDataObject") as DragDropDataObject;
+                    DragDropDataObject obj = e.Data.GetData("CrypTool.PluginBase.Editor.DragDropDataObject") as DragDropDataObject;
                     PluginModel pluginModel = (PluginModel)Model.ModifyModel(new NewPluginModelOperation(Util.MouseUtilities.CorrectGetPosition(sender as FrameworkElement), 0, 0, DragDropDataObjectToPluginConverter.CreatePluginInstance(obj.AssemblyFullName, obj.TypeFullName)));
                     AddComponentVisual(pluginModel, 0);
                     e.Handled = true;

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
 
-namespace Cryptool.Plugins.PlayfairAnalyzer
+namespace CrypTool.Plugins.PlayfairAnalyzer
 {
     class Stats
     {

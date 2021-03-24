@@ -1,8 +1,8 @@
 ﻿using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.WEP
+namespace CrypTool.WEP
 {
     /// <summary>
     /// Settings for the WEP plugins.

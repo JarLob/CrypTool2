@@ -13,9 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.DECRYPTTools.Util;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -26,10 +26,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECRYPTTools.Properties.Resources", "DecodeParserTesterCaption", "DecodeParserTesterTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.DECRYPTTools.Properties.Resources", "DecodeParserTesterCaption", "DecodeParserTesterTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
     [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECRYPTParserTester : ICrypComponent
     {
@@ -237,7 +237,7 @@ namespace Cryptool.Plugins.DECRYPTTools
         }
 
         /// <summary>
-        /// Returns types of all parsers implemented in Cryptool.Plugins.DECRYPTTools.Util
+        /// Returns types of all parsers implemented in CrypTool.Plugins.DECRYPTTools.Util
         /// which derive from SimpleSingleTokenParser and are not the KeyAsPlaintextParser
         /// </summary>
         /// <returns></returns>
@@ -246,7 +246,7 @@ namespace Cryptool.Plugins.DECRYPTTools
             List<Parser> parsers = new List<Parser>();
             var query = from t in Assembly.GetExecutingAssembly().GetTypes()
                     where t.IsClass && 
-                    t.Namespace.Equals("Cryptool.Plugins.DECRYPTTools.Util") &&
+                    t.Namespace.Equals("CrypTool.Plugins.DECRYPTTools.Util") &&
                     t.BaseType.Name.Equals("SimpleSingleTokenParser") && 
                     !t.Name.Equals("KeyAsPlaintextParser")
                     select t;           

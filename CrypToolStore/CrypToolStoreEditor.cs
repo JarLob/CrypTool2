@@ -13,19 +13,19 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Windows.Controls;
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     [TabColor("LightSeaGreen")]
-    [EditorInfo("cryptoolstore", false, true, false, true, false, false)]
-    [Author("Nils Kopal", "kopal@cryptool.org", "CrypTool Team", "http://www.cryptool.org")]
-    [PluginInfo("Cryptool.CrypToolStore.Properties.Resources", "PluginCaption", "PluginTooltip", null, "CrypToolStore/icon_small.png")]
+    [EditorInfo("CrypToolstore", false, true, false, true, false, false)]
+    [Author("Nils Kopal", "kopal@CrypTool.org", "CrypTool Team", "http://www.CrypTool.org")]
+    [PluginInfo("CrypTool.CrypToolStore.Properties.Resources", "PluginCaption", "PluginTooltip", null, "CrypToolStore/icon_small.png")]
     public class CrypToolStoreEditor : IEditor
     {
         private CrypToolStorePresentation _presentation;

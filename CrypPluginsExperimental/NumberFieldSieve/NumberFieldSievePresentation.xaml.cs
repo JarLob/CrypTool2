@@ -8,7 +8,7 @@ namespace NumberFieldSieve
     /// <summary>
     /// Interaction logic for NumberFieldSievePresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("NumberFieldSieve.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("NumberFieldSieve.Properties.Resources")]
     public partial class NumberFieldSievePresentation : UserControl
     {
         private readonly Queue _appendTextQueue;

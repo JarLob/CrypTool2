@@ -99,10 +99,10 @@ namespace PlayfairAnalysis.Common
         }
 
         /**
-         * If set to true, best list will be send to Cryptool no more than once every second.
+         * If set to true, best list will be send to CrypTool no more than once every second.
          * This is useful in case there are many new results, in a short period of time, that would be one of the top best.
          * This can happen very often in hillclimbing processes which slowly progress.
-         * @param throttle - if yes, throttle updates to Cryptool.
+         * @param throttle - if yes, throttle updates to CrypTool.
          */
         public void setThrottle(bool throttle)
         {

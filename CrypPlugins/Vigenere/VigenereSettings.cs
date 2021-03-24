@@ -17,9 +17,9 @@
 using System;
 using System.Linq;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Vigenere
+namespace CrypTool.Vigenere
 {
     public class VigenereSettings : ISettings
     {

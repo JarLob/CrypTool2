@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
 
     class DragAdorner : Adorner

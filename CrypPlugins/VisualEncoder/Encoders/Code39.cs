@@ -17,13 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Cryptool.PluginBase;
-using Cryptool.Plugins.VisualEncoder.Model;
+using CrypTool.PluginBase;
+using CrypTool.Plugins.VisualEncoder.Model;
 using VisualEncoder.Properties;
 using ZXing;
 using ZXing.Common;
 
-namespace Cryptool.Plugins.VisualEncoder.Encoders
+namespace CrypTool.Plugins.VisualEncoder.Encoders
 {
     class Code39 : DimCodeEncoder
     {

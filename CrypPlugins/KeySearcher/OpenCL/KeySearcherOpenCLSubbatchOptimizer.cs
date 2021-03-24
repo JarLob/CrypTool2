@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace KeySearcher
 {

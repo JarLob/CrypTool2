@@ -15,11 +15,11 @@
 */
 
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Documents;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace SHA
 {
@@ -33,7 +33,7 @@ namespace SHA
     public class SHA : ICrypComponent
     {
         private SHASettings settings;
-        private ICryptoolStream inputData;
+        private ICrypToolStream inputData;
         private byte[] outputData;        
         
 
@@ -52,7 +52,7 @@ namespace SHA
 
             if (inputData == null)
               {
-                GuiLogMessage("Received null value for ICryptoolStream.", NotificationLevel.Warning);
+                GuiLogMessage("Received null value for ICrypToolStream.", NotificationLevel.Warning);
               }
             else if (hash == null)
             {
@@ -95,7 +95,7 @@ namespace SHA
         #endregion
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputData
+        public ICrypToolStream InputData
         {
             get 
             {
@@ -111,7 +111,7 @@ namespace SHA
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStreamCaption", "OutputDataStreamTooltip", true)]
-        public ICryptoolStream OutputDataStream
+        public ICrypToolStream OutputDataStream
         {
             get
             {

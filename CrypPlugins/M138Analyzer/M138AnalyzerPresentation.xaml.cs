@@ -1,11 +1,11 @@
-﻿using Cryptool.CrypAnalysisViewControl;
+﻿using CrypTool.CrypAnalysisViewControl;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
-namespace Cryptool.M138Analyzer
+namespace CrypTool.M138Analyzer
 {
-    [PluginBase.Attributes.Localization("Cryptool.M138Analyzer.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.M138Analyzer.Properties.Resources")]
     public partial class M138AnalyzerPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> BestList { get; } = new ObservableCollection<ResultEntry>();

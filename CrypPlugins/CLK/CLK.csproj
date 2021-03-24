@@ -8,7 +8,7 @@
     <ProjectGuid>{1B04DDAA-3DA9-4AC9-85C0-E819C790CA34}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.CLK</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.CLK</RootNamespace>
     <AssemblyName>CLK</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

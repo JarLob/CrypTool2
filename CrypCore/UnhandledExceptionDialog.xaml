@@ -1,7 +1,7 @@
-﻿<Window x:Class="Cryptool.Core.UnhandledExceptionDialog"
+﻿<Window x:Class="CrypTool.Core.UnhandledExceptionDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:properties="clr-namespace:Cryptool.Core.Properties"
+        xmlns:properties="clr-namespace:CrypTool.Core.Properties"
         Title="{x:Static properties:Resources.Unhandled_Exception}" Height="400" Width="600" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Topmost="True" ResizeMode="NoResize" Icon="/CrypWin;component/images/remove32.png">
     <Grid>
         <Grid.RowDefinitions>

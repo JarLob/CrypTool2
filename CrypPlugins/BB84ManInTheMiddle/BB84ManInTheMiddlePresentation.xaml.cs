@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 
 namespace BB84ManInTheMiddle
 {
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.Plugins.BB84ManInTheMiddle.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.Plugins.BB84ManInTheMiddle.Properties.Resources")]
     public partial class BB84ManInTheMiddlePresentation : UserControl
     {
         public bool listened;

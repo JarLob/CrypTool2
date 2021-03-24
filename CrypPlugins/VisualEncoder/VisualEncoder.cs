@@ -20,13 +20,13 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.VisualEncoder.Encoders;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.VisualEncoder.Encoders;
 
-namespace Cryptool.Plugins.VisualEncoder
+namespace CrypTool.Plugins.VisualEncoder
 {
-    [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
+    [Author("Christopher Konze", "Christopher.Konze@CrypTool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
     [PluginInfo("VisualEncoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualEncoder/userdoc.xml", new[] { "VisualEncoder/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class VisualEncoder : ICrypComponent

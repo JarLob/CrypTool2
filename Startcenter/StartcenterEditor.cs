@@ -1,16 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
 
 namespace StartCenter
 {
     [TabColor("LightSeaGreen")]
     [EditorInfo("startcenter", false, true, false, true, false, false)]
-    [Author("Sven Rech", "rech@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Sven Rech", "rech@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Startcenter.Properties.Resources", "PluginCaption", "PluginTooltip", null, "Startcenter/startcenter.png")]
     public class StartcenterEditor : IEditor
     {

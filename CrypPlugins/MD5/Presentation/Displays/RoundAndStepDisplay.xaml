@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cryptool.MD5.Presentation.Displays.RoundAndStepDisplay"
+﻿<UserControl x:Class="CrypTool.MD5.Presentation.Displays.RoundAndStepDisplay"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="50" Width="298" Background="AliceBlue">

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@ using System;
 using System.IO;
 using System.Linq;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using ImageHash.Properties;
 
-namespace Cryptool.Plugins.ImageHash
+namespace CrypTool.Plugins.ImageHash
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
     [PluginInfo("ImageHash.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageHash/DetailedDescription/doc.xml", "ImageHash/icon.png")]
@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.ImageHash
         #region Private Variables
 
         private readonly ImageHashSettings settings;
-        private ICryptoolStream inputImage;
+        private ICrypToolStream inputImage;
         private Image<Bgr, Byte> orgImg;
         private Image<Gray, double> step1Img;
         private Image<Gray, double> step2Img;
@@ -53,10 +53,10 @@ namespace Cryptool.Plugins.ImageHash
         #region Data Properties
 
         /// <summary>
-        /// Input image ICryptoolStream, handles "inputImage".
+        /// Input image ICrypToolStream, handles "inputImage".
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputImageCaption", "InputImageTooltip", true)]
-        public ICryptoolStream InputImage
+        public ICrypToolStream InputImage
         {
             get
             {
@@ -89,10 +89,10 @@ namespace Cryptool.Plugins.ImageHash
         }
 
         /// <summary>
-        /// Output processed image as ICryptoolStream.
+        /// Output processed image as ICrypToolStream.
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
-        public ICryptoolStream OutputImage
+        public ICrypToolStream OutputImage
         {
             get;
             set;

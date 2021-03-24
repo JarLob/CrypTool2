@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.Plugins.QuadraticSieve
+namespace CrypTool.Plugins.QuadraticSieve
 {
     class NotSievableException : Exception
     {

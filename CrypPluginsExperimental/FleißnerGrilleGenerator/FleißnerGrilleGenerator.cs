@@ -15,8 +15,8 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using FleißnerGrilleGenerator;
 using System.Windows.Threading;
@@ -24,7 +24,7 @@ using System.Threading;
 using System.Windows.Media;
 using FleißnerGrilleGenerator.Properties;
 
-namespace Cryptool.Plugins.FleißnerGrilleGenerator
+namespace CrypTool.Plugins.FleißnerGrilleGenerator
 {
     [Author("Robert Rauer", "robert_rauer@yahoo.de", "Universität Kassel", "http://cryptool2.vs.uni-due.de")]
     [PluginInfo("FleißnerGrilleGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrilleGenerator/DetailedDescription/doc.xml",

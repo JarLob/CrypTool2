@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2019 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2021 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -36,15 +36,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Cryptool.Core;
-using Cryptool.CrypWin.Helper;
-using Cryptool.CrypWin.Properties;
-using Cryptool.CrypWin.Resources;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.CrypWin.Helper;
+using CrypTool.CrypWin.Properties;
+using CrypTool.CrypWin.Resources;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using CrypWin.Helper;
 using DevComponents.WpfRibbon;
 using Microsoft.Win32;
@@ -70,12 +70,12 @@ using CrypCloud.Core;
 using CrypCloud.Manager;
 using Exception = System.Exception;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class MainWindow : DevComponents.WpfRibbon.RibbonWindow
     {
         #region private variables
@@ -130,9 +130,9 @@ namespace Cryptool.CrypWin
         private bool silent = false;
         private List<IPlugin> listPluginsAlreadyInitialized = new List<IPlugin>();
         private string[] interfaceNameList = new string[] {
-                typeof(Cryptool.PluginBase.ICrypComponent).FullName,
-                typeof(Cryptool.PluginBase.Editor.IEditor).FullName,
-                typeof(Cryptool.PluginBase.ICrypTutorial).FullName };
+                typeof(CrypTool.PluginBase.ICrypComponent).FullName,
+                typeof(CrypTool.PluginBase.Editor.IEditor).FullName,
+                typeof(CrypTool.PluginBase.ICrypTutorial).FullName };
         #endregion
 
         public IEditor ActiveEditor
@@ -272,6 +272,9 @@ namespace Cryptool.CrypWin
         public MainWindow()
         {
             GuiLogMessage("Start creation of MainWindow", NotificationLevel.Debug);
+
+            FixSettingsByDeletingThem();
+
             EnforceTLS12();
 
             SetLanguage();
@@ -308,11 +311,18 @@ namespace Cryptool.CrypWin
             if (IsCommandParameterGiven("-GenerateComponentConnectionStatistics"))
             {
                 GenerateComponentConnectionStatistics(IsCommandParameterGiven("-storeInBaseDir"));
-            }         
+            }
 
-            if (Settings.Default.SingletonApplication && !EstablishSingleInstance())
+            try
             {
-                Environment.Exit(0);
+                if (Settings.Default.SingletonApplication && !EstablishSingleInstance())
+                {
+                    Environment.Exit(0);
+                }
+            }
+            catch (Exception)
+            {
+                //do nothing
             }
 
             //if true, exists the constructor
@@ -363,6 +373,38 @@ namespace Cryptool.CrypWin
         }
 
         /// <summary>
+        /// Due to renaming of namespace "Cryptool" to "CrypTool", we have to once delete
+        /// all settings folders
+        /// If fixed.txt file does not exist we have to perform the deletion
+        /// </summary>
+        private void FixSettingsByDeletingThem()
+        {
+            var localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var fixedFile = localApplicationData + @"\CrypTool2\fixed_settings.txt";
+            if (!File.Exists(fixedFile))
+            {
+                var folder = localApplicationData + @"\CrypTool2";
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder, true);
+                    Directory.CreateDirectory(folder);
+                }
+                folder = localApplicationData + @"\CrypTool_2_Team";
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder, true);
+                }
+                folder = localApplicationData + @"\CrypTool_Team";
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder, true);
+                }
+                var stream = File.Create(fixedFile);
+                stream.Close();
+            }
+        }
+
+        /// <summary>
         /// Sets the callback for the validation check of tls certificates
         /// </summary>
         private void SetServerCertificateValidationCallback()
@@ -389,13 +431,13 @@ namespace Cryptool.CrypWin
             try
             {
                 //Reset all plugins settings
-                Cryptool.PluginBase.Properties.Settings.Default.Reset();
+                CrypTool.PluginBase.Properties.Settings.Default.Reset();
                 //Reset WorkspaceManagerModel settings
                 WorkspaceManagerModel.Properties.Settings.Default.Reset();
                 //reset Crypwin settings
-                Cryptool.CrypWin.Properties.Settings.Default.Reset();
+                CrypTool.CrypWin.Properties.Settings.Default.Reset();
                 //reset Crypcore settings
-                Cryptool.Core.Properties.Settings.Default.Reset();
+                CrypTool.Core.Properties.Settings.Default.Reset();
                 //reset MainWindow settings
                 Settings.Default.Reset();
                 GuiLogMessage("Settings successfully set to default configuration", NotificationLevel.Info);
@@ -682,13 +724,13 @@ namespace Cryptool.CrypWin
                 if (Settings.Default.UpdateFlag)
                 {
                     Settings.Default.Upgrade();
-                    Cryptool.PluginBase.Properties.Settings.Default.Upgrade();
+                    CrypTool.PluginBase.Properties.Settings.Default.Upgrade();
                     //upgrade WorkspaceManagerModel settings
                     WorkspaceManagerModel.Properties.Settings.Default.Upgrade();
                     //upgrade Crypwin settings
-                    Cryptool.CrypWin.Properties.Settings.Default.Upgrade();
+                    CrypTool.CrypWin.Properties.Settings.Default.Upgrade();
                     //upgrade Crypcore settings
-                    Cryptool.Core.Properties.Settings.Default.Upgrade();
+                    CrypTool.Core.Properties.Settings.Default.Upgrade();
                     //upgrade MainWindow settings
                     Settings.Default.Upgrade();
                     //remove UpdateFlag
@@ -1082,7 +1124,7 @@ namespace Cryptool.CrypWin
 
             if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateNameMismatch)
             {
-                GuiLogMessage("CrypWin: Certificate name mismatch (certificate not for www.cryptool.org?). Aborting connection.", NotificationLevel.Error);
+                GuiLogMessage("CrypWin: Certificate name mismatch (certificate not for www.CrypTool.org?). Aborting connection.", NotificationLevel.Error);
                 return false;
             }
 
@@ -1266,27 +1308,27 @@ namespace Cryptool.CrypWin
             }
             
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
-            string crypToolStoreSubFolder = "";
+            string CrypToolStoreSubFolder = "";
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
-                    crypToolStoreSubFolder="Developer";
+                    CrypToolStoreSubFolder="Developer";
                     break;
                 case Ct2BuildType.Nightly:
-                    crypToolStoreSubFolder="Nightly";
+                    CrypToolStoreSubFolder="Nightly";
                     break;
                 case Ct2BuildType.Beta:
-                    crypToolStoreSubFolder="Beta";
+                    CrypToolStoreSubFolder="Beta";
                     break;
                 case Ct2BuildType.Stable:
-                    crypToolStoreSubFolder="Release";
+                    CrypToolStoreSubFolder="Release";
                     break;
                 default: //if no known version is given, we assume developer
-                    crypToolStoreSubFolder="Developer";
+                    CrypToolStoreSubFolder="Developer";
                     break;
             }
 
-            this.pluginManager = new PluginManager(disabledAssemblies, crypToolStoreSubFolder);
+            this.pluginManager = new PluginManager(disabledAssemblies, CrypToolStoreSubFolder);
             this.pluginManager.OnExceptionOccured += pluginManager_OnExceptionOccured;
             this.pluginManager.OnDebugMessageOccured += pluginManager_OnDebugMessageOccured;
             this.pluginManager.OnPluginLoaded += pluginManager_OnPluginLoaded;
@@ -1823,7 +1865,7 @@ namespace Cryptool.CrypWin
                         #region Gui-Stuff
                         Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
                         Version version = AssemblyHelper.GetVersion(assembly);
-                        OnGuiLogNotificationOccuredTS(this, new GuiLogEventArgs(Resource.crypTool + " " + version.ToString() + Resource.started_and_ready, null, NotificationLevel.Info));
+                        OnGuiLogNotificationOccuredTS(this, new GuiLogEventArgs(Resource.CrypTool + " " + version.ToString() + Resource.started_and_ready, null, NotificationLevel.Info));
 
                         this.IsEnabled = true;
                         AppRibbon.Items.Refresh();

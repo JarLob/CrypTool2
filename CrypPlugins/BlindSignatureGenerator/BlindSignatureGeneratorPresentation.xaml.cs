@@ -34,7 +34,7 @@ namespace BlindSignatureGenerator
     /// <summary>
     /// Interaktionslogik für BlindSignatureGeneratorPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("BlindSignatureGenerator.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("BlindSignatureGenerator.Properties.Resources")]
     public partial class BlindSignatureGeneratorPresentation : UserControl
     {
         public bool presentationEnabled = false;

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:visuals="clr-namespace:WorkspaceManager.View.VisualComponents"
-             xmlns:properties="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase"
+             xmlns:properties="clr-namespace:CrypTool.PluginBase.Properties;assembly=CrypPluginBase"
              xmlns:local="clr-namespace:WorkspaceManager.View.Visuals"
              xmlns:model="clr-namespace:WorkspaceManager.Model;assembly=WorkspaceManagerModel"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"

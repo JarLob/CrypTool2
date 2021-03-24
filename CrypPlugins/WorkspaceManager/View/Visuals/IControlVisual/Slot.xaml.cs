@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using WorkspaceManager.Model;
 using WorkspaceManagerModel.Model.Operations;
 

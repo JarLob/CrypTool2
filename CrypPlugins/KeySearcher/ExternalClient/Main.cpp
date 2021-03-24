@@ -18,7 +18,7 @@ void usage(char **argv)
 {
     printf("Usage: %s $HOST $PORT [$PASSWORD]\n\n", argv[0]);
     printf("    HOST       - PC running cryptool\n");
-    printf("    PORT       - Cryptool's listening port\n");
+    printf("    PORT       - CrypTool's listening port\n");
     printf("    [PASSWORD] - Password used to auth with server\n");
 }
 
@@ -83,7 +83,7 @@ int main (int argc, char **argv)
     bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_port = htons(port);
 
-    Cryptool cryptool;
+    CrypTool cryptool;
 
     while(!receivedSigInt)
     {

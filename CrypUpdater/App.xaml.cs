@@ -16,13 +16,13 @@ namespace CrypUpdater
         public const string ZipInstallLogHeader = "CrypTool 2 Zip Installation";
 
         private bool mayRestart = false;
-        private static string cryptoolExePath;
+        private static string CrypToolExePath;
         private string filePath;
-        private string cryptoolFolderPath;
+        private string CrypToolFolderPath;
 
         private readonly string tempPath;
         private readonly string logfilePath;
-        private int cryptoolProcessID;
+        private int CrypToolProcessID;
         private Process p;
         private List<Process> unwantedProcesses = new List<Process>();
 
@@ -46,12 +46,12 @@ namespace CrypUpdater
             try
             {
                 filePath = e.Args[0];
-                cryptoolFolderPath = e.Args[1];
-                cryptoolExePath = e.Args[2];
-                cryptoolProcessID = Convert.ToInt32(e.Args[3]);
+                CrypToolFolderPath = e.Args[1];
+                CrypToolExePath = e.Args[2];
+                CrypToolProcessID = Convert.ToInt32(e.Args[3]);
                 try
                 {
-                    p = Process.GetProcessById(cryptoolProcessID);
+                    p = Process.GetProcessById(CrypToolProcessID);
                 }
                 catch (Exception ex)
                 {
@@ -62,13 +62,13 @@ namespace CrypUpdater
                 {
                     if ((p == null) || p.WaitForExit(1000 * 30))
                     {
-                        RestartCryptool();
+                        RestartCrypTool();
                     }
                     else
                     {
                         p.Kill();
                         p.WaitForExit();
-                        RestartCryptool();
+                        RestartCrypTool();
                     }
                     return;
                 }
@@ -113,7 +113,7 @@ namespace CrypUpdater
             }
             catch (IndexOutOfRangeException) // parameter not set
             {
-                if (cryptoolExePath != null)
+                if (CrypToolExePath != null)
                     MessageBox.Show("Update failed. CrypTool 2 will be restarted.", "Error");
                 else
                     UpdateFailure();
@@ -130,7 +130,7 @@ namespace CrypUpdater
             if (mayRestart)
             {
                 File.Delete(filePath);
-                RestartCryptool();
+                RestartCrypTool();
             }
             else
                 App.Current.Shutdown();
@@ -152,7 +152,7 @@ namespace CrypUpdater
                     StartMSI();
                 else if(filePath.EndsWith("exe"))
                     StartNSIS();
-                else UnpackZip(filePath, cryptoolFolderPath);
+                else UnpackZip(filePath, CrypToolFolderPath);
             }
             else
                 AskForLicenseToKill();
@@ -166,11 +166,11 @@ namespace CrypUpdater
 
             try
             {
-                DirectorySecurity ds = Directory.GetAccessControl(cryptoolFolderPath);
+                DirectorySecurity ds = Directory.GetAccessControl(CrypToolFolderPath);
 
                 Process p = new Process();
                 p.StartInfo.FileName = "msiexec.exe";
-                p.StartInfo.Arguments = "/i \"" + filePath + "\" /qb /l* " + logfilePath + " INSTALLDIR=\"" + cryptoolFolderPath + "\"";
+                p.StartInfo.Arguments = "/i \"" + filePath + "\" /qb /l* " + logfilePath + " INSTALLDIR=\"" + CrypToolFolderPath + "\"";
                 p.Start();
                 p.WaitForExit();
                 if (p.ExitCode != 0)
@@ -184,7 +184,7 @@ namespace CrypUpdater
                 {
                     Process p = new Process();
                     p.StartInfo.FileName = "msiexec.exe";
-                    p.StartInfo.Arguments = "/i \"" + filePath + "\" /qb /l* " + logfilePath + " INSTALLDIR=\"" + cryptoolFolderPath + "\"";
+                    p.StartInfo.Arguments = "/i \"" + filePath + "\" /qb /l* " + logfilePath + " INSTALLDIR=\"" + CrypToolFolderPath + "\"";
                     p.StartInfo.UseShellExecute = true;
                     p.StartInfo.Verb = "runas";
                     p.Start();
@@ -209,7 +209,7 @@ namespace CrypUpdater
                 // we silently delete the old update executable; executables are considered "old" if (a) their version is smaller 
                 // than the current version, or if (b) the new version cannot be determined (which implicitly makes it an old version)
                 FileVersionInfo oldExecutableFileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
-                FileVersionInfo newExecutableFileVersionInfo = FileVersionInfo.GetVersionInfo(cryptoolExePath);
+                FileVersionInfo newExecutableFileVersionInfo = FileVersionInfo.GetVersionInfo(CrypToolExePath);
                 // if the version cannot be determined (i.e. versions weren't set up until a recent fix), null is returned
                 string oldVersion = oldExecutableFileVersionInfo.ProductVersion;
                 string newVersion = newExecutableFileVersionInfo.ProductVersion;
@@ -274,7 +274,7 @@ namespace CrypUpdater
                 }
                 else
                 {
-                    DirectorySecurity ds = Directory.GetAccessControl(cryptoolFolderPath);
+                    DirectorySecurity ds = Directory.GetAccessControl(CrypToolFolderPath);
 
                     Process p = new Process();
                     p.StartInfo.FileName = filePath;
@@ -367,15 +367,15 @@ namespace CrypUpdater
             Application.Current.Shutdown();
         }
 
-        private void RestartCryptool()
+        private void RestartCrypTool()
         {
             try
             {
                 // flomar, 05/09/2011: restart CrypTool (and don't forget to set the working directory!)
                 Process p = new Process();
                 p.StartInfo.UseShellExecute = false;
-                p.StartInfo.WorkingDirectory = cryptoolFolderPath;
-                p.StartInfo.FileName = cryptoolExePath;
+                p.StartInfo.WorkingDirectory = CrypToolFolderPath;
+                p.StartInfo.FileName = CrypToolExePath;
                 p.Start();
                 Application.Current.Shutdown();
             }
@@ -389,26 +389,26 @@ namespace CrypUpdater
             }
         }
 
-        private void UnpackZip(string ZipFilePath, string CryptoolFolderPath)
+        private void UnpackZip(string ZipFilePath, string CrypToolFolderPath)
         {
             var loadDialog = new CrypUpdater.MainWindow();
-            var extractionTask = Task.Run(() => InternalUnpackZip(ZipFilePath, CryptoolFolderPath));
+            var extractionTask = Task.Run(() => InternalUnpackZip(ZipFilePath, CrypToolFolderPath));
             extractionTask.ContinueWith(_ => loadDialog.CloseOnFinish());   //Close dialog after extraction finished.
 
             loadDialog.ShowDialog();    //This call will wait in the UI event loop until the dialog gets closed.
         }
 
-        private void InternalUnpackZip(string ZipFilePath, string CryptoolFolderPath)
+        private void InternalUnpackZip(string ZipFilePath, string CrypToolFolderPath)
         {
             try
             {
-                DirectorySecurity ds = Directory.GetAccessControl(CryptoolFolderPath);
+                DirectorySecurity ds = Directory.GetAccessControl(CrypToolFolderPath);
 
                 using (ZipFile zip = ZipFile.Read(ZipFilePath))
                 {
                     // flomar, 10/27/2011: check whether we have a "ZipInstall.log" file in our
                     // CrypToolFolderPath-- if so, read in all listed files and delete them
-                    string fileInstalledFiles = Path.Combine(CryptoolFolderPath, "ZipInstall.log");
+                    string fileInstalledFiles = Path.Combine(CrypToolFolderPath, "ZipInstall.log");
                     if (File.Exists(fileInstalledFiles))
                     {
                         
@@ -432,7 +432,7 @@ namespace CrypUpdater
                                 try
                                 {
                                     // delete files only, not directories (on purpose)
-                                    File.Delete(Path.Combine(CryptoolFolderPath, filename));
+                                    File.Delete(Path.Combine(CrypToolFolderPath, filename));
                                 }
                                 catch (Exception)
                                 {
@@ -453,7 +453,7 @@ namespace CrypUpdater
                     // flomar, 10/27/2011: now extract the archive as usual, regardless of errors during uninstall
                     foreach (ZipEntry e in zip)
                     {
-                        e.Extract(CryptoolFolderPath, ExtractExistingFileAction.OverwriteSilently);
+                        e.Extract(CrypToolFolderPath, ExtractExistingFileAction.OverwriteSilently);
                     }
                 }
 
@@ -464,7 +464,7 @@ namespace CrypUpdater
 
                 if (!pricipal.IsInRole(WindowsBuiltInRole.Administrator))
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("CrypUpdater.exe", "\"" + ZipFilePath + "\" " + "\"" + CryptoolFolderPath + "\" " + "\"" + cryptoolExePath + "\" " + "\"" + cryptoolProcessID + "\" \"" + Boolean.FalseString + "\"");
+                    ProcessStartInfo psi = new ProcessStartInfo("CrypUpdater.exe", "\"" + ZipFilePath + "\" " + "\"" + CrypToolFolderPath + "\" " + "\"" + CrypToolExePath + "\" " + "\"" + CrypToolProcessID + "\" \"" + Boolean.FalseString + "\"");
                     psi.UseShellExecute = true;
                     psi.Verb = "runas";
                     psi.WorkingDirectory = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
@@ -491,7 +491,7 @@ namespace CrypUpdater
                 Process[] p2 = Process.GetProcessesByName("CrypWin");
                 foreach (Process p in p2)
                 {
-                    if (Path.GetDirectoryName(p.MainModule.FileName) == cryptoolFolderPath)
+                    if (Path.GetDirectoryName(p.MainModule.FileName) == CrypToolFolderPath)
                         processList.Add(p);
                 }
             }

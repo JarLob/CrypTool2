@@ -17,10 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.IO;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public class DemoController
     {

@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for SystemInfos.xaml
     /// </summary>
     [TabColor("White")]
-    [Localization("Cryptool.CrypWin.Properties.Resources")]
+    [Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class LicensesTab : UserControl
     {
         public LicensesTab()

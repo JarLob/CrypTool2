@@ -17,18 +17,18 @@
 using System;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.Convertor
+namespace CrypTool.Plugins.Convertor
 {
     // Converts a given string into a stream by using different encodings.
-    [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
-    [PluginInfo("Cryptool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringDecoder/DetailedDescription/doc.xml", "StringDecoder/t2s-icon.png")]
+    [Author("Arno Wacker", "arno.wacker@CrypTool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
+    [PluginInfo("CrypTool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringDecoder/DetailedDescription/doc.xml", "StringDecoder/t2s-icon.png")]
     [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class StringDecoder : ICrypComponent
     {
@@ -44,7 +44,7 @@ namespace Cryptool.Plugins.Convertor
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get 
             {

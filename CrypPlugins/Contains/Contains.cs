@@ -17,19 +17,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 using Contains.Aho_Corasick;
 using System.Collections;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Contains
 {
-  [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+  [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
   [PluginInfo("Contains.Properties.Resources", "PluginCaption", "PluginTooltip", "Contains/DetailedDescription/doc.xml", "Contains/icon.png", "Contains/subset.png", "Contains/no_subset.png")]
   [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
   public class Contains : ICrypComponent

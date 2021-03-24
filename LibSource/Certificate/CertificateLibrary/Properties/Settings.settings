@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="PCP_SERVER_ADDRESS" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">cloud.cryptool.org</Value>
+      <Value Profile="(Default)">cloud.CrypTool.org</Value>
     </Setting>
     <Setting Name="PCP_SERVER_PORT" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10443</Value>

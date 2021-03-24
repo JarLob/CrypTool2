@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.PaddingOracle
+namespace CrypTool.Plugins.PaddingOracle
 {
     /// <summary>
     /// Interaction logic for OraclePresentation.xaml

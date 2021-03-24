@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Threading;
 using System.Windows.Threading; 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using KeySearcher.Helper;
 using KeySearcher.KeyPattern;
 using KeySearcher.P2P.Exceptions;

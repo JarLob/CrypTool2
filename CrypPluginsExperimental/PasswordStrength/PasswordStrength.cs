@@ -17,13 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.PasswordStrength
+namespace CrypTool.Plugins.PasswordStrength
 {
     [Author("Selim Arikan", "selimarikan@windowslive.com", "Istanbul University, Electrics-Electronics Engineering", "http://www.selimarikan.com")]    
     [PluginInfo("Password Strength", "Determine the strength of the password given.", null, new[] { "PasswordStrength/Images/password.png" })]

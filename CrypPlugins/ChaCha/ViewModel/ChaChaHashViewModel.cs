@@ -1,7 +1,7 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Helper.Validation;
-using Cryptool.Plugins.ChaCha.Model;
-using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.Helper.Validation;
+using CrypTool.Plugins.ChaCha.Model;
+using CrypTool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle
     {

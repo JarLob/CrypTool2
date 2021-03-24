@@ -8,7 +8,7 @@
     <ProjectGuid>{670A2465-7B18-4914-B96A-228F5A052ED3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.VisualCryptography</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.VisualCryptography</RootNamespace>
     <AssemblyName>VisualCryptography</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
-using Cryptool.CrypWin.Helper;
+using CrypTool.CrypWin.Helper;
 
-namespace Cryptool.CrypWin.Properties
+namespace CrypTool.CrypWin.Properties
 {
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
     {

@@ -18,14 +18,14 @@ using System.Text;
 using System.Windows.Controls;
 using Contains.Aho_Corasick;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace Contains
 {
   /// <summary>
   /// Interaction logic for ContainsPresentation.xaml
   /// </summary>
-  [Cryptool.PluginBase.Attributes.Localization("Contains.Properties.Resources")]
+  [CrypTool.PluginBase.Attributes.Localization("Contains.Properties.Resources")]
   public partial class ContainsPresentation : UserControl
   {
     // private ObservableCollection<StringSearchResult> collection = new ObservableCollection<StringSearchResult>();

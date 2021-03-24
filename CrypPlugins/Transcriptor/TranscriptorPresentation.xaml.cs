@@ -24,7 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Text;
-using Cryptool.Plugins.Transcriptor;
+using CrypTool.Plugins.Transcriptor;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
@@ -35,12 +35,12 @@ namespace Transcriptor
     /// <summary>
     /// Interaktionslogik für TranscriptorPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Transcriptor.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Transcriptor.Properties.Resources")]
     public partial class TranscriptorPresentation : UserControl
     {
         # region Variables
 
-        private readonly Cryptool.Plugins.Transcriptor.Transcriptor transcriptor;
+        private readonly CrypTool.Plugins.Transcriptor.Transcriptor transcriptor;
         private String rectangleColor, selectedRectangleColor;
         private int alphabetCount = 0, indexCount = 0, currentRectangeleWidth, currentRectangleHeight;
         private bool mtOn, mouseDown, ctrlBtnPressed = false, firstSymbolOn = false, isBlackImage = false;
@@ -59,7 +59,7 @@ namespace Transcriptor
 
         public TranscriptorSettings Settings { get; set; }
 
-        public TranscriptorPresentation(Cryptool.Plugins.Transcriptor.Transcriptor transcriptor)
+        public TranscriptorPresentation(CrypTool.Plugins.Transcriptor.Transcriptor transcriptor)
         {
             InitializeComponent();
             this.transcriptor = transcriptor;

@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Resource
+﻿namespace CrypTool.Resource
 {
     partial class CreateResourceCtrl
     {

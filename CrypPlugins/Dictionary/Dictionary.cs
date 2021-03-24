@@ -17,26 +17,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Diagnostics;
 
 namespace Dictionary
 {
-    [Author("Thomas Schmid, Matthäus Wander", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+    [Author("Thomas Schmid, Matthäus Wander", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("Dictionary.Properties.Resources", "PluginCaption", "PluginTooltip", "Dictionary/DetailedDescription/doc.xml", "Dictionary/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
-    public class CryptoolDictionary : ICrypComponent
+    public class CrypToolDictionary : ICrypComponent
     {        
         # region private_variables
 
         private const string DATATYPE = "wordlists";
 
-        private CryptoolDictionarySettings settings = new CryptoolDictionarySettings();
+        private CrypToolDictionarySettings settings = new CrypToolDictionarySettings();
 
         // dictionary name -> collection of words
         private Dictionary<DataFileMetaInfo, string[]> dicValues = new Dictionary<DataFileMetaInfo, string[]>();
@@ -53,7 +53,7 @@ namespace Dictionary
 
         # endregion private_variables
 
-        public CryptoolDictionary()
+        public CrypToolDictionary()
         {
             LoadFileList();
         }

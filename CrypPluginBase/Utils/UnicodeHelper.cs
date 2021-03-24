@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace Cryptool.PluginBase.Utils
+namespace CrypTool.PluginBase.Utils
 {
     /// <summary>
     /// Helper class to map unicode codes to names and vice versa

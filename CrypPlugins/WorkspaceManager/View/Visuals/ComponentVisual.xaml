@@ -8,7 +8,7 @@
              xmlns:ic="clr-namespace:WorkspaceManager.View.Visuals"
              xmlns:model="clr-namespace:WorkspaceManager.Model;assembly=WorkspaceManagerModel"
              xmlns:dragdrop="clr-namespace:DragDropListBox"
-             xmlns:base="clr-namespace:Cryptool.PluginBase.Miscellaneous;assembly=CrypPluginBase"
+             xmlns:base="clr-namespace:CrypTool.PluginBase.Miscellaneous;assembly=CrypPluginBase"
              xmlns:bin="clr-namespace:WorkspaceManager.View.Visuals"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 

@@ -14,20 +14,20 @@
    limitations under the License.
 */
 
-namespace Cryptool.PluginBase.IO
+namespace CrypTool.PluginBase.IO
 {
     /// <summary>
-    /// ICryptoolStream reference to membuffer/swapfile.
-    /// ICryptoolStream instances can be passed safely to other plugins or components.
-    /// To create a new ICryptoolStream, please use CStreamWriter.
+    /// ICrypToolStream reference to membuffer/swapfile.
+    /// ICrypToolStream instances can be passed safely to other plugins or components.
+    /// To create a new ICrypToolStream, please use CStreamWriter.
     /// 
-    /// <para>You MAY create 1 to n readers upon one ICryptoolStream. They do not interfere.
-    /// You MAY pass the ICryptoolStream object safely to other components. They can create new
+    /// <para>You MAY create 1 to n readers upon one ICrypToolStream. They do not interfere.
+    /// You MAY pass the ICrypToolStream object safely to other components. They can create new
     /// readers, but not modify the stream.</para>
     /// 
     /// <para>For more usage notes, see CStreamWriter and CStreamReader.</para>
     /// </summary>
-    public interface ICryptoolStream
+    public interface ICrypToolStream
     {
         CStreamReader CreateReader();
 

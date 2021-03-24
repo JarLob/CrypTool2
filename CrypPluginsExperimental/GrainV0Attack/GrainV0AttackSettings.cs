@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.GrainV0.Attack
+namespace CrypTool.Plugins.GrainV0.Attack
 {
     public class GrainV0AttackSettings : ISettings
     {

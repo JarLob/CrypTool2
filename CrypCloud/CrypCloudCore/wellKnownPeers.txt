@@ -1,1 +1,1 @@
-﻿cloud.cryptool.org:10000
+﻿cloud.CrypTool.org:10000

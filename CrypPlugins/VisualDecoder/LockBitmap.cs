@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 // halfs the encode time
-namespace Cryptool.Plugins.VisualDecoder
+namespace CrypTool.Plugins.VisualDecoder
 {
     public class LockBitmap
     {

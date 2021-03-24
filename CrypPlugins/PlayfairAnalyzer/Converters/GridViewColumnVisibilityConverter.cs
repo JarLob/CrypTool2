@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cryptool.PlayfairAnalyzer.Converters
+namespace CrypTool.PlayfairAnalyzer.Converters
 {
     public class GridViewColumnVisibilityConverter : IValueConverter
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.CrypAnalysisViewControl
+namespace CrypTool.CrypAnalysisViewControl
 {
     public class CrypAnalysisViewControl : ContentControl
     {

@@ -14,8 +14,8 @@
    limitations under the License.
 */
 
-// Cryptool PRESENT Plugin
-// Author: Timm Korte, cryptool@easycrypt.de
+// CrypTool PRESENT Plugin
+// Author: Timm Korte, CrypTool@easycrypt.de
 // PRESENT information: http://www.crypto.rub.de/imperia/md/content/texte/publications/conferences/present_ches2007.pdf
 
 using System;
@@ -24,15 +24,15 @@ using System.IO;
 using System.Security.Cryptography;
 using System.ComponentModel;
 using System.Runtime.Remoting.Contexts;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
-    [Author("Timm Korte", "cryptool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
-    [PluginInfo("Cryptool.PRESENT.Properties.Resources", "PluginCaption", "PluginTooltip", "PRESENT/DetailedDescription/doc.xml", "PRESENT/icon.png", "PRESENT/Images/encrypt.png", "PRESENT/Images/decrypt.png")]
+    [Author("Timm Korte", "CrypTool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
+    [PluginInfo("CrypTool.PRESENT.Properties.Resources", "PluginCaption", "PluginTooltip", "PRESENT/DetailedDescription/doc.xml", "PRESENT/icon.png", "PRESENT/Images/encrypt.png", "PRESENT/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     [Synchronization(SynchronizationAttribute.REQUIRES_NEW)]
     public class PRESENT : ContextBoundObject, ICrypComponent
@@ -40,7 +40,7 @@ namespace Cryptool.PRESENT
         #region Private variables
         private PRESENTSettings settings;
         private PRESENTAnimation presentation;
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private CStreamWriter outputStream;
         private byte[] inputKey;
         private byte[] inputIV;
@@ -65,7 +65,7 @@ namespace Cryptool.PRESENT
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
 
             get
@@ -116,7 +116,7 @@ namespace Cryptool.PRESENT
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
 
             get
@@ -215,7 +215,7 @@ namespace Cryptool.PRESENT
                     SymmetricAlgorithm p_alg = new PresentManaged();
                     ConfigureAlg(p_alg, true);
 
-                    ICryptoolStream inputdata = InputStream;
+                    ICrypToolStream inputdata = InputStream;
 
                     inputdata = BlockCipherHelper.AppendPadding(InputStream, settings.padmap[settings.Padding], p_alg.BlockSize / 8);
 
@@ -304,7 +304,7 @@ namespace Cryptool.PRESENT
                     SymmetricAlgorithm p_alg = new PresentManaged();
                     ConfigureAlg(p_alg, true);
 
-                    ICryptoolStream inputdata = InputStream;
+                    ICrypToolStream inputdata = InputStream;
 
                     CStreamReader reader = inputdata.CreateReader();
 

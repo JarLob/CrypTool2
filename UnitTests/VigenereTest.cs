@@ -34,7 +34,7 @@ namespace Tests.TemplateAndPluginTests
         // Sources of the test vectors:
         //  http://courses.ece.ubc.ca/412/previous_years/2004/modules/sessions/EECE_412-03-crypto_intro-viewable.pdf
         //  http://en.wikipedia.org/wiki/Vigenère_cipher
-        //  Cryptool1-Testvectors
+        //  CrypTool1-Testvectors
         //
         TestVector[] testvectors = new TestVector[] {
             new TestVector () { n=0, key="LEMON", input="ATTACKATDAWN", output="LXFOPVEFRNHR" },

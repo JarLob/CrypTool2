@@ -15,7 +15,7 @@
 */
 using System;
 
-namespace Cryptool.Plugins.NetworkReceiver
+namespace CrypTool.Plugins.NetworkReceiver
 {   
 
     public class PresentationPackage

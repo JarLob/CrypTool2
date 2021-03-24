@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <kopal<AT>cryptool.org>
+   Copyright 2019 Nils Kopal <kopal<AT>CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     
     /// <summary>

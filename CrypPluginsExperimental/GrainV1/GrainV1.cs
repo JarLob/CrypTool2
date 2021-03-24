@@ -16,13 +16,13 @@
 
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.GrainV1
+namespace CrypTool.Plugins.GrainV1
 {
     [Author("Maxim Serebrianski", "ms_1990@gmx.de", "University of Mannheim", "http://www.uni-mannheim.de/1/startseite/index.html")]
     [PluginInfo("GrainV1.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1/DetailedDescription/doc.xml", new[] { "GrainV1/Images/grain.jpg" })]

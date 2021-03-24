@@ -22,15 +22,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using NetworkSender;
 using Timer = System.Timers.Timer;
 
 #endregion
 
-namespace Cryptool.Plugins.NetworkSender
+namespace CrypTool.Plugins.NetworkSender
 {
     [Author("Mirko Sartorius", "mirkosartorius@web.de", "University of Kassel", "")]
     [PluginInfo("NetworkSender.Properties.Resources", "PluginCaption", "PluginTooltip", "NetworkSender/userdoc.xml", new[] {"NetworkSender/Images/package.png"})]
@@ -63,7 +63,7 @@ namespace Cryptool.Plugins.NetworkSender
         ///   Data to be send inside of a package over a network
         /// </summary>
         [PropertyInfo(Direction.InputData, "StreamInputCaption", "StreamInputTooltip")]
-        public ICryptoolStream PackageStream { get; set; }
+        public ICrypToolStream PackageStream { get; set; }
 
         /// <summary>
         ///   Socket ID

@@ -1,4 +1,4 @@
-namespace Cryptool.StreamComparator
+namespace CrypTool.StreamComparator
 {
   using System;
   using System.Collections;

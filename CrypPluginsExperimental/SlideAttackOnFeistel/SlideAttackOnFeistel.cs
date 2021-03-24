@@ -14,14 +14,14 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.Generic;
 
-namespace Cryptool.SlideAttackOnFeistel
+namespace CrypTool.SlideAttackOnFeistel
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
     [PluginInfo("SlideAttackOnFeistel.Properties.Resources", "PluginCaption", "PluginTooltip", "SlideAttackOnFeistel/userdoc.xml", "SlideAttackOnFeistel/Images/SlideAttackOnFeistel.jpg")]

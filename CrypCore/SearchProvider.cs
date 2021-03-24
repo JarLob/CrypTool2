@@ -11,7 +11,7 @@ using Lucene.Net.Store;
 using Directory = System.IO.Directory;
 using System;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     public class SearchResult
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
 namespace Wizard
 {
@@ -16,7 +16,7 @@ namespace Wizard
             Resources.Add("settingsStyle", settingsStyle);
             InitializeComponent();
 
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { Cryptool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { CrypTool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
         }
     }
 }

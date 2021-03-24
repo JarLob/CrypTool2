@@ -16,7 +16,7 @@
 
 using System.Security.Cryptography;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
   public sealed class PresentManaged : PresentCipher
   {

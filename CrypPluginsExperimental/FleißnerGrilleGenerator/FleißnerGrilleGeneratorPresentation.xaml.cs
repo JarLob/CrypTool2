@@ -15,10 +15,10 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
-using Cryptool.Plugins.FleißnerGrilleGenerator;
+using CrypTool.Plugins.FleißnerGrilleGenerator;
 using System.Collections;
 
-namespace Cryptool.Plugins.FleißnerGrilleGenerator
+namespace CrypTool.Plugins.FleißnerGrilleGenerator
 {
     /// <summary>
     /// Interaktionslogik für FleißnerGrilleGeneratorPresentation.xaml

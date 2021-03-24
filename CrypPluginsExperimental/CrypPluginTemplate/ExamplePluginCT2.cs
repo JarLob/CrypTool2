@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.ExamplePluginCT2
+namespace CrypTool.Plugins.ExamplePluginCT2
 {
     // HOWTO: Change author name, email address, organization and URL.
-    [Author("Anonymous", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Anonymous", "coredevs@CrypTool.org", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("Example Plugin", "Subtract one number from another", "ExamplePluginCT2/userdoc.xml", new[] { "CrypWin/images/default.png" })]

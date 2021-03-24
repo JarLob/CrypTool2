@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2020 Nils Kopal <kopal<AT>cryptool.org>
+   Copyright 2020 Nils Kopal <kopal<AT>CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cryptool.CrypConsole
+namespace CrypTool.CrypConsole
 {
     public class ArgsHelper
     {        
@@ -339,7 +339,7 @@ namespace Cryptool.CrypConsole
         {
             Console.WriteLine("");
             Console.WriteLine("-= CrypConsole -- a CrypTool 2 console for executing CrypTool 2 workspaces in the Windows console =- ");
-            Console.WriteLine("(C) 2020 by Nils Kopal, kopal<at>cryptool.org");
+            Console.WriteLine("(C) 2020 by Nils Kopal, kopal<at>CrypTool.org");
             Console.WriteLine("Usage:");
             Console.WriteLine("CrypConsole.exe -cwm=path/to/cwm/file -input=<input param definition> -output=<output param definition>");
             Console.WriteLine("All arguments:");

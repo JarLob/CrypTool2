@@ -21,14 +21,14 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.VigenereAnalyzer
+namespace CrypTool.VigenereAnalyzer
 {
     /// <summary>
     /// Interaktionslogik für AssignmentPresentation.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.VigenereAnalyzer.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.VigenereAnalyzer.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

@@ -5,19 +5,19 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Attributes;
 using System.Diagnostics;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for OnlineHelpTab.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.Properties.Resources")]
+    [Localization("CrypTool.CrypWin.Properties.Resources")]
     [TabColor("White")]
     [NotStoredInSessionAttribute]
     public partial class OnlineHelpTab : UserControl

@@ -28,7 +28,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Cryptool.OnlineDocumentationEditor
+namespace CrypTool.OnlineDocumentationEditor
 {
     /// <summary>
     /// Interaktionslogik für OnlineDocumentationEditorPresentation.xaml

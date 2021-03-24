@@ -16,10 +16,10 @@
 
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Converter
+namespace CrypTool.Plugins.Converter
 {
     public class ConverterSettings : ISettings
     {
@@ -476,7 +476,7 @@ namespace Cryptool.Plugins.Converter
                         }
                         break;
                     }
-                case OutputTypes.CryptoolStreamType:
+                case OutputTypes.CrypToolStreamType:
                     {
                         settingChanged("Numeric", Visibility.Collapsed);
                         settingChanged("Format", Visibility.Collapsed);

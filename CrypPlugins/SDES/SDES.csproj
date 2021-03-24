@@ -8,7 +8,7 @@
     <ProjectGuid>{68FF3A1A-16F7-4657-B79F-5A12F884F442}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Cryptography.Encryption</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Cryptography.Encryption</RootNamespace>
     <AssemblyName>SDES</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -193,7 +193,7 @@
     <Page Include="SDESPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>Cryptool.Plugins.Cryptography.Encryption</CustomToolNamespace>
+      <CustomToolNamespace>CrypTool.Plugins.Cryptography.Encryption</CustomToolNamespace>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

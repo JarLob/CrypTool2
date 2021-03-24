@@ -28,7 +28,7 @@ namespace DCAKeyRecovery.UI.Cipher1
     /// <summary>
     /// Interaktionslogik für LastRoundAttack.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
     public partial class Cipher1ResultView : UserControl, INotifyPropertyChanged
     {
         private string _attackLastRoundHeader;

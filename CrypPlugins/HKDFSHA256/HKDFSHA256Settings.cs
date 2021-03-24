@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Christian Bender, Universität Siegen
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.HKDFSHA256
+namespace CrypTool.Plugins.HKDFSHA256
 {
     public class HKDFSHA256Settings : ISettings
     {

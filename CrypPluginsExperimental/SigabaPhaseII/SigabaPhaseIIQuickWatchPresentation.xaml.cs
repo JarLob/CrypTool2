@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
 
 
@@ -21,7 +21,7 @@ namespace SigabaPhaseII
     /// <summary>
     /// Interaction logic for SigabaBruteforceQuickWatchPresentation.xaml
     /// </summary>
-    [global::Cryptool.PluginBase.Attributes.Localization("SigabaPhaseII.Properties.Resources")]
+    [global::CrypTool.PluginBase.Attributes.Localization("SigabaPhaseII.Properties.Resources")]
     public partial class SigabaPhaseIIQuickWatchPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();

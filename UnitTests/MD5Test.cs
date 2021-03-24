@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 namespace Tests.TemplateAndPluginTests
 {
@@ -27,9 +27,9 @@ namespace Tests.TemplateAndPluginTests
                 Assert.AreEqual(vector.output.ToUpper(), output[0].ToHex(), "Unexpected value in test #" + vector.n + ".");
             }
 
-            ICryptoolStream input = new String('\0', 16).ToStream();
+            ICrypToolStream input = new String('\0', 16).ToStream();
             for(int i=0;i<100000;i++)
-                input = (ICryptoolStream)scenario1.GetOutputs(new object[] { input })[0];
+                input = (ICrypToolStream)scenario1.GetOutputs(new object[] { input })[0];
             Assert.AreEqual("1A83F51285E4D89403D00C46EF8508FE", input.ToHex(), "Unexpected value in iteration test");
         }
 

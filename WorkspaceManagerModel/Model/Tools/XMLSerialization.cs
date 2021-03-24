@@ -47,7 +47,7 @@ namespace XMLSerialization
         /// /// <param name="compress"></param>
         public static void Serialize(object obj, string filename,bool compress = false)
         {
-            XMLSerialization.Serialize(obj, filename, Encoding.UTF8,compress);
+            Serialize(obj, filename, Encoding.UTF8,compress);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace XMLSerialization
                     sourceFile = File.Create(filename);
                     compStream = new GZipStream(sourceFile, CompressionMode.Compress);
                     writer = new StreamWriter(compStream, encoding);
-                    XMLSerialization.Serialize(obj, writer,compress);
+                    Serialize(obj, writer,compress);
                 }
                 finally
                 {
@@ -97,7 +97,7 @@ namespace XMLSerialization
                 {
                     sourceFile = File.Create(filename);
                     writer = new StreamWriter(sourceFile, encoding);
-                    XMLSerialization.Serialize(obj, writer);
+                    Serialize(obj, writer);
                 }
                 finally
                 {
@@ -124,10 +124,10 @@ namespace XMLSerialization
             writer.WriteLine("<?xml version=\"1.0\" encoding=\"" + writer.Encoding.HeaderName + "\"?>");
             writer.WriteLine("<!--");
             writer.WriteLine("     XML serialized C# Objects");
-            writer.WriteLine("     File created: " + System.DateTime.Now);
+            writer.WriteLine("     File created: " + DateTime.Now);
             writer.WriteLine("     File compressed: " + compress);
             writer.WriteLine("     XMLSerialization created by Nils Kopal");
-            writer.WriteLine("     mailto: Nils.Kopal(AT)stud.uni-due.de");
+            writer.WriteLine("     mailto: kopal(AT)cryptool.org");
             writer.WriteLine("-->");
             writer.WriteLine("<objects>");
             SerializeIt(obj, writer, alreadySerializedObjects);
@@ -277,7 +277,7 @@ namespace XMLSerialization
                     string type = obj.GetType().GetField(memberInfo.Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).FieldType.FullName;
                     object value = obj.GetType().GetField(memberInfo.Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
                     
-                    if (value is System.Collections.IList && !(value is System.Byte[]))
+                    if (value is System.Collections.IList && !(value is byte[]))
                     {
                         foreach (object o in (System.Collections.IList)value)
                         {
@@ -612,15 +612,12 @@ namespace XMLSerialization
                             {
                                 //hack: to allow "old" models being loaded (because some model elements were in model namespace before
                                 //creating new model)
-                                string name = membertype.InnerText.Replace("WorkspaceManager.View.Container", "WorkspaceManager.Model");
-                                newmember =
-                                    System.Activator.CreateInstance(Type.GetType(RevertXMLSymbols(name)));
+                                var name = membertype.InnerText.Replace("WorkspaceManager.View.Container", "WorkspaceManager.Model");
+                                newmember = Activator.CreateInstance(Type.GetType(RevertXMLSymbols(name)));
 
                                 if (newmember is Enum)
                                 {
-                                    Int32 result = 0;
-                                    System.Int32.TryParse(RevertXMLSymbols(value.InnerText), out result);
-                                    
+                                    int.TryParse(RevertXMLSymbols(value.InnerText), out var result);
                                     //hack: to allow "old" models being loaded (because some model elements were in model namespace before
                                     //creating new model)
                                     name = membertype.InnerText.Replace("WorkspaceManager.View.Container", "WorkspaceManager.Model");

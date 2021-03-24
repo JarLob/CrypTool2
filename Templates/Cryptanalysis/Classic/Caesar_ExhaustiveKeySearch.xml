@@ -33,7 +33,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Caesar-Verschlüsselung" /><
     <plugin name="Caesar" />
     <plugin name="Comparators" />
     <plugin name="Contains" />
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
     <plugin name="Gate" />
     <plugin name="IncDec" />
   </relevantPlugins>

@@ -3,14 +3,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.QuadraticSieve
+namespace CrypTool.Plugins.QuadraticSieve
 {
     /// <summary>
     /// Interaction logic for ProgressRelationPackages.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("QuadraticSieve.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("QuadraticSieve.Properties.Resources")]
     public partial class ProgressRelationPackages : UserControl
     {
         private long ourID;

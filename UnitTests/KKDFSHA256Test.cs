@@ -23,7 +23,7 @@ namespace Tests.TemplateAndPluginTests
         }
 
         byte[] outputData = null;
-        Cryptool.Plugins.KKDFSHA256.KKDFSHA256 pluginInstance;
+        CrypTool.Plugins.KKDFSHA256.KKDFSHA256 pluginInstance;
 
         /// <summary>
         /// The method contains the unittests
@@ -31,7 +31,7 @@ namespace Tests.TemplateAndPluginTests
         [TestMethod]
         public void KKDFSHA256TestMethod()
         {
-            pluginInstance = (Cryptool.Plugins.KKDFSHA256.KKDFSHA256)TestHelpers.GetPluginInstance("KKDFSHA256");
+            pluginInstance = (CrypTool.Plugins.KKDFSHA256.KKDFSHA256)TestHelpers.GetPluginInstance("KKDFSHA256");
             pluginInstance.PropertyChanged += PluginInstance_PropertyChanged;
             var scenario = new PluginTestScenario(pluginInstance, new[] { "SKM", "Key", "OutputBytes", ".DisplayPres", ".InfinityOutput" }, new[] { "KeyMaterial" });
             object[] output;

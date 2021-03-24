@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Grain_v1
+namespace CrypTool.Plugins.Grain_v1
 {
     public class GrainSettings : ISettings
     {

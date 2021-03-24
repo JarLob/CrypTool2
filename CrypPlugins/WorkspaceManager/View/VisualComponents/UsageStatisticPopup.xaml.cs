@@ -7,8 +7,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
 using WorkspaceManager.Model;
 using WorkspaceManager.View.Base;
 using WorkspaceManager.View.Visuals;
@@ -125,7 +125,7 @@ namespace WorkspaceManager.View.VisualComponents
         {
             try
             {
-                if (!Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition)
+                if (!CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition)
                 {
                     return;
                 }
@@ -172,7 +172,7 @@ namespace WorkspaceManager.View.VisualComponents
         {
             try
             {
-                if (!Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition)
+                if (!CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition)
                 {
                     return;
                 }
@@ -492,8 +492,8 @@ typeof(Double), typeof(CricularLineProgress), new FrameworkPropertyMetadata((Dou
             var p = Mouse.GetPosition(_win);
             _clp.RenderTransform = new TranslateTransform(p.X, p.Y);
 
-            DoubleAnimation anim = new DoubleAnimation(50, 0, new Duration(TimeSpan.FromSeconds(Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_BlingDelay)));
-            DoubleAnimation anim2 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_BlingDelay)));
+            DoubleAnimation anim = new DoubleAnimation(50, 0, new Duration(TimeSpan.FromSeconds(CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_BlingDelay)));
+            DoubleAnimation anim2 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_BlingDelay)));
             Storyboard sb = new Storyboard();
             Storyboard.SetTarget(anim, _clp);
             Storyboard.SetTarget(anim2, _clp);

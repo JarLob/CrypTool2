@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.Core;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase;
+using CrypTool.Core;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using WorkspaceManager.Model;
 using WorkspaceManager.Execution;
@@ -30,7 +30,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Media.Imaging;
 using System.Printing;
 using System.Windows.Documents;
@@ -53,7 +53,7 @@ namespace WorkspaceManager
     /// </summary>
     [TabColor("LightSlateGray")]
     [EditorInfo("cwm", true, false, true, true, true, true, false, true, true )]
-    [Author("Viktor Matkovic,Nils Kopal", "nils.kopal@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Viktor Matkovic,Nils Kopal", "nils.kopal@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("WorkspaceManager.Properties.Resources", "PluginCaption", "PluginTooltip", "WorkspaceManager/DetailedDescription/doc.xml", "WorkspaceManager/View/Images/WorkspaceManagerIcon.ico")]
     public class WorkspaceManagerClass : IEditor
     {
@@ -213,7 +213,7 @@ namespace WorkspaceManager
                 GuiLogMessage(String.Format(Resources.WorkspaceManagerClass_Open_Loading_Model___0_, fileName), NotificationLevel.Info);
                 var persistance = new ModelPersistance();
                 persistance.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-                WorkspaceModel = persistance.loadModel(fileName, Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_TemplateReplacement);
+                WorkspaceModel = persistance.loadModel(fileName, CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_TemplateReplacement);
                 WorkspaceModel.OnGuiLogNotificationOccured += this.GuiLogNotificationOccured;
                 var dispatcherOp = WorkspaceSpaceEditorView.Load(WorkspaceModel);
                 HandleTemplateLoadingDispatcher(dispatcherOp, fileName);
@@ -795,7 +795,7 @@ namespace WorkspaceManager
             Thread.CurrentThread.CurrentCulture = _currentCulture;
             Thread.CurrentThread.CurrentUICulture = _currentUICulture;
 
-            if (Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_UseGlobalProgressbar) 
+            if (CrypTool.PluginBase.Properties.Settings.Default.WorkspaceManager_UseGlobalProgressbar) 
             {
                 if (DateTime.Now >= progressTime.AddSeconds(1))
                 {

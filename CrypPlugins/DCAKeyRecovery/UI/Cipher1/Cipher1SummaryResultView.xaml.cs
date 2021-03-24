@@ -36,7 +36,7 @@ namespace DCAKeyRecovery.UI.Cipher1
     /// <summary>
     /// Interaktionslogik für Cipher1SummaryResultView.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAKeyRecovery.Properties.Resources")]
     public partial class Cipher1SummaryResultView : UserControl, INotifyPropertyChanged
     {
         //summary view

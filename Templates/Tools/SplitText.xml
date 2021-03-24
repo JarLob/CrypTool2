@@ -19,7 +19,7 @@
   <icon file="SplitText.png" />
   <relevantPlugins>
     <plugin name="Substitution" />
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Uppercase$" value="Großbuchstaben" />

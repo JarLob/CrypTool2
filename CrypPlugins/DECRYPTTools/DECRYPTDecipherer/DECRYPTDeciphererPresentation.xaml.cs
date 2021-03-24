@@ -13,8 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -23,9 +23,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.Plugins.DECRYPTTools.Util;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
     /// <summary>
     /// Interaktionslogik für DECRYPTTextParserPresentation.xaml

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Christian Bender, Universität Siegen
            Nils Kopal, CrypTool 2 Team
 
@@ -19,13 +19,13 @@
 
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
 
-namespace Cryptool.Plugins.RandomNumberGenerator
+namespace CrypTool.Plugins.RandomNumberGenerator
 {
     /// <summary>
     /// Type of random number generator
@@ -94,7 +94,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
-        [TaskPane("OutputTypeCaption", "OutputTypeTooltip", "GeneralSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "Byte Array", "CryptoolStream", "Number", "Number Array" , "Bool" })]
+        [TaskPane("OutputTypeCaption", "OutputTypeTooltip", "GeneralSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "Byte Array", "CrypToolStream", "Number", "Number Array" , "Bool" })]
         public OutputType OutputType
         {
             get

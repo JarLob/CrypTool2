@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Cryptool.MD5.Algorithm;
+using CrypTool.MD5.Algorithm;
 
-namespace Cryptool.MD5.Presentation
+namespace CrypTool.MD5.Presentation
 {
     /// <summary>
     /// Interaktionslogik für PresentationContainer.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.Plugins.MD5.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.Plugins.MD5.Properties.Resources")]
     public partial class PresentationContainer : UserControl
     {
         private PresentableMD5 md5;

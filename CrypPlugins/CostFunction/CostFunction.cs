@@ -18,16 +18,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using System.Threading;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.Utils;
 
-namespace Cryptool.Plugins.CostFunction
+namespace CrypTool.Plugins.CostFunction
 {
-    [Author("Nils Kopal, Sven Rech", "Nils.Kopal@cryptool.org", "CrypTool Team", "http://www.cryptool.org")]
+    [Author("Nils Kopal, Sven Rech", "Nils.Kopal@CrypTool.org", "CrypTool Team", "http://www.CrypTool.org")]
     [PluginInfo("CostFunction.Properties.Resources", "PluginCaption", "PluginTooltip", "CostFunction/DetailedDescription/doc.xml", "CostFunction/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CostFunction : ICrypComponent

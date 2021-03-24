@@ -8,7 +8,7 @@
     <ProjectGuid>{C6023885-0FEE-4699-97A8-6983381D529F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.EnigmaAnalyzer</RootNamespace>
+    <RootNamespace>CrypTool.EnigmaAnalyzer</RootNamespace>
     <AssemblyName>EnigmaAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

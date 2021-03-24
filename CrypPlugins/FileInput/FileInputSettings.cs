@@ -16,7 +16,7 @@
 
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace FileInput
 {

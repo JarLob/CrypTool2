@@ -15,15 +15,15 @@
 */
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Numerics;
 using System.Collections;
 
-namespace Cryptool.Plugins.DGK
+namespace CrypTool.Plugins.DGK
 {
     [Author("Armin Krauss, Martin Franz", "", "", "")]
     [PluginInfo("DGK.Properties.Resources",
@@ -437,7 +437,7 @@ namespace Cryptool.Plugins.DGK
                     this.inputm = (byte[])Encoding.UTF8.GetBytes((String)value);
                 else if (value is CStreamWriter)
                 {
-                    CStreamReader reader = ((ICryptoolStream)value).CreateReader();
+                    CStreamReader reader = ((ICrypToolStream)value).CreateReader();
                     reader.WaitEof();
                     this.inputm = new byte[reader.Length];
                     reader.Seek(0, System.IO.SeekOrigin.Begin);

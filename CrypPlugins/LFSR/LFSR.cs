@@ -15,10 +15,10 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 // for [MethodImpl(MethodImplOptions.Synchronized)]
 using System.Runtime.CompilerServices;
 // for QuickwatchPresentation
@@ -27,10 +27,10 @@ using System.Text.RegularExpressions;
 // for Brushes
 using System.Windows.Media;
 
-namespace Cryptool.LFSR
+namespace CrypTool.LFSR
 {
     [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
-    [PluginInfo("Cryptool.LFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "LFSR/DetailedDescription/doc.xml", "LFSR/Images/LFSR.png", "LFSR/Images/encrypt.png", "LFSR/Images/decrypt.png")]
+    [PluginInfo("CrypTool.LFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "LFSR/DetailedDescription/doc.xml", "LFSR/Images/LFSR.png", "LFSR/Images/encrypt.png", "LFSR/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.Protocols)]
     public class LFSR : ICrypComponent
     {
@@ -281,7 +281,7 @@ namespace Cryptool.LFSR
             {
                 // create some input
                 String dummystring = "1010";
-                // this.inputSeed = new CryptoolStream();
+                // this.inputSeed = new CrypToolStream();
                 inputSeed = dummystring;
                 // write a warning to the outside world
                 GuiLogMessage("WARNING - No Seed provided. Using dummy data (" + dummystring + ").", NotificationLevel.Warning, true);
@@ -378,7 +378,7 @@ namespace Cryptool.LFSR
 
         private string BuildPolynomialFromBinary(char [] tapSequence)
         {
-            string polynomial = Cryptool.LFSR.Properties.Resources.Feedback_polynomial + ": \n";
+            string polynomial = CrypTool.LFSR.Properties.Resources.Feedback_polynomial + ": \n";
             char[] tempTapSequence = ReverseOrder(tapSequence);
             int power;
 

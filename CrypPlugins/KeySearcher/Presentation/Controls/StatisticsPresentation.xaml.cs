@@ -79,7 +79,7 @@ namespace KeySearcherPresentation.Controls
     /// <summary>
     /// Interaction logic for StatisticsPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class StatisticsPresentation : UserControl
     {
         public StatisticsPresentation()

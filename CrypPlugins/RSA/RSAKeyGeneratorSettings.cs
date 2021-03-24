@@ -15,11 +15,11 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Cryptool.Plugins.RSA
+namespace CrypTool.Plugins.RSA
 {
     /// <summary>
     /// Settings class for the RSAKeyGenerator plugin
@@ -340,4 +340,4 @@ namespace Cryptool.Plugins.RSA
 
     }//end RSAKeyGeneratorSettings
 
-}//end Cryptool.Plugins.RSA
+}//end CrypTool.Plugins.RSA

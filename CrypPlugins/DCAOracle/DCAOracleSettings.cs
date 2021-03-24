@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.DCAOracle
+namespace CrypTool.Plugins.DCAOracle
 {
     public class DCAOracleSettings : ISettings
     {

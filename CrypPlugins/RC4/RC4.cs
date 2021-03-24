@@ -17,25 +17,25 @@
 using System;
 using System.Linq;
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Resources;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     [Author("Florian Marchal", "florian@marchal.de", "", "")]
-    [PluginInfo("Cryptool.RC4.Properties.Resources", "PluginCaption", "PluginTooltip", "RC4/DetailedDescription/doc.xml", "RC4/icon.png", "RC4/Images/encrypt.png", "RC4/Images/decrypt.png")]
+    [PluginInfo("CrypTool.RC4.Properties.Resources", "PluginCaption", "PluginTooltip", "RC4/DetailedDescription/doc.xml", "RC4/icon.png", "RC4/Images/encrypt.png", "RC4/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class RC4 : ICrypComponent
     {
         #region Private variables
         // RC4 settings
         // the input data provided by the user
-        private ICryptoolStream inputData;
+        private ICrypToolStream inputData;
         // the input key provided by the user
-        private ICryptoolStream inputKey;
+        private ICrypToolStream inputKey;
         // the output stream
         private CStreamWriter outputStreamWriter;
         // indicates if we need to stop the algorithm
@@ -60,7 +60,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputData
+        public ICrypToolStream InputData
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
-        public ICryptoolStream InputKey
+        public ICrypToolStream InputKey
         {
             get { return this.inputKey; }
             set
@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
         }
 
-        private byte[] ToByteArray(ICryptoolStream icstr)
+        private byte[] ToByteArray(ICrypToolStream icstr)
         {
             CStreamReader stream = icstr.CreateReader();
             stream.WaitEof();
@@ -110,7 +110,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             try
             {
                 // this is for localization
-                ResourceManager resourceManager = new ResourceManager("Cryptool.RC4.Properties.Resources", GetType().Assembly);
+                ResourceManager resourceManager = new ResourceManager("CrypTool.RC4.Properties.Resources", GetType().Assembly);
                 
                 // make sure we have a valid data input
                 if (inputData == null)

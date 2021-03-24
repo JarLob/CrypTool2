@@ -41,13 +41,13 @@
   </introduction>
   <usage lang="en">
     To use the WEP component the user has to put it onto the workspace. A 40bit key has to be provided. The WEP component offers to encrypt or to
-    decrypt packets which have to be provided using an CryptoolStream. To generate test packets an IFrame Generator component is suitable. Depending
+    decrypt packets which have to be provided using an CrypToolStream. To generate test packets an IFrame Generator component is suitable. Depending
     on the users choice to encrypt or to decrypt the WEP component delivers encrypted or decrypted packets using the provided key.
   </usage>
-  <usage lang="zh-CN">要使用WEP组件，用户必须将其放在工作区中。必须提供一个40位的密钥。 WEP组件提供加密或解密必须使用CryptoolStream提供的数据包的功能。要生成测试数据包，可以使用IFrame Generator组件。根据用户的选择，加密或解密WEP组件使用提供的密钥传递加密或解密的数据包。</usage>
-  <usage lang="ru">Чтобы использовать компонент WEP, пользователь должен поместить его в рабочую область. Должен быть предоставлен 40-битный ключ. Компонент WEP предлагает шифровать или расшифровывать пакеты, которые должны быть предоставлены с использованием CryptoolStream. Для генерации тестовых пакетов подходящим является компонент генератора IFrame. В зависимости от выбора пользователя для шифрования или дешифрования WEP-компонент поставляет зашифрованные или дешифрованные пакеты с использованием предоставленного ключа.</usage>
+  <usage lang="zh-CN">要使用WEP组件，用户必须将其放在工作区中。必须提供一个40位的密钥。 WEP组件提供加密或解密必须使用CrypToolStream提供的数据包的功能。要生成测试数据包，可以使用IFrame Generator组件。根据用户的选择，加密或解密WEP组件使用提供的密钥传递加密或解密的数据包。</usage>
+  <usage lang="ru">Чтобы использовать компонент WEP, пользователь должен поместить его в рабочую область. Должен быть предоставлен 40-битный ключ. Компонент WEP предлагает шифровать или расшифровывать пакеты, которые должны быть предоставлены с использованием CrypToolStream. Для генерации тестовых пакетов подходящим является компонент генератора IFrame. В зависимости от выбора пользователя для шифрования или дешифрования WEP-компонент поставляет зашифрованные или дешифрованные пакеты с использованием предоставленного ключа.</usage>
   <usage lang="de-DE">
-    Um die WEP-Komponente zu verwenden, muss der Benutzer diese auf den Arbeitsplatz ziehen. Als Input werden benötigt: Erstens ein 40-Bit-Schlüssel, und zweitens Pakete in Form eines CryptoolStream. WEP-Pakete können mit dem IFRame-Generator erzeugt werden.
+    Um die WEP-Komponente zu verwenden, muss der Benutzer diese auf den Arbeitsplatz ziehen. Als Input werden benötigt: Erstens ein 40-Bit-Schlüssel, und zweitens Pakete in Form eines CrypToolStream. WEP-Pakete können mit dem IFRame-Generator erzeugt werden.
     Je nach Wahl des Benutzers liefert die WEP-Komponente aus dem Input ver- oder entschlüsselte WEP-Pakete unter Nutzung des angegebenen Schlüssels.
   </usage>
   <presentation lang="en"></presentation>

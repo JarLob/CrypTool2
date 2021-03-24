@@ -16,7 +16,7 @@
 
 using DevComponents.WpfRibbon;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
   public class CrypWinCommands
   {

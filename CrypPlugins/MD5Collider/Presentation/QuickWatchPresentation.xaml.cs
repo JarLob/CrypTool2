@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Cryptool.Plugins.MD5Collider.Algorithm;
+using CrypTool.Plugins.MD5Collider.Algorithm;
 
-namespace Cryptool.Plugins.MD5Collider.Presentation
+namespace CrypTool.Plugins.MD5Collider.Presentation
 {
     /// <summary>
     /// Interaktionslogik für QuickWatchPresentation.xaml

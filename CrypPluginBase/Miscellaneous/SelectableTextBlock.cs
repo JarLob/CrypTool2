@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 //Code in this class is taken from https://stackoverflow.com/questions/136435/any-way-to-make-a-wpf-textblock-selectable
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class SelectableTextBlock : TextBlock
     {

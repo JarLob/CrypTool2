@@ -13,9 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.DECRYPTTools.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,10 +24,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.DECRYPTTools.DECRYPTSyntaxAnalyzer
+namespace CrypTool.Plugins.DECRYPTTools.DECRYPTSyntaxAnalyzer
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECRYPTTools.Properties.Resources", "DECRYPTSyntaxAnalyzer", "DECRYPTSyntaxAnalyzer", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.DECRYPTTools.Properties.Resources", "DECRYPTSyntaxAnalyzer", "DECRYPTSyntaxAnalyzer", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
     [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     class DECRYPTSyntaxAnalyzer : ICrypComponent
     {

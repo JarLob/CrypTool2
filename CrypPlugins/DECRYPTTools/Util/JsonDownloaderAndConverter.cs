@@ -22,7 +22,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptool.Plugins.DECRYPTTools.Util
+namespace CrypTool.Plugins.DECRYPTTools.Util
 {
     public class JsonDownloaderAndConverter
     {

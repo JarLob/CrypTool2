@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2021 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2021 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class EventsHelper
     {

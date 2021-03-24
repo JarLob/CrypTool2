@@ -15,12 +15,12 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Utils;
 using System.ComponentModel;
 
 
-namespace Cryptool.VigenereAnalyzer
+namespace CrypTool.VigenereAnalyzer
 {
     public enum Mode
     {

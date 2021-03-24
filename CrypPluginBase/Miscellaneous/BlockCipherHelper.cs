@@ -15,9 +15,9 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public static class BlockCipherHelper
     {              
@@ -49,7 +49,7 @@ namespace Cryptool.PluginBase.Miscellaneous
         public delegate byte[] BlockCipher(byte[] block, byte[] key);
         public delegate void ProgressChanged(double value, double max);
 
-        public static byte[] StreamToByteArray(ICryptoolStream stream)
+        public static byte[] StreamToByteArray(ICrypToolStream stream)
         {
             byte[] buf = new byte[stream.Length];
 
@@ -62,7 +62,7 @@ namespace Cryptool.PluginBase.Miscellaneous
             return buf;
         }
 
-        public static ICryptoolStream AppendPadding(ICryptoolStream input, PaddingType paddingtype, int blocksize)
+        public static ICrypToolStream AppendPadding(ICrypToolStream input, PaddingType paddingtype, int blocksize)
         {
             return new CStreamWriter(AppendPadding(StreamToByteArray(input), paddingtype, blocksize));
         }
@@ -175,7 +175,7 @@ namespace Cryptool.PluginBase.Miscellaneous
             return buf;
         }
 
-        public static ICryptoolStream StripPadding(ICryptoolStream input, PaddingType paddingtype, int blocksize)
+        public static ICrypToolStream StripPadding(ICrypToolStream input, PaddingType paddingtype, int blocksize)
         {
             return new CStreamWriter(StripPadding(StreamToByteArray(input), paddingtype, blocksize));
         }
@@ -195,8 +195,8 @@ namespace Cryptool.PluginBase.Miscellaneous
         /// <param name="blockSize"></param>
         public static void ExecuteECB(BlockCipher blockCipher,
                                 CipherAction cipherAction, 
-                                ref ICryptoolStream inputStream, 
-                                ref ICryptoolStream outputStream, 
+                                ref ICrypToolStream inputStream, 
+                                ref ICrypToolStream outputStream, 
                                 byte[] key,
                                 PaddingType padding,
                                 ref bool stop,
@@ -286,8 +286,8 @@ namespace Cryptool.PluginBase.Miscellaneous
         /// <param name="blocksize"></param>
         public static void ExecuteCBC(BlockCipher blockCipher,
                                 CipherAction cipherAction,
-                                ref ICryptoolStream inputStream,
-                                ref ICryptoolStream outputStream,
+                                ref ICrypToolStream inputStream,
+                                ref ICrypToolStream outputStream,
                                 byte[] key,
                                 byte[] iv,
                                 PaddingType padding,
@@ -402,8 +402,8 @@ namespace Cryptool.PluginBase.Miscellaneous
         /// <param name="blocksize"></param>
         public static void ExecuteCFB(BlockCipher blockCipher,
                                 CipherAction cipherAction,
-                                ref ICryptoolStream inputStream,
-                                ref ICryptoolStream outputStream,
+                                ref ICrypToolStream inputStream,
+                                ref ICrypToolStream outputStream,
                                 byte[] key,
                                 byte[] iv,
                                 PaddingType padding,
@@ -519,8 +519,8 @@ namespace Cryptool.PluginBase.Miscellaneous
         /// <param name="blocksize"></param>
         public static void ExecuteOFB(BlockCipher blockCipher,
                                 CipherAction cipherAction,
-                                ref ICryptoolStream inputStream,
-                                ref ICryptoolStream outputStream,
+                                ref ICrypToolStream inputStream,
+                                ref ICrypToolStream outputStream,
                                 byte[] key,
                                 byte[] iv,
                                 PaddingType padding,

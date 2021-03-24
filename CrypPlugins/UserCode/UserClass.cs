@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System;
 
-namespace Cryptool.Plugins.UserCode
+namespace CrypTool.Plugins.UserCode
 {
 
     public class UserClass

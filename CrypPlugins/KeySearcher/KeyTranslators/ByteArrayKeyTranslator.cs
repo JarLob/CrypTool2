@@ -15,7 +15,7 @@
 */
 
 using System;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using KeySearcher.KeyPattern;
 
 namespace KeySearcher.KeyTranslators

@@ -15,12 +15,12 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Cryptool.Plugins.QuadraticSieve
+namespace CrypTool.Plugins.QuadraticSieve
 {
     class QuadraticSieveSettings : ISettings
     {

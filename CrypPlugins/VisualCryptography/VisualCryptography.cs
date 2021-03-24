@@ -22,16 +22,16 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.VisualCryptography.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.VisualCryptography.Properties;
 using Font = VisualCryptography.Font;
 
-namespace Cryptool.Plugins.VisualCryptography
+namespace CrypTool.Plugins.VisualCryptography
 {
-    [Author("Nils Kopal", "kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.VisualCryptography.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualCryptography/userdoc.xml", new[] { "VisualCryptography/icon.png" })]
+    [Author("Nils Kopal", "kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.VisualCryptography.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualCryptography/userdoc.xml", new[] { "VisualCryptography/icon.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class VisualCryptography : ICrypComponent
     {
@@ -100,7 +100,7 @@ namespace Cryptool.Plugins.VisualCryptography
             ProgressChanged(0, 1);
 
             //check if we have a string, a CrypToolstream, or a byte[] and encrypt it
-            if (Plaintext is ICryptoolStream)
+            if (Plaintext is ICrypToolStream)
             {
                 EncryptImage(true);
             }
@@ -140,7 +140,7 @@ namespace Cryptool.Plugins.VisualCryptography
                 if (isCrypToolStream)
                 {
                     //we can directly read the image from the stream
-                    stream = ((ICryptoolStream)Plaintext).CreateReader();
+                    stream = ((ICrypToolStream)Plaintext).CreateReader();
                 }
                 else
                 {

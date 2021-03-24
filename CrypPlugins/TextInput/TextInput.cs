@@ -15,20 +15,20 @@
 */
 
 using System.Text.RegularExpressions;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.Windows;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using System.Windows.Threading;
 using System.Threading;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Input;
 
-namespace Cryptool.TextInput
+namespace CrypTool.TextInput
 {
-    [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.TextInput.Properties.Resources", "PluginCaption", "PluginTooltip", "TextInput/DetailedDescription/doc.xml", "TextInput/icon.png")]
+    [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+    [PluginInfo("CrypTool.TextInput.Properties.Resources", "PluginCaption", "PluginTooltip", "TextInput/DetailedDescription/doc.xml", "TextInput/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
     public class TextInput : DependencyObject, ICrypComponent

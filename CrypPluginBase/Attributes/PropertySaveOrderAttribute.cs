@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     /// <summary>
     /// This attribute is optional for the properties of the ISettings class. If

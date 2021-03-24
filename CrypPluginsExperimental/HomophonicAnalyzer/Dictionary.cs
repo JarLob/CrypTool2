@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.IO;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     class Dictionary
     {

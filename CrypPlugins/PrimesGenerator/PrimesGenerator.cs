@@ -1,9 +1,9 @@
 ﻿using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Numerics;
 
-namespace Cryptool.PrimesGenerator
+namespace CrypTool.PrimesGenerator
 {
 
   [PluginInfo("PrimesGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "PrimesGenerator/DetailedDescription/doc.xml", "PrimesGenerator/icon.png")]
@@ -19,14 +19,14 @@ namespace Cryptool.PrimesGenerator
 
     #region IPlugin Members
 
-    public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+    public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
 
     private void FireOnPluginStatusChangedEvent()
     {
       if (OnPluginStatusChanged != null) OnPluginStatusChanged(this, new StatusEventArgs(0));
     }
 
-    public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+    public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
     private void FireOnGuiLogNotificationOccuredEvent(string message, NotificationLevel lvl)
     {
@@ -38,7 +38,7 @@ namespace Cryptool.PrimesGenerator
       FireOnGuiLogNotificationOccuredEvent(message, NotificationLevel.Error);
     }
 
-    public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+    public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
     private void FireOnPluginProgressChangedEvent(string message, NotificationLevel lvl)
     {
       if (OnPluginProgressChanged != null) OnPluginProgressChanged(this, new PluginProgressEventArgs(0, 0));

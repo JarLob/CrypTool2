@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Research.SEAL;
 using System.IO;
 
-namespace Cryptool.Plugins.EncryptedVM
+namespace CrypTool.Plugins.EncryptedVM
 {
     public class Program
     {

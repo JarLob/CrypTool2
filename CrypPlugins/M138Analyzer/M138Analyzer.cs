@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,24 +15,24 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Utils;
 using System.Windows.Threading;
 using System.Threading;
 using System.Linq;
 using System.Media;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.M138Analyzer
+namespace CrypTool.M138Analyzer
 {
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "M138Analyzer/userdoc.xml", "M138Analyzer/icon.png")]
+    [PluginInfo("CrypTool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "M138Analyzer/userdoc.xml", "M138Analyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class M138Analyzer : ICrypComponent
     {

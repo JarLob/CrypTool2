@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System;
@@ -16,9 +16,9 @@ using System.Threading;
 using Microsoft.Windows.Controls;
 using System.Globalization;
 using System.Collections.Specialized;
-using Cryptool.PluginBase.Validation;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Validation;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Attributes;
 using WorkspaceManager.View.Base;
 
 namespace WorkspaceManager.View.Visuals
@@ -638,7 +638,7 @@ namespace WorkspaceManager.View.Visuals
                         ComboBox comboBox1 = new ComboBox();
                         comboBox1.Tag = tpa.ToolTip;
                         comboBox1.MouseEnter += Control_MouseEnter;
-                        comboBox1.ItemsSource = Cryptool.PluginBase.Utils.LanguageStatistics.SupportedLanguages;
+                        comboBox1.ItemsSource = CrypTool.PluginBase.Utils.LanguageStatistics.SupportedLanguages;
                         comboBox1.ToolTip = tpa.ToolTip;
                         comboBox1.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
                         entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBox1, tpa, sfa, b, bcv.Model));

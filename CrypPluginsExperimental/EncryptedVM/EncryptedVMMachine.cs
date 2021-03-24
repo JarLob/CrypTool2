@@ -1,15 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 using Microsoft.Research.SEAL;
 
-namespace Cryptool.Plugins.EncryptedVM
+namespace CrypTool.Plugins.EncryptedVM
 {
     [Author("Robert Stark", "robert.stark@rub.de", "", "")]
-    [PluginInfo("Cryptool.Plugins.EncryptedVM.Properties.Resources", "EncryptedVM_Machine_Name", "EncryptedVM_Machine_Tooltip", "EncryptedVM/doc/machine.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("CrypTool.Plugins.EncryptedVM.Properties.Resources", "EncryptedVM_Machine_Name", "EncryptedVM_Machine_Tooltip", "EncryptedVM/doc/machine.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class EncryptedVMMachine : ICrypComponent
     {

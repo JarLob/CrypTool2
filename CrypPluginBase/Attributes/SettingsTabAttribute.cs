@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase.Attributes
+namespace CrypTool.PluginBase.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class SettingsTabAttribute : Attribute

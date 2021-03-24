@@ -18,17 +18,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
 
-namespace Cryptool.Substitution
+namespace CrypTool.Substitution
 {
     [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Universität Kassel", "http://www.uni-kassel.de")]
     [PluginInfo("Substitution.Properties.Resources", "PluginCaption", "PluginTooltip", "Substitution/DetailedDescription/doc.xml", 

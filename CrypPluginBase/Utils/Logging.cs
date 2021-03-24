@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptool.PluginBase.Utils
+namespace CrypTool.PluginBase.Utils
 {
     public static class LogLevels
     {

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Christian Bender, Universität Siegen
            Nils Kopal, CrypTool 2 Team
 
@@ -19,15 +19,15 @@
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using RandomNumberGenerator.Properties;
 using System;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Security.Cryptography;
 using RandomNumberGenerator;
 
-namespace Cryptool.Plugins.RandomNumberGenerator
+namespace CrypTool.Plugins.RandomNumberGenerator
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("RandomNumberGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "RandomNumberGenerator/userdoc.xml", new[] { "RandomNumberGenerator/images/icon.png" })]

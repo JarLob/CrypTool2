@@ -1,8 +1,8 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.ViewModel.Components;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.ChaCha.Properties.Resources")]
     internal class OverviewViewModel : ViewModelBase, INavigation, ITitle, IChaCha
     {
         public OverviewViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)

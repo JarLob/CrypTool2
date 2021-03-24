@@ -31,7 +31,7 @@ namespace DCAPathVisualiser.UI
     /// <summary>
     /// Interaktionslogik für PathVisualiserPres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
     public partial class PathVisualiserPres : INotifyPropertyChanged
     {
         private UserControl _cipherControl;

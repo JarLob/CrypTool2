@@ -7,14 +7,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
      //<summary>
      //Interaction logic for CTTabItem.xaml
      //</summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class CTTabItem : TabItem
     {
         public event EventHandler RequestBigViewFrame;

@@ -23,9 +23,9 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using Ionic.Zip;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
@@ -33,7 +33,7 @@ using Microsoft.Scripting.Hosting;
 
 namespace NumberFieldSieve
 {
-    [Author("Sven Rech", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Sven Rech", "rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("NumberFieldSieve.Properties.Resources", "NumberFieldSieveCaption", "NumberFieldSieveTooltip", "NumberFieldSieve/DetailedDescription/doc.xml", "NumberFieldSieve/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class NumberFieldSieve : ICrypComponent

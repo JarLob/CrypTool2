@@ -18,12 +18,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Reflection;
 using System.Collections.ObjectModel;
 using WorkspaceManager.Execution;
 using WorkspaceManager.Model.Tools;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 using WorkspaceManagerModel.Model.Operations;
 using System.IO;
 using System.Text;
@@ -742,8 +742,8 @@ namespace WorkspaceManager.Model
                 || (connectorModelB.ConnectorType.FullName == "System.String" && connectorModelA.ConnectorType.FullName == "System.Int64")
                 || (connectorModelB.ConnectorType.FullName == "System.String" && connectorModelA.ConnectorType.FullName == "System.Numerics.BigInteger")
                 || (connectorModelB.ConnectorType.FullName == "System.String" && connectorModelA.ConnectorType.FullName == "System.Boolean")
-                || (connectorModelB.ConnectorType.FullName == "System.String" && connectorModelA.ConnectorType.FullName == "Cryptool.PluginBase.IO.ICryptoolStream")
-                || (connectorModelB.ConnectorType.FullName == "Cryptool.PluginBase.IO.ICryptoolStream" && connectorModelA.ConnectorType.FullName == "System.String"))
+                || (connectorModelB.ConnectorType.FullName == "System.String" && connectorModelA.ConnectorType.FullName == "CrypTool.PluginBase.IO.ICrypToolStream")
+                || (connectorModelB.ConnectorType.FullName == "CrypTool.PluginBase.IO.ICrypToolStream" && connectorModelA.ConnectorType.FullName == "System.String"))
             {
                 return ConversionLevel.Yellow;
             }

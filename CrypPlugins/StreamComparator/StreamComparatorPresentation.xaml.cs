@@ -20,9 +20,9 @@ using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Markup;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.StreamComparator
+namespace CrypTool.StreamComparator
 {
   /// <summary>
   /// Interaction logic for StreamComparatorPresentation.xaml
@@ -39,7 +39,7 @@ namespace Cryptool.StreamComparator
       SetNoComparisonYetDocument();
     }
 
-    public void SetContent(ICryptoolStream stream)
+    public void SetContent(ICrypToolStream stream)
     {
       Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
       {

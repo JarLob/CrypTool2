@@ -15,14 +15,14 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using NAudio.Wave;
 
-namespace Cryptool.Plugins.AudioInput
+namespace CrypTool.Plugins.AudioInput
 {
     [Author("Nils Kopal", "nils.kopal@uni-kassel.de", "University of Kassel", "")]
-    [PluginInfo("Cryptool.Plugins.AudioInput.Properties.Resources", "PluginCaption", "PluginTooltip", null, "AudioInput/icon.png")]
+    [PluginInfo("CrypTool.Plugins.AudioInput.Properties.Resources", "PluginCaption", "PluginTooltip", null, "AudioInput/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class AudioInput : ICrypComponent
     {

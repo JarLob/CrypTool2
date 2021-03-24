@@ -19,15 +19,15 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAPathVisualiser;
 using DCAPathVisualiser.Logic;
 using DCAPathVisualiser.Properties;
 using DCAPathVisualiser.UI;
 using Newtonsoft.Json;
 
-namespace Cryptool.Plugins.DCAPathVisualiser
+namespace CrypTool.Plugins.DCAPathVisualiser
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("DCAPathVisualiser.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathVisualiser/userdoc.xml", new[] { "DCAPathVisualiser/Images/IC_PathVisualizer.png" })]

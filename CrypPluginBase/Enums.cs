@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
 
     public enum Direction

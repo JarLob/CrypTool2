@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Globalization;
 using System.Diagnostics;
 
-namespace Cryptool.WEP
+namespace CrypTool.WEP
 {
     
     /// <summary>
@@ -20,7 +20,7 @@ namespace Cryptool.WEP
         "stef.schroeder@gmx.de",
         "Uni Siegen",
         "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.Properties.Resources",
+    [PluginInfo("CrypTool.Properties.Resources",
         "PluginCaption",
         "PluginTooltip",
         "WEP/DetailedDescription/doc.xml",
@@ -30,7 +30,7 @@ namespace Cryptool.WEP
     {
         #region Private variables
         /* Input / output variables */
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private byte[] inputByteKey;
         private CStreamWriter outputStreamWriter;
 
@@ -59,7 +59,7 @@ namespace Cryptool.WEP
             "InputStreamCaption",
             "InputStreamTooltip",
             false)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Cryptool.WEP
             "OutputStreamCaption",
             "OutputStreamTooltip",
             false)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {

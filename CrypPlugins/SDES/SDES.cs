@@ -14,32 +14,32 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using System.Threading;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using KeySearcher.KeyPattern;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     /// <summary>
     /// This plugin encrypts / decrypts texts with the simplified DES alogrithm (SDES)
     /// It can be used as plugin in a normal encryption/decryption chanin or be 
     /// used by the KeySearcher to do bruteforcing
     /// </summary>
-    [Author("Nils Kopal", "nils.kopal@cryptool.de", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
-    [PluginInfo("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "SDES/DetailedDescription/doc.xml", "SDES/icon.png", "SDES/Images/encrypt.png", "SDES/Images/decrypt.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.de", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [PluginInfo("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "SDES/DetailedDescription/doc.xml", "SDES/icon.png", "SDES/Images/encrypt.png", "SDES/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class SDES : ICrypComponent
     {
         #region Private variables
 
         private SDESSettings settings;
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private CStreamWriter outputStream;
         private byte[] inputKey;
         //default inputIV: (0,0,0,0,0,0,0,0)
@@ -116,7 +116,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         /// Gets/Sets the input of the SDES plugin (the text which should be encrypted/decrypted)
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         /// Gets/Sets the output of the SDES plugin (the text which is encrypted/decrypted)
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -2371,4 +2371,4 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
     }//end class OutputFeedBack
 
-}//end namespace Cryptool.Plugins.Cryptography.Encryption
+}//end namespace CrypTool.Plugins.Cryptography.Encryption

@@ -22,9 +22,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Reflection;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.PRESENT {
+namespace CrypTool.PRESENT {
     class KS_Animation {
         private PRESENTAnimation parent;
         private Model3DGroup mdl3D_main;

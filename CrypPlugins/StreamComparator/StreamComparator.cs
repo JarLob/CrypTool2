@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System;
 using System.Text;
 using System.Xml;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.StreamComparator
+namespace CrypTool.StreamComparator
 {
-  [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
-  [PluginInfo("Cryptool.StreamComparator.Properties.Resources", "PluginCaption", "PluginTooltip", "StreamComparator/DetailedDescription/doc.xml", "StreamComparator/icon.png", "StreamComparator/Images/equal.png", "StreamComparator/Images/unequal.png", "StreamComparator/Images/contextmenu.png")]
+  [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+  [PluginInfo("CrypTool.StreamComparator.Properties.Resources", "PluginCaption", "PluginTooltip", "StreamComparator/DetailedDescription/doc.xml", "StreamComparator/icon.png", "StreamComparator/Images/equal.png", "StreamComparator/Images/unequal.png", "StreamComparator/Images/contextmenu.png")]
   [ComponentCategory(ComponentCategory.ToolsMisc)]
   public class StreamComparator : ICrypComponent
   {
     #region Private variables
     private bool isBinary;
     private bool stop;
-    private ICryptoolStream streamOne;
-    private ICryptoolStream streamTwo;
+    private ICrypToolStream streamOne;
+    private ICrypToolStream streamTwo;
     private StreamComparatorPresentation streamComparatorPresentation;
     #endregion
 
@@ -43,7 +43,7 @@ namespace Cryptool.StreamComparator
     #region Properties
 
     [PropertyInfo(Direction.InputData, "InputOneCaption", "InputOneTooltip", true)]
-    public ICryptoolStream InputOne
+    public ICrypToolStream InputOne
     {
       get 
       {
@@ -53,7 +53,7 @@ namespace Cryptool.StreamComparator
     }
 
     [PropertyInfo(Direction.InputData, "InputTwoCaption", "InputTwoTooltip", true)]
-    public ICryptoolStream InputTwo
+    public ICrypToolStream InputTwo
     {
       get 
       {

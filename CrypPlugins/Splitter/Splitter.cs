@@ -16,15 +16,15 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace Splitter
 {
-  [Author("Thomas Schmid", "thomas.schmid@cryptool.org", "Uni Siegen", "http://www.uni-siegen.de")]
+  [Author("Thomas Schmid", "thomas.schmid@CrypTool.org", "Uni Siegen", "http://www.uni-siegen.de")]
   [PluginInfo("Splitter.Properties.Resources", "PluginCaption", "PluginTooltip", "Splitter/DetailedDescription/doc.xml", "Splitter/icon.png")]
   [ComponentCategory(ComponentCategory.ToolsDataflow)]
   [AutoAssumeFullEndProgress(false)]

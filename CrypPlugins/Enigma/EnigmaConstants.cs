@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Enigma
+namespace CrypTool.Enigma
 {
     internal partial class EnigmaCore
     {

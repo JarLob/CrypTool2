@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.EncryptedVM
+namespace CrypTool.Plugins.EncryptedVM
 {
     public class EncryptedVMMemoryDisplaySettings : ISettings
     {

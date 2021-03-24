@@ -23,16 +23,16 @@ using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Tools
+namespace CrypTool.Plugins.Tools
 {
 
-    [Author("Nils Kopal", "nils.kopal@cryptool.de", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
-    [PluginInfo("Cryptool.Plugins.Tools.Properties.Resources", "PluginCaption", "PluginTooltip",
+    [Author("Nils Kopal", "nils.kopal@CrypTool.de", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [PluginInfo("CrypTool.Plugins.Tools.Properties.Resources", "PluginCaption", "PluginTooltip",
         "PasswordStrength/DetailedDescription/doc.xml", "PasswordStrength/images/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class PasswordStrength : ICrypComponent

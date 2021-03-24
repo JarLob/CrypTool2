@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using BB84KeyGenerator;
 using System.Windows.Threading;
 using System.Threading;
 using System;
 using System.Text;
 
-namespace Cryptool.Plugins.BB84KeyGenerator
+namespace CrypTool.Plugins.BB84KeyGenerator
 {
     [Author("Benedict Beuscher", "benedict.beuscher@stud.uni-due.de", "Uni Duisburg-Essen", "http://www.uni-due.de/")]
 
-    [PluginInfo("Cryptool.Plugins.BB84KeyGenerator.Properties.Resources", "res_GeneratorCaption", "res_GeneratorTooltip", "BB84KeyGenerator/userdoc.xml", new[] { "BB84KeyGenerator/images/icon.png" })]
+    [PluginInfo("CrypTool.Plugins.BB84KeyGenerator.Properties.Resources", "res_GeneratorCaption", "res_GeneratorTooltip", "BB84KeyGenerator/userdoc.xml", new[] { "BB84KeyGenerator/images/icon.png" })]
     [ComponentCategory(ComponentCategory.Protocols)]
     public class BB84KeyGenerator : ICrypComponent
     {

@@ -8,7 +8,7 @@
     <ProjectGuid>{76855D3A-A543-4DBC-9B86-40083543C4EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.CylinderCipher</RootNamespace>
+    <RootNamespace>CrypTool.CylinderCipher</RootNamespace>
     <AssemblyName>CylinderCipher</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

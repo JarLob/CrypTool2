@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Helper.Converter
+namespace CrypTool.Plugins.ChaCha.Helper.Converter
 {
     internal class ASCII : IValueConverter
     {

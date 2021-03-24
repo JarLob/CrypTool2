@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.HKDFSHA256
+namespace CrypTool.Plugins.HKDFSHA256
 {
     /// <summary>
     /// Interaktionslogik für HKDFSHA256Pres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("HKDFSHA256.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("HKDFSHA256.Properties.Resources")]
     public partial class HKDFSHA256Pres : UserControl
     {
         public AutoResetEvent buttonNextClickedEvent;

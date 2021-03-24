@@ -16,12 +16,12 @@
 using System;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.FEAL
+namespace CrypTool.Plugins.FEAL
 {
     /// <summary>
     /// Interaktionslogik für FEAL8Presentation.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.FEAL.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.FEAL.Properties.Resources")]
     public partial class FEAL8Presentation : UserControl
     {
         public FEAL8Presentation()

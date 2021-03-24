@@ -15,15 +15,15 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.HIGHT
+namespace CrypTool.HIGHT
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.crypto.ruhr-uni-bochum.de/")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.de", "Ruhr-Universitaet Bochum, Chair for Embedded Security (EmSec)", "http://www.crypto.ruhr-uni-bochum.de/")]
     [PluginInfo("HIGHT.Properties.Resources", "PluginCaption", "PluginTooltip", "HIGHT/DetailedDescription/doc.xml", "HIGHT/Images/HIGHT.png", "HIGHT/Images/encrypt.png", "HIGHT/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class HIGHT : ICrypComponent
@@ -31,7 +31,7 @@ namespace Cryptool.HIGHT
         #region IPlugin Members
 
         private HIGHTSettings settings;
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private CStreamWriter outputStreamWriter;
         private byte[] inputKey;
         private bool stop = false;
@@ -51,7 +51,7 @@ namespace Cryptool.HIGHT
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get 
             {
@@ -78,7 +78,7 @@ namespace Cryptool.HIGHT
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -256,7 +256,7 @@ namespace Cryptool.HIGHT
                     long outbytes = outputStreamWriter.Length;
                 DateTime stopTime = DateTime.Now;
                 TimeSpan duration = stopTime - startTime;
-                //(outputStream as CryptoolStream).FinishWrite();
+                //(outputStream as CrypToolStream).FinishWrite();
 
                 if (!stop)
                 {

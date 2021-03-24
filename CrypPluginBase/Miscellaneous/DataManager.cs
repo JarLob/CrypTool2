@@ -18,9 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class DataManager
     {

@@ -7,7 +7,7 @@
     <ProjectGuid>{69F25E48-E535-435B-B684-EB2867B7790E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.OnlineDocumentationEditor</RootNamespace>
+    <RootNamespace>CrypTool.OnlineDocumentationEditor</RootNamespace>
     <AssemblyName>OnlineDocumentationEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PRESENT {
+namespace CrypTool.PRESENT {
     class PresentTracer {
         public PresentTracer() {
         }
@@ -24,7 +24,7 @@ namespace Cryptool.PRESENT {
         public string Trace(Present cipher) {
             string txtOut;
             txtOut  = "*** PRESENT Key Schedule ******************************\n";
-            txtOut += "*** (c) 2008 by Timm Korte, cryptool@easycrypt.de******\n\n";
+            txtOut += "*** (c) 2008 by Timm Korte, CrypTool@easycrypt.de******\n\n";
             txtOut += String.Format("Input Key:  {0:x16} {1:x4}\n", cipher.KeyRegs[0, 1, 3], cipher.KeyRegs[0, 0, 3]);
             txtOut += String.Format("Subkey Round 1: >>{0:x16}<<\n\n", cipher.RoundKeys[0]);
             

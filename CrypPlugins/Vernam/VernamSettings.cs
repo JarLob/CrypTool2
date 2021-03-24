@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Vernam
+namespace CrypTool.Plugins.Vernam
 {
     
     public class VernamSettings : ISettings

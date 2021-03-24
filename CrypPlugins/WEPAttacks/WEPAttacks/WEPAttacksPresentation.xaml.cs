@@ -2,14 +2,14 @@
 using System.Windows.Controls;
 using System.Threading;
 using System.Globalization;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.WEPAttacks
+namespace CrypTool.WEPAttacks
 {
     /// <summary>
     /// Interaktionslogik für WEPAttacksPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("WEPAttacks.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("WEPAttacks.Properties.Resources")]
     public partial class WEPAttacksPresentation : UserControl
     {
         public WEPAttacksPresentation()

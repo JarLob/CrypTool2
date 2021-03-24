@@ -16,7 +16,7 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
 [assembly: AssemblyTitle("CrypTool Plugin Base")]
 [assembly: AssemblyCompany("CrypTool 2 Team")]

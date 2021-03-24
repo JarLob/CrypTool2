@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2010 Sven Rech (svenrech at cryptool dot org), University of Duisburg-Essen
+   Copyright 2010 Sven Rech (svenrech at CrypTool dot org), University of Duisburg-Essen
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public static class BigIntegerHelper
     {

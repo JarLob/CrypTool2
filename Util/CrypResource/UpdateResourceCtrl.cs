@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace Cryptool.Resource
+namespace CrypTool.Resource
 {
     public partial class UpdateResourceCtrl : UserControl
     {
@@ -23,7 +23,7 @@ namespace Cryptool.Resource
         private void bSelectAssembly_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Open Cryptool Plugin";
+            dlg.Title = "Open CrypTool Plugin";
             dlg.Filter = "Crytool Plugin (*.dll)|*.dll";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -39,7 +39,7 @@ namespace Cryptool.Resource
         {
 
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Open Cryptool Plugin Resource";
+            dlg.Title = "Open CrypTool Plugin Resource";
             dlg.Filter = "Crytool Plugin Resource (*.resx)|*.resx";
             if (dlg.ShowDialog() == DialogResult.OK)
             {

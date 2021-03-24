@@ -15,12 +15,12 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 
 
-namespace Cryptool.Plugins.Paillier
+namespace CrypTool.Plugins.Paillier
 {
     /// <summary>
     /// Settings class for the PaillierKeyGenerator plugin
@@ -155,4 +155,4 @@ namespace Cryptool.Plugins.Paillier
 
     }//end PaillierKeyGeneratorSettings
 
-}//end Cryptool.Plugins.Paillier
+}//end CrypTool.Plugins.Paillier

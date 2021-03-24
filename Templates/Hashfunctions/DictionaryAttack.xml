@@ -19,7 +19,7 @@
   <icon file="DictionaryAttack.png" />
   <relevantPlugins>
     <plugin name="ArrayIndexer" />
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
     <plugin name="Gate" />
     <plugin name="LengthOf" />
     <plugin name="Progress" />

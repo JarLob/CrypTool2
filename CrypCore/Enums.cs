@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     public enum AssemblySigningRequirement
     {

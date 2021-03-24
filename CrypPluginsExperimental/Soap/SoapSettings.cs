@@ -1,4 +1,4 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections;
 
@@ -67,7 +67,7 @@ namespace Soap
 
 
         private int animationSpeed = 3;
-        [TaskPane( "AnimationSpeedCaption", "AnimationSpeedTooltip", "Animation", 9, true, ControlType.NumericUpDown, Cryptool.PluginBase.ValidationType.RangeInteger, 1, 5)]
+        [TaskPane( "AnimationSpeedCaption", "AnimationSpeedTooltip", "Animation", 9, true, ControlType.NumericUpDown, CrypTool.PluginBase.ValidationType.RangeInteger, 1, 5)]
         public int AnimationSpeed
         {
             get

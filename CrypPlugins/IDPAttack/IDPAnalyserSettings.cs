@@ -1,4 +1,4 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows;
 

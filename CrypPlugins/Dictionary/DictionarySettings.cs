@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
 namespace Dictionary
 {
-  public class CryptoolDictionarySettings : ISettings
+  public class CrypToolDictionarySettings : ISettings
   {
     # region private_variables
     private int currentDictionary;

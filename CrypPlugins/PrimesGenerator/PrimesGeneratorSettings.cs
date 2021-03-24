@@ -1,6 +1,6 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 
-namespace Cryptool.PrimesGenerator
+namespace CrypTool.PrimesGenerator
 {
   public class PrimesGeneratorSettings: ISettings
   {

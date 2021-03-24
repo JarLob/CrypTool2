@@ -8,7 +8,7 @@
     <ProjectGuid>{AE633B61-EA75-40F0-BFF8-04B707FB1159}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.BooleanFunctionParser</RootNamespace>
+    <RootNamespace>CrypTool.BooleanFunctionParser</RootNamespace>
     <AssemblyName>BooleanFunctionParser</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

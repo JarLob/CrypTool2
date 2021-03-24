@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 using WorkspaceManager.Model;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public static class TemplatesAnalyzer
     {

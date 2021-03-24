@@ -19,15 +19,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.IO;
 using System.Xml;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using WorkspaceManagerModel.Properties;
 using System.Windows.Documents;
 using System.Windows;
 using System.Text;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using System.Globalization;
 
 namespace WorkspaceManager.Model
@@ -116,7 +116,7 @@ namespace WorkspaceManager.Model
                     plugin.Name = plugin.Name.Replace(key, replacements[key]);
 
                 //Replace text in TextInputs
-                if (plugin.PluginType.FullName.Equals("Cryptool.TextInput.TextInput"))
+                if (plugin.PluginType.FullName.Equals("CrypTool.TextInput.TextInput"))
                 {
                     var value = (string)plugin.Plugin.Settings.GetType().GetProperty("Text").GetValue(plugin.Plugin.Settings, null);
                     if (replacements.ContainsKey(value))

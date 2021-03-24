@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Cryptool.CrypAnalysisViewControl
+namespace CrypTool.CrypAnalysisViewControl
 {
     public class ViewLabel : FrameworkContentElement
     {

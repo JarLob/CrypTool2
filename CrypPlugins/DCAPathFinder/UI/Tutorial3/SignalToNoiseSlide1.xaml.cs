@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial3
     /// <summary>
     /// Interaktionslogik für SignalToNoiseSlide1.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class SignalToNoiseSlide1 : UserControl
     {
         public SignalToNoiseSlide1()

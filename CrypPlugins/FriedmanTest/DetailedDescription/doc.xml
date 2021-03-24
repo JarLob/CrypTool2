@@ -30,11 +30,11 @@
     wobei N die Länge des Textes ist und n1 bis nc die absoluten Häufigkeiten der Buchstaben des Alphabets im Text darstellen.
   </introduction>
   <usage lang="en">
-    The frequencies are supplied by the <docRef item="Cryptool.FrequencyTest.FrequencyTest" /> component. A typical usage scenario looks like this:<newline /><newline /><img src="FriedmanTest/DetailedDescription/Images/usage.png" caption="Usage scenario" /></usage>
+    The frequencies are supplied by the <docRef item="CrypTool.FrequencyTest.FrequencyTest" /> component. A typical usage scenario looks like this:<newline /><newline /><img src="FriedmanTest/DetailedDescription/Images/usage.png" caption="Usage scenario" /></usage>
   <usage lang="zh-CN">频率由组件提供。典型的使用场景如下所示：</usage>
   <usage lang="ru">Частоты передаются компонентом. Типичный сценарий использования выглядит так:</usage>
   <usage lang="de-DE">
-    Die benötgten Buchstabenhäufigkeiten erhält man mit der Komponente <docRef item="Cryptool.FrequencyTest.FrequencyTest" />. Ein typisches Anwendungsszenario sieht folgendermaßen aus:
+    Die benötgten Buchstabenhäufigkeiten erhält man mit der Komponente <docRef item="CrypTool.FrequencyTest.FrequencyTest" />. Ein typisches Anwendungsszenario sieht folgendermaßen aus:
     <newline /><newline /><img src="FriedmanTest/DetailedDescription/Images/usage.png" caption="Anwendungsszenario" /></usage>
   <presentation lang="en"></presentation>
   <presentation lang="de-DE"></presentation>

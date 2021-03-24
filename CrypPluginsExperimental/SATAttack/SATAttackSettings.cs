@@ -15,11 +15,11 @@
 */
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows;
 
-namespace Cryptool.Plugins.SATAttack
+namespace CrypTool.Plugins.SATAttack
 {
     public class SATAttackSettings : ISettings
     {

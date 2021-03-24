@@ -16,14 +16,14 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using DCAToyCiphers;
 using DCAToyCiphers.Ciphers;
 using DCAToyCiphers.Ciphers.Cipher1;
@@ -34,7 +34,7 @@ using DCAToyCiphers.Properties;
 using DCAToyCiphers.UI;
 
 
-namespace Cryptool.Plugins.DCAToyCiphers
+namespace CrypTool.Plugins.DCAToyCiphers
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("DCAToyCiphers.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAToyCiphers/userdoc.xml", new[] { "DCAToyCiphers/Images/IC_DCAToyCiphers.png" })]
@@ -45,8 +45,8 @@ namespace Cryptool.Plugins.DCAToyCiphers
 
         private readonly DCAToyCiphersSettings settings = new DCAToyCiphersSettings();
         private readonly DCAToyCiphersPres _activePresentation = new DCAToyCiphersPres();
-        private ICryptoolStream _messageInput;
-        private ICryptoolStream _messageOutput;
+        private ICrypToolStream _messageInput;
+        private ICrypToolStream _messageOutput;
         private IEncryption _currentCipher = null;
         private byte[] _key;
         private bool _stop = false;
@@ -103,7 +103,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
         /// Input for messages
         /// </summary>
         [PropertyInfo(Direction.InputData, "MessageInput", "MessageInputTooltip", true)]
-        public ICryptoolStream MessageInput
+        public ICrypToolStream MessageInput
         {
             get { return _messageInput; }
             set
@@ -117,7 +117,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
         /// Output for encrypted messages
         /// </summary>
         [PropertyInfo(Direction.OutputData, "MessageOutput", "MessageOutputTooltip")]
-        public ICryptoolStream MessageOutput
+        public ICrypToolStream MessageOutput
         {
             get { return _messageOutput; }
             set

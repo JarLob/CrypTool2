@@ -11,9 +11,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using Path = System.IO.Path;
 
@@ -22,7 +22,7 @@ namespace Startcenter
     /// <summary>
     /// Interaction logic for Templates.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
     public partial class Templates : UserControl
     {
         private readonly RecentFileList _recentFileList = RecentFileList.GetSingleton();

@@ -15,18 +15,18 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 // for [MethodImpl(MethodImplOptions.Synchronized)]
 using System.Runtime.CompilerServices;
 
-namespace Cryptool.BerlekampMassey
+namespace CrypTool.BerlekampMassey
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.org", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
-    [PluginInfo("Cryptool.BerlekampMassey.Properties.Resources", "PluginCaption", "PluginTooltip", "BerlekampMassey/DetailedDescription/doc.xml", "BerlekampMassey/Images/icon2.png", "BerlekampMassey/Images/icon2.png", "BerlekampMassey/Images/icon2.png")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.org", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
+    [PluginInfo("CrypTool.BerlekampMassey.Properties.Resources", "PluginCaption", "PluginTooltip", "BerlekampMassey/DetailedDescription/doc.xml", "BerlekampMassey/Images/icon2.png", "BerlekampMassey/Images/icon2.png", "BerlekampMassey/Images/icon2.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class BerlekampMassey : ICrypComponent
     {

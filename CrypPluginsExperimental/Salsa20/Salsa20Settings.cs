@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Salsa20
+namespace CrypTool.Plugins.Salsa20
 {
     public class Salsa20Settings : ISettings
     {

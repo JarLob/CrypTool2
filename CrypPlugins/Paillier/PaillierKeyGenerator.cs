@@ -15,12 +15,12 @@
 */
 
 using System;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Numerics;
 
-namespace Cryptool.Plugins.Paillier
+namespace CrypTool.Plugins.Paillier
 {
     [Author("Armin Krauss, Martin Franz", "", "", "http://www.uni-due.de")]
     [PluginInfo("Paillier.Properties.Resources", "PluginKeyCaption", "PluginKeyTooltip", "Paillier/DetailedDescription/dockeygen.xml", "Paillier/Image/PaillierKey.png")]
@@ -54,9 +54,9 @@ namespace Cryptool.Plugins.Paillier
         
         #region events
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -263,7 +263,7 @@ namespace Cryptool.Plugins.Paillier
         }
 
         /// <summary>
-        /// Logs a message to cryptool
+        /// Logs a message to CrypTool
         /// </summary>
         private void GuiLogMessage(string p, NotificationLevel notificationLevel)
         {
@@ -288,4 +288,4 @@ namespace Cryptool.Plugins.Paillier
     
     }//end PaillierKeyGenerator
 
-}//end Cryptool.Plugins.Paillier
+}//end CrypTool.Plugins.Paillier

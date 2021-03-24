@@ -1,8 +1,8 @@
-﻿using Cryptool.Plugins.ChaCha.Model;
+﻿using CrypTool.Plugins.ChaCha.Model;
 using System;
 using System.Linq;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// A helper class which creates the input and output actions for the quarterround visualization

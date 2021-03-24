@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+﻿namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     internal interface IActionNavigation
     {

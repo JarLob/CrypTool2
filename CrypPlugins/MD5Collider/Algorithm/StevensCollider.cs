@@ -35,7 +35,7 @@ using System;
 using System.Security.Cryptography;
 
 
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+namespace CrypTool.Plugins.MD5Collider.Algorithm
 {
     class StevensCollider : MD5ColliderBase
     {

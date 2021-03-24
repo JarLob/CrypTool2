@@ -20,7 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CrypCloud.Core;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using OpenCLNet; 
 namespace CrypCloud.Manager
 {

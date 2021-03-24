@@ -15,14 +15,14 @@
 */
 
 using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections;
 using System.Numerics;
 
-namespace Cryptool.Plugins.RSA
+namespace CrypTool.Plugins.RSA
 {
     [Author("Dennis Nolte, Raoul Falk, Sven Rech, Nils Kopal", null, "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("RSA.Properties.Resources", "PluginCaption", "PluginTooltip", "RSA/DetailedDescription/doc.xml", "RSA/iconrsa.png", "RSA/Images/encrypt.png", "RSA/Images/decrypt.png")]
@@ -487,7 +487,7 @@ namespace Cryptool.Plugins.RSA
         }
 
         /// <summary>
-        /// Logg a message to cryptool
+        /// Logg a message to CrypTool
         /// </summary>
         /// <param name="p">p</param>
         /// <param name="notificationLevel">notificationLevel</param>

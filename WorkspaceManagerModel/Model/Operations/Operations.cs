@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using WorkspaceManager.Model;
 using System.Windows;
 using WorkspaceManagerModel.Properties;

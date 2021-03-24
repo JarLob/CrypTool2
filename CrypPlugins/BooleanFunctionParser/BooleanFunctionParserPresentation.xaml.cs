@@ -19,12 +19,12 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.BooleanFunctionParser
+namespace CrypTool.BooleanFunctionParser
 {
   /// <summary>
     /// Interaction logic for BooleanFunctionParserPresentation.xaml
   /// </summary>
-  [Cryptool.PluginBase.Attributes.Localization("Cryptool.BooleanFunctionParser.Properties.Resources")]
+  [CrypTool.PluginBase.Attributes.Localization("CrypTool.BooleanFunctionParser.Properties.Resources")]
   public partial class BooleanFunctionParserPresentation : UserControl
   {
     public BooleanFunctionParserPresentation()

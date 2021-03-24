@@ -14,13 +14,13 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Serializer
+namespace CrypTool.Plugins.Serializer
 {
-    [Author("Armin Krauß", "krauss@cryptool.org", "", "")]
+    [Author("Armin Krauß", "krauss@CrypTool.org", "", "")]
     [PluginInfo("Serializer.Properties.Resources", "PluginCaption", "PluginTooltip", "Serializer/DetailedDescription/doc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class Serializer : ICrypComponent
@@ -78,7 +78,7 @@ namespace Cryptool.Plugins.Serializer
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return null; }
             set {  }

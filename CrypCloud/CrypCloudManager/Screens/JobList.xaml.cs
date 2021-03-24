@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ using System.Windows.Controls;
 
 namespace CrypCloud.Manager.Screens
 {
-    [Cryptool.PluginBase.Attributes.Localization("CrypCloud.Manager.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypCloud.Manager.Properties.Resources")]
     public partial class JobList : UserControl
     {
         public JobList()

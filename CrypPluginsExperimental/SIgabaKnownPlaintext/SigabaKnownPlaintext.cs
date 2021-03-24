@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,15 +27,15 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace SigabaKnownPlaintext
 {
 
-    [Author("Julian Weyers", "weyers@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Julian Weyers", "weyers@CrypTool.org", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     //[PluginInfo("SIGABA-Widerspruchsbeweis", "", "SigabaPhaseI/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [PluginInfo("SigabaKnownPlaintext.Properties.Resources", "PluginCaption", "PluginToolTip",
         "Enigma/DetailedDescription/doc.xml",

@@ -7,7 +7,7 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 
-namespace Cryptool.Plugins.Keccak
+namespace CrypTool.Plugins.Keccak
 {
     public static class KeccakHashFunction
     {

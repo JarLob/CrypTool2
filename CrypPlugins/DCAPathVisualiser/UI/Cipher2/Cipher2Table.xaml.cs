@@ -27,7 +27,7 @@ namespace DCAPathVisualiser.UI.Cipher2
     /// <summary>
     /// Interaktionslogik für Cipher2Table.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
     public partial class Cipher2Table : UserControl, INotifyPropertyChanged
     {
         private int _currentRound;

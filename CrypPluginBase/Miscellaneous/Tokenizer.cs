@@ -21,7 +21,7 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class StringUtil
     {

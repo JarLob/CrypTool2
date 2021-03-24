@@ -17,20 +17,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Runtime.CompilerServices;
 using System.Numerics;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.Converter
+namespace CrypTool.Plugins.Converter
 {
-    public enum OutputTypes { StringType = 0, IntType, ShortType, ByteType, DoubleType, BigIntegerType, ByteArrayType, CryptoolStreamType, BooleanType, UIntArrayType };
+    public enum OutputTypes { StringType = 0, IntType, ShortType, ByteType, DoubleType, BigIntegerType, ByteArrayType, CrypToolStreamType, BooleanType, UIntArrayType };
     
-    [Author("Raoul Falk, Dennis Nolte", "falk@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Converter.Properties.Resources", "PluginCaption", "PluginTooltip", "Converter/DetailedDescription/doc.xml", "Converter/icons/icon.png", "Converter/icons/tostring.png", "Converter/icons/toint.png", "Converter/icons/toshort.png", "Converter/icons/tobyte.png", "Converter/icons/todouble.png", "Converter/icons/tobig.png", "Converter/icons/tobytearray.png", "Converter/icons/tocryptoolstream.png", "Converter/icons/toboolean.png", "Converter/icons/tointarray.png")]
+    [Author("Raoul Falk, Dennis Nolte", "falk@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("Converter.Properties.Resources", "PluginCaption", "PluginTooltip", "Converter/DetailedDescription/doc.xml", "Converter/icons/icon.png", "Converter/icons/tostring.png", "Converter/icons/toint.png", "Converter/icons/toshort.png", "Converter/icons/tobyte.png", "Converter/icons/todouble.png", "Converter/icons/tobig.png", "Converter/icons/tobytearray.png", "Converter/icons/toCrypToolstream.png", "Converter/icons/toboolean.png", "Converter/icons/tointarray.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     class Converter : ICrypComponent
     {
@@ -96,14 +96,14 @@ namespace Cryptool.Plugins.Converter
                     Array.Reverse(temp);
                     return temp;
                 }
-                else if (settings.Converter == OutputTypes.CryptoolStreamType)
+                else if (settings.Converter == OutputTypes.CrypToolStreamType)
                 {
                     byte[] streamData = null;
 
-                    if (inputOne is ICryptoolStream)
+                    if (inputOne is ICrypToolStream)
                     {
-                        if (!settings.ReverseOrder) return (ICryptoolStream)inputOne;
-                        streamData = ICryptoolStreamToByteArray((ICryptoolStream)inputOne);
+                        if (!settings.ReverseOrder) return (ICrypToolStream)inputOne;
+                        streamData = ICrypToolStreamToByteArray((ICrypToolStream)inputOne);
                     } 
                     else if (inputOne is byte[])
                         streamData = (byte[])inputOne;
@@ -126,7 +126,7 @@ namespace Cryptool.Plugins.Converter
                     }
                     else
                     {
-                        GuiLogMessage("Conversion from " + inputOne.GetType().Name + " to Cryptoolstream is not yet implemented", NotificationLevel.Error);
+                        GuiLogMessage("Conversion from " + inputOne.GetType().Name + " to CrypToolstream is not yet implemented", NotificationLevel.Error);
                         return null;
                     }
                 }
@@ -161,7 +161,7 @@ namespace Cryptool.Plugins.Converter
             return buffer;
         }
 
-        private byte[] ICryptoolStreamToByteArray(ICryptoolStream stream)
+        private byte[] ICrypToolStreamToByteArray(ICrypToolStream stream)
         {
             return CStreamReaderToByteArray(stream.CreateReader());
         }
@@ -374,7 +374,7 @@ namespace Cryptool.Plugins.Converter
                 case OutputTypes.UIntArrayType: return typeof(uint[]);
                 case OutputTypes.ByteArrayType: return typeof(byte[]);
                 case OutputTypes.BooleanType: return typeof(Boolean);
-                case OutputTypes.CryptoolStreamType: return typeof(ICryptoolStream);
+                case OutputTypes.CrypToolStreamType: return typeof(ICrypToolStream);
                 default: return null;
             }
         }
@@ -449,40 +449,40 @@ namespace Cryptool.Plugins.Converter
 
             #region ConvertFromTypes
 
-            #region ConvertFromICryptoolStream
-            if (input is ICryptoolStream)
+            #region ConvertFromICrypToolStream
+            if (input is ICrypToolStream)
             {
                 switch (this.settings.Converter)
                 {
-                    case OutputTypes.CryptoolStreamType:
+                    case OutputTypes.CrypToolStreamType:
                         {
-                            Output = (ICryptoolStream)input;
+                            Output = (ICrypToolStream)input;
                             break;
                         }
 
                     case OutputTypes.StringType:
                         {
-                            byte[] buffer = ICryptoolStreamToByteArray((ICryptoolStream)input);
+                            byte[] buffer = ICrypToolStreamToByteArray((ICrypToolStream)input);
                             Output = GetStringForEncoding(buffer, settings.InputEncoding);
                             break;
                         }
 
                     case OutputTypes.ByteArrayType:
                         {
-                            Output = ICryptoolStreamToByteArray((ICryptoolStream)input);
+                            Output = ICrypToolStreamToByteArray((ICrypToolStream)input);
                             break;
                         }
 
                     case OutputTypes.BigIntegerType:
                         {
-                            byte[] buffer = ICryptoolStreamToByteArray((ICryptoolStream)input);
+                            byte[] buffer = ICrypToolStreamToByteArray((ICrypToolStream)input);
                             Output = ByteArrayToBigInteger(buffer, settings.Endianness);
                             break;
                         }
 
                     case OutputTypes.UIntArrayType:
                         {
-                            byte[] buffer = ICryptoolStreamToByteArray((ICryptoolStream)input);
+                            byte[] buffer = ICrypToolStreamToByteArray((ICrypToolStream)input);
 
                             uint[] result = (settings.DigitsDefinition == 1)
                                 ? ByteArrayToIntArray(buffer)
@@ -534,7 +534,7 @@ namespace Cryptool.Plugins.Converter
                             return true;
                         }
 
-                    case OutputTypes.CryptoolStreamType:    // uint[] to CryptoolStream
+                    case OutputTypes.CrypToolStreamType:    // uint[] to CrypToolStream
                         {
                             byte[] result = (settings.DigitsDefinition==1)
                                 ? IntArrayToByteArray((uint[])input)
@@ -858,7 +858,7 @@ namespace Cryptool.Plugins.Converter
                             Output = (Double)((bool)input ? 1 : 0);
                             return true;
 
-                    case OutputTypes.CryptoolStreamType:
+                    case OutputTypes.CrypToolStreamType:
                             Output = new byte[] { (byte)(((bool)input) ? 1 : 0) };
                             return true;
 
@@ -1086,8 +1086,8 @@ namespace Cryptool.Plugins.Converter
                         return true;
                     }
                 #endregion
-                #region ConvertToCryptoolStream
-                case OutputTypes.CryptoolStreamType:
+                #region ConvertToCrypToolStream
+                case OutputTypes.CrypToolStreamType:
                     {                        
                         if (input is byte[] || input is byte || input is BigInteger || input is String)
                         {
@@ -1096,7 +1096,7 @@ namespace Cryptool.Plugins.Converter
                         }
                         else
                         {
-                            GuiLogMessage("Conversion from " + input.GetType().Name + " to CryptoolStream is not yet implemented", NotificationLevel.Error);
+                            GuiLogMessage("Conversion from " + input.GetType().Name + " to CrypToolStream is not yet implemented", NotificationLevel.Error);
                             return false;
                         }
                     }

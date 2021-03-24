@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Numerics;
 
-namespace Cryptool.Plugins.ChaCha
+namespace CrypTool.Plugins.ChaCha
 {
     internal sealed class KeyValidator : ValidationAttribute
     {

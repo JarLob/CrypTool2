@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cryptool.MD5.Presentation.Displays
+namespace CrypTool.MD5.Presentation.Displays
 {
     /// <summary>
     /// Interaktionslogik für HashAccumulatorDisplay.xaml

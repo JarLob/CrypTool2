@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using LatticeCrypto.Models;
 using System.Windows.Controls;
 

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 //using PaddingOracleAttack.Properties;
 using System;
 using System.ComponentModel;
@@ -25,13 +25,13 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows;
-//using Cryptool.Plugins.PaddingOracleAttack.Properties;
+//using CrypTool.Plugins.PaddingOracleAttack.Properties;
 using PaddingOracleAttack.Properties;
 
 
-namespace Cryptool.Plugins.PaddingOracleAttack
+namespace CrypTool.Plugins.PaddingOracleAttack
 {
-    [Author("Alexander Juettner", "alex@juettner-online.com", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
+    [Author("Alexander Juettner", "alex@juettner-online.com", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
     [PluginInfo("PaddingOracleAttack.Properties.Resources", "PluginCaption", "PluginTooltip", "PaddingOracleAttack/Documentation/doc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
@@ -100,14 +100,14 @@ namespace Cryptool.Plugins.PaddingOracleAttack
         }
 
         [PropertyInfo(Direction.InputData, "CipherInputCaption", "CipherInputTooltip", true)]
-        public ICryptoolStream CipherInput
+        public ICrypToolStream CipherInput
         {
             get;
             set;
         }
         
         [PropertyInfo(Direction.OutputData, "ResultOutputCaption", "ResultOutputTooltip")]
-        public ICryptoolStream PaddingOracleOutput
+        public ICrypToolStream PaddingOracleOutput
         {
             get
             {

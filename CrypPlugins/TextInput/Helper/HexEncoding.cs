@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.TextInput.Helper
+namespace CrypTool.TextInput.Helper
 {
   static class HexStringConverter
   {

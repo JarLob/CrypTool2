@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data;
 
-namespace Cryptool.Resource
+namespace CrypTool.Resource
 {
     public class ResourceTab : TabPage
     {

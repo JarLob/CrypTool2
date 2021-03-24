@@ -5,7 +5,7 @@ using System.Threading;
 using System.Net;
 using System.Collections.Generic;
 
-class CryptoolServer
+class CrypToolServer
 {
     #region Properties
 
@@ -96,7 +96,7 @@ class CryptoolServer
         {
             if (state == State.Running && OnErrorLog != null)
             {
-                OnErrorLog("CryptoolServer: Got Exception while running "+e.Message);
+                OnErrorLog("CrypToolServer: Got Exception while running "+e.Message);
             }
         }
         finally

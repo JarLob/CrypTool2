@@ -1,14 +1,14 @@
-﻿using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+﻿using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using Cryptool.Plugins.MD5Collider.Algorithm;
-using Cryptool.Plugins.MD5Collider.Presentation;
+using CrypTool.Plugins.MD5Collider.Algorithm;
+using CrypTool.Plugins.MD5Collider.Presentation;
 
-namespace Cryptool.Plugins.MD5Collider
+namespace CrypTool.Plugins.MD5Collider
 {
-    [Author("Holger Pretzsch", "cryptool@holger-pretzsch.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.MD5Collider.Properties.Resources", "PluginCaption", "PluginTooltip", "MD5Collider/DetailedDescription/doc.xml", "MD5Collider/MD5Collider.png")]
+    [Author("Holger Pretzsch", "CrypTool@holger-pretzsch.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.MD5Collider.Properties.Resources", "PluginCaption", "PluginTooltip", "MD5Collider/DetailedDescription/doc.xml", "MD5Collider/MD5Collider.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     class MD5Collider : ICrypComponent
     {
@@ -21,12 +21,12 @@ namespace Cryptool.Plugins.MD5Collider
             set { _collider = value; presentation.Collider = value; }
         }
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
-        public Cryptool.PluginBase.ISettings Settings { get { return null; } }
+        public CrypTool.PluginBase.ISettings Settings { get { return null; } }
         public System.Windows.Controls.UserControl Presentation { get { return presentation; } }
 
         public void PreExecution() { Dispose(); }
@@ -54,7 +54,7 @@ namespace Cryptool.Plugins.MD5Collider
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStream1Caption", "OutputDataStream1Tooltip", false)]
-        public ICryptoolStream OutputDataStream1
+        public ICrypToolStream OutputDataStream1
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.MD5Collider
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStream2Caption", "OutputDataStream2Tooltip", false)]
-        public ICryptoolStream OutputDataStream2
+        public ICrypToolStream OutputDataStream2
         {
             get
             {

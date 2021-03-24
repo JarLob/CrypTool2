@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 using System.Globalization;
 
 
-namespace Cryptool.Internet_frame_generator
+namespace CrypTool.Internet_frame_generator
 {
     /// <summary>
     /// Creates internet traffic packages (IPv4). Either IP packages (ISO/OSI layer 3) or ARP request packages
@@ -55,7 +55,7 @@ namespace Cryptool.Internet_frame_generator
             "OutputStreamCaption",
             "OutputStreamTooltip",
             false)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Cryptool.Internet_frame_generator
         /// <summary>
         /// Generates IP packets of variable size.
         /// First a byte array is used to build the package, which is then
-        /// converted into a CryptoolStream for output. 
+        /// converted into a CrypToolStream for output. 
         /// </summary>
         private byte[] generateIPPackets()
         {

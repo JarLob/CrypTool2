@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Cryptool.Plugins.Ipc.Messages {
+namespace CrypTool.Plugins.Ipc.Messages {
 
   /// <summary>Holder for reflection information generated from ct2ipc.proto</summary>
   public static partial class Ct2IpcReflection {
@@ -42,13 +42,13 @@ namespace Cryptool.Plugins.Ipc.Messages {
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2IpcMessage), global::Cryptool.Plugins.Ipc.Messages.Ct2IpcMessage.Parser, new[]{ "SequenceNumber", "MessageType", "Body" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2Hello), global::Cryptool.Plugins.Ipc.Messages.Ct2Hello.Parser, new[]{ "ProtocolVersion", "ProgramName", "ProgramVersion" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2Shutdown), global::Cryptool.Plugins.Ipc.Messages.Ct2Shutdown.Parser, new[]{ "Reason" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2Values), global::Cryptool.Plugins.Ipc.Messages.Ct2Values.Parser, new[]{ "PinId", "Value" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry), global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry.Parser, new[]{ "LogLevel", "Entry" }, null, new[]{ typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel) }, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2Progress), global::Cryptool.Plugins.Ipc.Messages.Ct2Progress.Parser, new[]{ "MaxValue", "CurrentValue" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cryptool.Plugins.Ipc.Messages.Ct2Goodbye), global::Cryptool.Plugins.Ipc.Messages.Ct2Goodbye.Parser, new[]{ "ExitCode", "ExitMessage" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2IpcMessage), global::CrypTool.Plugins.Ipc.Messages.Ct2IpcMessage.Parser, new[]{ "SequenceNumber", "MessageType", "Body" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2Hello), global::CrypTool.Plugins.Ipc.Messages.Ct2Hello.Parser, new[]{ "ProtocolVersion", "ProgramName", "ProgramVersion" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2Shutdown), global::CrypTool.Plugins.Ipc.Messages.Ct2Shutdown.Parser, new[]{ "Reason" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2Values), global::CrypTool.Plugins.Ipc.Messages.Ct2Values.Parser, new[]{ "PinId", "Value" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry), global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry.Parser, new[]{ "LogLevel", "Entry" }, null, new[]{ typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel) }, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2Progress), global::CrypTool.Plugins.Ipc.Messages.Ct2Progress.Parser, new[]{ "MaxValue", "CurrentValue" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CrypTool.Plugins.Ipc.Messages.Ct2Goodbye), global::CrypTool.Plugins.Ipc.Messages.Ct2Goodbye.Parser, new[]{ "ExitCode", "ExitMessage" }, null, null, null)
           }));
     }
     #endregion
@@ -66,7 +66,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[0]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -256,7 +256,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[1]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -444,7 +444,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[2]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -576,7 +576,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[3]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -721,7 +721,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[4]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -750,9 +750,9 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     /// <summary>Field number for the "logLevel" field.</summary>
     public const int LogLevelFieldNumber = 1;
-    private global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel logLevel_ = 0;
+    private global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel logLevel_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel LogLevel {
+    public global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel LogLevel {
       get { return logLevel_; }
       set {
         logLevel_ = value;
@@ -857,7 +857,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            logLevel_ = (global::Cryptool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel) input.ReadEnum();
+            logLevel_ = (global::CrypTool.Plugins.Ipc.Messages.Ct2LogEntry.Types.LogLevel) input.ReadEnum();
             break;
           }
           case 18: {
@@ -896,7 +896,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[5]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1056,7 +1056,7 @@ namespace Cryptool.Plugins.Ipc.Messages {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cryptool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[6]; }
+      get { return global::CrypTool.Plugins.Ipc.Messages.Ct2IpcReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

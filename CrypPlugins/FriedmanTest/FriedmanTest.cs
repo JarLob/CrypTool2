@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace FriedmanTest
 {
-    [Author("Georgi Angelov, Danail Vazov", "vazov@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [Author("Georgi Angelov, Danail Vazov", "vazov@CrypTool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("FriedmanTest.Properties.Resources", "PluginCaption", "PluginTooltip", "FriedmanTest/DetailedDescription/doc.xml", "FriedmanTest/friedman.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class FriedmanTest : ICrypComponent

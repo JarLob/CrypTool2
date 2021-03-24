@@ -13,12 +13,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Cryptool.PlayfairAnalyzer
+namespace CrypTool.PlayfairAnalyzer
 {
 
     public enum Language

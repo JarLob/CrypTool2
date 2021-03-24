@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI.Tutorial3
     /// <summary>
     /// Interaction logic for AttackKeyRound4.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class AttackKeyRound4 : UserControl
     {
         public event EventHandler<EventArgs> SelectionChanged;

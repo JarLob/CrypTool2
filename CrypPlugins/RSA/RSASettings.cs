@@ -17,10 +17,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Collections.ObjectModel;
 
-namespace Cryptool.Plugins.RSA
+namespace CrypTool.Plugins.RSA
 {
     /// <summary>
     /// Settings class for the RSA plugin
@@ -211,4 +211,4 @@ namespace Cryptool.Plugins.RSA
 
     }//end RSASettings
 
-}//end Cryptool.Plugins.RSA
+}//end CrypTool.Plugins.RSA

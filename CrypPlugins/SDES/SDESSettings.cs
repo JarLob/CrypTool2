@@ -14,10 +14,10 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     /// <summary>
     /// Settings for the SDES plugin
@@ -115,4 +115,4 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         #endregion
     }
 
-}//end namespace Cryptool.Plugins.Cryptography.Encryption
+}//end namespace CrypTool.Plugins.Cryptography.Encryption

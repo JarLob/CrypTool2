@@ -20,15 +20,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Cryptool.Plugins.VisualEncoder.Model;
+using CrypTool.Plugins.VisualEncoder.Model;
 using Color = System.Drawing.Color;
 
-namespace Cryptool.Plugins.VisualEncoder
+namespace CrypTool.Plugins.VisualEncoder
 {
     /// <summary>
     /// Interaktionslogik für DimCodeEncoderPresentation.xaml
     /// </summary>
-     [Cryptool.PluginBase.Attributes.Localization("VisualEncoder.Properties.Resources")]
+     [CrypTool.PluginBase.Attributes.Localization("VisualEncoder.Properties.Resources")]
     public partial class VisualEncoderPresentation : UserControl
     {
 

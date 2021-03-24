@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.PluginBase.Properties {
+namespace CrypTool.PluginBase.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -322,7 +322,7 @@ namespace Cryptool.PluginBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://www.cryptool.org/ct2download/Tutorials/videos.xml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.CrypTool.org/ct2download/Tutorials/videos.xml")]
         public string CrypVideoTutorials_URL {
             get {
                 return ((string)(this["CrypVideoTutorials_URL"]));
@@ -334,7 +334,7 @@ namespace Cryptool.PluginBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://www.cryptool.org/ct2download/Tutorials/cat.xml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.CrypTool.org/ct2download/Tutorials/cat.xml")]
         public string CrypVideoTutorials_CatURL {
             get {
                 return ((string)(this["CrypVideoTutorials_CatURL"]));

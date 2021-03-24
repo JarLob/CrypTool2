@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel.Components
+namespace CrypTool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// A helper class which creates the step operation actions for the quarterround visualization.

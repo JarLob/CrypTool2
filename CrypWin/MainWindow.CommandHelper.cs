@@ -17,18 +17,18 @@
 using System;
 using System.Linq;
 using System.Windows.Input;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase;
 using System.Windows;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 using StartCenter;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using Cryptool.CrypWin.Helper;
+using CrypTool.CrypWin.Helper;
 using DevComponents.WpfRibbon;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public partial class MainWindow
     {

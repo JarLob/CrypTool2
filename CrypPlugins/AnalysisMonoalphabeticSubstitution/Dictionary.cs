@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Compression;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.IO;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     class Dictionary
     {

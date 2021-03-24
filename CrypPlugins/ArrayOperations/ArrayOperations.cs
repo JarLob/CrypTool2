@@ -17,7 +17,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using ArrayOperations.Properties;
 using System.Collections.Generic;
 

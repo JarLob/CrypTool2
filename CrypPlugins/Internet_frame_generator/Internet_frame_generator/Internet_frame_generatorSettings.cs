@@ -1,8 +1,8 @@
 ﻿using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Internet_frame_generator
+namespace CrypTool.Internet_frame_generator
 {
     /// <summary>
     /// Some settings for the <see cref="IPPacketGenerator"/>IPPacketGenerator plugin. Only setting is the kind

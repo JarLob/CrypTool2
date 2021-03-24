@@ -348,7 +348,7 @@ namespace WindowsFormsApplication1
         private void saveMergedResourcesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //string fname = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\CT2resources.xml";
-            string fname = GetSaveFileName("Save Cryptool Merged Resource");
+            string fname = GetSaveFileName("Save CrypTool Merged Resource");
 
             Cursor.Current = Cursors.WaitCursor;
             if (fname != null) allres.SaveXML(fname);
@@ -358,7 +358,7 @@ namespace WindowsFormsApplication1
         private void loadMergedResourcesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //string fname = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\CT2resources.xml";
-            string fname = GetOpenFileName("Load Cryptool Merged Resource");
+            string fname = GetOpenFileName("Load CrypTool Merged Resource");
             if (fname == null) return;
 
             Cursor.Current = Cursors.WaitCursor;

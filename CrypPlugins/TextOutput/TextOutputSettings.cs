@@ -15,9 +15,9 @@
 */
 
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -70,12 +70,12 @@ namespace TextOutput
             foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
             {
                 Fonts.Add(font.ToString());
-                if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
+                if (CrypTool.PluginBase.Properties.Settings.Default.FontFamily == font)
                 {
                     _font = font.ToString();
                 }
             }
-            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
+            fontsize = CrypTool.PluginBase.Properties.Settings.Default.FontSize;
             OnPropertyChanged("Font");
             OnPropertyChanged("FontSize");
         }

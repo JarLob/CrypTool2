@@ -15,24 +15,24 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.IO;
 using System.Windows.Threading;
 using System.Threading;
 using System;
 using System.Text;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
-using Cryptool.Plugins.DECRYPTTools.Util;
+using CrypTool.Plugins.DECRYPTTools.Util;
 
-namespace Cryptool.Plugins.DECRYPTTools
+namespace CrypTool.Plugins.DECRYPTTools
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECRYPTTools.Properties.Resources", "DecodeViewerPluginCaption", "DecodeViewerPluginTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.DECRYPTTools.Properties.Resources", "DecodeViewerPluginCaption", "DecodeViewerPluginTooltip", "DECRYPTTools/userdoc.xml", "DECRYPTTools/icon.png")]
     [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECRYPTViewer : ICrypComponent
     {
@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.DECRYPTTools
         /// Outputs a selected Image in a CrypToolStream
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
-        public ICryptoolStream OutputImage
+        public ICrypToolStream OutputImage
         {
             get;
             set;

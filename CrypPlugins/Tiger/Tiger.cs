@@ -23,9 +23,9 @@
 
 using System.ComponentModel;
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 
 namespace Tiger
@@ -89,7 +89,7 @@ namespace Tiger
       /// </summary>
       /// <value>The input inputdata.</value>
       [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", false)]
-      public ICryptoolStream InputStream
+      public ICrypToolStream InputStream
       {
           get
           {
@@ -159,7 +159,7 @@ namespace Tiger
     /// </summary>
     /// <value>The output inputdata stream.</value>
     [PropertyInfo(Direction.OutputData, "HashOutputStreamCaption", "HashOutputStreamTooltip", true)]
-    public ICryptoolStream HashOutputStream
+    public ICrypToolStream HashOutputStream
     {
       get
       {

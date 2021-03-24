@@ -17,11 +17,11 @@
 using System;
 using System.IO;
 
-namespace Cryptool.PluginBase.IO
+namespace CrypTool.PluginBase.IO
 {
     public class DirectoryHelper
     {
-        private const string crypTool2 = "CrypTool2";
+        private const string CrypTool2 = "CrypTool2";
         private const string crypPlugins = "CrypPlugins";
         private const string tempFiles = "Temp";
         private const string samples = "Templates";
@@ -67,7 +67,7 @@ namespace Cryptool.PluginBase.IO
         {
             BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             DirectoryCrypPlugins = Path.Combine(BaseDirectory, crypPlugins);
-            DirectoryLocal = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), crypTool2);
+            DirectoryLocal = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypTool2);
             DirectoryLocalTemp = Path.Combine(DirectoryLocal, tempFiles);
             DirectorySamples = Path.Combine(BaseDirectory, samples);
             DirectoryLanguageStatistics = Path.Combine(BaseDirectory, languageStatistics);

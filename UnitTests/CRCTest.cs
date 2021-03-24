@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 namespace Tests.TemplateAndPluginTests
 {
@@ -12,7 +12,7 @@ namespace Tests.TemplateAndPluginTests
         }
 
         // convert stream to ulong
-        private ulong stream2ulong(ICryptoolStream s)
+        private ulong stream2ulong(ICrypToolStream s)
         {
             byte[] tmpbuf = s.ToByteArray();
             Array.Reverse(tmpbuf);
@@ -41,12 +41,12 @@ namespace Tests.TemplateAndPluginTests
 
                 // set CRC parameters individually
                 output = scenario1.GetOutputs(new object[] { input, vector.width, vector.polynomial.ToString("x"), vector.init.ToString("x"), vector.xorout.ToString("x"), vector.refin, vector.refout });
-                check = stream2ulong(output[0] as ICryptoolStream);
+                check = stream2ulong(output[0] as ICrypToolStream);
                 Assert.AreEqual(vector.check.ToString("x"), check.ToString("x"), "Unexpected value in test '" + vector.name + "'.");
 
                 // set CRC parameters by selecting a CRCMethod
                 output = scenario2.GetOutputs(new object[] { input, method });
-                check = stream2ulong(output[0] as ICryptoolStream);
+                check = stream2ulong(output[0] as ICrypToolStream);
                 Assert.AreEqual(vector.check.ToString("x"), check.ToString("x"), "Unexpected value in test '" + vector.name + "'.");
             }
         }

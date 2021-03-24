@@ -14,8 +14,8 @@
    limitations under the License.
 */
 using BlindSignatureGenerator.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.ComponentModel;
 using System.Numerics;
@@ -23,9 +23,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Controls;
 using BlindSignatureGenerator;
-using Cryptool.Plugins.BlindSignatureGenerator;
+using CrypTool.Plugins.BlindSignatureGenerator;
 
-namespace Cryptool.Plugins.BlindSignatureGenerator
+namespace CrypTool.Plugins.BlindSignatureGenerator
 {
     [Author("Axel Wehage", "axel.wehage@unibw.de", "Universität der Bundeswehr München", "https://www.unibw.de")]
     [PluginInfo("BlindSignatureGenerator.Properties.Resources", "BlindSignatureVerifierCaption", "BlindSignatureVerifierTooltip", "BlindSignatureGenerator/userdoc.xml", new[] { "BlindSignatureGenerator/Images/Icon2.png" })]

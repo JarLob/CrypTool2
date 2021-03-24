@@ -18,12 +18,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using EnigmaAnalyzerLib.Common;
 using static EnigmaAnalyzerLib.Key;
 
-namespace Cryptool.EnigmaAnalyzer
+namespace CrypTool.EnigmaAnalyzer
 {
     #region some setting enums
 

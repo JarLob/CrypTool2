@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wizard;
 using WorkspaceManager.Model;

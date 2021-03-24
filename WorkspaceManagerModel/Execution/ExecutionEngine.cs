@@ -16,12 +16,12 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using WorkspaceManager.Model;
 using System.Threading;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Threading;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 using WorkspaceManagerModel.Properties;
 
 

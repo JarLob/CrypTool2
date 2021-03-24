@@ -13,8 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Cryptool.Plugins.DECRYPTTools.Util
+namespace CrypTool.Plugins.DECRYPTTools.Util
 {
     /// <summary>
     /// A ClusterSet is a self-generating set of different Clusters using a dedicated matchBorder (threshold)

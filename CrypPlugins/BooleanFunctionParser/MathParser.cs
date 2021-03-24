@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.MathParser
+namespace CrypTool.MathParser
 {
     public enum Mode { RAD, DEG, GRAD };
 

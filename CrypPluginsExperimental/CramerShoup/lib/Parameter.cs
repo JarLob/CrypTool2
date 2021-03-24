@@ -2,7 +2,7 @@
 using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Math.EC;
 
-namespace Cryptool.Plugins.CramerShoup.lib
+namespace CrypTool.Plugins.CramerShoup.lib
 {
     public abstract class ECCramerShoupParameter
     {

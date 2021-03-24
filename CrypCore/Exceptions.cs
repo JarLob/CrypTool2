@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     [Serializable]
     public class UnknownFileFormatException : Exception

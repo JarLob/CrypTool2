@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.ComputeXZ
+namespace CrypTool.ComputeXZ
 {
     class ComputeXZSettings : ISettings
     {

@@ -2,7 +2,7 @@
 using System.Text;
 using Org.BouncyCastle.Utilities.Encoders;
 using Org.BouncyCastle.Math;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace PKCS1.Library
 {

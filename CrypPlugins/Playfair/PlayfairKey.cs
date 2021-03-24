@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Cryptool.Playfair
+namespace CrypTool.Playfair
 {
     public static class PlayfairKey
     {

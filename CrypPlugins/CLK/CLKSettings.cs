@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 // for Visibility
 using System.Windows;
 
-namespace Cryptool.CLK
+namespace CrypTool.CLK
 {
   public class CLKSettings : ISettings
   {

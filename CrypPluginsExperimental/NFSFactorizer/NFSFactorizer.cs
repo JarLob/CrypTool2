@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,16 +21,16 @@ using System.Linq;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Numerics;
 using System.Reflection;
 using System.Windows;
 
 
 
-namespace Cryptool.Plugins.NFSFactorizer
+namespace CrypTool.Plugins.NFSFactorizer
 {
     [Author("Inigo Querejeta", "i.querejeta.azurmendi@student.tue.nl", "Technical University of Eindhoven", "https://www.tue.nl/")]
     [PluginInfo("NFS Factorizer", "Factoring numbers with, among other algorithms, the NFS.", "NFSFactorizer/DetailedDescription/userdoc.xml", new[] { "NFSFactorizer/images.png" })]

@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Variable
+namespace CrypTool.Plugins.Variable
 {
-    [Author("Sven Rech", "sven.rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Sven Rech", "sven.rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Variable.Properties.Resources", "VariableLoadCaption", "VariableLoadTooltip", "Variable/DetailedDescription/doc.xml", "Variable/loadIcon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     class VariableLoad : ICrypComponent

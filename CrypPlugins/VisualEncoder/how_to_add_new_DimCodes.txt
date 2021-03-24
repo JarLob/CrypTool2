@@ -1,4 +1,4 @@
-﻿Author: Christopher Konze, christopher.konze@cryptool.org
+﻿Author: Christopher Konze, christopher.konze@CrypTool.org
 
 To add a new DimcodeTypes you simply will have to do the following steps:
 

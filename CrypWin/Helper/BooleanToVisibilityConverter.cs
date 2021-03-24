@@ -3,7 +3,7 @@ using System.Windows.Data;
 using System.Windows;
 using DevComponents.WpfDock;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
     class BooleanToVisibilityConverter : IMultiValueConverter
     {
@@ -44,7 +44,7 @@ namespace Cryptool.CrypWin.Helper
                         break;
                 }
                 dock.IsAutoHide = false;
-                Cryptool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings();
+                CrypTool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings();
                 return v;
             }
             else

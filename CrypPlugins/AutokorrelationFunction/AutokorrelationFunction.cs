@@ -14,16 +14,16 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Cryptool.PluginBase.Utils.Graphics.Diagrams.Histogram;
+using CrypTool.PluginBase.Utils.Graphics.Diagrams.Histogram;
 
-namespace Cryptool.Plugins.AutokorrelationFunction
+namespace CrypTool.Plugins.AutokorrelationFunction
 {
-    [Author("Dennis Nolte", "nolte@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Dennis Nolte", "nolte@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("AutokorrelationFunction.Properties.Resources", "PluginCaption", "PluginTooltip", "AutokorrelationFunction/DetailedDescription/doc.xml", "AutokorrelationFunction/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class AutokorrelationFunction : ICrypComponent

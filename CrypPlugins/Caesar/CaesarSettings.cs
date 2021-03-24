@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Caesar
+namespace CrypTool.Caesar
 {
     public class CaesarSettings : ISettings
     {

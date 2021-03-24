@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Cryptool.CubeAttack
+namespace CrypTool.CubeAttack
 {
     [Serializable()]
     public class Matrix : ISerializable

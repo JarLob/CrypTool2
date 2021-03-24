@@ -1,5 +1,5 @@
-﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using CrypTool.Plugins.ChaCha.Helper;
+using CrypTool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.ViewModel
+namespace CrypTool.Plugins.ChaCha.ViewModel
 {
     internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha, IDiffusion
     {

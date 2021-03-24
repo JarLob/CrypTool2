@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using Org.BouncyCastle.Math;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 
 namespace PKCS1.Library
@@ -227,7 +227,7 @@ namespace PKCS1.Library
             GuiLogMsgHandOff.getInstance().registerAt(ref OnGuiLogMsgSend);
         }
 
-        public void SendGuiLogMsg(string message, Cryptool.PluginBase.NotificationLevel logLevel)
+        public void SendGuiLogMsg(string message, CrypTool.PluginBase.NotificationLevel logLevel)
         {
             if (null != OnGuiLogMsgSend)
             {

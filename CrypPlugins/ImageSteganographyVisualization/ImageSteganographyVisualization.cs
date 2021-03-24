@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Drawing;
 using System.Collections;
 using System.Windows.Threading;
@@ -71,14 +71,14 @@ namespace ImageSteganographyVisualization
         }
 
         [PropertyInfo(Direction.InputData, "InputImageCaption", "InputImageTooltip", true)]
-        public ICryptoolStream InputImage
+        public ICrypToolStream InputImage
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip", false)]
-        public ICryptoolStream OutputImage
+        public ICrypToolStream OutputImage
         {
             get;
             set;

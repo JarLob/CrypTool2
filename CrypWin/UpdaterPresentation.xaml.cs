@@ -6,15 +6,15 @@ using System.Windows.Controls;
 using System.Threading;
 using System.Xml.Linq;
 using System.Windows.Threading;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     /// <summary>
     /// Interaction logic for UpdaterPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.CrypWin.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypWin.Properties.Resources")]
     public partial class UpdaterPresentation : UserControl
     {
         public delegate void RestartClickedHandler();

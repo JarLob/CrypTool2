@@ -15,15 +15,15 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Threading;
 using System.Threading;
 using System;
 using System.Text;
 using FleißnerGrille.Properties;
 
-namespace Cryptool.Plugins.FleißnerGrille
+namespace CrypTool.Plugins.FleißnerGrille
 {
     [Author("Robert Rauer", "robert_rauer@yahoo.de", "Universität Kassel", "http://cryptool2.vs.uni-due.de")]
     [PluginInfo("FleißnerGrille.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrille/DetailedDescription/doc.xml",

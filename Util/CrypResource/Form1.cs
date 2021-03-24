@@ -8,11 +8,11 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Windows.Forms;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.IO;
 using System.Collections;
 
-namespace Cryptool.Resource
+namespace CrypTool.Resource
 {
     public partial class Form1 : Form
     {
@@ -124,7 +124,7 @@ namespace Cryptool.Resource
         private void loadResourceMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Open Cryptool Plugin Resource";
+            dlg.Title = "Open CrypTool Plugin Resource";
             dlg.Filter = "Crytool Plugin Resource (*.resx)|*.resx";
             if (dlg.ShowDialog() == DialogResult.OK)
             {

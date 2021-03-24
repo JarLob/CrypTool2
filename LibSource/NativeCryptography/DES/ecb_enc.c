@@ -56,7 +56,7 @@
  * [including the GNU Public Licence.]
  */
 
-/*Note: Modified by Sven Rech for Cryptool2 */
+/*Note: Modified by Sven Rech for CrypTool2 */
 
 #include "des_locl.h"
 #include "spr.h"

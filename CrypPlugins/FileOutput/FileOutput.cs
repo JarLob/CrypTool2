@@ -21,9 +21,9 @@ using System.Text;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using FileOutputWPF;
 
 namespace FileOutput
@@ -124,7 +124,7 @@ namespace FileOutput
 
             if (StreamInput == null)
             {
-                GuiLogMessage("Received null value for ICryptoolStream.", NotificationLevel.Warning);
+                GuiLogMessage("Received null value for ICrypToolStream.", NotificationLevel.Warning);
                 return;
             }
 
@@ -234,7 +234,7 @@ namespace FileOutput
         # region Properties
 
         [PropertyInfo(Direction.InputData, "StreamInputCaption", "StreamInputTooltip", true)]
-        public ICryptoolStream StreamInput { get; set; }
+        public ICrypToolStream StreamInput { get; set; }
 
         #endregion
     }

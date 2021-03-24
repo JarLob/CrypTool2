@@ -8,7 +8,7 @@
     <ProjectGuid>{40252D29-01C9-4F1A-9735-072B349AD165}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Numbers</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Numbers</RootNamespace>
     <AssemblyName>Numbers</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

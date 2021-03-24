@@ -15,12 +15,12 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.Generic;
 using System.Text;
 using System;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.IO;
 using System.Threading;
 using System.Windows.Threading;
@@ -29,10 +29,10 @@ using System.Windows;
 using System.Linq;
 using System.Windows.Media;
 
-namespace Cryptool.M_138
+namespace CrypTool.M_138
 {
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.M_138.Properties.Resources", "PluginCaption", "PluginTooltip", "M-138/userdoc.xml", "M-138/icon.png")]
+    [PluginInfo("CrypTool.M_138.Properties.Resources", "PluginCaption", "PluginTooltip", "M-138/userdoc.xml", "M-138/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class M_138 : ICrypComponent
     {

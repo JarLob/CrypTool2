@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SATAttack.Properties;
 
-namespace Cryptool.Plugins.SATAttack
+namespace CrypTool.Plugins.SATAttack
 {
     [Author("Max Brandi", "max.brandi@rub.de", null, null)]
     [PluginInfo("SATAttack.Properties.Resources", "PluginCaption", "PluginDescription", "SATAttack/Documentation/doc.xml", new[] { "SATSolver/Images/sat-race-logo.gif" })]
@@ -52,14 +52,14 @@ namespace Cryptool.Plugins.SATAttack
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", false)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "CbmcOutputStreamCaption", "CbmcOutputStreamTooltip", false)]
-        public ICryptoolStream CbmcOutputStream
+        public ICrypToolStream CbmcOutputStream
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Cryptool.Plugins.SATAttack
         }
 
         [PropertyInfo(Direction.OutputData, "SatSolverOutputStreamCaption", "SatSolverOutputStreamTooltip", false)]
-        public ICryptoolStream SatSolverOutputStream
+        public ICrypToolStream SatSolverOutputStream
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Cryptool.Plugins.SATAttack
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {
@@ -601,9 +601,9 @@ namespace Cryptool.Plugins.SATAttack
         }
 
         /// <summary>
-        /// Writes a stream of type ICryptoolStream to a file. The parameter filepath should end with "\\".
+        /// Writes a stream of type ICrypToolStream to a file. The parameter filepath should end with "\\".
         /// </summary>
-        void ReadInputStreamToCodefile(ICryptoolStream inputStream, string pluginDataPath, string codefileName)
+        void ReadInputStreamToCodefile(ICrypToolStream inputStream, string pluginDataPath, string codefileName)
         {
             using (CStreamReader reader = InputStream.CreateReader())
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     /// <summary>
     /// Interaction logic for UnhandledExceptionDialog.xaml

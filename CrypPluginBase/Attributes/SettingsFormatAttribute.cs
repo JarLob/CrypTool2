@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
   /// <summary>
   /// This optional attribute can be used to display author information in the 

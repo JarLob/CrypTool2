@@ -16,10 +16,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Transcriptor
+namespace CrypTool.Plugins.Transcriptor
 {
     // HOWTO: rename class (click name, press F2)
     public class TranscriptorSettings : ISettings

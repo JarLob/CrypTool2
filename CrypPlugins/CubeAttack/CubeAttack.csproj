@@ -8,7 +8,7 @@
     <ProjectGuid>{A7BE7721-3F38-4B95-B659-736A1FCA4A67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.CubeAttack</RootNamespace>
+    <RootNamespace>CrypTool.CubeAttack</RootNamespace>
     <AssemblyName>CubeAttack</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

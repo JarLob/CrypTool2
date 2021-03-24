@@ -4,11 +4,11 @@ using System.Windows.Media;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     public class ImageHelper
     {
@@ -22,7 +22,7 @@ namespace Cryptool.PluginBase
 
 
     [Serializable()]
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.PluginBase.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.PluginBase.Properties.Resources")]
     public class TabInfo : IDeserializationCallback
     {
         [NonSerialized]

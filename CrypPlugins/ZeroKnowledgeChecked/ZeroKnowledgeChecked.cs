@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.ZeroKnowledgeChecked
+namespace CrypTool.Plugins.ZeroKnowledgeChecked
 {
     [Author("Ondřej Skowronek", "xskowr00@stud.fit.vutbr.cz", "Brno University of Technology", "https://www.vutbr.cz")]
     [PluginInfo("ZeroKnowledgeChecked.Properties.Resources", "PluginCaption", "PluginTooltip", "ZeroKnowledgeChecked/userdoc.xml", new[] { "ZeroKnowledgeChecked/icon.png" })]    

@@ -23,7 +23,7 @@ namespace DCAPathVisualiser.UI.Cipher1
     /// <summary>
     /// Interaktionslogik für Cipher1Table.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
     public partial class Cipher1Table : UserControl, INotifyPropertyChanged
     {
         private int _currentRound;

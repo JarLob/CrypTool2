@@ -22,7 +22,7 @@ using System.Reflection;
 using System.Collections;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.QuadraticSieve
+namespace CrypTool.Plugins.QuadraticSieve
 {
     [Serializable]
     class FactorManager

@@ -1,15 +1,15 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.CrypWin.Properties;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.CrypWin.Properties;
 
-namespace Cryptool.CrypWin.SettingsTabs
+namespace CrypTool.CrypWin.SettingsTabs
 {
     /// <summary>
     /// Interaction logic for UpdaterSettingsTab.xaml
     /// </summary>
-    [Localization("Cryptool.CrypWin.SettingsTabs.Resources.res")]
+    [Localization("CrypTool.CrypWin.SettingsTabs.Resources.res")]
     [SettingsTab("UpdaterSettings", "/MainSettings/", 0.9)]
     public partial class UpdaterSettingsTab : UserControl
     {

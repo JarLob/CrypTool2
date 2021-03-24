@@ -5,14 +5,14 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     /// <summary>
     /// Interaktionslogik für AssignmentPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.AnalysisMonoalphabeticSubstitution.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

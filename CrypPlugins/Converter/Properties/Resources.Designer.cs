@@ -628,7 +628,7 @@ namespace Converter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cryptoolstream ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypToolstream ähnelt.
         /// </summary>
         internal static string TypesList8 {
             get {

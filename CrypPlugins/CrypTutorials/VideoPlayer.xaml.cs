@@ -12,7 +12,7 @@ using Vlc.DotNet.Wpf;
 using Microsoft.Win32;
 using System.Linq;
 
-namespace Cryptool.CrypTutorials
+namespace CrypTool.CrypTutorials
 {
 
     public partial class VideoPlayer : UserControl

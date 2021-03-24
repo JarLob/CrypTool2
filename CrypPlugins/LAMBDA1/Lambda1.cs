@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System;
 using System.IO;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 
-namespace Cryptool.Plugins.LAMBDA1
+namespace CrypTool.Plugins.LAMBDA1
 {
-    [Author("Michael Altenhuber", "michael@altenhuber.net", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.LAMBDA1.Properties.Resources", "PluginCaption", "PluginTooltip", "LAMBDA1/userdoc.xml", "LAMBDA1/images/t316_icon.png")]
+    [Author("Michael Altenhuber", "michael@altenhuber.net", "CrypTool 2 Team", "http://CrypTool2.vs.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.LAMBDA1.Properties.Resources", "PluginCaption", "PluginTooltip", "LAMBDA1/userdoc.xml", "LAMBDA1/images/t316_icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class LAMBDA1 : ICrypComponent
     {

@@ -26,7 +26,7 @@
 /* Note: rewritten a little bit to provide error control and an OpenSSL-
    compatible API */
 
-/* Note: Modified by Sven Rech for Cryptool 2 */
+/* Note: Modified by Sven Rech for CrypTool 2 */
 
 #ifndef HEADER_AES_LOCL_H
 #define HEADER_AES_LOCL_H

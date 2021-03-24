@@ -15,24 +15,24 @@
 */
 
 using System.Security.Cryptography;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.MD5.Presentation;
-using Cryptool.MD5.Algorithm;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.MD5.Presentation;
+using CrypTool.MD5.Algorithm;
 
-namespace Cryptool.MD5
+namespace CrypTool.MD5
 {
     [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
-    [PluginInfo("Cryptool.Plugins.MD5.Properties.Resources", "PluginCaption", "PluginTooltip", "MD5/DetailedDescription/doc.xml", "MD5/MD5.png")]
+    [PluginInfo("CrypTool.Plugins.MD5.Properties.Resources", "PluginCaption", "PluginTooltip", "MD5/DetailedDescription/doc.xml", "MD5/MD5.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class MD5 : ICrypComponent
     {
         #region Private variables
 
-        private ICryptoolStream inputData;
+        private ICrypToolStream inputData;
         private byte[] outputData;
         private PresentableMD5 md5;
         private PresentationContainer presentationContainer;
@@ -57,7 +57,7 @@ namespace Cryptool.MD5
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public ICryptoolStream InputData
+        public ICrypToolStream InputData
         {
             get 
             {
@@ -72,7 +72,7 @@ namespace Cryptool.MD5
         }
 
         [PropertyInfo(Direction.OutputData, "OutputDataStreamCaption", "OutputDataStreamTooltip", false)]
-        public ICryptoolStream OutputDataStream
+        public ICrypToolStream OutputDataStream
         {
           get 
           {            
@@ -135,7 +135,7 @@ namespace Cryptool.MD5
             }
             else
             {
-                GuiLogMessage("Received null value for CryptoolStream.", NotificationLevel.Warning);
+                GuiLogMessage("Received null value for CrypToolStream.", NotificationLevel.Warning);
             }
         }
         

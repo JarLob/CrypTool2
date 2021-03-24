@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4AB9BE96-3E34-40CB-9270-A64480C851EE}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Cryptool.CrypAnalysisViewControl</RootNamespace>
+    <RootNamespace>CrypTool.CrypAnalysisViewControl</RootNamespace>
     <AssemblyName>CrypAnalysisViewControl</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

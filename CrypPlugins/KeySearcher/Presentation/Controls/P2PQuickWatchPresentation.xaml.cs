@@ -5,11 +5,11 @@ using KeySearcher;
 using System.Globalization;
 using System.Threading.Tasks;
 using KeySearcher.CrypCloud;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace KeySearcherPresentation.Controls
 {
-    [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class P2PQuickWatchPresentation : UserControl
     {
         public KeySearcher.KeySearcher.UpdateOutput UpdateOutputFromUserChoice { get; set; }

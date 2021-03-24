@@ -16,10 +16,10 @@
 using System;
 using System.Numerics;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.ZufallsTests
+namespace CrypTool.Plugins.ZufallsTests
 {
     // HOWTO: rename class (click name, press F2)
     public class ZufallsTestSettings : ISettings
@@ -63,7 +63,7 @@ namespace Cryptool.Plugins.ZufallsTests
         private int nTuple = 1;
 
         [PropertySaveOrder(2)]
-        [TaskPane("NTupleCaption", "NTupleTooltip", null, 1, false, ControlType.NumericUpDown, Cryptool.PluginBase.ValidationType.RangeInteger, 1, 5)]
+        [TaskPane("NTupleCaption", "NTupleTooltip", null, 1, false, ControlType.NumericUpDown, CrypTool.PluginBase.ValidationType.RangeInteger, 1, 5)]
         public int NTuple
         {
             get

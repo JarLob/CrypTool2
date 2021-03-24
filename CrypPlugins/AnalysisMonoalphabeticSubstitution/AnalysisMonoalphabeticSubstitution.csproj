@@ -8,7 +8,7 @@
     <ProjectGuid>{F6FBBA54-C9ED-418E-A584-E71503EAB13C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.AnalysisMonoalphabeticSubstitution</RootNamespace>
+    <RootNamespace>CrypTool.AnalysisMonoalphabeticSubstitution</RootNamespace>
     <AssemblyName>AnalysisMonoalphabeticSubstitution</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class DontSaveAttribute : Attribute

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ using System.IO;
 using System.Text;
 using System.Windows.Controls;
 using System.Xml;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using FormatPreservingEncryptionWeydstone;
 
-namespace Cryptool.Plugins.FormatPreservingEncryption
+namespace CrypTool.Plugins.FormatPreservingEncryption
 {
-    [Author("Alexander Hirsch", "alexander.hirsch@cryptool.org", "Universität Kassel", "https://www.cryptool.org")]
+    [Author("Alexander Hirsch", "alexander.hirsch@CrypTool.org", "Universität Kassel", "https://www.CrypTool.org")]
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("FormatPreservingEncryption.Properties.Resources", "PluginCaption", "PluginTooltip", "FormatPreservingEncryption/userdoc.xml", new[] { "FormatPreservingEncryption/Images/FormatPreservingEncryptionIcon.png" })]
 

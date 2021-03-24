@@ -13,13 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
     public class HillClimber
     {

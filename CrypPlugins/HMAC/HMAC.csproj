@@ -8,7 +8,7 @@
     <ProjectGuid>{9DC8FE92-6839-4837-8AAA-D7456F2B288F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.HMAC</RootNamespace>
+    <RootNamespace>CrypTool.HMAC</RootNamespace>
     <AssemblyName>HMAC</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

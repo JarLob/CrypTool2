@@ -33,7 +33,7 @@ namespace Tests.TemplateAndPluginTests
         //
         // Sources of the test vectors:
         //  http://de.wikipedia.org/wiki/ADFGX
-        //  Cryptool1-Testvectors
+        //  CrypTool1-Testvectors
         //
         TestVector[] testvectors = new TestVector[] {
             new TestVector () { n=0, cipher=0, subkey="WIKPEDAZYXVUTSRQONMLHGFCB", transkey="BEOBACHTUNGSLISTE", input="Munitionierung beschleunigen Punkt Soweit nicht eingesehen auch bei Tag", output="GXGGADDDGDXXAFADDFAAXAFDFFXFDGDXGAGGAAXFAGADFAAADGFAXXADADFFFDDADFGAXGXAFXGXFXDAFAGFXXFAXGFDXFFDFAGXXGXXADGXGFXDFFDGAXXFFFFGDX" },

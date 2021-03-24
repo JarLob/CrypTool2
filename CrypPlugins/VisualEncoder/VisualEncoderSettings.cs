@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.VisualEncoder
+namespace CrypTool.Plugins.VisualEncoder
 {
     public class VisualEncoderSettings : ISettings
     {

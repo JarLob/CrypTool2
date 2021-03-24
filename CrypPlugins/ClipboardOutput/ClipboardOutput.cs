@@ -14,22 +14,22 @@
    limitations under the License.
 */
 
-// Cryptool ClipboardOutput Plugin
-// Author: Timm Korte, cryptool@easycrypt.de
+// CrypTool ClipboardOutput Plugin
+// Author: Timm Korte, CrypTool@easycrypt.de
 
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Forms;
 using System.Threading;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Runtime.Remoting.Contexts;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace ClipboardOutput {
   // Converts a stream to given format and writes the results to the clipboard
-  [Author("Timm Korte", "cryptool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
+  [Author("Timm Korte", "CrypTool@easycrypt.de", "Uni Bochum", "http://www.ruhr-uni-bochum.de")]
   [PluginInfo("ClipboardOutput.Properties.Resources", "PluginCaption", "PluginTooltip", "ClipboardOutput /DetailedDescription/doc.xml", "ClipboardOutput/icon.png")]
   [Synchronization(SynchronizationAttribute.REQUIRES_NEW)]
   [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
@@ -71,9 +71,9 @@ namespace ClipboardOutput {
     }
 
 		#region Interface
-    private ICryptoolStream streamInput;
+    private ICrypToolStream streamInput;
     [PropertyInfo(Direction.InputData, "StreamInputCaption", "StreamInputTooltip", true)]
-    public ICryptoolStream StreamInput
+    public ICrypToolStream StreamInput
     {
 			get 
       {
@@ -121,7 +121,7 @@ namespace ClipboardOutput {
 			}
 		}
 
-    private string Stream2Text(ICryptoolStream value)
+    private string Stream2Text(ICrypToolStream value)
     {
         using (CStreamReader reader = value.CreateReader())
         {
@@ -136,7 +136,7 @@ namespace ClipboardOutput {
 		}
     }
 
-    private string Stream2Base64(ICryptoolStream value)
+    private string Stream2Base64(ICrypToolStream value)
     {
         using (CStreamReader reader = value.CreateReader())
         {
@@ -147,7 +147,7 @@ namespace ClipboardOutput {
 		}
     }
 
-    private string Stream2Hex(ICryptoolStream value)
+    private string Stream2Hex(ICrypToolStream value)
     {
         using (CStreamReader reader = value.CreateReader())
         {

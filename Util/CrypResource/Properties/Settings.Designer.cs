@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Resource.Properties {
+namespace CrypTool.Resource.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

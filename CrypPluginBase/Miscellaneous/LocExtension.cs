@@ -18,15 +18,15 @@ using System;
 using System.Resources;
 using System.Windows.Markup;
 using System.Xaml;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Properties;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Properties;
 
 // Register the extention in the Microsoft's default namespaces
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Cryptool.PluginBase.Miscellaneous")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2007/xaml/presentation", "Cryptool.PluginBase.Miscellaneous")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2008/xaml/presentation", "Cryptool.PluginBase.Miscellaneous")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "CrypTool.PluginBase.Miscellaneous")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2007/xaml/presentation", "CrypTool.PluginBase.Miscellaneous")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2008/xaml/presentation", "CrypTool.PluginBase.Miscellaneous")]
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     [MarkupExtensionReturnType(typeof(object))]
     [ContentProperty("Key")]

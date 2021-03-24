@@ -7,15 +7,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace TranspositionAnalyser
 {
 
-    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels, Nils Kopal", "kohnen@cryptool.org, weyers@cryptool.org, malischewski@cryptool.org, wiefels@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels, Nils Kopal", "kohnen@CrypTool.org, weyers@CrypTool.org, malischewski@CrypTool.org, wiefels@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("TranspositionAnalyser.Properties.Resources", "PluginCaption", "PluginTooltip", "TranspositionAnalyser/DetailedDescription/doc.xml", "TranspositionAnalyser/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class TranspositionAnalyser : ICrypComponent

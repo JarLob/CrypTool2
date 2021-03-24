@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.Plugins.Tools
+namespace CrypTool.Plugins.Tools
 {
 
     public class PasswordStrengthSettings : ISettings

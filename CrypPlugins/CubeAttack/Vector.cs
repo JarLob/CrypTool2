@@ -1,4 +1,4 @@
-﻿namespace Cryptool.CubeAttack
+﻿namespace CrypTool.CubeAttack
 {
     public class Vector
     {

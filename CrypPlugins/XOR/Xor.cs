@@ -17,13 +17,13 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.XOR
+namespace CrypTool.XOR
 {
-    [Author("Matthäus Wander", "wander@cryptool.org", "University of Duisburg-Essen", "http://www.vs.uni-due.de")]
-    [PluginInfo("Cryptool.XOR.Properties.Resources", "PluginCaption", "PluginTooltip", "XOR/DetailedDescription/doc.xml",
+    [Author("Matthäus Wander", "wander@CrypTool.org", "University of Duisburg-Essen", "http://www.vs.uni-due.de")]
+    [PluginInfo("CrypTool.XOR.Properties.Resources", "PluginCaption", "PluginTooltip", "XOR/DetailedDescription/doc.xml",
       "XOR/Images/icon.png", "XOR/Images/encrypt.png", "XOR/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Xor : ICrypComponent

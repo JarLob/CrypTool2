@@ -20,7 +20,7 @@ using System.Windows.Media.Animation;
 using System.Windows;
 using System;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
     public class CubeBuilder
     {

@@ -8,7 +8,7 @@
     <ProjectGuid>{92C31D1C-A348-4C4D-B591-36D51F48F401}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Fialka</RootNamespace>
+    <RootNamespace>CrypTool.Fialka</RootNamespace>
     <AssemblyName>Fialka</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -8,7 +8,7 @@
     <ProjectGuid>{C47DD9AA-04C2-4407-9FA4-5BF9775F30F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.LAMBDA1</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.LAMBDA1</RootNamespace>
     <AssemblyName>LAMBDA1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

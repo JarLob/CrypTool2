@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.IO;
 using System.Reflection;
 using System;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Text;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.SATSolver
+namespace CrypTool.Plugins.SATSolver
 {
     [Author("Max Brandi", "max.brandi@rub.de", null, null)]
     [PluginInfo("SATSolver.Properties.Resources", "PluginCaption", "PluginDescription", "SATSolver/Documentation/doc.xml", new[] { "SATSolver/Images/sat-race-logo.gif" })]
@@ -57,14 +57,14 @@ namespace Cryptool.Plugins.SATSolver
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
         }
 
         [PropertyInfo(Direction.OutputData, "OutputConsoleCaption", "OutputConsoleTooltip", true)]
-        public ICryptoolStream OutputConsoleStream
+        public ICrypToolStream OutputConsoleStream
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Cryptool.Plugins.SATSolver
         }
 
         [PropertyInfo(Direction.OutputData, "OutputResultCaption", "OutputResultTooltip", true)]
-        public ICryptoolStream OutputResultStream
+        public ICrypToolStream OutputResultStream
         {
             get
             {

@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Linq;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
 
 namespace AvalancheVisualization
@@ -18,7 +18,7 @@ namespace AvalancheVisualization
     /// <summary>
     /// Interaction logic for AvaAESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AvalancheVisualization.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("AvalancheVisualization.Properties.Resources")]
     public partial class AvalanchePresentation : UserControl
     {
 
@@ -84,12 +84,12 @@ namespace AvalancheVisualization
         public byte[] newKey;
         public byte[] currentDES;
 
-        private Cryptool.Plugins.AvalancheVisualization.AvalancheVisualization avalancheVisualization;
+        private CrypTool.Plugins.AvalancheVisualization.AvalancheVisualization avalancheVisualization;
         #endregion
 
         #region constructor
 
-        public AvalanchePresentation(Cryptool.Plugins.AvalancheVisualization.AvalancheVisualization av)
+        public AvalanchePresentation(CrypTool.Plugins.AvalancheVisualization.AvalancheVisualization av)
         {
             InitializeComponent();
 

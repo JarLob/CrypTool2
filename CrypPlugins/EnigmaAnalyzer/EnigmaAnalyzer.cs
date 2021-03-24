@@ -21,21 +21,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.CrypAnalysisViewControl;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.CrypAnalysisViewControl;
+using CrypTool.PluginBase.Miscellaneous;
 using EnigmaAnalyzerLib;
 using static EnigmaAnalyzerLib.Key;
 using System.Text.RegularExpressions;
 using EnigmaAnalyzerLib.Common;
-using static Cryptool.EnigmaAnalyzer.EnigmaAnalyzer;
+using static CrypTool.EnigmaAnalyzer.EnigmaAnalyzer;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.EnigmaAnalyzer
+namespace CrypTool.EnigmaAnalyzer
 {
-    [Author("George Lasry, Nils Kopal", "george.lasry@cryptool.org", "CrypTool project", "http://www.cryptool.org")]
-    [PluginInfo("Cryptool.EnigmaAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "EnigmaAnalyzer/DetailedDescription/doc.xml",
+    [Author("George Lasry, Nils Kopal", "george.lasry@CrypTool.org", "CrypTool project", "http://www.CrypTool.org")]
+    [PluginInfo("CrypTool.EnigmaAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "EnigmaAnalyzer/DetailedDescription/doc.xml",
       "EnigmaAnalyzer/Images/Enigma.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class EnigmaAnalyzer : ICrypComponent

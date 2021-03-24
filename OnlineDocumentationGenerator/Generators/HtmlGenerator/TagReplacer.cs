@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using OnlineDocumentationGenerator.DocInformations.Localization;
 using OnlineDocumentationGenerator.Properties;
 

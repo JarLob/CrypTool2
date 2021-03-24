@@ -23,10 +23,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using DCAKeyRecovery;
 using DCAKeyRecovery.Logic;
 using DCAKeyRecovery.Logic.Cipher1;
@@ -36,7 +36,7 @@ using DCAKeyRecovery.Properties;
 using DCAKeyRecovery.UI;
 using Newtonsoft.Json;
 
-namespace Cryptool.Plugins.DCAKeyRecovery
+namespace CrypTool.Plugins.DCAKeyRecovery
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("DCAKeyRecovery.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAKeyRecovery/userdoc.xml", new[] {"DCAKeyRecovery/Images/IC_KeyRecovery.png"})]
@@ -52,8 +52,8 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         private int _messageDifference;
         private Algorithms _currentAlgorithm;
         private bool _finished;
-        private ICryptoolStream _unencryptedMessagePairs;
-        private ICryptoolStream _encryptedMessagePairs;
+        private ICrypToolStream _unencryptedMessagePairs;
+        private ICrypToolStream _encryptedMessagePairs;
         private int _neededMessageCount;
         private Thread _workerThread;
         private AutoResetEvent _nextStep;
@@ -130,7 +130,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// input of the plaintext message pairs
         /// </summary>
         [PropertyInfo(Direction.InputData, "UnencryptedMessagePairsInput", "UnencryptedMessagePairsInputToolTip", true)]
-        public ICryptoolStream UnencryptedMessagePairs
+        public ICrypToolStream UnencryptedMessagePairs
         {
             get { return _unencryptedMessagePairs; }
             set
@@ -145,7 +145,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// Input if the encrypted message pairs
         /// </summary>
         [PropertyInfo(Direction.InputData, "EncryptedMessagePairsInput", "EncryptedMessagePairsInputToolTip", true)]
-        public ICryptoolStream EncryptedMessagePairs
+        public ICrypToolStream EncryptedMessagePairs
         {
             get { return _encryptedMessagePairs; }
             set

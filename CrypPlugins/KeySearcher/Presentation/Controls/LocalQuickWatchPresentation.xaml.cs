@@ -4,11 +4,11 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using KeySearcher;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
 namespace KeySearcherPresentation.Controls
 {
-    [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class LocalQuickWatchPresentation
     {
         private KeySearcher.KeySearcher.UpdateOutput _updateOutputFromUserChoice;

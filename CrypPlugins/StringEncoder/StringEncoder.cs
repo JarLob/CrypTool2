@@ -16,17 +16,17 @@
 
 using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.IO;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Convertor
+namespace CrypTool.Plugins.Convertor
 {
-    [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
-    [PluginInfo("Cryptool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringEncoder/DetailedDescription/doc.xml", "StringEncoder/s2t-icon.png")]
+    [Author("Arno Wacker", "arno.wacker@CrypTool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
+    [PluginInfo("CrypTool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringEncoder/DetailedDescription/doc.xml", "StringEncoder/s2t-icon.png")]
     [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class StringEncoder : ICrypComponent
     {
@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.Convertor
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", false)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Cryptool.Plugins.Convertor
 
         #region Private variables
         private StringEncoderSettings settings = new StringEncoderSettings();
-        private ICryptoolStream inputStream = null;
+        private ICrypToolStream inputStream = null;
         private byte[] inputBytes = null;
         private string outputString;
         #endregion

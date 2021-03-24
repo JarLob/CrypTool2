@@ -48,7 +48,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
 
   // This class implement most of the common code required for symmetric

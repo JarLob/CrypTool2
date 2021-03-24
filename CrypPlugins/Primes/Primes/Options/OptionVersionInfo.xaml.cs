@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Reflection;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace Primes.Options
 {

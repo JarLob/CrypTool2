@@ -17,7 +17,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.FEAL
+namespace CrypTool.Plugins.FEAL
 {
     /// <summary>
     /// Interaktionslogik für FEALPresentation.xaml

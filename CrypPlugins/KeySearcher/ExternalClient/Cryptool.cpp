@@ -14,14 +14,14 @@
 
 #define __NO_STD_STRING
 
-#include "Cryptool.h"
+#include "CrypTool.h"
 
 unsigned long DiffMicSec(timeval & start, timeval & end)
 {
     return (end.tv_sec - start.tv_sec)*1000000 + (end.tv_usec - start.tv_usec);
 }
 
-Cryptool::Cryptool()
+CrypTool::CrypTool()
 {
     cl_int err;
 
@@ -157,7 +157,7 @@ Cryptool::Cryptool()
     setlocale(LC_ALL,"");
 }
 
-void Cryptool::buildKernel(const Job& j)
+void CrypTool::buildKernel(const Job& j)
 {
     if (j.Src == "")
     {
@@ -209,7 +209,7 @@ void Cryptool::buildKernel(const Job& j)
     }
 }
 
-JobResult Cryptool::doOpenCLJob(const Job& j)
+JobResult CrypTool::doOpenCLJob(const Job& j)
 {
     res.Guid = j.Guid;
     cl_int err;
@@ -253,7 +253,7 @@ JobResult Cryptool::doOpenCLJob(const Job& j)
     return res;
 }
 
-void Cryptool::enqueueSubbatch(cl::CommandQueue& queue, cl::Buffer& keybuffer, cl::Buffer& costs, int add, int length, const Job& j)
+void CrypTool::enqueueSubbatch(cl::CommandQueue& queue, cl::Buffer& keybuffer, cl::Buffer& costs, int add, int length, const Job& j)
 {
     timeval openCLStart;
     gettimeofday(&openCLStart, NULL);
@@ -352,7 +352,7 @@ void Cryptool::enqueueSubbatch(cl::CommandQueue& queue, cl::Buffer& keybuffer, c
 
 }
 
-void Cryptool::enqueueKernel(cl::CommandQueue& queue, int size, cl::Buffer& keybuffer, cl::Buffer& costs, const Job& j)
+void CrypTool::enqueueKernel(cl::CommandQueue& queue, int size, cl::Buffer& keybuffer, cl::Buffer& costs, const Job& j)
 {
     for (int i = 0; i < (size/subbatch); i++)
     {
@@ -374,13 +374,13 @@ void Cryptool::enqueueKernel(cl::CommandQueue& queue, int size, cl::Buffer& keyb
     }
 }
 
-void Cryptool::pushInTop(std::list<std::pair<float, int> >& top, std::list<std::pair<float, int> >::iterator it, float val, int k) {
+void CrypTool::pushInTop(std::list<std::pair<float, int> >& top, std::list<std::pair<float, int> >::iterator it, float val, int k) {
 	top.insert(it, std::pair<float, int>(val, k));
     if(top.size() > this->resultSize)
         top.pop_back();
 }
 
-std::list<std::pair<float, int> >::iterator Cryptool::isInTop(std::list<std::pair<float, int> >& top, float val, bool LargerThen) {
+std::list<std::pair<float, int> >::iterator CrypTool::isInTop(std::list<std::pair<float, int> >& top, float val, bool LargerThen) {
     if (top.size() == 0)
         return top.begin();
 
@@ -404,7 +404,7 @@ std::list<std::pair<float, int> >::iterator Cryptool::isInTop(std::list<std::pai
 	return top.end();
 }
 
-void Cryptool::initTop(std::list<std::pair<float, int> >& top, bool LargerThen) {
+void CrypTool::initTop(std::list<std::pair<float, int> >& top, bool LargerThen) {
 	for (std::list<std::pair<float, int> >::iterator k = top.begin(); k != top.end(); k++)
         {
             if (LargerThen)
@@ -414,7 +414,7 @@ void Cryptool::initTop(std::list<std::pair<float, int> >& top, bool LargerThen) 
         }
 }
 
-std::string Cryptool::getDeviceName()
+std::string CrypTool::getDeviceName()
 {
     return std::string(devices[deviceChoice].getInfo<CL_DEVICE_NAME>().c_str());
 }

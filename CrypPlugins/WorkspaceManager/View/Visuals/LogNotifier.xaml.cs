@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Globalization;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
 using WorkspaceManager.Model;

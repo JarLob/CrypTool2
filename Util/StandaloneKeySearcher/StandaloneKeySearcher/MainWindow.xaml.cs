@@ -14,9 +14,9 @@
    limitations under the License.
 */
 using CrypCloud.Core;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
 using System;
 using System.ComponentModel;
 using System.Numerics;

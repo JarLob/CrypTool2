@@ -18,13 +18,13 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Collections.Generic;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.CaesarAnalysisHelper
+namespace CrypTool.CaesarAnalysisHelper
 {
-    [Author("Fabian Enkler", "enkler@cryptool.org", "", "")]
+    [Author("Fabian Enkler", "enkler@CrypTool.org", "", "")]
     [PluginInfo("CaesarAnalysisHelper.Properties.Resources", "PluginCaption", "PluginTooltip", "CaesarAnalysisHelper/DetailedDescription/doc.xml", "CaesarAnalysisHelper/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class CaesarAnalysisHelper : ICrypComponent

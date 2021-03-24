@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Cryptool.Plugins.BB84PhotonEncoder
+namespace CrypTool.Plugins.BB84PhotonEncoder
 {
     public partial class BB84PhotonEncoderPresentation : UserControl
     {

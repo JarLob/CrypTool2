@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.BLAKE
+namespace CrypTool.Plugins.BLAKE
 {
     public enum BLAKEFunction { BLAKE224, BLAKE256, BLAKE384, BLAKE512 };
     public class BLAKESettings : ISettings

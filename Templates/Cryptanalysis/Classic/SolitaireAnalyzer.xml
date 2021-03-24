@@ -18,7 +18,7 @@
   <keywords lang="de">Wörterbuch, Angriff</keywords>
   <icon file="solitaireanalyzer.jpg" />
   <relevantPlugins>
-    <plugin name="CryptoolDictionary" />
+    <plugin name="CrypToolDictionary" />
     <plugin name="SolitaireAnalyser" />
   </relevantPlugins>
   <replacements lang="de">

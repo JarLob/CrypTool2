@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using System;
 using System.Windows.Data;
 using System.Windows.Controls;
@@ -16,9 +16,9 @@ using Vlc.DotNet.Core;
 using System.Linq;
 using System.Diagnostics;
 
-namespace Cryptool.CrypTutorials
+namespace CrypTool.CrypTutorials
 {
-    [Localization("Cryptool.CrypTutorials.Properties.Resources")]
+    [Localization("CrypTool.CrypTutorials.Properties.Resources")]
     public partial class CrypTutorialsPresentation : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

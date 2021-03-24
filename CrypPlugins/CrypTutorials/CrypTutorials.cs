@@ -1,19 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.Core;
-using Cryptool.CrypTutorials.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
+using CrypTool.Core;
+using CrypTool.CrypTutorials.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.Editor;
 using Vlc.DotNet.Core;
 
-namespace Cryptool.CrypTutorials
+namespace CrypTool.CrypTutorials
 {
     [TabColor("Black")]
     [EditorInfo("cryptutorials", true, true, false, true, false, false)]
     [Author("Nils Kopal", "kopal@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.CrypTutorials.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypTutorials/DetailedDescription/doc.xml",
+    [PluginInfo("CrypTool.CrypTutorials.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypTutorials/DetailedDescription/doc.xml",
         "CrypTutorials/icon.png")]
     public class CrypTutorials : IEditor
     {

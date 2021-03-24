@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class Hex
     {

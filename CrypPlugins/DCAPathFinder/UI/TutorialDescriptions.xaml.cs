@@ -34,7 +34,7 @@ namespace DCAPathFinder.UI
     /// <summary>
     /// Interaktionslogik für TutorialDescriptions.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class TutorialDescriptions : UserControl
     {
         public TutorialDescriptions()

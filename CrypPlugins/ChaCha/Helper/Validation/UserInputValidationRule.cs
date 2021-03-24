@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.Helper.Validation
+namespace CrypTool.Plugins.ChaCha.Helper.Validation
 {
     internal class UserInputValidationRule : ValidationRule
     {

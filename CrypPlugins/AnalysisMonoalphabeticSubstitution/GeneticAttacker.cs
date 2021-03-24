@@ -1,10 +1,10 @@
-﻿using Cryptool.PluginBase.Utils;
+﻿using CrypTool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.AnalysisMonoalphabeticSubstitution
+namespace CrypTool.AnalysisMonoalphabeticSubstitution
 {
     class GeneticAttacker
     {

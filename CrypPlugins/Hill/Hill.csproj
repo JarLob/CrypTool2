@@ -8,7 +8,7 @@
     <ProjectGuid>{26C44578-C758-424D-862C-D9AD26C8A35A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.Hill</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.Hill</RootNamespace>
     <AssemblyName>Hill</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

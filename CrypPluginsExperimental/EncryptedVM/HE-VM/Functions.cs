@@ -1,6 +1,6 @@
 ﻿using Microsoft.Research.SEAL;
 
-namespace Cryptool.Plugins.EncryptedVM
+namespace CrypTool.Plugins.EncryptedVM
 {
     class Functions
     {

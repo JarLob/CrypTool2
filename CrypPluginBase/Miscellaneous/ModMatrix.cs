@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Collections.Generic;
 
-namespace Cryptool.PluginBase.Miscellaneous
+namespace CrypTool.PluginBase.Miscellaneous
 {
     public class ModMatrix
     {

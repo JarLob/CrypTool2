@@ -17,9 +17,9 @@
 #include "PlatformIndependentWrapper.h"
 #include "Opcodes.h"
 #include "Job.h"
-#include "Cryptool.h"
+#include "CrypTool.h"
 
-std::string getIdentificationStr(Cryptool* cryptool)
+std::string getIdentificationStr(CrypTool* cryptool)
 {
     std::stringstream out;
     char buf[255];
@@ -61,7 +61,7 @@ void writeJobResult(PlatformIndependentWrapper& wrapper, JobResult& result)
 
 // Queue of completed jobs
 std::queue<JobResult> finishedJobs;
-void GetJobsAndPostResults(PlatformIndependentWrapper& wrapper, const char* password, Cryptool* cryptool, bool* receivedSigInt)
+void GetJobsAndPostResults(PlatformIndependentWrapper& wrapper, const char* password, CrypTool* cryptool, bool* receivedSigInt)
 {
     wrapper.WriteInt(ClientOpcodes::HELLO);
     wrapper.WriteString(getIdentificationStr(cryptool));
@@ -112,7 +112,7 @@ void GetJobsAndPostResults(PlatformIndependentWrapper& wrapper, const char* pass
     }
 }
 
-void networkThread(sockaddr_in serv_addr, int port, const char* password, Cryptool* cryptool, bool* receivedSigInt)
+void networkThread(sockaddr_in serv_addr, int port, const char* password, CrypTool* cryptool, bool* receivedSigInt)
 {
     printf("Connecting to %s on port %i\n", inet_ntoa(serv_addr.sin_addr), port);
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);

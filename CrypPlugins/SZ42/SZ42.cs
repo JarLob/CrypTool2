@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.SZ42
+namespace CrypTool.Plugins.SZ42
 {
     /// <summary>
     /// Class that represents a SZ42 machine cipher

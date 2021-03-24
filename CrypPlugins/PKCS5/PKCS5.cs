@@ -19,9 +19,9 @@ using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace PKCS5
 {
@@ -184,11 +184,11 @@ namespace PKCS5
         if (null == value)
           return;
 
-        if (value is ICryptoolStream)
+        if (value is ICrypToolStream)
         {
           keyType = argType.Stream;
 
-          using (CStreamReader cst = ((ICryptoolStream)value).CreateReader())
+          using (CStreamReader cst = ((ICrypToolStream)value).CreateReader())
           {
               cst.WaitEof();
 
@@ -265,11 +265,11 @@ namespace PKCS5
         if (null == value)
           return;
 
-        if (value is ICryptoolStream)
+        if (value is ICrypToolStream)
         {
           saltType = argType.Stream;
 
-          using (CStreamReader cst = ((ICryptoolStream)value).CreateReader())
+          using (CStreamReader cst = ((ICrypToolStream)value).CreateReader())
           {
               cst.WaitEof();
               long len = cst.Length;
@@ -329,7 +329,7 @@ namespace PKCS5
     /// </summary>
     /// <value>The output data stream.</value>
     [PropertyInfo(Direction.OutputData, "HashOutputStreamCaption", "HashOutputStreamTooltip", true)]
-    public ICryptoolStream HashOutputStream
+    public ICrypToolStream HashOutputStream
     {
       get
       {

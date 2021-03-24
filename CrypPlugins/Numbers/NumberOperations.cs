@@ -17,13 +17,13 @@
 using System;
 using System.ComponentModel;
 using System.Numerics;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Numbers
+namespace CrypTool.Plugins.Numbers
 {
-    [Author("Sven Rech, Nils Kopal", "sven.rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.Numbers.Properties.Resources", "PluginOperationCaption", "PluginOperationTooltip", 
+    [Author("Sven Rech, Nils Kopal", "sven.rech@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
+    [PluginInfo("CrypTool.Plugins.Numbers.Properties.Resources", "PluginOperationCaption", "PluginOperationTooltip", 
         "Numbers/DetailedDescription/doc.xml", 
         "Numbers/icons/plusIcon.png", 
         "Numbers/icons/minusIcon.png", 
@@ -66,13 +66,13 @@ namespace Cryptool.Plugins.Numbers
 
         #region event
 
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
 
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;      
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;      
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         #endregion
 

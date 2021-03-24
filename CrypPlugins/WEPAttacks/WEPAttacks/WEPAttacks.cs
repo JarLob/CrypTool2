@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
 using System.Globalization;
 using System.Diagnostics;
 
-namespace Cryptool.WEPAttacks
+namespace CrypTool.WEPAttacks
 {
     /// <summary>
     /// Implements some attacks on the WEP protocol. So the FMS attack, the KoreK attack and the
@@ -30,7 +30,7 @@ namespace Cryptool.WEPAttacks
     {
         #region Private variables
         /* in- and output matters */
-        private ICryptoolStream inputStream;
+        private ICrypToolStream inputStream;
         private CStreamWriter outputStreamWriter;
         private List<byte[]> internalByteList;
 
@@ -65,7 +65,7 @@ namespace Cryptool.WEPAttacks
             "InputStreamCaption",
             "InputStreamTooltip",
             false)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Cryptool.WEPAttacks
             "OutputStreamCaption",
             "OutputStreamTooltip",
             false)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {

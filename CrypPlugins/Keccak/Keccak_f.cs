@@ -9,7 +9,7 @@ using System.Windows;
 using Keccak.Properties;
 using System.IO;
 
-namespace Cryptool.Plugins.Keccak
+namespace CrypTool.Plugins.Keccak
 {
     public class Keccak_f
     {

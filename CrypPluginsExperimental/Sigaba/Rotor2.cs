@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 using Sigaba;
 
 
-namespace Cryptool.Sigaba
+namespace CrypTool.Sigaba
 {
     class Rotor2 : Canvas
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.CubeAttack
+namespace CrypTool.CubeAttack
 {
     public class CubeAttackSettings : ISettings
     {

@@ -6,13 +6,13 @@ using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.Generators;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using OnlineDocumentationGenerator.Utils;
 
@@ -182,28 +182,28 @@ namespace OnlineDocumentationGenerator
         public static Dictionary<string, Type> ReadPluginInformations()
         {
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins
-            string crypToolStoreSubFolder = "";
+            string CrypToolStoreSubFolder = "";
 
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
                 case Ct2BuildType.Nightly:
-                    crypToolStoreSubFolder = "Nightly";
+                    CrypToolStoreSubFolder = "Nightly";
                     break;
                 case Ct2BuildType.Beta:
-                    crypToolStoreSubFolder = "Beta";
+                    CrypToolStoreSubFolder = "Beta";
                     break;
                 case Ct2BuildType.Stable:
-                    crypToolStoreSubFolder = "Release";
+                    CrypToolStoreSubFolder = "Release";
                     break;
                 default: //if no known version is given, we assume developer
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
             }
 
-            var pluginManager = new PluginManager(null, crypToolStoreSubFolder);
+            var pluginManager = new PluginManager(null, CrypToolStoreSubFolder);
             return pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies);
         }
         private void ReadPlugins(Generator generator)

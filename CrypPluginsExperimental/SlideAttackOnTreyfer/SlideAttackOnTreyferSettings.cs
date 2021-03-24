@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.SlideAttackOnTreyfer
+namespace CrypTool.SlideAttackOnTreyfer
 {
     public class SlideAttackOnTreyferSettings : ISettings
     {

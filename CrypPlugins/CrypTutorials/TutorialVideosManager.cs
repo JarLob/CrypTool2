@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 
-namespace Cryptool.CrypTutorials
+namespace CrypTool.CrypTutorials
 {
     public class TutorialVideosManager
     {

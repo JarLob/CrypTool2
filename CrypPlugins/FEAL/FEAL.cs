@@ -15,19 +15,19 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
 using System;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.Plugins.FEAL.Properties;
-using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
+using CrypTool.Plugins.FEAL.Properties;
+using static CrypTool.PluginBase.Miscellaneous.BlockCipherHelper;
 
-namespace Cryptool.Plugins.FEAL
+namespace CrypTool.Plugins.FEAL
 {
-    [Author("Nils Kopal", "Nils.Kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.Feal.Properties.Resources", "PluginCaption", "PluginTooltip", "", "FEAL/Images/icon.png")]
+    [Author("Nils Kopal", "Nils.Kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
+    [PluginInfo("CrypTool.Plugins.Feal.Properties.Resources", "PluginCaption", "PluginTooltip", "", "FEAL/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class FEAL : ICrypComponent
     {
@@ -38,8 +38,8 @@ namespace Cryptool.Plugins.FEAL
 
         private byte[] _InputKey;
         private byte[] _InputIV;
-        private ICryptoolStream _OutputStreamWriter;
-        private ICryptoolStream _InputStream;
+        private ICrypToolStream _OutputStreamWriter;
+        private ICrypToolStream _InputStream;
         
         private bool _stop = false;
                 
@@ -56,7 +56,7 @@ namespace Cryptool.Plugins.FEAL
         }
 
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get; 
             set;
@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.FEAL
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get
             {

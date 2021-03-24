@@ -18,7 +18,7 @@
   <introduction lang="zh-CN">二次筛（QS）是一种现代的整数分解算法。因式分解是将数字分解为其主要除数。对于大于ca的数字。 QS算法是100个十进制数字，是目前通用数字字段筛（GNFS）之后第二快的算法。如今，QS仍然是最快的算法。 100个十进制数字。二次筛算法分解大小为n的整数的运行时间为（使用O-表示法）：$$ O（\ exp（\ log（n）\ cdot \ log（n）\ cdot \ log（n）） $$该组件是由Jason Stratos Papadopoulos编写的二次筛C实现Msieve的包装程序，该C代码集成到32位dll中，并在CrypTool 2的启动阶段中加载。该dll还扩展了Msieve算法的功能。 Msieve本身是一个控制台应用程序，如果您想获得有关Msieve的更多信息，请访问SourceForge上的作者网站。</introduction>
   <introduction lang="ru">Квадратичное сито (QS) представляет собой современный алгоритм целочисленной факторизации. Факторизация - это разбиение числа на простые делители. Для чисел, больших, чем ок. 100 десятичных цифр, алгоритм QS в настоящее время является вторым самым быстрым алгоритмом после ситового поля общего числа (GNFS). Сегодня QS по-прежнему является самым быстрым алгоритмом для больших целых чисел под ок. 100 десятичных цифр. Время работы алгоритма квадратичного сита для вычисления целого числа размера n (с использованием O-нотации): $$ O (\ exp (\ log (n) \ cdot \ log (n) \ cdot \ log (n)) $$ Этот компонент является оболочкой для реализации квадратичного сита C Msieve, написанной Джейсоном Стратосом Пападопулосом. Код C интегрирован в 32-разрядную DLL и загружается во время фазы запуска CrypTool 2. DLL также расширяет функциональность алгоритма Msieve с несколькими потоками. Оригинальное Msieve - консольное приложение. Если вы хотите получить дополнительную информацию о Msieve, пожалуйста, взгляните на сайт автора на SourceForge.</introduction>
   <usage lang="en">
-    This component has a BigNumber input. Here the user has to enter a BigNumber. He can use a <docRef item="Cryptool.Plugins.Numbers.NumberInput" /> component and enter a number or an arithmetic expression like $2^{12}+17+2^{32}$.
+    This component has a BigNumber input. Here the user has to enter a BigNumber. He can use a <docRef item="CrypTool.Plugins.Numbers.NumberInput" /> component and enter a number or an arithmetic expression like $2^{12}+17+2^{32}$.
     However, the input number must consist of less than 275 decimal digits, otherwise the component will reject it.
     The component has only one output. The component puts an array of BigIntegers (the prime factors) to this output. In the configuration bar the user can set the number of CPUs to be used by the quadratic sieve component
     (It is only possible to select as many CPUs as the user's system offers).
@@ -52,7 +52,7 @@
       Für weitere Informationen über Msieve gehen Sie bitte auf die Website des Autors auf SourceForge: <ref id="msieve" />.
     </section></introduction>
   <usage lang="de">
-    Die Komponente hat einen Eingang, an dem die zu faktorisierende Zahl als BigNumber anliegen muss. Dies kann z.B. mittels der <docRef item="Cryptool.Plugins.Numbers.NumberInput" />-Komponente geschehen, über die Zahlen oder auch
+    Die Komponente hat einen Eingang, an dem die zu faktorisierende Zahl als BigNumber anliegen muss. Dies kann z.B. mittels der <docRef item="CrypTool.Plugins.Numbers.NumberInput" />-Komponente geschehen, über die Zahlen oder auch
     arithmetische Ausdrücke wie $2^{12}+17+2^{32}$ eingegeben werden können. Allerdings akzeptiert die QS-Komponente nur Zahlen mit weniger als 275 Dezimalstellen als Eingabe.
     Die Komponente hat nur einen Ausgang. An diesem wird ein Array von BigInteger-Zahlen, nämlich den gefundenen Primfaktoren, ausgegeben. In den Einstellungen der Komponente kann man die Anzahl der für die Faktorisierung zu verwendenden CPUs
     angeben, wobei als Maximum automatisch die Anzahl der vorhandenen CPUs des Systems angegeben ist.

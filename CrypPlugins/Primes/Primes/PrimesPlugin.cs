@@ -1,4 +1,4 @@
-﻿using Cryptool.PluginBase;
+﻿using CrypTool.PluginBase;
 using Primes.WpfVisualization;
 
 namespace Primes
@@ -25,13 +25,13 @@ namespace Primes
         #region IPlugin Members
 
         private PrimesControl m_PrimesPlugin = null;
-        public event Cryptool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
+        public event CrypTool.PluginBase.StatusChangedEventHandler OnPluginStatusChanged;
 
-        public event Cryptool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event CrypTool.PluginBase.GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
-        public event Cryptool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public event CrypTool.PluginBase.PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return null; }
         }

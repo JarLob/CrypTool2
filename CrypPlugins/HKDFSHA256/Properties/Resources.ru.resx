@@ -256,7 +256,7 @@
     <value>При запросе памяти из вашей системы произошло исключение. Попробуйте меньшее значение для выходных байтов.</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
-    <value>Произошла ошибка. Пожалуйста, найдите подробную информацию в журнале Cryptool2.</value>
+    <value>Произошла ошибка. Пожалуйста, найдите подробную информацию в журнале CrypTool2.</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
     <value>4. Расчет завершен</value>

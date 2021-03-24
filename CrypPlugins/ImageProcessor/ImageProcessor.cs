@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,21 +18,21 @@
 using System;
 using System.IO;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 using System.Windows.Controls;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
 
-namespace Cryptool.Plugins.ImageProcessor
+namespace CrypTool.Plugins.ImageProcessor
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    [PluginInfo("Cryptool.Plugins.ImageProcessor.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
+    [PluginInfo("CrypTool.Plugins.ImageProcessor.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ImageProcessor : ICrypComponent
     {
@@ -52,30 +52,30 @@ namespace Cryptool.Plugins.ImageProcessor
         #region Data Properties
 
         /// <summary>
-        /// Input image1 ICryptoolStream, handles "inputImage1".
+        /// Input image1 ICrypToolStream, handles "inputImage1".
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputImage1Caption", "InputImage1Tooltip", true)]
-        public ICryptoolStream InputImage1
+        public ICrypToolStream InputImage1
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Input image2 ICryptoolStream, handles "inputImage2".
+        /// Input image2 ICrypToolStream, handles "inputImage2".
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputImage2Caption", "InputImage2Tooltip")]
-        public ICryptoolStream InputImage2
+        public ICrypToolStream InputImage2
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Output processed image as ICryptoolStream.
+        /// Output processed image as ICrypToolStream.
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
-        public ICryptoolStream OutputImage
+        public ICrypToolStream OutputImage
         {
             get;
             set;

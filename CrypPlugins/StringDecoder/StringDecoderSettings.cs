@@ -16,10 +16,10 @@
 
 using System;
 using System.Windows;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.Convertor
+namespace CrypTool.Plugins.Convertor
 {
     public class StringDecoderSettings : ISettings
     {

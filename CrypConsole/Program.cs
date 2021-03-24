@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2020 Nils Kopal <kopal<AT>cryptool.org>
+   Copyright 2020 Nils Kopal <kopal<AT>CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 using System;
 using System.Windows;
 
-namespace Cryptool.CrypConsole
+namespace CrypTool.CrypConsole
 {
     public class CrypConsole
     {

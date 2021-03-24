@@ -22,11 +22,11 @@ using System.Threading;
 using System.Windows.Controls;
 using CadoNFS.Presentation;
 using CadoNFS.Processing;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.CadoNFS
+namespace CrypTool.Plugins.CadoNFS
 {
     [Author("Sven Rech", "rech@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("CADO-NFS", 

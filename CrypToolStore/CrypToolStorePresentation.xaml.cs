@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <kopal<AT>cryptool.de>
+   Copyright 2019 Nils Kopal <kopal<AT>CrypTool.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.Core;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
 using System;
@@ -36,16 +36,16 @@ using System.Xml;
 using CrypToolStoreLib.Tools;
 using System.Text;
 
-namespace Cryptool.CrypToolStore
+namespace CrypTool.CrypToolStore
 {
     /// <summary>
     /// Interaktionslogik für CrypToolStorePresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("CrypTool.CrypToolStore.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.CrypToolStore.Properties.Resources")]
     public partial class CrypToolStorePresentation : UserControl, INotifyPropertyChanged
     {
         //reference totthe editor
-        private readonly CrypToolStoreEditor _crypToolStoreEditor;
+        private readonly CrypToolStoreEditor _CrypToolStoreEditor;
         //list of all plugins available in the store
         private ObservableCollection<PluginWrapper> Plugins { get; set; }
         //Current selected plugin in the store
@@ -61,11 +61,11 @@ namespace Cryptool.CrypToolStore
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="crypToolStoreEditor"></param>
-        public CrypToolStorePresentation(CrypToolStoreEditor crypToolStoreEditor)
+        /// <param name="CrypToolStoreEditor"></param>
+        public CrypToolStorePresentation(CrypToolStoreEditor CrypToolStoreEditor)
         {
             InitializeComponent();
-            _crypToolStoreEditor = crypToolStoreEditor;
+            _CrypToolStoreEditor = CrypToolStoreEditor;
             Plugins = new ObservableCollection<PluginWrapper>();
             PluginListView.ItemsSource = Plugins;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PluginListView.ItemsSource);
@@ -115,7 +115,7 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
-        /// Starts a thread to retrieve the newest list of plugins from the CrypTooLStoreServer
+        /// Starts a thread to retrieve the newest list of plugins from the CrypToolStoreServer
         /// </summary>
         private void UpdateStorePluginList()
         {
@@ -123,8 +123,8 @@ namespace Cryptool.CrypToolStore
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.CTStoreTLS);
-                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
-                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
+                client.ServerAddress = CrypTool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = CrypTool.CrypToolStore.Constants.ServerPort;
 
                 //Translate the Ct2BuildType to PublishState
                 PublishState publishState;
@@ -208,18 +208,18 @@ namespace Cryptool.CrypToolStore
                         }
                         catch (Exception ex)
                         {
-                            _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_, ex.Message), NotificationLevel.Error);
+                            _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_, ex.Message), NotificationLevel.Error);
                         }
                     }, null);                    
                 }
                 else
                 {
-                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, result_plugins.Message), NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, result_plugins.Message), NotificationLevel.Error);
                 }
             }
             catch (Exception ex)
             {
-                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, ex.Message), NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, ex.Message), NotificationLevel.Error);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Cryptool.CrypToolStore
                     }
                     catch (Exception ex)
                     {
-                        _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_, ex.Message), NotificationLevel.Error);
+                        _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_, ex.Message), NotificationLevel.Error);
                     }
                 }, null);
             }
@@ -320,7 +320,7 @@ namespace Cryptool.CrypToolStore
                 }
                 catch (Exception ex)
                 {
-                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_,plugin.Name,ex.Message),NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_,plugin.Name,ex.Message),NotificationLevel.Error);
                 }
                 plugin.IsInstalled = true;
             }
@@ -372,29 +372,29 @@ namespace Cryptool.CrypToolStore
         private string GetPluginsFolder()
         {
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
-            string crypToolStoreSubFolder;
+            string CrypToolStoreSubFolder;
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
                 case Ct2BuildType.Nightly:
-                    crypToolStoreSubFolder = "Nightly";
+                    CrypToolStoreSubFolder = "Nightly";
                     break;
                 case Ct2BuildType.Beta:
-                    crypToolStoreSubFolder = "Beta";
+                    CrypToolStoreSubFolder = "Beta";
                     break;
                 case Ct2BuildType.Stable:
-                    crypToolStoreSubFolder = "Release";
+                    CrypToolStoreSubFolder = "Release";
                     break;
                 default: //if no known version is given, we assume developer
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
             }
-            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "plugins");
-            return crypToolStorePluginFolder;
+            string CrypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, CrypToolStoreSubFolder);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, "plugins");
+            return CrypToolStorePluginFolder;
         }
 
         /// <summary>
@@ -403,29 +403,29 @@ namespace Cryptool.CrypToolStore
         public string GetResourcesFolder()
         {
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
-            string crypToolStoreSubFolder;
+            string CrypToolStoreSubFolder;
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
                 case Ct2BuildType.Nightly:
-                    crypToolStoreSubFolder = "Nightly";
+                    CrypToolStoreSubFolder = "Nightly";
                     break;
                 case Ct2BuildType.Beta:
-                    crypToolStoreSubFolder = "Beta";
+                    CrypToolStoreSubFolder = "Beta";
                     break;
                 case Ct2BuildType.Stable:
-                    crypToolStoreSubFolder = "Release";
+                    CrypToolStoreSubFolder = "Release";
                     break;
                 default: //if no known version is given, we assume developer
-                    crypToolStoreSubFolder = "Developer";
+                    CrypToolStoreSubFolder = "Developer";
                     break;
             }
-            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
-            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "resources");
-            return crypToolStorePluginFolder;
+            string CrypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, CrypToolStoreSubFolder);
+            CrypToolStorePluginFolder = System.IO.Path.Combine(CrypToolStorePluginFolder, "resources");
+            return CrypToolStorePluginFolder;
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Cryptool.CrypToolStore
                         catch (Exception ex)
                         {
                             string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
-                            _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                            _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                             _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
                         }
                     });
@@ -469,7 +469,7 @@ namespace Cryptool.CrypToolStore
                         catch (Exception ex)
                         {
                             string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
-                            _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                            _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                             _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
                         }
                     });
@@ -504,7 +504,7 @@ namespace Cryptool.CrypToolStore
             }
             catch (Exception ex)
             {
-                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
                 return;
             }
 
@@ -523,7 +523,7 @@ namespace Cryptool.CrypToolStore
                 }
                 catch (Exception ex)
                 {
-                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_, ex.Message), NotificationLevel.Error);                    
+                    _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_, ex.Message), NotificationLevel.Error);                    
                 }
             }, null);
 
@@ -533,8 +533,8 @@ namespace Cryptool.CrypToolStore
                 //Download assembly zip
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.CTStoreTLS);
-                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
-                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
+                client.ServerAddress = CrypTool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = CrypTool.CrypToolStore.Constants.ServerPort;
                 client.UploadDownloadProgressChanged +=client_UploadDownloadProgressChanged;
 
                 //Translate the Ct2BuildType to PublishState
@@ -567,7 +567,7 @@ namespace Cryptool.CrypToolStore
                 {
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
-                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                     _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
                 }
 
@@ -579,7 +579,7 @@ namespace Cryptool.CrypToolStore
                 {
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
-                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                     _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
                     errorOccured = true;
                     return;
@@ -615,7 +615,7 @@ namespace Cryptool.CrypToolStore
             catch (Exception ex)
             {                
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
-                _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                 _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
                 errorOccured = true;
             }
@@ -660,7 +660,7 @@ namespace Cryptool.CrypToolStore
                     }
                     catch (Exception ex)
                     {
-                        _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_, ex.Message), NotificationLevel.Error);
+                        _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_, ex.Message), NotificationLevel.Error);
                     }
                 }, null);
 
@@ -700,7 +700,7 @@ namespace Cryptool.CrypToolStore
                 }
                 catch (Exception ex)
                 {
-                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_, ex.Message), NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_, ex.Message), NotificationLevel.Error);
                 }
             }, null);
 
@@ -710,8 +710,8 @@ namespace Cryptool.CrypToolStore
                 //Download resource file
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.CTStoreTLS);
-                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
-                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
+                client.ServerAddress = CrypTool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = CrypTool.CrypToolStore.Constants.ServerPort;
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
 
                 //Translate the Ct2BuildType to PublishState
@@ -744,7 +744,7 @@ namespace Cryptool.CrypToolStore
                 {
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
-                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                     _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
                 }
 
@@ -756,7 +756,7 @@ namespace Cryptool.CrypToolStore
                 {
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
-                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                     _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
                     errorOccured = true;
                     return;
@@ -776,7 +776,7 @@ namespace Cryptool.CrypToolStore
             catch (Exception ex)
             {
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
-                _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                 _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
                 errorOccured = true;
             }
@@ -813,7 +813,7 @@ namespace Cryptool.CrypToolStore
                     }
                     catch (Exception ex)
                     {
-                        _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_, ex.Message), NotificationLevel.Error);
+                        _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_, ex.Message), NotificationLevel.Error);
                     }
                 }, null);
 
@@ -873,7 +873,7 @@ namespace Cryptool.CrypToolStore
             catch (Exception ex)
             {
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Could_not_uninstall__Exception_was___0_, ex.Message);
-                _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                 MessageBox.Show(_windowToBlockForMessageBoxes,message, Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Exception_during_uninstallation_, MessageBoxButton.OK);
             }
         }
@@ -899,7 +899,7 @@ namespace Cryptool.CrypToolStore
             }
             catch (Exception ex)
             {
-                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
                 return;
             }
 
@@ -940,7 +940,7 @@ namespace Cryptool.CrypToolStore
             }
             catch (Exception ex)
             {
-                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
                 return;
             }
 
@@ -961,16 +961,16 @@ namespace Cryptool.CrypToolStore
             {
                 int processID = Process.GetCurrentProcess().Id;
                 string exePath = Process.GetCurrentProcess().MainModule.FileName;
-                string cryptoolFolderPath = System.IO.Path.GetDirectoryName(exePath);
+                string CrypToolFolderPath = System.IO.Path.GetDirectoryName(exePath);
                 string updaterPath = System.IO.Path.Combine(DirectoryHelper.BaseDirectory, "CrypUpdater.exe");
-                string parameters = "\"dummy\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
+                string parameters = "\"dummy\" " + "\"" + CrypToolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
                 Process.Start(updaterPath, parameters);
                 Application.Current.Shutdown();
             }
             catch (Exception ex)
             {
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_RestartButton_Click_Exception_occured_while_trying_to_restart_CrypTool_2___0_, ex.Message);
-                _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                _CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
                 MessageBox.Show(_windowToBlockForMessageBoxes,message, Properties.Resources.CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_, MessageBoxButton.OK);
             }
         }      

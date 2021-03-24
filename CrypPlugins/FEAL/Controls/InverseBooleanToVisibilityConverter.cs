@@ -17,7 +17,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.FEAL.Controls
+namespace CrypTool.Plugins.FEAL.Controls
 {
     public class InverseBooleanToVisibilityConverter : IValueConverter
     {

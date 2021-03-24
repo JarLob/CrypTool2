@@ -16,7 +16,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
     /// <summary>
     /// This class represents a text which constists of symbols while each symbol

@@ -8,7 +8,7 @@
     <ProjectGuid>{C3A0BF12-DEBA-4C21-B118-A340502AD937}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.M138Analyzer</RootNamespace>
+    <RootNamespace>CrypTool.M138Analyzer</RootNamespace>
     <AssemblyName>M138Analyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

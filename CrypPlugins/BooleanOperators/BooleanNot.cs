@@ -16,13 +16,13 @@
 
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
 
-namespace Cryptool.Plugins.BooleanOperators
+namespace CrypTool.Plugins.BooleanOperators
 {
-    [Author("Nils Kopal", "nils.kopal@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-duisburg-essen.de")]
+    [Author("Nils Kopal", "nils.kopal@CrypTool.org", "Uni Duisburg-Essen", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("BooleanOperators.Properties.Resources", "PluginBN_Caption", "PluginBN_Tooltip", "BooleanOperators/DetailedDescription/doc.xml", "BooleanOperators/icons/not.png")]
     [ComponentCategory(ComponentCategory.ToolsBoolean)]
     public class BooleanNot : ICrypComponent

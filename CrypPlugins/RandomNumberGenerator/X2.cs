@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Christian Bender, Universität Siegen
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 using System;
 using System.Numerics;
 
-namespace Cryptool.Plugins.RandomNumberGenerator
+namespace CrypTool.Plugins.RandomNumberGenerator
 {
     /// <summary>
     /// X^2 Mod N randomumber generator

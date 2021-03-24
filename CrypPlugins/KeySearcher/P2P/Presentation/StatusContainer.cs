@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Numerics;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 namespace KeySearcher.P2P.Presentation
 {

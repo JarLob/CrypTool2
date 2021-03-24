@@ -21,7 +21,7 @@
     Dies bedeutet, dass man ohne Kenntnis des privaten Schlüssels auf den verschlüsselten Daten die mathematischen Operationen Addition und Multiplikation mit einer Konstanten
     durchführen kann, ohne die Argumente zu kennen und die Ergebnisse zu erfahren.
     <newline /><newline />
-    Das sind dieselben homomorphen Eigenschaften wie beim <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier-Kryptosystem</docRef>.
+    Das sind dieselben homomorphen Eigenschaften wie beim <docRef item="CrypTool.Plugins.Paillier.Paillier">Paillier-Kryptosystem</docRef>.
     <newline /><newline />
     Die homomorphen Eigenschaften von DGK und weitere <b>Referenzen</b> werden im <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_de.html">Tutorial</internal> "Homomorphe Chiffren und ihre Bedeutung in der Kryptographie" (in der Online-Hilfe unter "Allgemein") genauer erläutert. Dort finden Sie auch einen generellen Überblick über homomorphe Chiffren.
   </introduction>
@@ -41,7 +41,7 @@
     This means that, even without knowing the private key, one can carry out the mathematical operations addition and multiplication with a constant on encrypted numbers,
     without knowing their values and without learning anything about the results.
     <newline /><newline />
-    These are the same homomorphic properties as for the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem.
+    These are the same homomorphic properties as for the <docRef item="CrypTool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem.
     <newline /><newline />
     The homomorphic properties of this cryptosystem and further <b>references</b> are described in the <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_en.html">tutorial</internal> "Homomorphic Ciphers and their Importance in Cryptography" (in the online help below "Common"). There you can get a general overview about homomorphic ciphers.
   </usage>
@@ -50,9 +50,9 @@
   <usage lang="de-DE">
     Wählen Sie in den Einstellungen der Komponente, ob diese verschlüsseln oder entschlüsseln soll.
     <newline /><newline />
-    Für die Verschlüsselung benötigt die Komponente den öffentlichen Schlüssel, der aus dem 4-Tupel (N,G,H,U) besteht. Dieser kann durch die <docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef>-Komponente erzeugt werden.
+    Für die Verschlüsselung benötigt die Komponente den öffentlichen Schlüssel, der aus dem 4-Tupel (N,G,H,U) besteht. Dieser kann durch die <docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef>-Komponente erzeugt werden.
     <newline /><newline />
-    Für die Entschlüsselung wird zusätzlich der private Schlüssel (VP,VQ,P) benötigt, der ebenfalls vom <docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef> zur Verfügung gestellt wird.
+    Für die Entschlüsselung wird zusätzlich der private Schlüssel (VP,VQ,P) benötigt, der ebenfalls vom <docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef> zur Verfügung gestellt wird.
     <newline /><newline />
     Die zu verschlüsselnde oder entschlüsselnde Nachricht muss am Eingang mit der Bezeichnung "Eingabe M" angegeben werden.
     Als Eingabe werden BigInteger-Zahlen und Byte-Arrays akzeptiert. Abhängig vom eingegebenen Datentyp wird das Resultat am BigInteger-Ausgang oder am Byte-Array-Ausgang ausgegeben.
@@ -60,9 +60,9 @@
   <presentation lang="en">
     Select in the settings of the component whether you want to encrypt or decrypt data.
     <newline /><newline />
-    For encryption, the component needs the public key, that consists of the tuple (N,G,H,U). The public key can be provided by the <docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef> component.
+    For encryption, the component needs the public key, that consists of the tuple (N,G,H,U). The public key can be provided by the <docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef> component.
     <newline /><newline />
-    For decryption, the component additionally needs the private key (VP,VQ,P), that is also provided by the <docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef>.
+    For decryption, the component additionally needs the private key (VP,VQ,P), that is also provided by the <docRef item="CrypTool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef>.
     <newline /><newline />
     The data that is to be encrypted or decrypted must be entered at the input labeled "Input message M".
     The component accepts BigInteger numbers and byte arrays as input. Depending on the given data type, the result will be sent to the BigInteger output or the byte array output.

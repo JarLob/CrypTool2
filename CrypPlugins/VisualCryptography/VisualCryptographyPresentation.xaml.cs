@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-namespace Cryptool.Plugins.VisualCryptography
+namespace CrypTool.Plugins.VisualCryptography
 {
     /// <summary>
     /// Interaktionslogik für VisualCryptographyPresentation.xaml

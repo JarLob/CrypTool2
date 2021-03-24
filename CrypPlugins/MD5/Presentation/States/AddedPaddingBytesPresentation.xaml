@@ -1,8 +1,8 @@
-﻿<UserControl x:Class="Cryptool.MD5.Presentation.States.AddedPaddingBytesPresentation"
+﻿<UserControl x:Class="CrypTool.MD5.Presentation.States.AddedPaddingBytesPresentation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="400" Width="800"
-    xmlns:displays="clr-namespace:Cryptool.MD5.Presentation.Displays">
+    xmlns:displays="clr-namespace:CrypTool.MD5.Presentation.Displays">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>

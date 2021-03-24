@@ -1,4 +1,4 @@
-﻿using Cryptool.Fialka;
+﻿using CrypTool.Fialka;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.TemplateAndPluginTests

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.PluginBase.Control
+namespace CrypTool.PluginBase.Control
 {
     
         public interface IControlSigabaEncryption : IControl, IDisposable

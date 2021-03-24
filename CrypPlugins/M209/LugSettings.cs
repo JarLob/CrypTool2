@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.M209
+﻿namespace CrypTool.Plugins.M209
 {
     class LugSettings
     {

@@ -17,9 +17,9 @@
 using System;
 using System.IO;
 using System.Threading;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.PluginBase.IO
+namespace CrypTool.PluginBase.IO
 {
     /// <summary>
     /// Create a stream to pass data with arbitrary size to another CT2 plugin.
@@ -32,7 +32,7 @@ namespace Cryptool.PluginBase.IO
     /// You MUST Close() the stream when you're finished with writing, otherwise the reader will block
     /// and wait for more data infinitely.</para>
     /// </summary>
-    public class CStreamWriter : Stream, ICryptoolStream
+    public class CStreamWriter : Stream, ICrypToolStream
     {
         #region Fields and constructors
 

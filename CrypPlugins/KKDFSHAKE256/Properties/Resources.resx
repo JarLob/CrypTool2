@@ -238,7 +238,7 @@ The calculation takes place completely within the hash function SHAKE256...</val
     <value>2. Construction of KKDF SHAKE256</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
-    <value>An error occured. Please find detailed information in the log of Cryptool2.</value>
+    <value>An error occured. Please find detailed information in the log of CrypTool2.</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
     <value>4. Calculation finished</value>

@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("CrypTool 2.1 (Developer Build)")]
 [assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
-[assembly: AssemblyTrademark("Copyright © 2016 CrypTool 2 Team")]
+[assembly: AssemblyTrademark("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 

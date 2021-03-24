@@ -15,12 +15,12 @@
 */
 
 // .NET Implementation of the PRESENT algorithm
-// Copyright (C) 2008 Timm Korte, korte-cryptool@easycrypt.de
+// Copyright (C) 2008 Timm Korte, korte-CrypTool@easycrypt.de
 
 using System;
 using System.Security.Cryptography;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
     public class Present
     {

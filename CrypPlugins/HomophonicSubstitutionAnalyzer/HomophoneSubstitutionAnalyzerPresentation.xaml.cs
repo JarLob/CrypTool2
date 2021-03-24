@@ -23,14 +23,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Cryptool.PluginBase.Utils;
+using CrypTool.PluginBase.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Cryptool.CrypAnalysisViewControl;
+using CrypTool.CrypAnalysisViewControl;
 
-namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
+namespace CrypTool.Plugins.HomophonicSubstitutionAnalyzer
 {
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources")]
     public partial class HomophoneSubstitutionAnalyzerPresentation : UserControl
     {
         private const int MaxBestListEntries = 100;

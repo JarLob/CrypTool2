@@ -235,7 +235,7 @@ void msieve_run(msieve_obj *obj) {
 			goto clean_up;
 	}
 
-	//callback to inform Cryptool about the already found trivial factors:
+	//callback to inform CrypTool about the already found trivial factors:
 	put_trivial_factorlist(&factor_list, obj);
 
 

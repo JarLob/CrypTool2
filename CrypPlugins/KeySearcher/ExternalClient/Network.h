@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cryptool.h"
+#include "CrypTool.h"
 
-void networkThread(sockaddr_in, int, const char*, Cryptool* cryptool, bool*);
+void networkThread(sockaddr_in, int, const char*, CrypTool* cryptool, bool*);
 

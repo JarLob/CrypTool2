@@ -19,13 +19,13 @@ using System.Numerics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using ZufallsTests;
 using System.Collections.Generic;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase.IO;
 
-namespace Cryptool.Plugins.ZufallsTests
+namespace CrypTool.Plugins.ZufallsTests
 {
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Philipp Eisen", "philipp.iron@gmail.com", "University of Mannheim", "http://www.uni-mannheim.de/")]
@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.ZufallsTests
         private int selected;
         private Dictionary<int, int> dTestNumbers = new Dictionary<int, int>();
         private int reachedEOF;
-        private ICryptoolStream dataAsStream;
+        private ICrypToolStream dataAsStream;
         private FileStream fileStream;
         private Dictionary<int, int> minimumDataAmount = new Dictionary<int, int>();
 
@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.ZufallsTests
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "StreamInputCaption", "StreamInputTooltip")]
-        public ICryptoolStream StreamInput
+        public ICrypToolStream StreamInput
         {
             get
             {

@@ -1,5 +1,5 @@
 using System.Numerics;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 
 namespace KeySearcher
 {

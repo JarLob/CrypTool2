@@ -1,13 +1,13 @@
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.CramerShoup.lib;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.Plugins.CramerShoup.lib;
 using Org.BouncyCastle.Security;
 using System.Collections.Generic;
 using System;
 
-namespace Cryptool.Plugins.CramerShoup
+namespace CrypTool.Plugins.CramerShoup
 {
     [Author("Jan Jansen", "jan.jansen-n22@rub.de", "Ruhr Uni-Bochum", "http://cits.rub.de/")]
     [PluginInfo("CramerShoup.Properties.Resources", "PluginKeyCaption", "PluginKeyTooltip", "CramerShoup/DetailedDescription/doc.xml", new[] { "CramerShoup/Images/cskey.png" })]

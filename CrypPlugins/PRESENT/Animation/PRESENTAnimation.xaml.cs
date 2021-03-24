@@ -20,11 +20,11 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.PRESENT {
+namespace CrypTool.PRESENT {
     /// <summary>
     /// Interaktionslogik für Window1.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.PRESENT.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.PRESENT.Properties.Resources")]
     public partial class PRESENTAnimation : UserControl {
         private KS_Animation ks_animation;
         private EC_Animation ec_animation;

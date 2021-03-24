@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:properties="clr-namespace:KeySearcher.Properties"
     xmlns:con="clr-namespace:KeySearcher.Converter"
-    xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
+    xmlns:crypanalysisviewcontrol="clr-namespace:CrypTool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
     x:Name="LocalQuickWatch">
 
     <UserControl.Resources>

@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Timers;
 
-namespace Cryptool.CrypWin.Helper
+namespace CrypTool.CrypWin.Helper
 {
     public class PriorityChangedListener
     {

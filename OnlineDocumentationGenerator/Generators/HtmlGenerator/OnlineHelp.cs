@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 
 namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 {

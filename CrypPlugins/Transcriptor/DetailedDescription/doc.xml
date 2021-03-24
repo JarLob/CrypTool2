@@ -17,7 +17,7 @@
   </introduction>
   <usage lang="en">
     With <docRef item="FileInput.FileInputClass" /> you can load the picture, which contains the symbols into the Transcriptor.
-    The Roman alphabet in big letters is the default alphabet for transcription. It's also possible to use other alphabets with the <docRef item="Cryptool.Alphabets.Alphabet" /> component.
+    The Roman alphabet in big letters is the default alphabet for transcription. It's also possible to use other alphabets with the <docRef item="CrypTool.Alphabets.Alphabet" /> component.
     Use <docRef item="TextOutput.TextOutput" /> to display the text.
     <newline /><newline />
     Once the workspace has been started, you can interact with the Transcriptor. You can mark a symbol by dragging a rectangle over it.
@@ -47,7 +47,7 @@
   <usage lang="de-DE">
     Mit der <docRef item="FileInput.FileInputClass" />  kann man das Bild, welches die Symbole enthält, in den Transkriptor laden. Standardmäßig wird das lateinische
     Alphabet in Großbuchstaben für das Transkribieren verwendet. Es ist aber auch möglich, andere Alphabete zu benutzen,
-    indem man <docRef item="Cryptool.Alphabets.Alphabet" /> verwendet. Um den Text später auszugeben, verwendet man die <docRef item="TextOutput.TextOutput" />.
+    indem man <docRef item="CrypTool.Alphabets.Alphabet" /> verwendet. Um den Text später auszugeben, verwendet man die <docRef item="TextOutput.TextOutput" />.
   <newline /><newline />
     Sobald der Workspace gestartet worden ist, kann man mit dem Transkriptor interagieren. Man markiert ein Symbol indem man ein
     Rechteck darüber zieht. Das ausgewählte Symbol wird dann in der Auswahl dargestellt. Jetzt kann man auf die "Neues Symbol"-Taste

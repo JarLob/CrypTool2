@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Cryptool.Plugins.Blowfish
+namespace CrypTool.Plugins.Blowfish
 {
     internal class TwofishAlgorithm
     {

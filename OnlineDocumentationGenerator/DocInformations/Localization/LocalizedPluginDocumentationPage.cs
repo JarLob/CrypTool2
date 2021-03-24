@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using OnlineDocumentationGenerator.Utils;
 

@@ -20,7 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.CLK
+namespace CrypTool.CLK
 {
   /// <summary>
     /// Interaction logic for CLKPresentation.xaml

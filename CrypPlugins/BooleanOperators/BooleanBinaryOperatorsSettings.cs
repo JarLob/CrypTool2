@@ -15,10 +15,10 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
 
-namespace Cryptool.Plugins.BooleanOperators
+namespace CrypTool.Plugins.BooleanOperators
 {
     class BooleanBinaryOperatorsSettings : ISettings
     {

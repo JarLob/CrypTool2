@@ -11,7 +11,7 @@ namespace Wizard
     /// <summary>
     /// Interaction logic for StorageControl.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Wizard.Properties.Resources")]
     public partial class StorageControl : UserControl
     {
         public delegate void CloseEventDelegate();
@@ -32,7 +32,7 @@ namespace Wizard
             StoreValue.Text = defaultValue;
             StoreKey.Text = defaultKey;
             RefreshSource();
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate(object sender, PropertyChangedEventArgs args)
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate(object sender, PropertyChangedEventArgs args)
                                                                                    {
                                                                                        if (args.PropertyName == "Wizard_Storage")
                                                                                        {
@@ -57,7 +57,7 @@ namespace Wizard
         private void AddButtonClicked(object sender, RoutedEventArgs e)
         {
             var newEntry = new StorageEntry(StoreKey.Text, StoreValue.Text, StoreDescription.Text);
-            var storage = Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage ?? new ArrayList();
+            var storage = CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage ?? new ArrayList();
             storage.Add(newEntry);
 
             SaveAndClose(storage);
@@ -73,7 +73,7 @@ namespace Wizard
             entry.Value = StoreValue.Text;
             entry.Description = StoreDescription.Text;
 
-            Save(Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage);
+            Save(CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage);
             KeyListBox.SelectedItem = entry;
             KeyListBox.ScrollIntoView(entry);
         }
@@ -82,7 +82,7 @@ namespace Wizard
         {
             var entryToRemove = (StorageEntry)((Button)sender).Tag;
             Debug.Assert(entryToRemove != null);
-            var storage = Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage;
+            var storage = CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage;
             Debug.Assert(storage != null);
 
             var res = MessageBox.Show(Properties.Resources.RemoveEntryQuestion, Properties.Resources.RemoveEntry, MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -105,9 +105,9 @@ namespace Wizard
             {
                 _view.Refresh();
             }
-            else if (Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage != null)
+            else if (CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage != null)
             {
-                _view = CollectionViewSource.GetDefaultView(Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage);
+                _view = CollectionViewSource.GetDefaultView(CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage);
                 if (_view.GroupDescriptions.Count == 0)
                 {
                     _view.GroupDescriptions.Add(new PropertyGroupDescription("Key"));
@@ -125,8 +125,8 @@ namespace Wizard
 
         private static void Save(ArrayList storage)
         {
-            Cryptool.PluginBase.Properties.Settings.Default.Wizard_Storage = storage;
-            Cryptool.PluginBase.Properties.Settings.Default.Save();
+            CrypTool.PluginBase.Properties.Settings.Default.Wizard_Storage = storage;
+            CrypTool.PluginBase.Properties.Settings.Default.Save();
         }
 
         private void KeyListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

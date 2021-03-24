@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2020 Nils Kopal <kopal<at>cryptool.org>
+   Copyright 2020 Nils Kopal <kopal<at>CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
 */
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.Buffer
+namespace CrypTool.Plugins.Buffer
 {
-    [Author("Nils Kopal", "kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
+    [Author("Nils Kopal", "kopal@CrypTool.org", "CrypTool 2 Team", "https://www.CrypTool.org")]
     [PluginInfo("Buffer", "Buffers input data and returns these as a block of output data", "Buffer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsDataflow)]
     public class Buffer : ICrypComponent
@@ -38,14 +38,14 @@ namespace Cryptool.Plugins.Buffer
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "InputStream", "Input data stream to buffer", true)]
-        public ICryptoolStream InputStream
+        public ICrypToolStream InputStream
         {
             get;
             set;
         }
        
         [PropertyInfo(Direction.OutputData, "OutputStream", "Output data stream", true)]
-        public ICryptoolStream OutputStream
+        public ICrypToolStream OutputStream
         {
             get;
             set;

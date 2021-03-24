@@ -15,9 +15,9 @@
 */
 
 using System.ComponentModel;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 
-namespace Cryptool.SlideAttackOnFeistel
+namespace CrypTool.SlideAttackOnFeistel
 {
     public class SlideAttackOnFeistelSettings : ISettings
     {

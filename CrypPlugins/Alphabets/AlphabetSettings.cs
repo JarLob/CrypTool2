@@ -16,13 +16,13 @@
 
 using System;
 using System.Collections.Generic;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace Cryptool.Alphabets
+namespace CrypTool.Alphabets
 {
     public class AlphabetSettings : ISettings
     {

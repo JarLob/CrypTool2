@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Cryptool.SystemOfEquations
+namespace CrypTool.SystemOfEquations
 {
     [Author("Abdeljalil Bourbahh", "bourbahh@yahoo.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
     [PluginInfo("Alg. attack: System of equations", "generate a System of equation for algebric attack against Combiner of streamcipher", "SystemOfEquations/DetailedDescription/Description.xaml",

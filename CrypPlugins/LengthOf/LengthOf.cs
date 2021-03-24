@@ -15,13 +15,13 @@
 */
 using System;
 using System.Collections;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 // This PlugIn accepts every type. For arrays the number of elements is written.
 // For everything else the number of characters of the object's string representation is shown.
-namespace Cryptool.Plugins.LengthOf
+namespace CrypTool.Plugins.LengthOf
 {
     [Author("Christian Arnold", "christian.arnold@stud.uni-due.de", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("LengthOf.Properties.Resources", "PluginCaption", "PluginTooltip", "LengthOf/DetailedDescription/doc.xml", "LengthOf/LenOf.png")]
@@ -119,7 +119,7 @@ namespace Cryptool.Plugins.LengthOf
             get { return null; }
         }
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return null; }
         }

@@ -8,7 +8,7 @@
     <ProjectGuid>{1137719A-7468-4DEF-84B1-77AB82049656}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.MD5</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.MD5</RootNamespace>
     <AssemblyName>MD5</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

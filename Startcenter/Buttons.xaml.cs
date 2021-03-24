@@ -1,19 +1,19 @@
 ﻿ using System.IO;
 using System.Windows;
 using System.Windows.Controls; 
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.IO;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using System.Windows.Documents;
 using System;
-using Cryptool.PluginBase.Editor;
+using CrypTool.PluginBase.Editor;
 
 namespace Startcenter
 {
     /// <summary>
     /// Interaction logic for Buttons.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Startcenter.Properties.Resources")]
     public partial class Buttons : UserControl
     {
         public event OpenEditorHandler OnOpenEditor;
@@ -75,7 +75,7 @@ namespace Startcenter
         {
             try
             {
-                System.Diagnostics.Process.Start("https://www.cryptool.org/cryptool2");
+                System.Diagnostics.Process.Start("https://www.CrypTool.org/CrypTool2");
             }
             catch (Exception)
             {
@@ -99,7 +99,7 @@ namespace Startcenter
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.facebook.de/cryptool2");
+                System.Diagnostics.Process.Start("http://www.facebook.de/CrypTool2");
             }
             catch (Exception)
             {
@@ -123,7 +123,7 @@ namespace Startcenter
         {
             try
             {
-                DoOpenEditor(typeof(Cryptool.CrypToolStore.CrypToolStoreEditor));                
+                DoOpenEditor(typeof(CrypTool.CrypToolStore.CrypToolStoreEditor));                
             }
             catch (Exception)
             {

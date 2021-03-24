@@ -26,7 +26,7 @@ namespace DCAToyCiphers.UI
     /// <summary>
     /// Interaktionslogik für Cipher2Pres.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("DCAToyCiphers.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("DCAToyCiphers.Properties.Resources")]
     public partial class Cipher2Pres : UserControl, INotifyPropertyChanged
     {
         private ObservableCollection<TableMapping> sboxData;

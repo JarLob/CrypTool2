@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Win32;
 
-namespace Cryptool.Core
+namespace CrypTool.Core
 {
     public class RecentFileList
     {
@@ -19,9 +19,16 @@ namespace Cryptool.Core
 
         public static RecentFileList GetSingleton()
         {
-            if (_recentFileList == null)
+            try
             {
-                _recentFileList = new RecentFileList(Properties.Settings.Default.RecentFileListSize);
+                if (_recentFileList == null)
+                {
+                    _recentFileList = new RecentFileList(Properties.Settings.Default.RecentFileListSize);
+                }
+            }
+            catch (Exception)
+            {
+                return new RecentFileList();
             }
             return _recentFileList;
         }

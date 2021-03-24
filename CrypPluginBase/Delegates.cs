@@ -15,12 +15,12 @@
 */
 
 using System;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.Control;
 using System.Numerics;
 using System.Windows.Controls;
 
-namespace Cryptool.PluginBase
+namespace CrypTool.PluginBase
 {
   #region public interface delegates
   /// <summary>

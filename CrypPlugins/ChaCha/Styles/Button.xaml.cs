@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaCha.Styles
+namespace CrypTool.Plugins.ChaCha.Styles
 {
     /// <summary>
     /// Interaction logic for Button.xaml
     /// </summary>
-    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
+    [PluginBase.Attributes.Localization("CrypTool.Plugins.ChaCha.Properties.Resources")]
     public partial class Button : ResourceDictionary
     {
         public Button()

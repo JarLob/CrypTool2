@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 using WorkspaceManager.Model;
 
 namespace WorkspaceManager
@@ -39,18 +39,18 @@ namespace WorkspaceManager
             Resources.Add("settingsStyle", settingsStyle);
             InitializeComponent();
 
-            if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily != null)
+            if (CrypTool.PluginBase.Properties.Settings.Default.FontFamily != null)
             {
-                FontFamilyComboBox.SelectedItem = _fontFamilies.First(x => Equals(Cryptool.PluginBase.Properties.Settings.Default.FontFamily, x));
+                FontFamilyComboBox.SelectedItem = _fontFamilies.First(x => Equals(CrypTool.PluginBase.Properties.Settings.Default.FontFamily, x));
             }
             else
             {
                 FontFamilyComboBox.SelectedItem = _fontFamilies.First(x => Equals(this.FontFamily, x));
             }
-            FontSizeComboBox.SelectedItem = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
+            FontSizeComboBox.SelectedItem = CrypTool.PluginBase.Properties.Settings.Default.FontSize;
 
             InitializeColors();
-            Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { Cryptool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
+            CrypTool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate { CrypTool.PluginBase.Miscellaneous.ApplicationSettingsHelper.SaveApplicationsSettings(); };
         }
 
         private void InitializeColors()
@@ -160,17 +160,17 @@ namespace WorkspaceManager
 
         private void ButtonResetCCS_Click(object sender, RoutedEventArgs e)
         {
-            Cryptool.PluginBase.Editor.ComponentConnectionStatistics.Reset();
+            CrypTool.PluginBase.Editor.ComponentConnectionStatistics.Reset();
         }
 
         private void FontFamilyComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Cryptool.PluginBase.Properties.Settings.Default.FontFamily = (FontFamily) FontFamilyComboBox.SelectedItem;
+            CrypTool.PluginBase.Properties.Settings.Default.FontFamily = (FontFamily) FontFamilyComboBox.SelectedItem;
         }
 
         private void FontSizeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Cryptool.PluginBase.Properties.Settings.Default.FontSize = (double)FontSizeComboBox.SelectedItem;
+            CrypTool.PluginBase.Properties.Settings.Default.FontSize = (double)FontSizeComboBox.SelectedItem;
         }
     }
 }

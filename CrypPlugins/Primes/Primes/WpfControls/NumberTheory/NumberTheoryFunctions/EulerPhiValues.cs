@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {

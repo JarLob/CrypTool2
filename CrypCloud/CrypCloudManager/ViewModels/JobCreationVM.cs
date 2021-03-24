@@ -51,7 +51,7 @@ namespace CrypCloud.Manager.ViewModels
 
             try
             {
-                var jobHasBeenCreated = crypCloudCore.CreateJob("CryptoolJob", Name, Description, workspaceModel);
+                var jobHasBeenCreated = crypCloudCore.CreateJob("CrypToolJob", Name, Description, workspaceModel);
                 if (jobHasBeenCreated)
                 {
                     Navigator.ShowScreenWithPath(ScreenPaths.JobList);

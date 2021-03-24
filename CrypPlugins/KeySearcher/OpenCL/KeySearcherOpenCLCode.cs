@@ -1,5 +1,5 @@
 ﻿using System;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.Control;
 using KeySearcher.Properties;
 using OpenCLNet;
 

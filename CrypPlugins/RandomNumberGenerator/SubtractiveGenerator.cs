@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 CrypTool 2 Team <ct2contact@CrypTool.org>
    Author: Nils Kopal
    code adapted from: https://rosettacode.org/wiki/Subtractive_generator#C.23
 
@@ -16,7 +16,7 @@
    limitations under the License.
 */
 
-using Cryptool.Plugins.RandomNumberGenerator;
+using CrypTool.Plugins.RandomNumberGenerator;
 using System;
 using System.Numerics;
 

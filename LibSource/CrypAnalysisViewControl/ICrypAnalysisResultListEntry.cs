@@ -1,4 +1,4 @@
-﻿namespace Cryptool.CrypAnalysisViewControl
+﻿namespace CrypTool.CrypAnalysisViewControl
 {
     public interface ICrypAnalysisResultListEntry
     {

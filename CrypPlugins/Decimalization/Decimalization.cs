@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Numerics;
 
-namespace Cryptool.Plugins.Decimalization
+namespace CrypTool.Plugins.Decimalization
 {
     [Author("Andreas Grüner", "agruener@informatik.hu-berlin.de", "Humboldt University Berlin", "http://www.hu-berlin.de")]
     [PluginInfo("Decimalization.Properties.Resources", "PluginCaption", "PluginTooltip", "Decimalization/DetailedDescription/doc.xml", "Decimalization/Decimalization.png")]

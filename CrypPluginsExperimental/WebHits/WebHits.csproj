@@ -8,7 +8,7 @@
     <ProjectGuid>{3D4DCC8E-85D2-4DAE-B03C-C996B7A14B60}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.WebHits</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.WebHits</RootNamespace>
     <AssemblyName>WebHits</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

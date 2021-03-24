@@ -1,11 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace Cryptool.Plugins.Cryptography.Encryption
+namespace CrypTool.Plugins.Cryptography.Encryption
 {
     /// <summary>
     /// Interaktionslogik für SDSPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("CrypTool.Plugins.Cryptography.Encryption.Properties.Resources")]
     public partial class SDESPresentation : UserControl
     {
         public SDESPresentation()

@@ -27,17 +27,17 @@ using System.Windows.Controls;
 // for QuickwatchPresentaton
 using System.Windows.Threading;
 // for IControl
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Control;
+using CrypTool.PluginBase.Miscellaneous;
 // MathParser
 // RPNExpression
-using Cryptool.RPNExpression;
+using CrypTool.RPNExpression;
 
-namespace Cryptool.BooleanFunctionParser
+namespace CrypTool.BooleanFunctionParser
 {
-    [Author("Soeren Rinne", "soeren.rinne@cryptool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
-    [PluginInfo("Cryptool.BooleanFunctionParser.Properties.Resources", "PluginCaption", "PluginTooltip", "BooleanFunctionParser/DetailedDescription/doc.xml", "BooleanFunctionParser/Images/icon2.png")]
+    [Author("Soeren Rinne", "soeren.rinne@CrypTool.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
+    [PluginInfo("CrypTool.BooleanFunctionParser.Properties.Resources", "PluginCaption", "PluginTooltip", "BooleanFunctionParser/DetailedDescription/doc.xml", "BooleanFunctionParser/Images/icon2.png")]
     [ComponentCategory(ComponentCategory.ToolsBoolean)]
     public class BooleanFunctionParser : ICrypComponent
     {

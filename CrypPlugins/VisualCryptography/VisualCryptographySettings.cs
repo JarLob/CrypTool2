@@ -14,10 +14,10 @@
    limitations under the License.
 */
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.VisualCryptography
+namespace CrypTool.Plugins.VisualCryptography
 {
     public enum VisualPattern
     {

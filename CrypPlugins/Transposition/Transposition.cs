@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2020 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2020 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,15 +20,15 @@ using System.Text;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Control;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Control;
 using System.Windows.Controls;
 
 namespace Transposition
 {
-    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels", "kohnen@cryptool.org, weyers@cryptool.org, malischewski@cryptool.org, wiefels@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels", "kohnen@CrypTool.org, weyers@CrypTool.org, malischewski@CrypTool.org, wiefels@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Transposition.Properties.Resources", "PluginCaption", "PluginTooltip", "Transposition/DetailedDescription/doc.xml", "Transposition/Images/icon.png", "Transposition/Images/encrypt.png", "Transposition/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Transposition : ICrypComponent

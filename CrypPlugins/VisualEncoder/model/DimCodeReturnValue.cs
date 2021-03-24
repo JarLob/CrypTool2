@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 
 
-namespace Cryptool.Plugins.VisualEncoder.Model
+namespace CrypTool.Plugins.VisualEncoder.Model
 {
     class DimCodeEncoderItem
     {

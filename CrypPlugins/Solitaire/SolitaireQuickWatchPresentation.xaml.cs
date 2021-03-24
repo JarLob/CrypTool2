@@ -11,7 +11,7 @@ namespace Solitaire
     /// <summary>
     /// Interaktionslogik für SolitaireQuickWatchPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Solitaire.Properties.Resources")]
+    [CrypTool.PluginBase.Attributes.Localization("Solitaire.Properties.Resources")]
     public partial class SolitaireQuickWatchPresentation : System.Windows.Controls.UserControl
     {
         private Boolean enabled = false;

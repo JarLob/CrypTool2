@@ -8,7 +8,7 @@
     <ProjectGuid>{25DB2B47-A457-4EC2-960B-395CE07AE093}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.PluginBase</RootNamespace>
+    <RootNamespace>CrypTool.PluginBase</RootNamespace>
     <AssemblyName>CrypPluginBase</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -139,7 +139,7 @@
     <Compile Include="IO\CStreamReader.cs" />
     <Compile Include="IO\CStreamWriter.cs" />
     <Compile Include="IO\DirectoryHelper.cs" />
-    <Compile Include="IO\ICryptoolStream.cs" />
+    <Compile Include="IO\ICrypToolStream.cs" />
     <Compile Include="ICrypTutorial.cs" />
     <Compile Include="Miscellaneous\ApplicationSettingsHelper.cs" />
     <Compile Include="Miscellaneous\BigIntegerHelper.cs" />

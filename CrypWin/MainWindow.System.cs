@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2011 CrypTool 2 Team <ct2contact@CrypTool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,19 +24,19 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using Cryptool.CrypWin.Helper;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.CrypWin.Helper;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Editor;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using Microsoft.Win32;
 using Trinet.Core.IO.Ntfs;
 using MessageBox = System.Windows.MessageBox;
 using PowerLineStatus = System.Windows.Forms.PowerLineStatus;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypWin
+namespace CrypTool.CrypWin
 {
     public partial class MainWindow
     {
@@ -46,7 +46,7 @@ namespace Cryptool.CrypWin
 
         #region System Events
 
-        private void MainCryptoolWindow_StateChanged(object sender, EventArgs e)
+        private void MainCrypToolWindow_StateChanged(object sender, EventArgs e)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Cryptool.CrypWin
                     if (closingCausedMinimization)
                     {
                         ShowInTaskbar = false;
-                        notifyIcon.ShowBalloonTip(1000 * 5, Properties.Resources.Information, Properties.Resources.Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_, ToolTipIcon.Info);
+                        notifyIcon.ShowBalloonTip(1000 * 5, Properties.Resources.Information, Properties.Resources.CrypTool_2_0_has_been_backgrounded_due_to_running_tasks_, ToolTipIcon.Info);
                         oldPriority = Process.GetCurrentProcess().PriorityClass;
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
                     }
@@ -149,7 +149,7 @@ namespace Cryptool.CrypWin
             {
                 notifyIcon = new System.Windows.Forms.NotifyIcon();
                 notifyIcon.Text = "CrypTool 2";
-                notifyIcon.Icon = Properties.Resources.cryptool;
+                notifyIcon.Icon = Properties.Resources.CrypTool;
                 notifyIcon.Visible = true;
 
                 var notifyContextMenu = new System.Windows.Forms.ContextMenu();
@@ -442,7 +442,7 @@ namespace Cryptool.CrypWin
                 //we had an exception IN the Close() operation of the window
                 //since we cannot fix the code of the Close() method we catch
                 //the exception and write it to the log:
-                GuiLogMessage(String.Format("Exception in RestartCryptool method: {0}",ex.Message),NotificationLevel.Error);
+                GuiLogMessage(String.Format("Exception in RestartCrypTool method: {0}",ex.Message),NotificationLevel.Error);
             }
         }
 
@@ -454,17 +454,17 @@ namespace Cryptool.CrypWin
         {
             int processID = Process.GetCurrentProcess().Id;
             string exePath = Process.GetCurrentProcess().MainModule.FileName;
-            string cryptoolFolderPath = Path.GetDirectoryName(exePath);
+            string CrypToolFolderPath = Path.GetDirectoryName(exePath);
             string updaterPath = Path.Combine(DirectoryHelper.DirectoryLocalTemp, "CrypUpdater.exe");
             string filePath = AutoUpdater.GetSingleton().FilePath;
 
             try
             {
-                File.Copy(Path.Combine(cryptoolFolderPath, "CrypUpdater.exe"), Path.Combine(DirectoryHelper.DirectoryLocalTemp, "CrypUpdater.exe"), true);
+                File.Copy(Path.Combine(CrypToolFolderPath, "CrypUpdater.exe"), Path.Combine(DirectoryHelper.DirectoryLocalTemp, "CrypUpdater.exe"), true);
 
                 if (File.Exists(filePath) && File.Exists(updaterPath) && File.Exists(Path.Combine(DirectoryHelper.DirectoryLocalTemp, "Ionic.Zip.Reduced.dll")))
                 {
-                    string parameters = "\"" + filePath + "\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" \"" + Boolean.TrueString + "\"";
+                    string parameters = "\"" + filePath + "\" " + "\"" + CrypToolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" \"" + Boolean.TrueString + "\"";
                     Process.Start(updaterPath, parameters);
                     if (!restart)
                         App.Current.Shutdown();

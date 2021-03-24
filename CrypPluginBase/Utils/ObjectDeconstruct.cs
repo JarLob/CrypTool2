@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace Cryptool.PluginBase.Utils
+namespace CrypTool.PluginBase.Utils
 {
     using Datatypes;
     using System.Collections.Generic;

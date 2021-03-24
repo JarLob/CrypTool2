@@ -8,7 +8,7 @@
     <ProjectGuid>{CC765107-4794-4ADD-9D87-6378D985C4BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.PlayfairAnalyzer</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.PlayfairAnalyzer</RootNamespace>
     <AssemblyName>PlayfairAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

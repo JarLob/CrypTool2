@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Cryptool.ComputeXZ
+namespace CrypTool.ComputeXZ
 {
     [Author("Abdeljalil Bourbahh", "bourbahh@yahoo.de", "Ruhr-Universitaet Bochum, Chair for System Security", "http://www.trust.rub.de/")]
     [PluginInfo("Alg. attack: Compute XZ", "compute the sets XZ for a Combiner of streamcipher", "ComputeXZ/DetailedDescription/Description.xaml", new[] { "ComputeXZ/Images/xzz.png" })]

@@ -15,7 +15,7 @@
 */
 using System;
 
-namespace Cryptool.Plugins.FEAL
+namespace CrypTool.Plugins.FEAL
 {
     /// <summary>
     /// Implementation of the Fast Data Encipherement Algorithm (FEAL)

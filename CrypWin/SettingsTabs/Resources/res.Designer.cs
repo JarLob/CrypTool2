@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.CrypWin.SettingsTabs.Resources {
+namespace CrypTool.CrypWin.SettingsTabs.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.CrypWin.SettingsTabs.Resources.res", typeof(res).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.CrypWin.SettingsTabs.Resources.res", typeof(res).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

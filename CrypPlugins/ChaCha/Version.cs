@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha
+﻿namespace CrypTool.Plugins.ChaCha
 {
     public class Version
     {

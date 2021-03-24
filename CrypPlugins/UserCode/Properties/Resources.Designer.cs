@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Plugins.UserCode.Properties {
+namespace CrypTool.Plugins.UserCode.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.UserCode.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.UserCode.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypTool.Plugins.UserCode.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -262,7 +262,7 @@ namespace Cryptool.Plugins.UserCode.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die using System.Numerics;
         ///using System;
         ///
-        ///namespace Cryptool.Plugins.UserCode
+        ///namespace CrypTool.Plugins.UserCode
         ///{
         ///
         ///    public class UserClass

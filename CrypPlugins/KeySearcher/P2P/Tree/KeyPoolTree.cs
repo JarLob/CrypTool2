@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics; 
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using KeySearcher.Helper;
 using KeySearcher.KeyPattern; 
 using KeySearcher.P2P.Presentation;

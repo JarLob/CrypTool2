@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.T310
+namespace CrypTool.Plugins.T310
 {
     public enum ModeEnum
     {

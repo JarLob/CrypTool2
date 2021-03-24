@@ -16,14 +16,14 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.Progress
+namespace CrypTool.Progress
 {
-    [Author("Sven Rech", "rech@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/uc")]
-    [PluginInfo("Cryptool.Progress.Properties.Resources", "PluginCaption", "PluginTooltip", "Progress/DetailedDescription/doc.xml",
+    [Author("Sven Rech", "rech@CrypTool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/uc")]
+    [PluginInfo("CrypTool.Progress.Properties.Resources", "PluginCaption", "PluginTooltip", "Progress/DetailedDescription/doc.xml",
       "Progress/Images/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]

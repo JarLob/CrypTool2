@@ -17,7 +17,7 @@ using System.Collections;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.FleißnerGrille
+namespace CrypTool.Plugins.FleißnerGrille
 {
     /// <summary>
     /// Interaktionslogik für FleißnerGrillePresentation.xaml

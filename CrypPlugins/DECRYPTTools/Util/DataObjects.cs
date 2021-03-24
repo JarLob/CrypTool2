@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Cryptool.Plugins.DECRYPTTools.Util
+namespace CrypTool.Plugins.DECRYPTTools.Util
 {
     /*
      *  classes generated with http://json2csharp.com/

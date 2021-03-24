@@ -14,11 +14,11 @@
    limitations under the License.
 */
 using System;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.ArrayIndexer
+namespace CrypTool.Plugins.ArrayIndexer
 {
     [Author("Christian Arnold", "christian.arnold@stud.uni-due.de", "Uni Duisburg-Essen", "")]
     [PluginInfo("ArrayIndexer.Properties.Resources", "PluginCaption", "PluginTooltip", "ArrayIndexer/DetailedDescription/doc.xml", "ArrayIndexer/arrayindexer.png")]
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.ArrayIndexer
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public Cryptool.PluginBase.ISettings Settings
+        public CrypTool.PluginBase.ISettings Settings
         {
             get { return null; }
             set {  }

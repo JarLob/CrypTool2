@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Cryptool.Plugins.DimCodeEncoder;
+using CrypTool.Plugins.DimCodeEncoder;
 
 namespace DimCodeEncoder.DimCodes
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Data;
-using Cryptool.MD5.Presentation.Helpers;
-using Cryptool.MD5.Algorithm;
+using CrypTool.MD5.Presentation.Helpers;
+using CrypTool.MD5.Algorithm;
 
-namespace Cryptool.MD5.Presentation.Converters
+namespace CrypTool.MD5.Presentation.Converters
 {
     class MD5StateToUserControlConverter : IValueConverter
     {

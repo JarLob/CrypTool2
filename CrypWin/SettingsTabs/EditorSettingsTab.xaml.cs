@@ -29,16 +29,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Cryptool.CrypWin.Properties;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Attributes;
+using CrypTool.CrypWin.Properties;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Attributes;
 
-namespace Cryptool.CrypWin.SettingsTabs
+namespace CrypTool.CrypWin.SettingsTabs
 {
     /// <summary>
     /// Interaction logic for NotificationIconSettingsTab.xaml
     /// </summary>
-    [SettingsTab("Cryptool.CrypWin.SettingsTabs.Resources.res", "EditorSettings", "/")]
+    [SettingsTab("CrypTool.CrypWin.SettingsTabs.Resources.res", "EditorSettings", "/")]
     public partial class EditorSettingsTab : UserControl
     {
         public EditorSettingsTab(Style settingsStyle)

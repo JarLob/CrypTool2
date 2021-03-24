@@ -18,10 +18,10 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.IO;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Threading;
@@ -29,7 +29,7 @@ using HomophonicAnalyzer.Properties;
 using System.Threading;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String key_string, String plaintext_string);
@@ -671,7 +671,7 @@ namespace Cryptool.Plugins.HomophonicAnalyzer
             return res;
         }
 
-        private string returnStreamContent(ICryptoolStream stream)
+        private string returnStreamContent(ICrypToolStream stream)
         {
             string res = "";
 

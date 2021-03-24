@@ -8,7 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
-namespace Cryptool.Plugins.HomophonicAnalyzer
+namespace CrypTool.Plugins.HomophonicAnalyzer
 {
     class GeneticAttacker
     {

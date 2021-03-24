@@ -16,13 +16,13 @@
 
 using System.Linq;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System;
 
-namespace Cryptool.Playfair
+namespace CrypTool.Playfair
 {
     [Author("Sebastian Przybylski","sebastian@przybylski.org","Uni Siegen","http://www.uni-siegen.de")]
     [PluginInfo("Playfair.Properties.Resources", "PluginCaption", "PluginTooltip", "Playfair/DetailedDescription/doc.xml", 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Cryptool.FrequencyTest
+namespace CrypTool.FrequencyTest
 {
     public class DataSource
     {

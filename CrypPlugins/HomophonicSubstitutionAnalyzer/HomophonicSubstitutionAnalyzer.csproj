@@ -8,7 +8,7 @@
     <ProjectGuid>{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.Plugins.HomophonicSubstitutionAnalyzer</RootNamespace>
+    <RootNamespace>CrypTool.Plugins.HomophonicSubstitutionAnalyzer</RootNamespace>
     <AssemblyName>HomophonicSubstitutionAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

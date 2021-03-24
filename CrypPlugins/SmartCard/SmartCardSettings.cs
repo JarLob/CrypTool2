@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using Cryptool.PluginBase;
+using CrypTool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase.Miscellaneous;
 using System.Collections.ObjectModel;
 
 namespace SmartCard

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Helper.Converter
+namespace CrypTool.Plugins.ChaCha.Helper.Converter
 {
     /// <summary>
     /// Reverse byte order of each consecutive 4 bytes.

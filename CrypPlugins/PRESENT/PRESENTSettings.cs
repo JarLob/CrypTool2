@@ -16,10 +16,10 @@
 
 using System;
 using System.ComponentModel;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
+using CrypTool.PluginBase;
+using CrypTool.PluginBase.Miscellaneous;
 
-namespace Cryptool.PRESENT
+namespace CrypTool.PRESENT
 {
   public class PRESENTSettings : ISettings
   {

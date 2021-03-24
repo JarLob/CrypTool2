@@ -1,9 +1,9 @@
 ﻿using System;
-using Cryptool.MD5.Algorithm;
-using Cryptool.PluginBase.IO;
+using CrypTool.MD5.Algorithm;
+using CrypTool.PluginBase.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test.Cryptool.MD5.Algorithm
+namespace Test.CrypTool.MD5.Algorithm
 {
     [TestClass]
     public class PresentableMD5Test

@@ -14,7 +14,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Cryptool.FrequencyTest
+namespace CrypTool.FrequencyTest
 {
     public class CollectionElement
     {
