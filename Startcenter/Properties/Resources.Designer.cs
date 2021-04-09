@@ -196,6 +196,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die External resources ähnelt.
+        /// </summary>
+        internal static string ExternalResources {
+            get {
+                return ResourceManager.GetString("ExternalResources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Visit us on Facebook ähnelt.
         /// </summary>
         internal static string Follow_us_on_Facebook_ {

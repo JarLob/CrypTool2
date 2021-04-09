@@ -246,4 +246,7 @@
   <data name="View_CT2_Tutorial" xml:space="preserve">
     <value>在YouTube上观看有关CrypTool 2的教程视频</value>
   </data>
+  <data name="ExternalResources" xml:space="preserve">
+    <value>外部资源</value>
+  </data>
 </root>

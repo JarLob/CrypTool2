@@ -27,7 +27,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Grid.Column="1" ToolTip="{Loc ClearList}" Click="Button_Click">
-            <Image Source="/Startcenter;component/trash.png" />
+            <Image Source="pack://application:,,,/Startcenter;component/images/trash.png" />
         </Button>
     </Grid>
 </UserControl>

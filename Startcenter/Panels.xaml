@@ -27,7 +27,7 @@
                 </DataTemplate>
             </Expander.HeaderTemplate>
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/template.png" />
+                <BitmapImage UriSource="pack://application:,,,/Startcenter;component/images/template.png" />
             </Expander.Tag>
             
             <Border Name="templates">
@@ -47,7 +47,7 @@
                 </DataTemplate>
             </Expander.HeaderTemplate>
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/youtube.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
+                <BitmapImage UriSource="pack://application:,,,/Startcenter;component/images/youtube.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
             </Expander.Tag>
             <Border>
                 <Startcenter:RSSViewer/>
@@ -56,7 +56,7 @@
 
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFAEBBD4" VerticalContentAlignment="Center" />
 
-        <Expander IsExpanded="True" Header="{Loc RecentFiles}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,5,0,0">
+        <Expander IsExpanded="True" Header="{Loc RecentFiles}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="8,5,0,0">
             <Expander.HeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -66,7 +66,7 @@
                 </DataTemplate>
             </Expander.HeaderTemplate>
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/lastFiles.png"/>
+                <BitmapImage UriSource="pack://application:,,,/Startcenter;component/images/lastFiles.png"/>
             </Expander.Tag>
             <Border Name="lastOpenedFilesList">
                 <Startcenter:LastOpenedFilesList/>

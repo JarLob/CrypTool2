@@ -8,10 +8,10 @@ using CrypTool.PluginBase.Editor;
 
 namespace StartCenter
 {
-    [TabColor("LightSeaGreen")]
+    [TabColor("LightSkyBlue")]
     [EditorInfo("startcenter", false, true, false, true, false, false)]
     [Author("Sven Rech", "rech@CrypTool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Startcenter.Properties.Resources", "PluginCaption", "PluginTooltip", null, "Startcenter/startcenter.png")]
+    [PluginInfo("Startcenter.Properties.Resources", "PluginCaption", "PluginTooltip", null, "Startcenter/images/startcenter.png")]
     public class StartcenterEditor : IEditor
     {
         private string _samplesDir;
@@ -54,7 +54,6 @@ namespace StartCenter
             _startcenter.OnOpenEditor += (content, info) => OnOpenEditor(content, info);
             _startcenter.OnOpenTab += (content, title, parent) => OnOpenTab(content, title, parent);
             _startcenter.TemplatesDir = _samplesDir;
-
             OnProjectTitleChanged(this, "Startcenter");
             Presentation.ToolTip = Startcenter.Properties.Resources.PluginTooltip;
         }

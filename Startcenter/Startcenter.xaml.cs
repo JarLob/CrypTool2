@@ -46,8 +46,8 @@ namespace Startcenter
         public Startcenter()
         {
             InitializeComponent();
-            ((Buttons)buttons.Content).OnOpenEditor += (content, info) => OnOpenEditor(content, info);
-            _panelsObj = ((Panels)panels.Children[0]);
+            ((MainFunctionButtons)mainFunctionButtonsBorder.Child).OnOpenEditor += (content, info) => OnOpenEditor(content, info);
+            _panelsObj = (Panels)panels.Children[0];
             _panelsObj.OnOpenEditor += (content, info) => OnOpenEditor(content, info);
             _panelsObj.OnOpenTab += (content, info, parent) => OnOpenTab(content, info, parent);
             _panelsObj.TemplateLoaded += new EventHandler<TemplateOpenEventArgs>(templateLoaded);

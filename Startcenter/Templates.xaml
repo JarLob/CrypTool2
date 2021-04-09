@@ -65,7 +65,7 @@
                                                                       BorderThickness="1" >
                                         <Border Background="{TemplateBinding Background}">
                                             <DockPanel LastChildFill="True">
-                                                <Image Source="/Startcenter;component/search.png" DockPanel.Dock="Left"></Image>
+                                                <Image Source="pack://application:,,,/Startcenter;component/images/search.png" DockPanel.Dock="Left"></Image>
                                                 <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                                             </DockPanel>
                                         </Border>
