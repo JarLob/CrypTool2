@@ -55,7 +55,7 @@ jobs:
       matrix:
         # Supported options are ['csharp', 'cpp', 'go', 'java', 'javascript', 'python']
         # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#overriding-automatic-language-detection
-        language: ['csharp','cpp','java','python','javascript']
+        language: ['csharp','python','javascript']
 
     steps:
     - uses: actions/checkout@v2
